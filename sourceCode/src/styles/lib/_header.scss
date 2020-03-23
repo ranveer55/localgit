@@ -1,0 +1,126 @@
+    #header{
+        padding: 9px 102px 9px 55px;
+        height: 70px;
+        background-color: #FFF;
+    }
+        .header_wrap{
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-align-items: center;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+            -webkit-justify-content: space-between;
+                    -webkit-box-pack: justify;
+                    -ms-flex-pack: justify;
+                    justify-content: space-between;
+        }
+        .header_left{
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-align-items: center;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+        }
+        .header_right{
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-align-items: center;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+        }
+        
+        .logo_box{
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-align-items: center;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+        }
+            .logo{
+                margin-right: 6px;
+                height: 34px;
+                img{
+                    max-height: 100%;
+                }
+            }
+            .logo_description{
+                font-size: 25px;
+                line-height: 30px;
+                font-weight: 500;
+                color: #0B093F;
+            }
+        
+        .support_link{
+            margin-right: 110px;
+        }
+        .header_reminder{
+            position: relative;
+            margin-right: 30px;
+            width: 20px;
+            height: 30px;
+            background: url(../images/icons/bell-icon.svg) center center no-repeat;
+            span{
+                position: absolute;
+                bottom: 0;
+                right: -6px;
+                width: 13px;
+                height: 13px;
+                font-size: 10px;
+                line-height: 10px;
+                text-align: center;
+                color: #FFF;
+                background: #D31B5C 0% 0% no-repeat;
+                border: 1px solid #D31B5C;
+                -webkit-border-radius: 50px;
+                        border-radius: 50px;
+                opacity: 1;
+            }
+        }
+        .header_login_box{
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-align-items: center;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+        }
+        .header_login_name{
+            margin-right: 15px;
+            font-size: 20px;
+            line-height: 1.2;
+            color: #0B093F;
+        }
+        .header_login_photo{
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-align-items: center;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+            -webkit-justify-content: center;
+                    -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+            width: 52px;
+            height: 52px;
+            border: 1px solid #092043;
+            -webkit-border-radius: 50px;
+                    border-radius: 50px;
+            overflow: hidden;
+        }

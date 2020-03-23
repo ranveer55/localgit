@@ -1,0 +1,21 @@
+$white: #fff;
+$black: #000;
+
+// $color1: #000;
+
+
+
+$colors: (
+  'black' : $black,
+  'white' : $white,
+);
+
+
+@function color($key) {
+  @if map-has-key($colors, $key) {
+    $key: map-get($colors, $key);
+    @return color($key);
+  }
+
+  @return $key;
+}

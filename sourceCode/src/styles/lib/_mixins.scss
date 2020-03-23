@@ -1,0 +1,132 @@
+	@mixin vertical-gradient($from, $to) { /*vertical top to bottom*/
+		background: $to;
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$from), color-stop(100%,$to));
+		background: -webkit-linear-gradient(top, $from 0%,$to 100%);
+		background: -o-linear-gradient(top, $from 0%,$to 100%);
+		background: -webkit-gradient(linear, left top, left bottom, from($from),to($to));
+		background: linear-gradient(to bottom, $from 0%,$to 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#{$from}, endColorstr=#{$to})
+	}
+
+	/* 	*//* @include vertical-gradient($color-white, $color-black);*//**/
+
+
+	@mixin horizontal-gradient($from, $to, $stop: 100%) {
+	  background-color: $from;
+	  background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, $from), color-stop($stop, $to));
+	  background-image: -webkit-linear-gradient(left, $from 0%, $to $stop);
+	  background-image: -o-linear-gradient(left, $from 0%, $to $stop);
+	  background: -webkit-gradient(linear, left top, right top, from($from), color-stop($stop, $to));
+	  background: -webkit-linear-gradient(left, $from 0%, $to $stop);
+	  background: -o-linear-gradient(left, $from 0%, $to $stop);
+	  background: linear-gradient(to right, $from 0%, $to $stop);
+	  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$from', endColorstr='$to',GradientType=1 );
+	}
+	/* 	*//* @include horizontal-gradient($color-black, $color-white);*//**/
+
+
+	@mixin triangle($before-after, $color, $direction, $size){
+		position: relative;
+
+		@if $before-after == before {
+
+			&:before{
+				content: "";
+				position: absolute;
+			    width: 0;
+			    height: 0;
+			    top: 0;
+			    left: 0;
+			    
+			    @if $direction == bottom {
+			    	top: auto;
+			    	bottom: 0;
+			        margin-bottom: -$size;
+			        border-left: $size solid transparent;
+			        border-right: $size solid transparent;
+			        border-top: $size solid $color;
+			    } 
+			    @else if $direction == top {
+			    	top: 0;
+			        margin-top: -$size;
+			        border-left: $size solid transparent;
+			        border-right: $size solid transparent;
+			        border-bottom: $size solid $color;
+			    }
+			    @else if $direction == right {
+			    	left: auto;
+			    	right: 0;
+			        margin-right: -$size;
+			        border-top: $size solid transparent;
+			        border-bottom: $size solid transparent;
+			        border-left: $size solid $color;
+			    }
+			    @else if  $direction == left {
+			        left: 0;
+			        margin-left: -$size;
+			        border-top: $size solid transparent;
+			        border-bottom: $size solid transparent;
+			        border-right: $size solid $color;
+			    }
+			}
+		}
+
+		@if $before-after == after {
+
+			&:after{
+				content: "";
+				position: absolute;
+			    width: 0;
+			    height: 0;
+			    top: 0;
+			    left: 0;
+			    
+			    @if $direction == bottom {
+			    	top: auto;
+			    	bottom: 0;
+			        margin-bottom: -$size;
+			        border-left: $size solid transparent;
+			        border-right: $size solid transparent;
+			        border-top: $size solid $color;
+			    } 
+			    @else if $direction == top {
+			    	top: 0;
+			        margin-top: -$size;
+			        border-left: $size solid transparent;
+			        border-right: $size solid transparent;
+			        border-bottom: $size solid $color;
+			    }
+			    @else if $direction == right {
+			    	left: auto;
+			    	right: 0;
+			        margin-right: -$size;
+			        border-top: $size solid transparent;
+			        border-bottom: $size solid transparent;
+			        border-left: $size solid $color;
+			    }
+			    @else if  $direction == left {
+			        left: 0;
+			        margin-left: -$size;
+			        border-top: $size solid transparent;
+			        border-bottom: $size solid transparent;
+			        border-right: $size solid $color;
+			    }
+			}
+		}
+	    
+	}
+	
+	/* 	*//* @include triangle(before, #000, right, 10px);*//**/
+
+
+@mixin placeholder {
+
+    &:-moz-placeholder { @content; }
+
+    &::-moz-placeholder { @content; }
+
+    &:-ms-input-placeholder { @content; }
+
+    &::-webkit-input-placeholder { @content; }
+
+}

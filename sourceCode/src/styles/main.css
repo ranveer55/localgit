@@ -1,0 +1,15 @@
+/* src/styles/main.css */
+/* @import 'bootstrap.min.css'; */  
+@import 'reset.css';
+@import 'bootstrap.css';
+@import 'animate.css';
+@import 'plugins/owl.carousel/assets/owl.carousel.min.css';
+@import 'plugins/formstyler/jquery.formstyler.css';
+@import 'plugins/formstyler/jquery.formstyler.theme.css';
+@import 'plugins/chart/chart.min.css';
+@import 'plugins/dropzone/dropzone.css';
+@import 'plugins/datepicker/jquery-ui.min.css';
+@import 'plugins/magnific-popup/magnific-popup.css';
+@import 'style.css';
+@import 'responsive.css';
+

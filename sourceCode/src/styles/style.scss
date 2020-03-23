@@ -1,0 +1,41 @@
+@charset "UTF-8";
+/*====>>  Stylesheet Guide START  <<====*/
+        
+
+        /*<<=========================================>>
+
+        1. DEFAULT Stylesheets
+        2. BASIC classes
+            2.1.      Typography
+            2.2.      Colors
+            2.3.      Form
+            2.4.      Plugins
+            2.5.      Preloader
+            2.6.      Breadcrumbs
+            2.7.      Indents
+        3. HEADER
+        4. CONTENT
+        5. FOOTER 
+        
+        <<=========================================>>*/
+        
+
+/*====>>  Stylesheet Guide END    <<====*/
+
+@import "lib/_colors";
+@import "lib/_mixins";
+/*  <!-- 1. DEFAULT Stylesheets 
+============================================ --> */
+@import "lib/_base";
+/*  <!-- 2. BASIC classes
+============================================ --> */
+@import "lib/_basicClasses";
+/*  <!-- 4. HEADER 
+============================================ --> */
+@import "lib/_header";
+/*  <!-- 5. CONTENT 
+============================================ --> */
+@import "lib/_content";
+/*  <!-- 6. FOOTER 
+============================================ --> */
+@import "lib/_footer";
