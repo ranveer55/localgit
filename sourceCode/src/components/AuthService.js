@@ -13,7 +13,7 @@ export default class AuthService {
     }
     forgotpass(email) {
         // Get a token from api server using the fetch api
-        return this.fetch(`${this.domain}/password_reset.php`, {
+        return this.fetch(`${this.domain}/user/password/reset`, {
             method: 'POST',
             body: JSON.stringify({
                 email
