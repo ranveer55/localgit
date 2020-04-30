@@ -10,7 +10,7 @@ export default class ApiService {
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.addEmpCourse = this.addEmpCourse.bind(this)
         this.token = localStorage.getItem('id_token');
-        
+
     }
     //update Single Employee	
     updateEmployee(params) {
@@ -72,9 +72,9 @@ export default class ApiService {
         return axios.post(`${this.domain}/send-weekly-email`,
             JSON.stringify({ params }), {
             headers: {
-                    'Authorization': `Bearer ${this.token}`,
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                'Authorization': `Bearer ${this.token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
         }
         ).then(res => {
@@ -106,7 +106,13 @@ export default class ApiService {
     //email sent list
     sendEmail(params) {
         return axios.post(`${this.domain}/send-email`,
-            JSON.stringify({ params })
+            JSON.stringify({ params }), {
+            headers: {
+                'Authorization': `Bearer ${this.token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        }
         ).then(res => {
             return Promise.resolve(res);
         })
