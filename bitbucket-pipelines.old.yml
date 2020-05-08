@@ -1,0 +1,19 @@
+# This is a sample build configuration for PHP.
+# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples..
+# Only use spaces to indent your .yml configuration.
+# ---------
+# You can specify a custom docker image from Docker Hub as your build environment..
+image: php:7.1.29
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - composer
+        script:
+          - pipe: atlassian/sftp-deploy:0.5.2
+            variables:
+              USER: 'ubuntu'
+              SERVER: '18.157.49.133'
+              REMOTE_PATH: '/var/www/subdomains/dashboard2'
+              LOCAL_PATH: '.'

@@ -1,19 +1,13 @@
-# This is a sample build configuration for PHP.
-# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples..
-# Only use spaces to indent your .yml configuration.
-# ---------
-# You can specify a custom docker image from Docker Hub as your build environment..
-image: php:7.1.29
+image: nikolaik/python-nodejs
 
 pipelines:
   default:
     - step:
         caches:
-          - composer
-        script:
-          - pipe: atlassian/sftp-deploy:0.5.2
-            variables:
-              USER: 'ubuntu'
-              SERVER: '18.157.49.133'
-              REMOTE_PATH: '/var/www/subdomains/dashboard2'
-              LOCAL_PATH: '.'
+          - node
+        script: # Modify the commands below to build your repository.
+          - apt-get update && apt-get install -y rsync
+          - unset CI
+          - npm install
+          - npm run build
+          - rsync -r -v -e ssh ./build/ ubuntu@18.157.49.133:/var/www/subdomains/dashboard2 --delete-before --exclude '.git'
