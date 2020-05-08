@@ -10,4 +10,4 @@ pipelines:
           - unset CI
           - npm install
           - npm run build
-          - rsync -r -v -e ssh ./build/ ubuntu@18.157.49.133:/var/www/subdomains/dashboard2 --delete-before --exclude '.git'
+          - rsync -r -v -e ssh ./build/ ubuntu@18.157.49.133:/var/www/subdomains/dashboard2 --delete-before --exclude '.git' --exclude '.htaccess'
