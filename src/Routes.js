@@ -16,6 +16,7 @@ import Campaigns from "./pages/Campaigns";
 import OverView from "./pages/OverView";
 import Messaging from './pages/messaging/Messaging';
 import accessLevels from './config/access_levels';
+import Leaderboard from './pages/Leaderboard';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -28,6 +29,7 @@ class Router extends React.Component {
       <ProtectedRoute path="/add-employee" component={AddEmployees} />
       <ProtectedRoute path="/employeestocourses" component={EmployeestoCourses} />
       <ProtectedRoute path="/reports" component={Reports} />
+      <ProtectedRoute path="/leaderboard" component={Leaderboard} />
       <ProtectedRoute path="/coursedetail" component={CourseDetails} />
       <ProtectedRoute path="/courses" component={Courses} />
       {/* <ProtectedRoute path="/firebase" component={Firebase} /> */}

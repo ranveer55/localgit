@@ -47,6 +47,15 @@ class Menu extends Component {
                                 <span>Courses</span>
                             </a>
                         </li>
+                        <li className="menu_item">
+                            <a className={pathName === '/leaderboard' ? 'menu_link current' : 'menu_link'} href="/leaderboard">
+                                <i className="menu_link_icon">
+                                    <img src="/images/icons/icon3.svg" alt="" />
+                                    <img src="/images/icons/icon3hover.svg" alt="" />
+                                </i>
+                                <span>Leaderboard</span>
+                            </a>
+                        </li>
 
                         {
                             (typeof localStorage['access_level'] === "string") && parseInt(localStorage['access_level']) !== accessLevels.AUDITOR ?
@@ -79,4 +88,3 @@ class Menu extends Component {
 }
 
 export default Menu;
-

@@ -325,6 +325,30 @@ export default class ApiService {
         })
     }
 
+    // get leaderboard weekly
+    getLeaderboard(companyCode) {
+        return axios.get(`${this.domain}/leaderboard-company?companyCode=${companyCode}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        })
+    }
+
+    // get leaderboard today
+    getLeaderboardToday(companyCode) {
+        return axios.get(`${this.domain}/leaderboard-company/today?companyCode=${companyCode}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        })
+    }
+
     fetch(url, options) {
         // performs api calls sending the required authentication headers
         const headers = {
