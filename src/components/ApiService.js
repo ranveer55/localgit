@@ -327,7 +327,7 @@ export default class ApiService {
 
     // get leaderboard weekly
     getLeaderboard(companyCode) {
-        return axios.get(`${this.domain}/leaderboard-company?companyCode=${companyCode}`, {
+        return axios.get(`${this.domain}/leaderboard-company?withNewUsers=true&companyCode=${companyCode}`, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },
@@ -339,7 +339,7 @@ export default class ApiService {
 
     // get leaderboard today
     getLeaderboardToday(companyCode) {
-        return axios.get(`${this.domain}/leaderboard-company/today?companyCode=${companyCode}`, {
+        return axios.get(`${this.domain}/leaderboard-company/today?withNewUsers=true&companyCode=${companyCode}`, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },
