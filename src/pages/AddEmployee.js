@@ -198,6 +198,9 @@ class AddEmployee extends Component {
               .catch(err =>{
                   alert(err);
               })
+
+    // show user daily log link
+    console.log("show daily log link")
    }
   
 }
@@ -223,7 +226,11 @@ class AddEmployee extends Component {
     <section className="section_box">
       <h4 className="title4 fw500 mb20">Employees</h4>
         <h1 className="title1 mb25">{this.state.title} Employee</h1>
-        <form onSubmit={this.form.handleSubmit} className="form_employee js-tabs">
+          <form onSubmit={this.form.handleSubmit} className="form_employee js-tabs">
+
+            <a href={"/daily-goal-log?userId=" + this.state.userId.trim()} className="btn btn-blue btn-sm btn-radius btn-icon-left" style={{marginBottom: "2rem"}}>
+              <span>Daily Goal Log</span>
+            </a>
           
           <div className="js-tabs-box">
             <div>
@@ -337,4 +344,3 @@ class AddEmployee extends Component {
   }
 }
 export default AddEmployee;
-

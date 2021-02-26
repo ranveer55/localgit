@@ -349,6 +349,17 @@ export default class ApiService {
         })
     }
 
+    getDailyGoalLog(userId) {
+        return axios.get(`${this.domain}/cms/daily-goal-log?userId=${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        })
+    }
+
     fetch(url, options) {
         // performs api calls sending the required authentication headers
         const headers = {
