@@ -48,6 +48,7 @@ class DailyGoalLog extends Component {
               <thead style={{ textAlign: "left" }}>
                 <tr>
                   <th>Date</th>
+                  <th>Time</th>
                   <th>Points</th>
                   <th>Module No</th>
                   <th>Route No</th>
@@ -62,6 +63,7 @@ class DailyGoalLog extends Component {
                         return (
                           <tr key={dailyGoalLog.id}>
                             <td>{dailyGoalLog.dated}</td>
+                            <td>{dailyGoalLog.time}</td>
                             <td>{dailyGoalLog.points}</td>
                             <td>{dailyGoalLog.moduleNo}</td>
                             <td>{dailyGoalLog.routeNo}</td>
