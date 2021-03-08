@@ -228,9 +228,13 @@ class AddEmployee extends Component {
         <h1 className="title1 mb25">{this.state.title} Employee</h1>
           <form onSubmit={this.form.handleSubmit} className="form_employee js-tabs">
 
-            <a href={"/daily-goal-log?userId=" + this.state.userId.trim()} className="btn btn-blue btn-sm btn-radius btn-icon-left" style={{marginBottom: "2rem"}}>
-              <span>Daily Goal Log</span>
-            </a>
+          {
+              this.state.userId ? (
+                <a href={"/daily-goal-log?userId=" + this.state.userId.trim()} className="btn btn-blue btn-sm btn-radius btn-icon-left" style={{ marginBottom: "2rem" }}>
+                  <span>Daily Goal Log</span>
+                </a>
+              ) : <></>
+          }
           
           <div className="js-tabs-box">
             <div>
