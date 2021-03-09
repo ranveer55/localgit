@@ -360,6 +360,19 @@ export default class ApiService {
         })
     }
 
+    createACertificate({ userId, courseNo }) {
+        return axios.post(`${this.domain}/create-certificate`, {
+            userId, courseNo
+        }, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        })
+    }
+
     fetch(url, options) {
         // performs api calls sending the required authentication headers
         const headers = {

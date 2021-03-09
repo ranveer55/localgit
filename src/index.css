@@ -8754,6 +8754,11 @@ div.scrollmenu {
 .form-control, select{
   -webkit-appearance: select !important;
 }
+label.certificate-button span,
+label.certificate-button a {
+  margin: 0 4px;
+  cursor: pointer;
+}
 @charset "UTF-8";
 /*  <!-- RESPONSIVE
 ============================================ --> */

@@ -1,49 +1,50 @@
 import React, { Component } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory, {PaginationProvider,PaginationListStandalone} from "react-bootstrap-table2-paginator";
-import ToolkitProvider, {  Search } from "react-bootstrap-table2-toolkit";
+import paginationFactory, { PaginationProvider, PaginationListStandalone } from "react-bootstrap-table2-paginator";
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 //import Loader from "react-loader-spinner";
 import filterFactory from 'react-bootstrap-table2-filter';
-import { Progress } from 'reactstrap';  
+import { Progress } from 'reactstrap';
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import * as moment from 'moment'
 import queryString from 'query-string';
+import endpoints from "../config/endpoints";
 
 const { SearchBar } = Search;
 
 class CourseDetails extends Component {
-  
+
   constructor(props) {
     super(props);
     let params = queryString.parse(this.props.location.search)
-     
-    if(this.props.location.state===undefined && params.courseId===undefined && params.courseName===undefined){
+
+    if (this.props.location.state === undefined && params.courseId === undefined && params.courseName === undefined) {
       window.location.href = '/courses';
     }
     let courseId = ''
     let courseName = ''
-    if(this.props.location.state!==undefined){
-      if(this.props.location.state.courseId!==undefined && this.props.location.state.courseName!==undefined){
+    if (this.props.location.state !== undefined) {
+      if (this.props.location.state.courseId !== undefined && this.props.location.state.courseName !== undefined) {
         courseId = this.props.location.state.courseId;
         courseName = this.props.location.state.courseName;
       }
     }
-    if(params.courseName!==undefined && params.courseId!==undefined){
+    if (params.courseName !== undefined && params.courseId !== undefined) {
       courseId = params.courseId;
       courseName = params.courseName;
     }
     //Set attendance Table Settings
     this.state = {
-      courseId:courseId,
-      courseName:courseName,
+      courseId: courseId,
+      courseName: courseName,
       attendanceColumns: [
         { dataField: "Id", text: "Id", csvExport: false, hidden: true },
-        { 
+        {
           text: "Email",
           dataField: "userId",
           sort: true,
-          classes:'entry-text',
+          classes: 'entry-text',
           headerStyle: {
             width: "25%"
           }
@@ -78,6 +79,14 @@ class CourseDetails extends Component {
           }
         },
         {
+          text: "Is Certificate Available",
+          formatter: showCertificateButton,
+          dataField: "certificate",
+          headerStyle: {
+            width: "10%"
+          }
+        },
+        {
           text: "Completion",
           dataField: "completionPercentage",
           formatter: completionFormater,
@@ -86,9 +95,9 @@ class CourseDetails extends Component {
           }
         }
       ],
-      attendanceData: [{'message':'nodata'}],
+      attendanceData: [{ 'message': 'nodata' }],
       empColumns: [
-        
+
         {
           dataField: "FirstName",
           text: "FirstName",
@@ -136,7 +145,7 @@ class CourseDetails extends Component {
     this.state.attenSelected = [];
     this.state.empSelected = [];
     this.state.empNodata = false;
-    this.state.totalData=[];
+    this.state.totalData = [];
     this.state.notification = {
       title: '',
       message: '',
@@ -149,12 +158,38 @@ class CourseDetails extends Component {
         onScreen: true
       }
     };
-    
+
     //Column Formatter methods
     function completionFormater(cell, row) {
       return (
         <div className="table_progres_bar">
           <Progress value={row.completionPercentage}>{row.completionPercentage}%</Progress>
+        </div>
+      );
+    }
+
+    //Column Formatter methods
+    function showCertificateButton(cell, row) {
+      return (
+        <div className="">
+          <label className="certificate-button" onClick={() => {
+            global.api.createACertificate({
+              courseNo: row.courseNumber,
+              userId: row.userId
+            }).then(response => {
+              // certificate created, refresh the page
+              window.location.reload();
+            })
+          }}>
+            <input className="checkbox" type="checkbox" defaultChecked={row.certificate ? true : false} />
+            {
+              row.certificate ? (
+                <a target="_blank" rel="noopener noreferrer" href={endpoints.base + "/certificate/raw/" + row.certificate.certificateId}>View</a>
+              ) : (
+                <span>Create</span>
+              )
+            }
+          </label>
         </div>
       );
     }
@@ -166,19 +201,19 @@ class CourseDetails extends Component {
         </div>
       );
     }
-    
+
   }
   //remote Data Load
   componentDidMount() {
-    global.api.getCourseDetails (global.companyCode,this.state.courseId)
-                .then(res => res)
-                .then((json)=>{
-                  this.setState({attendanceData:json.registered})
-                  this.setState({empData:json.availableToRegister})
-                })
-                .catch(err =>{
-                    alert(err);
-                })
+    global.api.getCourseDetails(global.companyCode, this.state.courseId)
+      .then(res => res)
+      .then((json) => {
+        this.setState({ attendanceData: json.registered.map(r => { r.courseNumber = json.courseNumber; return r; }) })
+        this.setState({ empData: json.availableToRegister })
+      })
+      .catch(err => {
+        alert(err);
+      })
   }
   componentWillReceiveProps(newProps) {
     this.setState(() => ({
@@ -187,16 +222,16 @@ class CourseDetails extends Component {
     this.setState(() => ({
       empSelected: []
     }));
-    this.setState({attendanceData:[]})
-                  this.setState({empData:[]})
-    global.api.getCourseDetails (global.companyCode,this.state.courseId)
+    this.setState({ attendanceData: [] })
+    this.setState({ empData: [] })
+    global.api.getCourseDetails(global.companyCode, this.state.courseId)
       .then(res => res)
-      .then((json)=>{
-        this.setState({attendanceData:json.registered})
-        this.setState({empData:json.availableToRegister})
+      .then((json) => {
+        this.setState({ attendanceData: json.registered.map(r => { r.courseNumber = json.courseNumber; return r; }) })
+        this.setState({ empData: json.availableToRegister })
       })
-      .catch(err =>{
-          alert(err);
+      .catch(err => {
+        alert(err);
       })
   }
 
@@ -210,39 +245,41 @@ class CourseDetails extends Component {
       var companyCode = global.companyCode;
       //var courseNumber = this.state.courseId
       global.api.deleteEmpCourse(userIds, companyCode, this.state.courseId)
-      .then(res => res)
-                .then((json)=>{
-                  var notification=this.state.notification
-                  if(json.data.message==='Employee is removed from this Course'){
-                    notification.type='success';
-                    notification.title='Success';
-                    notification.message=json.data.message
-                    store.addNotification({
-                      ...notification
-                    });
-                    this.setState(() => ({
-                      attenSelected: []
-                    }));
-                    this.setState(() => ({
-                      empSelected: []
-                    }));
-                    this.props.history.replace({ //browserHistory.push should also work here
-                      pathname: '/coursedetail',
-                      state: {courseId:this.state.courseId,
-                      courseName:this.state.courseName}
-                    });
-                  }else{
-                    notification.type='danger'
-                    notification.title='Error';
-                    notification.message=json.data.message
-                    store.addNotification({
-                      ...notification
-                    });
-                  }
-                })
-                .catch(err =>{
-                    alert(err);
-                })
+        .then(res => res)
+        .then((json) => {
+          var notification = this.state.notification
+          if (json.data.message === 'Employee is removed from this Course') {
+            notification.type = 'success';
+            notification.title = 'Success';
+            notification.message = json.data.message
+            store.addNotification({
+              ...notification
+            });
+            this.setState(() => ({
+              attenSelected: []
+            }));
+            this.setState(() => ({
+              empSelected: []
+            }));
+            this.props.history.replace({ //browserHistory.push should also work here
+              pathname: '/coursedetail',
+              state: {
+                courseId: this.state.courseId,
+                courseName: this.state.courseName
+              }
+            });
+          } else {
+            notification.type = 'danger'
+            notification.title = 'Error';
+            notification.message = json.data.message
+            store.addNotification({
+              ...notification
+            });
+          }
+        })
+        .catch(err => {
+          alert(err);
+        })
     }
   };
   handleAddClick = e => {
@@ -253,41 +290,43 @@ class CourseDetails extends Component {
     } else {
       var userIds = this.state.empSelected[0]
       var companyCode = global.companyCode;
-      
+
       global.api.addEmpCourse(userIds, companyCode, this.state.courseId)
-      .then(res => res)
-                .then((json)=>{
-                  var notification=this.state.notification
-                  if(json.data.message==='Employee is successfully registered for this Course'){
-                    notification.type='success'
-                    notification.title='Success';
-                    notification.message=json.data.message
-                    store.addNotification({
-                      ...notification
-                    });
-                    this.setState(() => ({
-                      attenSelected: []
-                    }));
-                    this.setState(() => ({
-                      empSelected: []
-                    }));
-                    this.props.history.replace({ //browserHistory.push should also work here
-                      pathname: '/coursedetail',
-                      state: {courseId:this.state.courseId,
-                        courseName:this.state.courseName}
-                    });
-                  }else{
-                    notification.type='danger'
-                    notification.title='Error';
-                    notification.message=json.data.message
-                    store.addNotification({
-                      ...notification
-                    });
-                  }
-                })
-                .catch(err =>{
-                    alert(err);
-                })
+        .then(res => res)
+        .then((json) => {
+          var notification = this.state.notification
+          if (json.data.message === 'Employee is successfully registered for this Course') {
+            notification.type = 'success'
+            notification.title = 'Success';
+            notification.message = json.data.message
+            store.addNotification({
+              ...notification
+            });
+            this.setState(() => ({
+              attenSelected: []
+            }));
+            this.setState(() => ({
+              empSelected: []
+            }));
+            this.props.history.replace({ //browserHistory.push should also work here
+              pathname: '/coursedetail',
+              state: {
+                courseId: this.state.courseId,
+                courseName: this.state.courseName
+              }
+            });
+          } else {
+            notification.type = 'danger'
+            notification.title = 'Error';
+            notification.message = json.data.message
+            store.addNotification({
+              ...notification
+            });
+          }
+        })
+        .catch(err => {
+          alert(err);
+        })
     }
   };
   handleEmpOnSelect = (row, isSelect, rowIndex, e) => {
@@ -303,9 +342,9 @@ class CourseDetails extends Component {
   }
   handleEmpOnSelectAll = (isSelect, rows, e) => {
     const ids = rows.map(r => r.userId);
-    
+
     if (isSelect) {
-      
+
       this.setState(() => ({
         empSelected: ids
       }));
@@ -316,7 +355,7 @@ class CourseDetails extends Component {
     }
   }
   handleAttenOnSelect = (row, isSelect, rowIndex, e) => {
-    
+
     if (isSelect) {
       this.setState(() => ({
         attenSelected: [...this.state.attenSelected, row.userId]
@@ -330,7 +369,7 @@ class CourseDetails extends Component {
   handleAttenOnSelectAll = (isSelect, rows, e) => {
     const ids = rows.map(r => r.userId);
     if (isSelect) {
-      
+
       this.setState(() => ({
         attenSelected: ids
       }));
@@ -340,14 +379,14 @@ class CourseDetails extends Component {
       }));
     }
   }
-  
+
   render() {
     const MyExportCSV = props => {
       const handleClick = () => {
         props.onExport();
       };
       return (
-        <span className="btn btn-radius btn-size btn-blue export"  onClick={handleClick}>
+        <span className="btn btn-radius btn-size btn-blue export" onClick={handleClick}>
           <span>Export CSV</span>
         </span>
       );
@@ -355,7 +394,7 @@ class CourseDetails extends Component {
     const options = {
       custom: true,
       sizePerPage: 30,
-      selected:[],
+      selected: [],
       /* totalSize: this.state.attendanceData.length, */
       noDataText: 'Your_custom_text',
       withoutNoDataText: true
@@ -363,7 +402,7 @@ class CourseDetails extends Component {
     const empOptions = {
       custom: true,
       sizePerPage: 30,
-      selected:[],
+      selected: [],
       /* totalSize: this.state.empData.length */
     };
     const selectRow = {
@@ -376,7 +415,7 @@ class CourseDetails extends Component {
         paddingLeft: "5px"
       }
     };
-    
+
     const empSelectRow = {
       mode: "radio",
       clickToSelect: false,
@@ -387,14 +426,14 @@ class CourseDetails extends Component {
         paddingLeft: "5px"
       }
     };
-    
+
     const NoDataAvailable = () => (
       <div className="spinner nodata-available">
-       No Data Available....
+        No Data Available....
       </div>
     );
     const toDate = moment().format("DD-MM-YYYY");
-    
+
     return (
       <main className="offset" id="content">
         <section className="section_box">
@@ -406,7 +445,7 @@ class CourseDetails extends Component {
               </h1>
             </div>
           </div>
-          
+
           <ToolkitProvider
             keyField="i_d"
             data={this.state.attendanceData}
@@ -414,7 +453,7 @@ class CourseDetails extends Component {
             classes="table-atten type2"
             exportCSV={{ fileName: `employeeperformace_for_${global.companyName}_${this.state.courseName}_${toDate}.csv` }}
             search
-            >
+          >
             {props => (
               <div>
                 <div className="head_box type2 mb20">
@@ -425,9 +464,9 @@ class CourseDetails extends Component {
                   </div>
                   <div className="head_box_c">
                     <div className="form_search">
-                      <SearchBar { ...props.searchProps } placeholder="Search for employee"/>
+                      <SearchBar {...props.searchProps} placeholder="Search for employee" />
                       <button>
-                          <img src="images/icons/search-icon.svg" alt="" />
+                        <img src="images/icons/search-icon.svg" alt="" />
                       </button>
                     </div>
                   </div>
@@ -446,9 +485,9 @@ class CourseDetails extends Component {
                           {...props.baseProps}
                           selectRow={selectRow}
                           {...paginationTableProps}
-                          filter={ filterFactory() }
+                          filter={filterFactory()}
                           classes="table-atten"
-                          noDataIndication={ () => <NoDataAvailable /> }
+                          noDataIndication={() => <NoDataAvailable />}
                         />
                         <PaginationListStandalone {...paginationProps} />
                       </div>
@@ -475,9 +514,9 @@ class CourseDetails extends Component {
                   </div>
                   <div className="head_box_c">
                     <div className="form_search">
-                      <SearchBar { ...props.searchProps } placeholder="Search for employee"/>
+                      <SearchBar {...props.searchProps} placeholder="Search for employee" />
                       <button>
-                          <img src="images/icons/search-icon.svg" alt="" />
+                        <img src="images/icons/search-icon.svg" alt="" />
                       </button>
                     </div>
                   </div>
@@ -501,7 +540,7 @@ class CourseDetails extends Component {
                           selectRow={empSelectRow}
                           {...paginationTableProps}
                           classes="table-atten"
-                          noDataIndication={ () => <NoDataAvailable /> }
+                          noDataIndication={() => <NoDataAvailable />}
                         />
                         <PaginationListStandalone {...paginationProps} />
                       </div>
