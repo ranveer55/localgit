@@ -184,7 +184,7 @@ class CourseDetails extends Component {
             <input className="checkbox" type="checkbox" defaultChecked={row.certificate ? true : false} />
             {
               row.certificate ? (
-                <a target="_blank" rel="noopener noreferrer" href={endpoints.base + "/certificate/raw/" + row.certificate.certificateId}>View</a>
+                <a target="_blank" rel="noopener noreferrer" href={endpoints.base + "/certificate/" + row.certificate.certificateId}>View</a>
               ) : (
                 <span>Create</span>
               )
