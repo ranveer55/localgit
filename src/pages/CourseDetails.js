@@ -79,6 +79,20 @@ class CourseDetails extends Component {
           }
         },
         {
+          text: "Total Lessons",
+          dataField: "totalLessons",
+          headerStyle: {
+            width: "10%"
+          }
+        },
+        {
+          text: "Lessons Completed",
+          dataField: "lessonsCompleted",
+          headerStyle: {
+            width: "10%"
+          }
+        },
+        {
           text: "Current Milestone",
           dataField: "currentMilestone",
           headerStyle: {
