@@ -79,6 +79,13 @@ class CourseDetails extends Component {
           }
         },
         {
+          text: "Current Milestone",
+          dataField: "currentMilestone",
+          headerStyle: {
+            width: "10%"
+          }
+        },
+        {
           text: "Is Certificate Available",
           formatter: showCertificateButton,
           dataField: "certificate",
@@ -93,7 +100,7 @@ class CourseDetails extends Component {
           headerStyle: {
             width: "20%"
           }
-        }
+        },
       ],
       attendanceData: [{ 'message': 'nodata' }],
       empColumns: [
