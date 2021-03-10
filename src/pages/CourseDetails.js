@@ -456,7 +456,7 @@ class CourseDetails extends Component {
     const toDate = moment().format("DD-MM-YYYY");
 
     return (
-      <main className="offset" id="content">
+      <main className="offset CourseDetailPage" id="content">
         <section className="section_box">
           <h4 className="title4 mb15 fw500">Courses</h4>
           <div className="head_box type2 mb55">
