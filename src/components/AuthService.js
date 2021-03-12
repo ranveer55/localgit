@@ -91,6 +91,41 @@ export default class AuthService {
             });
     }
 
+    loginFacebook(token) {
+        // Get a token from api server using the fetch api
+        return axios.get(endpoints.api + endpoints.social.facebook.profile, {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(response => {
+            const res = response.data;
+            if (res.token) {
+                if (res.accesslevel !== "0") {
+                    this.setToken(res.token) // Setting the token in localStorage
+                    this.setProfile(res);
+                    if (res.accesslevel !== "0") {
+                        window.location.href = '/overview';
+                    } else {
+                        alert('Access Level Disabled, Contact Admin');
+                    }
+                } else {
+                    const result = { firstName: '', email: '', company_code: '', company_name: '', access_level: '', accepted_gdpr: '' }
+                    this.setProfile(result)
+                    alert('Access Level Disabled, Contact Admin');
+                }
+            }
+        })
+            .catch(error => {
+                if (error.response && error.response.data && error.response.data.message) {
+                    alert(error.response.data.message);
+                } else {
+                    alert('something went wrong, please try again!');
+                }
+            });
+    }
+
     loggedIn() {
         // Checks if there is a saved token and it's still valid
         const token = this.getToken() // GEtting token from localstorage

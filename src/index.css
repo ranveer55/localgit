@@ -8762,6 +8762,22 @@ label.certificate-button a {
 .CourseDetailPage .table th {
   font-size: 14px;
 }
+.btnFacebook {
+  width: 250px;
+  height: 44px;
+  border-radius: 4px;
+  background: #3b5998;
+  color: white;
+  border: 0px transparent;
+  text-align: center;
+  margin: 0 5px;
+  display: inline-block;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+  margin-left: 1rem;
+}
+.btnFacebook i {
+  margin-right: 6px;
+}
 @charset "UTF-8";
 /*  <!-- RESPONSIVE
 ============================================ --> */

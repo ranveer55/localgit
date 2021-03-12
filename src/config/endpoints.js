@@ -5,6 +5,9 @@ const localhost = {
     social: {
         google: {
             profile: '/auth/google/profile'
+        },
+        facebook: {
+            profile: '/auth/facebook/profile'
         }
     }
 }
@@ -16,6 +19,9 @@ const server = {
     social: {
         google: {
             profile: '/auth/google/profile'
+        },
+        facebook: {
+            profile: '/auth/facebook/profile'
         }
     }
 }

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import AuthService from '../components/AuthService';
 import { GoogleLogin } from 'react-google-login';
-import { google } from '../config/services';
+import { facebook, google } from '../config/services';
+import ReactFacebookLogin from 'react-facebook-login';
 
 class Login extends Component {
     constructor() {
@@ -31,6 +32,32 @@ class Login extends Component {
                     isLoading: false
                 });
             });
+        } else {
+            alert('something went wrong, please try again!');
+        }
+    }
+
+    /**
+     * Google Auth
+     * @param {*} response 
+     */
+    facebookAuthResponse(response: any) {
+        // Check if there is a token
+        this.setState({
+            isLoading: true
+        });
+
+        console.log({ facebookResponse: response })
+
+        if (response && ('accessToken' in response)) {
+            const accessToken = response.accessToken;
+            this.Auth.loginFacebook(accessToken)
+                .catch(f => {
+                    this.setState({
+                        isLoading: false
+                    });
+                    alert('something went wrong, please try again!');
+                });
         } else {
             alert('something went wrong, please try again!');
         }
@@ -84,6 +111,13 @@ class Login extends Component {
                                         onSuccess={this.googleAuthResponse.bind(this)}
                                         onFailure={this.googleAuthResponse.bind(this)}
                                         cookiePolicy={'single_host_origin'}
+                                    />
+                                    <ReactFacebookLogin
+                                        appId={facebook.appId}
+                                        textButton="Continue with Facebook"
+                                        callback={this.facebookAuthResponse.bind(this)}
+                                        cssClass="btnFacebook"
+                                        icon="fa-facebook"
                                     />
                                 </div>
                                 <div style={{
