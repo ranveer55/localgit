@@ -330,8 +330,7 @@ class AddEmployee extends Component {
                   <span>Cancel</span>
                 </button>
                 <button className="btn btn-blue btn-radius btn-icon-left">
-                  
-                  <span>Add employee</span>
+                  <span>{this.state.title} employee</span>
                 </button>
                 <input type="hidden" id="action" name="actionVal" ref="actionVal"/>
               </div>
