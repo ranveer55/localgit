@@ -100,6 +100,13 @@ class CourseDetails extends Component {
           }
         },
         {
+          text: "Score",
+          dataField: "totalScore",
+          headerStyle: {
+            width: "10%"
+          }
+        },
+        {
           text: "Is Certificate Available",
           formatter: showCertificateButton,
           dataField: "certificate",
