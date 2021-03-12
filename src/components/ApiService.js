@@ -17,7 +17,8 @@ export default class ApiService {
         return axios.put(`${this.domain}/employee/${params.userId}`,
             JSON.stringify(params), {
             headers: {
-                'Authorization': `Bearer ${this.token}`
+                'Authorization': `Bearer ${this.token}`,
+                'Content-Type': 'application/json'
             },
         }
         ).then(res => {
