@@ -509,6 +509,11 @@ class CourseDetails extends Component {
                     <span className="btn btn-radius btn-size btn-blue delete" onClick={this.handleDeleteClick}>
                       <span>Delete</span>
                     </span>
+                    <span className="btn btn-radius btn-size btn-blue delete" onClick={() => {
+                      window.location.href = "/course-registration-report?courseNo=" + this.state.courseId
+                    }}>
+                      <span>Registration Report</span>
+                    </span>
                   </div>
                 </div>
                 <div className="table_wraps">

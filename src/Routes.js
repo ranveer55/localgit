@@ -18,6 +18,7 @@ import Messaging from './pages/messaging/Messaging';
 import accessLevels from './config/access_levels';
 import Leaderboard from './pages/Leaderboard';
 import DailyGoalLog from './pages/DailyGoalLog';
+import CourseRegistrationReport from './pages/CourseRegistrationReport';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -31,6 +32,7 @@ class Router extends React.Component {
       <ProtectedRoute path="/employeestocourses" component={EmployeestoCourses} />
       <ProtectedRoute path="/reports" component={Reports} />
       <ProtectedRoute path="/leaderboard" component={Leaderboard} />
+      <ProtectedRoute path="/course-registration-report" component={CourseRegistrationReport} />
       <ProtectedRoute path="/daily-goal-log" component={DailyGoalLog} />
       <ProtectedRoute path="/coursedetail" component={CourseDetails} />
       <ProtectedRoute path="/courses" component={Courses} />

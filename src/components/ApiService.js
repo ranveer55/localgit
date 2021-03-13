@@ -374,6 +374,18 @@ export default class ApiService {
         })
     }
 
+    // get leaderboard today
+    getCourseRegistrationReport(courseNo, lastXDays = 7) {
+        return axios.get(`${this.domain}/employee-course-registeration-report?courseNo=${courseNo}&lastXDays=${lastXDays}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        })
+    }
+
     fetch(url, options) {
         // performs api calls sending the required authentication headers
         const headers = {
