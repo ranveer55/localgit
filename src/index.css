@@ -8796,6 +8796,8 @@ label.certificate-button a {
 }
 .registered-user-td>span:last-child {
   font-size: small;
+  display: flex;
+  flex-direction: column;
 }
 @charset "UTF-8";
 /*  <!-- RESPONSIVE
