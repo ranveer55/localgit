@@ -6022,3 +6022,23 @@ label.certificate-button a {
 .btnFacebook i {
   margin-right: 6px;
 }
+
+.registered-user-td {
+  display: flex;
+  align-items: flex-start;
+}
+.registered-user-td>span:first-child {
+  background-color: dodgerblue;
+  color: white;
+  display: flex;
+  border-radius: 50%;
+  margin: 10px;
+  width: 24px;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
+
+}
+.registered-user-td>span:last-child {
+  font-size: small;
+}

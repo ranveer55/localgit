@@ -62,41 +62,46 @@ class CourseRegistrationReport extends Component {
                   label="Course Registrations in Last 7 Days"
                   labels={this.state.report7Days.map(r => moment(r.date).format('DD MMM'))}
                   data={this.state.report7Days.map(r => r.userRegistered.length)} />
-                {/* <table style={{ width: "100%" }}>
-              <thead style={{ textAlign: "left" }}>
-                <tr>
-                  <th>Name</th>
-                  <th>UserId</th>
-                  <th>Rank</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  this.state.leaderboardLoaded ?
-                    this.state.leaderboardToday.length > 0 ?
-                      this.state.leaderboardToday.map(leaderboard => {
-                        return (
-                          <tr key={leaderboard.userId}>
-                            <td>{leaderboard.FirstName}</td>
-                            <td>{leaderboard.userId}</td>
-                            <td>{leaderboard.rank}</td>
-                            <td>{leaderboard.total}</td>
+                <table style={{ width: "100%" }}>
+                  <thead style={{ textAlign: "left" }}>
+                    <tr>
+                      <th>Date</th>
+                      <th>User Registered</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      this.state.dataLoaded ?
+                        this.state.report7Days.length > 0 ?
+                          this.state.report7Days.map(report => {
+                            return (
+                              <tr key={report.date}>
+                                <td>{moment(report.date).format('DD MMM')}</td>
+                                <td className="registered-user-td">
+                                  <span>{report.userRegistered.length}</span>
+                                  <span>
+                                    {report.userRegistered.map(user => (
+                                      <span>
+                                        {user.FirstName} {user.LastName}
+                                      </span>
+                                    ))}
+                                  </span>
+                                </td>
+                              </tr>
+                            )
+                          }) : (
+                            <tr>
+                              <td colSpan="4">No Data Available</td>
+                            </tr>
+                          )
+                        : (
+                          <tr>
+                            <td colSpan="4">Loading Data</td>
                           </tr>
                         )
-                      }) : (
-                        <tr>
-                          <td colSpan="4">No Data Available</td>
-                        </tr>
-                      )
-                    : (
-                      <tr>
-                        <td colSpan="4">Loading Data</td>
-                      </tr>
-                    )
-                }
-              </tbody>
-            </table> */}
+                    }
+                  </tbody>
+                </table>
               </div>
               <br />
               <br />
@@ -110,41 +115,46 @@ class CourseRegistrationReport extends Component {
                   label="Course Registrations in Last 30 Days"
                   labels={this.state.report30Days.map(r => moment(r.date).format('DD MMM'))}
                   data={this.state.report30Days.map(r => r.userRegistered.length)} />
-                {/* <table style={{ width: "100%" }}>
-              <thead style={{ textAlign: "left" }}>
-                <tr>
-                  <th>Name</th>
-                  <th>UserId</th>
-                  <th>Rank</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  this.state.leaderboardLoaded ?
-                    this.state.leaderboard.length > 0 ?
-                      this.state.leaderboard.map(leaderboard => {
-                        return (
-                          <tr key={leaderboard.userId}>
-                            <td>{leaderboard.FirstName}</td>
-                            <td>{leaderboard.userId}</td>
-                            <td>{leaderboard.rank}</td>
-                            <td>{leaderboard.total}</td>
+                <table style={{ width: "100%" }}>
+                  <thead style={{ textAlign: "left" }}>
+                    <tr>
+                      <th>Date</th>
+                      <th>User Registered</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      this.state.dataLoaded ?
+                        this.state.report30Days.length > 0 ?
+                          this.state.report30Days.map(report => {
+                            return (
+                              <tr key={report.date}>
+                                <td>{moment(report.date).format('DD MMM')}</td>
+                                <td className="registered-user-td">
+                                  <span>{report.userRegistered.length}</span>
+                                  <span>
+                                    {report.userRegistered.map(user => (
+                                      <span>
+                                        {user.FirstName} {user.LastName}
+                                      </span>
+                                    ))}
+                                  </span>
+                                </td>
+                              </tr>
+                            )
+                          }) : (
+                            <tr>
+                              <td colSpan="4">No Data Available</td>
+                            </tr>
+                          )
+                        : (
+                          <tr>
+                            <td colSpan="4">Loading Data</td>
                           </tr>
                         )
-                      }) : (
-                        <tr>
-                          <td colSpan="4">No Data Available</td>
-                        </tr>
-                      )
-                    : (
-                      <tr>
-                        <td colSpan="4">Loading Data</td>
-                      </tr>
-                    )
-                }
-              </tbody>
-            </table> */}
+                    }
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
