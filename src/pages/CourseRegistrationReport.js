@@ -60,7 +60,7 @@ class CourseRegistrationReport extends Component {
               <div id="reports" className="scrollmenu">
                 <LineChart
                   label="Course Registrations in Last 7 Days"
-                  labels={this.state.report7Days.map(r => moment(r.date).format('DD/MM'))}
+                  labels={this.state.report7Days.map(r => moment(r.date).format('DD MMM'))}
                   data={this.state.report7Days.map(r => r.userRegistered)} />
                 {/* <table style={{ width: "100%" }}>
               <thead style={{ textAlign: "left" }}>
@@ -108,7 +108,7 @@ class CourseRegistrationReport extends Component {
               <div id="reports" className="scrollmenu">
                 <LineChart
                   label="Course Registrations in Last 30 Days"
-                  labels={this.state.report30Days.map(r => moment(r.date).format('DD/MM'))}
+                  labels={this.state.report30Days.map(r => moment(r.date).format('DD MMM'))}
                   data={this.state.report30Days.map(r => r.userRegistered)} />
                 {/* <table style={{ width: "100%" }}>
               <thead style={{ textAlign: "left" }}>
