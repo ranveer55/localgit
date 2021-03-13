@@ -82,7 +82,7 @@ class CourseRegistrationReport extends Component {
                                   <span>
                                     {report.userRegistered.map(user => (
                                       <span>
-                                        {user.FirstName} {user.LastName}
+                                        {user.FirstName} {user.LastName} 
                                         ({user.userId})
                                       </span>
                                     ))}
