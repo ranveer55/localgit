@@ -53,14 +53,16 @@ class CourseRegistrationReport extends Component {
     return (
       <main className="offset" id="content">
         <section className="section_box">
-          <h1 className="title1 mb25">Course Registration Report</h1>
-          <h4 className="title4 mb40">For {this.state.selectedCompanyName} (Last 7 Days)</h4>
-          <div id="reports" className="scrollmenu">
-            <LineChart
-              label="Course Registrations in Last 7 Days"
-              labels={this.state.report7Days.map(r => moment(r.date).format('DD/MM'))}
-              data={this.state.report7Days.map(r => r.userRegistered)} />
-            {/* <table style={{ width: "100%" }}>
+          <div className="row">
+            <div className="col-md-6">
+              <h1 className="title1 mb25">Course Registration Report</h1>
+              <h4 className="title4 mb40">For {this.state.selectedCompanyName} (Last 7 Days)</h4>
+              <div id="reports" className="scrollmenu">
+                <LineChart
+                  label="Course Registrations in Last 7 Days"
+                  labels={this.state.report7Days.map(r => moment(r.date).format('DD/MM'))}
+                  data={this.state.report7Days.map(r => r.userRegistered)} />
+                {/* <table style={{ width: "100%" }}>
               <thead style={{ textAlign: "left" }}>
                 <tr>
                   <th>Name</th>
@@ -95,18 +97,20 @@ class CourseRegistrationReport extends Component {
                 }
               </tbody>
             </table> */}
-          </div>
-          <br />
-          <br />
-          <br />
-          <h1 className="title1 mb25">Course Completion Report</h1>
-          <h4 className="title4 mb40">For {this.state.selectedCompanyName} (Last 30 days)</h4>
-          <div id="reports" className="scrollmenu">
-            <LineChart
-              label="Course Registrations in Last 30 Days"
-              labels={this.state.report30Days.map(r => moment(r.date).format('DD/MM'))}
-              data={this.state.report30Days.map(r => r.userRegistered)} />
-            {/* <table style={{ width: "100%" }}>
+              </div>
+              <br />
+              <br />
+              <br />
+            </div>
+            <div className="col-md-6">
+              <h1 className="title1 mb25">Course Completion Report</h1>
+              <h4 className="title4 mb40">For {this.state.selectedCompanyName} (Last 30 days)</h4>
+              <div id="reports" className="scrollmenu">
+                <LineChart
+                  label="Course Registrations in Last 30 Days"
+                  labels={this.state.report30Days.map(r => moment(r.date).format('DD/MM'))}
+                  data={this.state.report30Days.map(r => r.userRegistered)} />
+                {/* <table style={{ width: "100%" }}>
               <thead style={{ textAlign: "left" }}>
                 <tr>
                   <th>Name</th>
@@ -141,8 +145,9 @@ class CourseRegistrationReport extends Component {
                 }
               </tbody>
             </table> */}
+              </div>
+            </div>
           </div>
-
         </section>
       </main>
     );
