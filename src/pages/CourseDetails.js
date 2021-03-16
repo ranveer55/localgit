@@ -514,6 +514,11 @@ class CourseDetails extends Component {
                     }}>
                       <span>Registration Report</span>
                     </span>
+                    <span className="btn btn-radius btn-size btn-blue delete" onClick={() => {
+                      window.open(endpoints.base + "/app/employee-course-registration?courseNo=" + this.state.courseId)
+                    }}>
+                      <span>Registration Page</span>
+                    </span>
                   </div>
                 </div>
                 <div className="table_wraps">
