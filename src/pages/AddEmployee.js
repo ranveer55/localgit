@@ -177,7 +177,7 @@ class AddEmployee extends Component {
                 this.setState({phone: `+${json.Mobilewcode} ${json.Mobile}`});
                 this.setState({fields});
                 //this.setState({phone : json.Mobile});
-                if (!json.status && json.status!=="" && json.status!==" "){
+                if (json.status && json.status!=="" && json.status!==" "){
                   this.setState({status:json.status.toUpperCase()});
                 }
                 if(json.weeklyEmail!=="" && json.weeklyEmail!==" "){
