@@ -6452,6 +6452,14 @@ body.blackTheme .breadcrumbs {
   margin-bottom: 47px;
   text-align: center;
 }
+.menu_item.submenu-holder .submenu {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+}
+.menu_link.current-item {
+  zoom: 0.8;
+}
 .menu_link {
   font-size: 12px;
   line-height: 14px;

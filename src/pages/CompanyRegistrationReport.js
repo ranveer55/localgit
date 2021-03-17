@@ -1,15 +1,13 @@
 import React, { Component } from "react";
-import queryString from 'query-string';
 import { Line } from "react-chartjs-2";
 import moment from "moment";
 
-class CourseRegistrationReport extends Component {
+class CompanyRegistrationReport extends Component {
 
   constructor(props) {
     super(props);
-    let params = queryString.parse(this.props.location.search);
 
-    this.courseNo = params.courseNo;
+    this.companyCode = global.companyCode;
 
     this.state = {};
 
@@ -21,10 +19,10 @@ class CourseRegistrationReport extends Component {
   }
 
   componentDidMount() {
-    const courseNo = this.courseNo;
+    const companyCode = this.companyCode;
 
-    // getCourseRegistrationReport for last 7 days
-    global.api.getCourseRegistrationReport(courseNo)
+    // getCompanyRegistrationReport for last 7 days
+    global.api.getCompanyRegistrationReport(companyCode)
       .then(
         data => {
           this.setState({
@@ -34,8 +32,8 @@ class CourseRegistrationReport extends Component {
           // this.setState({ batchData: data });
         });
 
-    // getCourseRegistrationReport for last 30 days
-    global.api.getCourseRegistrationReport(courseNo, 30)
+    // getCompanyRegistrationReport for last 30 days
+    global.api.getCompanyRegistrationReport(companyCode, 30)
       .then(
         data => {
           this.setState({
@@ -55,11 +53,11 @@ class CourseRegistrationReport extends Component {
         <section className="section_box">
           <div className="row">
             <div className="col-md-6">
-              <h1 className="title1 mb25">Course Registration Report</h1>
+              <h1 className="title1 mb25">Company Registration Report</h1>
               <h4 className="title4 mb40">For {this.state.selectedCompanyName} (Last 7 Days)</h4>
               <div id="reports" className="scrollmenu">
                 <LineChart
-                  label="Course Registrations in Last 7 Days"
+                  label="Company Registrations in Last 7 Days"
                   labels={this.state.report7Days.map(r => moment(r.date).format('DD MMM'))}
                   data={this.state.report7Days.map(r => r.userRegistered.length)} />
                 <table style={{ width: "100%" }}>
@@ -109,11 +107,11 @@ class CourseRegistrationReport extends Component {
               <br />
             </div>
             <div className="col-md-6">
-              <h1 className="title1 mb25">Course Registration Report</h1>
+              <h1 className="title1 mb25">Company Registration Report</h1>
               <h4 className="title4 mb40">For {this.state.selectedCompanyName} (Last 30 days)</h4>
               <div id="reports" className="scrollmenu">
                 <LineChart
-                  label="Course Registrations in Last 30 Days"
+                  label="Company Registrations in Last 30 Days"
                   labels={this.state.report30Days.map(r => moment(r.date).format('DD MMM'))}
                   data={this.state.report30Days.map(r => r.userRegistered.length)} />
                 <table style={{ width: "100%" }}>
@@ -198,4 +196,4 @@ function LineChart({
 }
 
 
-export default CourseRegistrationReport;
+export default CompanyRegistrationReport;

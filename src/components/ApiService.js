@@ -374,9 +374,21 @@ export default class ApiService {
         })
     }
 
-    // get leaderboard today
+    // getCourseRegistrationReport
     getCourseRegistrationReport(courseNo, lastXDays = 7) {
         return axios.get(`${this.domain}/employee-course-registeration-report?courseNo=${courseNo}&lastXDays=${lastXDays}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        })
+    }
+
+    // getCompanyRegistrationReport
+    getCompanyRegistrationReport(companyCode, lastXDays = 7) {
+        return axios.get(`${this.domain}/employee-company-registeration-report?companyCode=${companyCode}&lastXDays=${lastXDays}`, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import accessLevels from '../config/access_levels';
 //import { Link } from 'react-router-dom'
 console.log(window.location.pathname);
@@ -29,15 +29,12 @@ class Menu extends Component {
                                 <span>Employees</span>
                             </a>
                         </li>
-                        <li className="menu_item">
-                            <a className={pathName === '/reports' ? 'menu_link current' : 'menu_link'} href="/reports">
-                                <i className="menu_link_icon">
-                                    <img src="/images/icons/icon3.svg" alt="" />
-                                    <img src="/images/icons/icon3hover.svg" alt="" />
-                                </i>
-                                <span>Reports</span>
-                            </a>
-                        </li>
+
+                        <ItemWithSubMenu label="Reports" subItems={[
+                            { title: "Other Reports", url: "/reports" },
+                            { title: "Company Registrations", url: "/registration-report-by-company" },
+                        ]} />
+
                         <li className="menu_item">
                             <a className={pathName === '/courses' ? 'menu_link current' : 'menu_link'} href="/courses">
                                 <i className="menu_link_icon">
@@ -56,7 +53,6 @@ class Menu extends Component {
                                 <span>Leaderboard</span>
                             </a>
                         </li>
-
                         {
                             (typeof localStorage['access_level'] === "string") && parseInt(localStorage['access_level']) !== accessLevels.AUDITOR ?
                                 <li className="menu_item">
@@ -85,6 +81,42 @@ class Menu extends Component {
 
         );
     }
+}
+
+function ItemWithSubMenu({ label = "Link", subItems = [] }) {
+
+    const [open, setOpen] = useState(false);
+
+    return (
+        <li className="menu_item submenu-holder">
+            <span className={open ? 'menu_link current' : 'menu_link'} href="/leaderboard" onClick={() => {
+                setOpen(!open);
+            }}>
+                <i className="menu_link_icon">
+                    <img src="/images/icons/icon3.svg" alt="" />
+                    <img src="/images/icons/icon3hover.svg" alt="" />
+                </i>
+                <span>{label}</span>
+            </span>
+            {
+                open ? (
+                    <span className="submenu">
+                        {
+                            subItems.map(item => (
+                                <a className={pathName === item.url ? 'menu_link current-item' : 'menu_link'} href={item.url}>
+                                    <i className="menu_link_icon">
+                                        <img src="/images/icons/icon3.svg" alt="" />
+                                        <img src="/images/icons/icon3hover.svg" alt="" />
+                                    </i>
+                                    <span>{item.title}</span>
+                                </a>
+                            ))
+                        }
+                    </span>
+                ) : <></>
+            }
+        </li>
+    );
 }
 
 export default Menu;

@@ -115,7 +115,7 @@ class AddEmployee extends Component {
             }
           })
           .catch(err =>{
-              //alert(err);
+              alert(err);
               notification.type='danger'
               notification.title='Error';
               notification.message=err.data.error
