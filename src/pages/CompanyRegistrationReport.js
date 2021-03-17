@@ -187,6 +187,12 @@ function LineChart({
           {
             ticks: {
               beginAtZero: true,
+              userCallback(label, index, labels) {
+                // only show if whole number
+                if (Math.floor(label) === label) {
+                  return label;
+                }
+              },
             },
           },
         ],
