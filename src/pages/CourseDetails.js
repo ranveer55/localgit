@@ -189,7 +189,11 @@ class CourseDetails extends Component {
 
     //Column Formatter methods
     function completionFormater(cell, row) {
-      return row.completionPercentage;
+      return (
+        <div className="table_progres_bar">
+          <Progress value={row.completionPercentage}>{row.completionPercentage}%</Progress>
+        </div>
+      );
       // let percentage = row.totalLessons > 0 ? (row.lessonsCompleted / row.totalLessons) * 100 : 0;
       // percentage = Math.floor(percentage > 100 ? 100 : percentage);
       // return (
