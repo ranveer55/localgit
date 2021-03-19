@@ -20,6 +20,7 @@ import Leaderboard from './pages/Leaderboard';
 import DailyGoalLog from './pages/DailyGoalLog';
 import CourseRegistrationReport from './pages/CourseRegistrationReport';
 import CompanyRegistrationReport from './pages/CompanyRegistrationReport';
+import CompanyActivationReport from './pages/CompanyActivationReport';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -35,6 +36,7 @@ class Router extends React.Component {
       <ProtectedRoute path="/leaderboard" component={Leaderboard} />
       <ProtectedRoute path="/registration-report-by-company" component={CompanyRegistrationReport} />
       <ProtectedRoute path="/course-registration-report" component={CourseRegistrationReport} />
+        <ProtectedRoute path="/activation-report-by-company" component={CompanyActivationReport} />
       <ProtectedRoute path="/daily-goal-log" component={DailyGoalLog} />
       <ProtectedRoute path="/coursedetail" component={CourseDetails} />
       <ProtectedRoute path="/courses" component={Courses} />

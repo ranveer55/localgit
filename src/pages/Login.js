@@ -34,6 +34,9 @@ class Login extends Component {
             });
         } else {
             alert('something went wrong, please try again!');
+            this.setState({
+                isLoading: false
+            });
         }
     }
 
@@ -60,6 +63,9 @@ class Login extends Component {
                 });
         } else {
             alert('something went wrong, please try again!');
+            this.setState({
+                isLoading: false
+            });
         }
     }
 
