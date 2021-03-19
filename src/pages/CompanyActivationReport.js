@@ -223,7 +223,7 @@ function LineChart({
           data: data2,
           fill: false,
           backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'purple',
         },
       ],
     }} options={{
