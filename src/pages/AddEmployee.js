@@ -19,6 +19,7 @@ class AddEmployee extends Component {
       phone: '+34',
       title: 'Add',
       startDate: new Date(),
+      subscriptionExpires: new Date(),
       fields: {
         fname: "",
         email: "",
@@ -88,6 +89,7 @@ class AddEmployee extends Component {
           Mobilewcode:countryCode,
           DNI:fields.dni,
           mobileOS:this.state.mobileos,
+          subscriptionExpires: this.state.subscriptionExpires,
           subscriptionValidDate:this.state.startDate,
           company:fields.deptname,
           weeklyEmail:this.state.wemail,
@@ -192,6 +194,11 @@ class AddEmployee extends Component {
                 if(json.subscriptionValidDate !== '' && json.subscriptionValidDate!== '0000-00-00 00:00:00'){
                   var toDate = new Date(json.subscriptionValidDate);
                   this.setState({startDate : toDate});
+                }
+
+                if (json.subscriptionExpires !== '' && json.subscriptionExpires !== '0000-00-00 00:00:00') {
+                  var toDate2 = new Date(json.subscriptionExpires);
+                  this.setState({ subscriptionExpires: toDate2 });
                 }
                 
               })
@@ -306,6 +313,16 @@ class AddEmployee extends Component {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="form_row form_flex mb25">
+                      <label className="form_label">Subscription Expires</label>
+                      <div>
+                        <div className="datepicker_box mb20">
+                          <div className="p_rel">
+                            <DatePicker className=" form_input" selected={this.state.subscriptionExpires} onChange={date => this.setState({ subscriptionExpires: date })} dateFormat="dd-MM-yyyy" />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="form_row_col">
