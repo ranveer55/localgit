@@ -10,6 +10,7 @@ import 'react-notifications-component/dist/theme.css';
 import * as moment from 'moment'
 import queryString from 'query-string';
 import endpoints from "../config/endpoints";
+import ReactDatePicker from "react-datepicker";
 
 const { SearchBar } = Search;
 
@@ -110,6 +111,14 @@ class CourseDetails extends Component {
           text: "Is Certificate Available",
           formatter: showCertificateButton,
           dataField: "certificate",
+          headerStyle: {
+            width: "10%"
+          }
+        },
+        {
+          text: "Subscription Expires",
+          formatter: showSubscriptionExpires,
+          dataField: "subscriptionExpiresDate",
           headerStyle: {
             width: "10%"
           }
@@ -233,6 +242,30 @@ class CourseDetails extends Component {
         </div>
       );
     }
+
+    // showSubscriptionExpires
+    function showSubscriptionExpires(cell, row) {
+      return (
+        <div className="">
+          <label className="certificate-button">
+            <ReactDatePicker
+              className=""
+              onChange={date => {
+                global.api.updateCourseSubscriptionExpiresDate({
+                  courseNo: row.courseNumber,
+                  userId: row.userId,
+                  subscriptionExpiresDate: date,
+                }).then(response => {
+                  // certificate created, refresh the page
+                  window.location.reload();
+                })
+              }}
+              selected={row.subscriptionExpiresDate ? row.subscriptionExpiresDate : (new Date())} />
+          </label>
+        </div>
+      );
+    }
+
     function locationFormater(cell, row) {
       return (
         <div>
@@ -248,10 +281,11 @@ class CourseDetails extends Component {
     global.api.getCourseDetails(global.companyCode, this.state.courseId)
       .then(res => res)
       .then((json) => {
-        this.setState({ attendanceData: json.registered.map(r => { r.courseNumber = json.courseNumber; return r; }) })
+        this.setState({ attendanceData: json.registered.map(r => { r.courseNumber = json.courseNumber; r.subscriptionExpiresDate = new Date(r.subscriptionExpiresDate); return r; }) })
         this.setState({ empData: json.availableToRegister })
       })
       .catch(err => {
+        console.log("this alert");
         alert(err);
       })
   }

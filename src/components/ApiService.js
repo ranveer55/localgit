@@ -374,6 +374,19 @@ export default class ApiService {
         })
     }
 
+    updateCourseSubscriptionExpiresDate({ userId, courseNo, subscriptionExpiresDate }) {
+        return axios.post(`${this.domain}/employee-course-update-subscription-expires`, {
+            userId, courseNo, subscriptionExpiresDate
+        }, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        })
+    }
+
     // getCourseRegistrationReport
     getCourseRegistrationReport(courseNo, lastXDays = 7) {
         return axios.get(`${this.domain}/employee-course-registeration-report?courseNo=${courseNo}&lastXDays=${lastXDays}`, {
