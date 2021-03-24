@@ -250,6 +250,8 @@ class CourseDetails extends Component {
           <label className="certificate-button">
             <ReactDatePicker
               className=""
+              showMonthDropdown
+              showYearDropdown
               onChange={date => {
                 global.api.updateCourseSubscriptionExpiresDate({
                   courseNo: row.courseNumber,
