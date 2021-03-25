@@ -9,12 +9,15 @@ import $ from 'jquery';
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import { Progress } from 'reactstrap';  
+import ReactDatePicker from "react-datepicker";
 const { SearchBar } = Search;
 
 class Employees extends Component {
   
   constructor(props) {
     super(props);
+
+    this.subscriptionExpiresFormatter = this.subscriptionExpiresFormatter.bind(this);
     
     function formatter(cell, row) {
       return (
@@ -183,15 +186,24 @@ class Employees extends Component {
           width:'10%'
         }
        },
-       {
-         text: 'COURSES',
-         dataField: 'courseRegistered',
+        {
+          text: 'COURSES',
+          dataField: 'courseRegistered',
          formatter: courseFormater,
-         csvExport: false,
-         headerStyle: {
-          width:'22%'
-        }
-       },
+          csvExport: false,
+          headerStyle: {
+            width: '10%'
+          }
+        },
+        {
+          text: 'Subscription Expires',
+          dataField: 'subscriptionExpires',
+          formatter: this.subscriptionExpiresFormatter,
+          csvExport: true,
+          headerStyle: {
+            width: '15%'
+          }
+        },
        {
          text: 'PHONE',
          dataField: 'Mobile',
@@ -287,6 +299,55 @@ class Employees extends Component {
     var tempDate = new Date();
     var date = tempDate.getFullYear() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getDate() ;
     return date;
+  }
+
+
+  subscriptionExpiresFormatter(cell, row, index) {
+
+    let expiringDate = null;
+    try {
+      expiringDate = new Date(row.subscriptionExpires);
+    } catch (error) {
+      
+    }
+
+    if (expiringDate.toString().startsWith("0000") || expiringDate.toString() === "Invalid Date") {
+      expiringDate = null;
+    }
+
+    return (
+      
+      <div className="certificate-button-holder">
+        <label className="certificate-button">
+          <ReactDatePicker
+            showMonthDropdown
+            showYearDropdown
+            className="border-bottom-black"
+            onChange={date => {
+              // save old date
+              const oldDate = row.subscriptionExpires;
+              const newRecord = { ...row, subscriptionExpires: date }
+              console.log("data", this.state);
+              const oldData = [...this.state.data];
+              global.api.updateEmployee(newRecord)
+                .then(response => {
+                  // update the current state to incorporate the changes
+                  const dataIndex = index;
+                  oldData.splice(dataIndex, 1, newRecord);
+                  this.setState({
+                    data: oldData
+                  });
+                });
+            }}
+            selected={expiringDate}
+              />
+          </label>
+      </div>
+    )
+  }
+
+  updateEmployeeExpiryDate(date) {
+    
   }
   
   componentDidMount() {
@@ -648,5 +709,3 @@ class Employees extends Component {
   }
 }
 export default Employees;
-
-

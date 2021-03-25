@@ -8762,7 +8762,7 @@ div.scrollmenu {
 .form-control, select{
   -webkit-appearance: select !important;
 }
-div.certificate-button-holder {
+.CourseDetailPage div.certificate-button-holder {
   width: 100%;
   border-bottom: 1px solid #232323;
 }
@@ -8813,6 +8813,9 @@ label.certificate-button a {
   font-size: small;
   display: flex;
   flex-direction: column;
+}
+.border-bottom-black {
+  border-bottom: 1px solid #232323;
 }
 @charset "UTF-8";
 /*  <!-- RESPONSIVE
