@@ -8762,14 +8762,17 @@ div.scrollmenu {
 .form-control, select{
   -webkit-appearance: select !important;
 }
+div.certificate-button-holder {
+  width: 100%;
+  border-bottom: 1px solid #232323;
+}
 label.certificate-button span,
 label.certificate-button a {
   margin: 0 4px;
   cursor: pointer;
 }
 .CourseDetailPage .table th {
-  padding: 2px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .btnFacebook {
   width: 250px;
@@ -8790,6 +8793,9 @@ label.certificate-button a {
 .registered-user-td {
   display: flex;
   align-items: flex-start;
+}
+.CourseDetailPage th {
+  padding: 2px;
 }
 .registered-user-td>span:first-child {
   background-color: dodgerblue;
@@ -10480,3 +10486,4 @@ label.certificate-button a {
 /* <!-- max-width: 479px --> */
 /* <!-- maxw end 
 	============================================ --> */
+

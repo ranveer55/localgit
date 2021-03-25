@@ -18,6 +18,10 @@ class CourseDetails extends Component {
 
   constructor(props) {
     super(props);
+
+    this.showSubscriptionExpires = this.showSubscriptionExpires.bind(this);
+
+
     let params = queryString.parse(this.props.location.search)
 
     if (this.props.location.state === undefined && params.courseId === undefined && params.courseName === undefined) {
@@ -117,7 +121,7 @@ class CourseDetails extends Component {
         },
         {
           text: "Subscription Expires",
-          formatter: showSubscriptionExpires,
+          formatter: this.showSubscriptionExpires,
           dataField: "subscriptionExpiresDate",
           headerStyle: {
             width: "10%"
@@ -243,31 +247,6 @@ class CourseDetails extends Component {
       );
     }
 
-    // showSubscriptionExpires
-    function showSubscriptionExpires(cell, row) {
-      return (
-        <div className="">
-          <label className="certificate-button">
-            <ReactDatePicker
-              className=""
-              showMonthDropdown
-              showYearDropdown
-              onChange={date => {
-                global.api.updateCourseSubscriptionExpiresDate({
-                  courseNo: row.courseNumber,
-                  userId: row.userId,
-                  subscriptionExpiresDate: date,
-                }).then(response => {
-                  // certificate created, refresh the page
-                  window.location.reload();
-                })
-              }}
-              selected={row.subscriptionExpiresDate ? row.subscriptionExpiresDate : (new Date())} />
-          </label>
-        </div>
-      );
-    }
-
     function locationFormater(cell, row) {
       return (
         <div>
@@ -309,6 +288,40 @@ class CourseDetails extends Component {
       .catch(err => {
         alert(err);
       })
+  }
+
+
+  // showSubscriptionExpires
+  showSubscriptionExpires(cell, row) {
+    return (
+      <div className="certificate-button-holder">
+        <label className="certificate-button">
+          <ReactDatePicker
+            showMonthDropdown
+            showYearDropdown
+            className=""
+            onChange={date => {
+              // save old date
+              const oldDate = row.subscriptionExpiresDate;
+              global.api.updateCourseSubscriptionExpiresDate({
+                courseNo: row.courseNumber,
+                userId: row.userId,
+                subscriptionExpiresDate: date,
+              }).then(response => {
+                // update the current state to incorporate the changes
+                const oldData = [...this.state.attendanceData];
+                const dataIndex = oldData.findIndex(d => d.userId === row.userId);
+                const newRecord = { ...row, subscriptionExpiresDate: date }
+                oldData.splice(dataIndex, 1, newRecord);
+                this.setState({
+                  attendanceData: oldData
+                });
+              })
+            }}
+            selected={row.subscriptionExpiresDate ? row.subscriptionExpiresDate : (new Date())} />
+        </label>
+      </div>
+    );
   }
 
   handleDeleteClick = e => {
