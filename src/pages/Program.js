@@ -91,6 +91,43 @@ class Program extends Component {
                 ))
               }
             </div>
+            <div className="col-6">
+              {
+                this.state.userDataLoading ? (
+                  <div>Loading...</div>
+                ) : <></>
+              }
+              {
+                this.state.userData ? (
+                  <div>
+                    <h4 className="title4 mb40" style={{
+                      marginTop: "10px"
+                    }}>User Details</h4>
+                    {
+                      Object.entries(this.state.userData.levels).map(([index, level]) => (
+                        <div key={index}>
+                          <div style={{
+                            backgroundColor: "dodgerblue",
+                            padding: "2px 12px",
+                            color: "white"
+                          }}>Level: {index}</div>
+                          {
+                            level.map((module, moduleIndex) => (
+                              <div style={{
+                                backgroundColor: module.completed ? "#00FF0011" : "#FF000011",
+                                padding: "2px 12px"
+                              }} key={moduleIndex}>
+                                {module.moduleName}
+                              </div>
+                            ))
+                          }
+                        </div>
+                      ))
+                    }
+                  </div>
+                ) : <></>
+              }
+            </div>
           </div>
           <div className="row">
             <div className="col-6">
@@ -139,41 +176,6 @@ class Program extends Component {
               </div>
             </div>
             <div className="col-6">
-              {
-                this.state.userDataLoading ? (
-                  <div>Loading...</div>
-                ) : <></>
-              }
-              {
-                this.state.userData ? (
-                  <div>
-                    <h4 className="title4 mb40" style={{
-                      marginTop: "10px"
-                    }}>User Details</h4>
-                    {
-                      Object.entries(this.state.userData.levels).map(([index, level]) => (
-                        <div key={index}>
-                          <div style={{
-                            backgroundColor: "dodgerblue",
-                            padding: "2px 12px",
-                            color: "white"
-                          }}>Level: {index}</div>
-                          {
-                            level.map((module, moduleIndex) => (
-                              <div style={{
-                                backgroundColor: module.completed ? "#00FF0011" : "#FF000011",
-                                padding: "2px 12px"
-                              }} key={moduleIndex}>
-                                {module.moduleName}
-                              </div>
-                            ))
-                          }
-                        </div>
-                      ))
-                    }
-                  </div>
-                ) : <></>
-              }
             </div>
           </div>
         </section>
