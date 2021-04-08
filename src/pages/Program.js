@@ -118,10 +118,13 @@ class Program extends Component {
                           {
                             level.map((module, moduleIndex) => (
                               <div style={{
+                                padding: "12px",
+                                display: "flex",
+                                alignItems: "center",
                                 backgroundColor: module.completed ? "#00FF0011" : "#FF000011",
-                                padding: "2px 12px"
                               }} key={moduleIndex}>
-                                {module.moduleName}
+                                <img src={'/images/icons/icon_module_' + module.module_number + '.svg'} width="52px" alt={module.module_number} />
+                                <span>{module.moduleName}</span>
                               </div>
                             ))
                           }
