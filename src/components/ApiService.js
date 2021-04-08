@@ -423,6 +423,30 @@ export default class ApiService {
         })
     }
 
+    // getCompanyActivationReport
+    getProgramData(company_code = 0, program_id = 1) {
+        return axios.get(`${this.domain}/company/${company_code}/program/${program_id}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        })
+    }
+
+    getProgramForUserId(program_id = 1, userId) {
+        return axios.get(`${this.domain}/program/${program_id}/user/${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        })
+
+    }
+
     fetch(url, options) {
         // performs api calls sending the required authentication headers
         const headers = {

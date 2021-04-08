@@ -75,6 +75,15 @@ class Menu extends Component {
                                 <span>Messaging</span>
                             </a>
                         </li>
+                        <li className="menu_item">
+                            <a className={pathName === '/program' ? 'menu_link current' : 'menu_link'} href="/program">
+                                <i className="menu_link_icon">
+                                    <img src="/images/icons/icon4.svg" alt="" />
+                                    <img src="/images/icons/icon4hover.svg" alt="" />
+                                </i>
+                                <span>Programs</span>
+                            </a>
+                        </li>
                     </menu>
                 </nav>
             </aside>

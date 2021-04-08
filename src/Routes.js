@@ -21,6 +21,7 @@ import DailyGoalLog from './pages/DailyGoalLog';
 import CourseRegistrationReport from './pages/CourseRegistrationReport';
 import CompanyRegistrationReport from './pages/CompanyRegistrationReport';
 import CompanyActivationReport from './pages/CompanyActivationReport';
+import Program from './pages/Program';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -48,6 +49,7 @@ class Router extends React.Component {
       }
       <ProtectedRoute path="/chats" component={Messaging} />
       <ProtectedRoute path="/overview" component={OverView} />
+      <ProtectedRoute path="/program" component={Program} />
       <ProtectedRoute path="/" component={OverView} />
       
       <Route
