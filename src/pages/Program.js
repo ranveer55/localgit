@@ -81,8 +81,11 @@ class Program extends Component {
                     {
                       level.map((module, moduleIndex) => (
                         <div style={{
-                          padding: "2px 12px"
+                          padding: "2px 12px",
+                          display: "flex",
+                          alignItems: "center"
                         }} key={moduleIndex}>
+                          <img src={'/images/icons/icon_module_' + module.module_number + '.svg'} width="52px" alt={module.module_number} />
                           <b>Module {module.module_number}:</b> {module.moduleName}
                         </div>
                       ))
@@ -90,6 +93,7 @@ class Program extends Component {
                   </div>
                 ))
               }
+              <div style={{ borderBottom: "1px solid #232323", padding: "10px" }}></div>
             </div>
             <div className="col-6">
               {
