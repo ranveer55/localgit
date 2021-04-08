@@ -81,7 +81,7 @@ class Program extends Component {
                     {
                       level.map((module, moduleIndex) => (
                         <div style={{
-                          padding: "2px 12px",
+                          padding: "12px",
                           display: "flex",
                           alignItems: "center"
                         }} key={moduleIndex}>
