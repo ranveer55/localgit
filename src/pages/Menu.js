@@ -33,6 +33,7 @@ class Menu extends Component {
                         <ItemWithSubMenu label="Reports" subItems={[
                             { title: "Other Reports", url: "/reports" },
                             { title: "Company Registrations", url: "/registration-report-by-company" },
+                            { title: "Company RegActs", url: "/regact-report-by-company" },
                         ]} />
 
                         <li className="menu_item">
@@ -112,11 +113,9 @@ function ItemWithSubMenu({ label = "Link", subItems = [] }) {
                     <span className="submenu">
                         {
                             subItems.map(item => (
-                                <a className={pathName === item.url ? 'menu_link current-item' : 'menu_link'} href={item.url}>
-                                    <i className="menu_link_icon">
-                                        <img src="/images/icons/icon3.svg" alt="" />
-                                        <img src="/images/icons/icon3hover.svg" alt="" />
-                                    </i>
+                                <a style={{
+                                    margin: "4px 0"
+                                }} className={pathName === item.url ? 'menu_link current-item' : 'menu_link'} href={item.url}>
                                     <span>{item.title}</span>
                                 </a>
                             ))

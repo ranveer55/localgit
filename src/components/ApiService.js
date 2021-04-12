@@ -424,6 +424,18 @@ export default class ApiService {
     }
 
     // getCompanyActivationReport
+    getCompanyRegActReport(companyCode, startDate, endDate) {
+        return axios.get(`${this.domain}/employee-company-regact-report?companyCode=${companyCode}&startDate=${startDate}&endDate=${endDate}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        })
+    }
+
+    // getCompanyActivationReport
     getProgramData(company_code = 0, program_id = 1) {
         return axios.get(`${this.domain}/company/${company_code}/program/${program_id}`, {
             headers: {
