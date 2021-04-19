@@ -34,6 +34,7 @@ class Menu extends Component {
                             { title: "Other Reports", url: "/reports" },
                             { title: "Company Registrations", url: "/registration-report-by-company" },
                             { title: "Company RegActs", url: "/regact-report-by-company" },
+                            { title: "Company Cohorts", url: "/company-cohorts" },
                         ]} />
 
                         <li className="menu_item">

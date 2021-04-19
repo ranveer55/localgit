@@ -455,8 +455,19 @@ export default class ApiService {
         }
         ).then(res => {
             return res.data;
-        })
+        });
 
+    }
+
+    getCompanyCohorts(company_code = 0) {
+        return axios.get(`${this.domain}/cohorts-by-company?company_code=` + company_code, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
     }
 
     fetch(url, options) {

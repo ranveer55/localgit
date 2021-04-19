@@ -12,7 +12,7 @@ import Forgot from "./pages/Forgot";
 import CourseDetails from "./pages/CourseDetails";
 import Courses from "./pages/Courses";
 // import Firebase from "./pages/Firebase";
-import Campaigns from "./pages/Campaigns";  
+import Campaigns from "./pages/Campaigns";
 import OverView from "./pages/OverView";
 import Messaging from './pages/messaging/Messaging';
 import accessLevels from './config/access_levels';
@@ -23,56 +23,58 @@ import CompanyRegistrationReport from './pages/CompanyRegistrationReport';
 import CompanyActivationReport from './pages/CompanyActivationReport';
 import Program from './pages/Program';
 import CompanyRegActReport from './pages/CompanyRegActReport';
+import CompanyCohortsReport from './pages/CompanyCohortsReport';
 
 const Auth = new AuthService();
 class Router extends React.Component {
   render() {
     return (
-    <Switch>
-      <Route exact path='/login' component={Login}/>
-      <Route exact path='/forgotpass' component={Forgot}/>
-      <ProtectedRoute path="/employee" component={Employees} />
-      <ProtectedRoute path="/add-employee" component={AddEmployees} />
-      <ProtectedRoute path="/employeestocourses" component={EmployeestoCourses} />
-      <ProtectedRoute path="/reports" component={Reports} />
-      <ProtectedRoute path="/leaderboard" component={Leaderboard} />
-      <ProtectedRoute path="/registration-report-by-company" component={CompanyRegistrationReport} />
+      <Switch>
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/forgotpass' component={Forgot} />
+        <ProtectedRoute path="/employee" component={Employees} />
+        <ProtectedRoute path="/add-employee" component={AddEmployees} />
+        <ProtectedRoute path="/employeestocourses" component={EmployeestoCourses} />
+        <ProtectedRoute path="/reports" component={Reports} />
+        <ProtectedRoute path="/leaderboard" component={Leaderboard} />
+        <ProtectedRoute path="/registration-report-by-company" component={CompanyRegistrationReport} />
         <ProtectedRoute path="/regact-report-by-company" component={CompanyRegActReport} />
-      <ProtectedRoute path="/course-registration-report" component={CourseRegistrationReport} />
+        <ProtectedRoute path="/company-cohorts" component={CompanyCohortsReport} />
+        <ProtectedRoute path="/course-registration-report" component={CourseRegistrationReport} />
         <ProtectedRoute path="/activation-report-by-company" component={CompanyActivationReport} />
-      <ProtectedRoute path="/daily-goal-log" component={DailyGoalLog} />
-      <ProtectedRoute path="/coursedetail" component={CourseDetails} />
-      <ProtectedRoute path="/courses" component={Courses} />
-      {/* <ProtectedRoute path="/firebase" component={Firebase} /> */}
-      {
-        (typeof localStorage['access_level'] === "string") && parseInt(localStorage['access_level']) !== accessLevels.AUDITOR ?
-        <ProtectedRoute path="/campaigns" component={Campaigns} /> :
-        ''
-      }
-      <ProtectedRoute path="/chats" component={Messaging} />
-      <ProtectedRoute path="/overview" component={OverView} />
-      <ProtectedRoute path="/program" component={Program} />
-      <ProtectedRoute path="/" component={OverView} />
-      
-      <Route
+        <ProtectedRoute path="/daily-goal-log" component={DailyGoalLog} />
+        <ProtectedRoute path="/coursedetail" component={CourseDetails} />
+        <ProtectedRoute path="/courses" component={Courses} />
+        {/* <ProtectedRoute path="/firebase" component={Firebase} /> */}
+        {
+          (typeof localStorage['access_level'] === "string") && parseInt(localStorage['access_level']) !== accessLevels.AUDITOR ?
+            <ProtectedRoute path="/campaigns" component={Campaigns} /> :
+            ''
+        }
+        <ProtectedRoute path="/chats" component={Messaging} />
+        <ProtectedRoute path="/overview" component={OverView} />
+        <ProtectedRoute path="/program" component={Program} />
+        <ProtectedRoute path="/" component={OverView} />
+
+        <Route
           render={function () {
             return <h1>Not Found</h1>;
           }}
         />
-    </Switch>
-   );
+      </Switch>
+    );
   }
 }
- const ProtectedRoute = ({ component: Component, ...rest }) => {
-  if(Auth.loggedIn()){
+const ProtectedRoute = ({ component: Component, ...rest }) => {
+  if (Auth.loggedIn()) {
     return (<Route {...rest} render={(props) => (
-      Auth.loggedIn() === true ? 
-          <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location }}} />   
+      Auth.loggedIn() === true ?
+        <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
     )} />)
-  }else{
+  } else {
     window.location.href = '/login';
   }
-  }
+}
 
 
 
