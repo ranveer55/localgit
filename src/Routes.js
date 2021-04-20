@@ -24,6 +24,7 @@ import CompanyActivationReport from './pages/CompanyActivationReport';
 import Program from './pages/Program';
 import CompanyRegActReport from './pages/CompanyRegActReport';
 import CompanyCohortsReport from './pages/CompanyCohortsReport';
+import CohortDetail from './pages/CohortDetail';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -40,6 +41,7 @@ class Router extends React.Component {
         <ProtectedRoute path="/registration-report-by-company" component={CompanyRegistrationReport} />
         <ProtectedRoute path="/regact-report-by-company" component={CompanyRegActReport} />
         <ProtectedRoute path="/company-cohorts" component={CompanyCohortsReport} />
+        <ProtectedRoute path="/cohort-detail/:cohortId" component={CohortDetail} />
         <ProtectedRoute path="/course-registration-report" component={CourseRegistrationReport} />
         <ProtectedRoute path="/activation-report-by-company" component={CompanyActivationReport} />
         <ProtectedRoute path="/daily-goal-log" component={DailyGoalLog} />

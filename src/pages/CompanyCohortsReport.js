@@ -80,7 +80,9 @@ class CompanyCohortsReport extends Component {
                         return (
                           <tr key={cohort.id}>
                             <td>{cohort.company_code}</td>
-                            <td>{cohort.name}</td>
+                            <td>
+                              <a target="_blank" rel="noopener noreferrer" href={"/cohort-detail/" + cohort.id}>{cohort.name}</a>
+                            </td>
                             <td>{cohort.start_date}</td>
                             <td
                               style={{
