@@ -481,6 +481,17 @@ export default class ApiService {
         });
     }
 
+    getUserCohortDetail(cohort_id = 0, userId = "") {
+        return axios.get(`${this.domain}/user-cohort-detail/` + cohort_id + "/" + userId, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
     fetch(url, options) {
         // performs api calls sending the required authentication headers
         const headers = {

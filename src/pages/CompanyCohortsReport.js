@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 
 class CompanyCohortsReport extends Component {
 
@@ -98,7 +99,7 @@ class CompanyCohortsReport extends Component {
                                 style={{
                                   color: "blue",
                                   cursor: "pointer"
-                                }}>{cohort.users.length}</span>
+                                }}>{cohort.users.length} User(s)</span>
                             </td>
                           </tr>
                         )
@@ -117,21 +118,27 @@ class CompanyCohortsReport extends Component {
             </table>
           </div>
           <div>
-            <br />
-            <h4>{this.state.selectedCohort.name} - User Count</h4>
-            <div>
-              {
-                this.state.selectedCohort ? (
+            {
+              this.state.selectedCohort ? (
+                <div>
+                  <br />
+                  <h4>{this.state.selectedCohort.name} - User Count</h4>
                   <div>
                     {
                       this.state.selectedCohort.users.map(user => (
-                        <div key={user.userId}>{user.userId}</div>
+                        <Link key={user.userId}
+                          target="_blank"
+                          to={"/user-cohort-detail/" + this.state.selectedCohort.id + "/" + user.userId}
+                          style={{
+                            color: "blue",
+                            cursor: "pointer"
+                          }}>{user.userId}</Link>
                       ))
                     }
                   </div>
-                ) : <></>
-              }
-            </div>
+                </div>
+              ) : <></>
+            }
           </div>
         </section>
       </main>
