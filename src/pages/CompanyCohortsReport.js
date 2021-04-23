@@ -126,13 +126,15 @@ class CompanyCohortsReport extends Component {
                   <div>
                     {
                       this.state.selectedCohort.users.map(user => (
-                        <Link key={user.userId}
-                          target="_blank"
-                          to={"/user-cohort-detail/" + this.state.selectedCohort.id + "/" + user.userId}
-                          style={{
-                            color: "blue",
-                            cursor: "pointer"
-                          }}>{user.userId}</Link>
+                        <div>
+                          <Link key={user.userId}
+                            target="_blank"
+                            to={"/user-cohort-detail/" + this.state.selectedCohort.id + "/" + user.userId}
+                            style={{
+                              color: "blue",
+                              cursor: "pointer"
+                            }}>{user.userId}</Link>
+                        </div>
                       ))
                     }
                   </div>

@@ -16,6 +16,7 @@ class UserCohortDetail extends Component {
     this.state = {
       dateLoaded: false,
       cohort: null,
+      user: null,
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -42,6 +43,7 @@ class UserCohortDetail extends Component {
           this.setState({
             dataLoaded: true,
             cohort: data.cohort,
+            user: data.user,
           });
           // this.setState({ batchData: data });
         })
@@ -75,7 +77,7 @@ class UserCohortDetail extends Component {
             <div className="col-md-6">
               <h1 className="title1 mb25">Cohort Detail</h1>
               <h4 className="title4 mb40">
-                For {this.state.selectedCompanyName}
+                For {this.state.selectedCompanyName} - {this.state.user.name} | {this.state.user.email}
               </h4>
             </div>
           </div>
