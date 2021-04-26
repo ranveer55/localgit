@@ -102,6 +102,7 @@ class Employees extends Component {
         text: '',
         dataField: "",
         formatter: formatter,
+        csvExport: false,
         headerStyle: {
           width: '10px'
         },
@@ -201,6 +202,7 @@ class Employees extends Component {
         text: 'Subscription Expires',
         dataField: 'subscriptionExpires',
         formatter: this.subscriptionExpiresFormatter,
+        csvFormatter: this.formatDateCSV,
         csvExport: true,
         headerStyle: {
           width: '15%'
@@ -210,6 +212,7 @@ class Employees extends Component {
         text: 'Account Created',
         dataField: 'accountCreated',
         formatter: this.formatDate,
+        csvFormatter: this.formatDateCSV,
         csvExport: true,
         headerStyle: {
           width: '10%'
@@ -219,6 +222,7 @@ class Employees extends Component {
         text: 'Activation Date',
         dataField: 'activationDate',
         formatter: this.formatDate,
+        csvFormatter: this.formatDateCSV,
         csvExport: true,
         headerStyle: {
           width: '10%'
@@ -228,6 +232,7 @@ class Employees extends Component {
         text: 'Last Login Date',
         dataField: 'lastLoginDate',
         formatter: this.formatDate,
+        csvFormatter: this.formatDateCSV,
         csvExport: true,
         headerStyle: {
           width: '10%'
@@ -328,6 +333,13 @@ class Employees extends Component {
     return moment(cell).format("DD-MM-YYYY HH:mm:ss");
   }
 
+  formatDateCSV(cell, row, index) {
+    if (moment(cell).toString() === "Invalid date") {
+      return "";
+    }
+    return moment(cell).format("DD-MM-YYYY HH:mm:ss");
+  }
+
 
   subscriptionExpiresFormatter(cell, row, index) {
 
@@ -383,7 +395,10 @@ class Employees extends Component {
   componentDidMount() {
     global.api.getEmployeeList(global.companyCode)
       .then(res => res)
-      .then(data => { $('#employee-content').show(); this.setState({ data }); $('#spinner').hide(); })
+      .then(data => {
+        $('#employee-content').show();
+        this.setState({ data }); $('#spinner').hide();
+      })
       .catch(err => {
         alert(err);
       })
@@ -645,7 +660,11 @@ class Employees extends Component {
 
       <ToolkitProvider
         keyField="i_d"
-        data={this.state.showActiveUsersOnly ? this.state.data.filter(e => moment(e.activationDate).toString() !== "Invalid date") : this.state.data}
+        data={(
+          this.state.showActiveUsersOnly
+            ? this.state.data.filter(e => moment(e.activationDate).toString() !== "Invalid date")
+            : this.state.data
+        )}
         columns={this.state.columns}
         classes="table"
         search
