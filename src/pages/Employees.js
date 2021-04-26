@@ -87,7 +87,7 @@ class Employees extends Component {
       )
     }
     function addLink(cell, row) {
-      return (<div><a href={`/add-employee/?userId=${row.userId}`}>{row.userId}</a></div>);
+      return (<div><a href={`/add-student/?userId=${row.userId}`}>{row.userId}</a></div>);
       //return (<div><a href>{row.userId}</a></div>);
     }
     this.state = {
@@ -277,7 +277,7 @@ class Employees extends Component {
     this.state.locationIndex = 12
     this.state.batchData = [];
 
-    this.state.csvFileName = global.companyName + "-Employee-" + this.getDate() +".csv";
+    this.state.csvFileName = global.companyName + "-Student-" + this.getDate() +".csv";
     this.state.notification = {
       title: '',
       message: '',
@@ -624,12 +624,12 @@ class Employees extends Component {
             props => (
               <main className="offset" id="content">
                     <section className="section_box">
-                        <h1 className="title1 mb50">Employees</h1>
+                        <h1 className="title1 mb50">Students</h1>
                         <div className="head_box type2 mb50">
                             <div className="head_box_l">
                                 <div className="activated_employee">
                                     <div className="activated_employee_it">
-                                        <h4 className="title4 mb10">Activated Employees</h4>
+                                        <h4 className="title4 mb10">Activated Students</h4>
                                         <div className="color5 fz28 fw700">{this.state.data.length}</div>
                                     </div>
                                     <div className="activated_employee_it2">
@@ -657,7 +657,7 @@ class Employees extends Component {
                                 </form>
                             </div>
                             <div className="head_box_r">
-                                <a className="btn btn-radius btn-size btn-white" href="/add-employee">
+                                <a className="btn btn-radius btn-size btn-white" href="/add-student">
                                     <i>
                                         <img src="images/icons/User.svg" alt="" />
                                     </i>

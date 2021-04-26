@@ -100,7 +100,7 @@ class AddEmployee extends Component {
           global.api.updateEmployee(params)
           .then(res => res)
           .then((json)=>{
-            if(json.data.message==="Employee data updated Successfully."){
+            if(json.data.message==="Student data updated Successfully."){
               notification.type='success'
               notification.title='Success';
               notification.message=json.data.message
@@ -129,7 +129,7 @@ class AddEmployee extends Component {
           global.api.addEmployee(params)
           .then(res => res)
           .then((json)=>{
-            if(json.data.message==="Employee data inserted Successfully."){
+            if(json.data.message==="Student data inserted Successfully."){
               notification.type='success'
               notification.title='Success';
               notification.message=json.data.message
@@ -231,8 +231,8 @@ class AddEmployee extends Component {
       <main className="offset" id="content">
       <link rel="stylesheet" media="screen" href="fonts/flag-icon/css/flag-icon.min.css" />
     <section className="section_box">
-      <h4 className="title4 fw500 mb20">Employees</h4>
-        <h1 className="title1 mb25">{this.state.title} Employee</h1>
+      <h4 className="title4 fw500 mb20">Students</h4>
+        <h1 className="title1 mb25">{this.state.title} Student</h1>
           <form onSubmit={this.form.handleSubmit} className="form_employee js-tabs">
 
           {
@@ -347,7 +347,7 @@ class AddEmployee extends Component {
                   <span>Cancel</span>
                 </button>
                 <button className="btn btn-blue btn-radius btn-icon-left">
-                  <span>{this.state.title} employee</span>
+                  <span>{this.state.title} Student</span>
                 </button>
                 <input type="hidden" id="action" name="actionVal" ref="actionVal"/>
               </div>

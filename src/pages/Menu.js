@@ -21,20 +21,20 @@ class Menu extends Component {
                             </a>
                         </li>
                         <li className="menu_item">
-                            <a className={pathName === '/employee' ? 'menu_link current' : 'menu_link'} href="/employee">
+                            <a className={pathName === '/students' ? 'menu_link current' : 'menu_link'} href="/students">
                                 <i className="menu_link_icon">
                                     <img src="/images/icons/icon2.svg" alt="" />
                                     <img src="/images/icons/icon2hover.svg" alt="" />
                                 </i>
-                                <span>Employees</span>
+                                <span>Students</span>
                             </a>
                         </li>
 
                         <ItemWithSubMenu label="Reports" subItems={[
                             { title: "Other Reports", url: "/reports" },
-                            { title: "Company Registrations", url: "/registration-report-by-company" },
-                            { title: "Company RegActs", url: "/regact-report-by-company" },
-                            { title: "Company Cohorts", url: "/company-cohorts" },
+                            { title: "Student Registrations", url: "/registration-report-by-company" },
+                            { title: "Student RegActs", url: "/regact-report-by-company" },
+                            { title: "Cohorts", url: "/company-cohorts" },
                         ]} />
 
                         <li className="menu_item">

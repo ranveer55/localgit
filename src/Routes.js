@@ -34,8 +34,8 @@ class Router extends React.Component {
       <Switch>
         <Route exact path='/login' component={Login} />
         <Route exact path='/forgotpass' component={Forgot} />
-        <ProtectedRoute path="/employee" component={Employees} />
-        <ProtectedRoute path="/add-employee" component={AddEmployees} />
+        <ProtectedRoute path="/students" component={Employees} />
+        <ProtectedRoute path="/add-student" component={AddEmployees} />
         <ProtectedRoute path="/employeestocourses" component={EmployeestoCourses} />
         <ProtectedRoute path="/reports" component={Reports} />
         <ProtectedRoute path="/leaderboard" component={Leaderboard} />
