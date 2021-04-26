@@ -206,7 +206,7 @@ class Employees extends Component {
         },
         {
           text: 'Account Created',
-          dataField: 'accountCreationDate',
+          dataField: 'accountCreated',
           csvExport: true,
           headerStyle: {
             width: '10%'
