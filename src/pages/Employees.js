@@ -321,7 +321,6 @@ class Employees extends Component {
   }
 
   formatDate(cell, row, index) {
-    console.log({ cell, row, index, date: moment(cell).format("DD-MM-YYYY") })
     return moment(cell).format("DD-MM-YYYY HH:mm:ss");
   }
 
@@ -337,6 +336,9 @@ class Employees extends Component {
 
     if (expiringDate.toString().startsWith("0000") || expiringDate.toString() === "Invalid Date") {
       expiringDate = null;
+    }
+    if (moment(expiringDate).isBefore(moment().subtract(1, "day"))) {
+      expiringDate = new Date(2021, 2, 31);
     }
 
     return (
