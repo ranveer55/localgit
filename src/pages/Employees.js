@@ -265,15 +265,6 @@ class Employees extends Component {
         }
        },
        {
-         text: 'gdprAccepted',
-         dataField: 'acceptedGDPR',
-         sort: true,
-         csvExport: true,
-         headerStyle: {
-          width:'15%'
-        }
-       },
-       {
          text: 'LOCATION',
          dataField: 'Location',
          formatter:locationFormater,
