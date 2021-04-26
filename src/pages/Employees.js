@@ -204,6 +204,30 @@ class Employees extends Component {
             width: '15%'
           }
         },
+        {
+          text: 'Account Created',
+          dataField: 'accountCreationDate',
+          csvExport: true,
+          headerStyle: {
+            width: '10%'
+          }
+        },
+        {
+          text: 'Activation Date',
+          dataField: 'activationDate',
+          csvExport: true,
+          headerStyle: {
+            width: '10%'
+          }
+        },
+        {
+          text: 'Last Login Date',
+          dataField: 'lastLoginDate',
+          csvExport: true,
+          headerStyle: {
+            width: '10%'
+          }
+        },
        {
          text: 'PHONE',
          dataField: 'Mobile',
