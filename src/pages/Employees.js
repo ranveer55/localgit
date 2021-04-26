@@ -321,6 +321,9 @@ class Employees extends Component {
   }
 
   formatDate(cell, row, index) {
+    if (moment(cell).toString() === "Invalid date") {
+      return "";
+    }
     return moment(cell).format("DD-MM-YYYY HH:mm:ss");
   }
 
