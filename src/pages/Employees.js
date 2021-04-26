@@ -348,7 +348,7 @@ class Employees extends Component {
           <ReactDatePicker
             showMonthDropdown
             showYearDropdown
-            className="border-bottom-black"
+            className="border-bottom-black w-full"
             onChange={date => {
               // save old date
               const oldDate = row.subscriptionExpires;
