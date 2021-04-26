@@ -162,7 +162,7 @@ class Employees extends Component {
 
       },
       {
-        text: 'EMAIL',
+        text: 'Email',
         dataField: 'userId',
         sort: true,
         csvExport: true,
@@ -239,7 +239,7 @@ class Employees extends Component {
         }
       },
       {
-        text: 'PHONE',
+        text: 'Phone',
         dataField: 'Mobile',
         sort: true,
         csvExport: true,
@@ -535,6 +535,24 @@ class Employees extends Component {
     const MyExportCSV = props => {
       const handleClick = () => {
         props.onExport();
+        const notification = {
+          title: '',
+          message: '',
+          type: 'success',                // 'default', 'success', 'info', 'warning'
+          container: 'top-right',                // where to position the notifications
+          animationIn: ["animated", "fadeIn"],     // animate.css classes that's applied
+          animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
+          dismiss: {
+            duration: 2000,
+            onScreen: true
+          }
+        }
+        notification.type = 'success'
+        notification.title = 'Success';
+        notification.message = "Export Successful";
+        store.addNotification({
+          ...notification
+        });
       };
       return (
 
