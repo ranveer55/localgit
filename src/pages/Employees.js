@@ -92,6 +92,7 @@ class Employees extends Component {
       //return (<div><a href>{row.userId}</a></div>);
     }
     this.state = {
+      showActiveUsersOnly: false,
       columns: [{
         dataField: "i_d",
         text: "Id",
@@ -644,7 +645,7 @@ class Employees extends Component {
 
       <ToolkitProvider
         keyField="i_d"
-        data={this.state.data}
+        data={this.state.showActiveUsersOnly ? this.state.data.filter(e => moment(e.activationDate).toString() !== "Invalid date") : this.state.data}
         columns={this.state.columns}
         classes="table"
         search
@@ -674,9 +675,16 @@ class Employees extends Component {
                           classNamePrefix="batch" />
                       </div>
                     </div>
-                    <div className="gdpr-check-box title4">
+                    <div className="gdpr-check-box title4" style={{ display: "none" }}>
                       GDPR <input type="checkbox" name="gdpr" id="gdpr" onChange={this.handleCheck} defaultChecked={this.state.checked} />
                     </div>
+                    <label className="gdpr-check-box title4">
+                      Show Activated Only <input type="checkbox" onChange={e => {
+                        this.setState({
+                          showActiveUsersOnly: e.target.checked
+                        });
+                      }} checked={this.state.showActiveUsersOnly} />
+                    </label>
                   </div>
                   <div className="head_box_c">
                     <form className="form_search">
