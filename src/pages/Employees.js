@@ -301,6 +301,8 @@ class Employees extends Component {
     this.state.courseIndex = 5
     this.state.locationIndex = 12
     this.state.batchData = [];
+    this.state.cohorts = [];
+    this.state.selectedCohort = null;
 
     this.state.csvFileName = global.companyName + "-Student-" + this.getDate() + ".csv";
     this.state.notification = {
@@ -402,28 +404,27 @@ class Employees extends Component {
       .catch(err => {
         alert(err);
       })
-    //For Batch
-    global.api.getBatch(global.companyCode)
+    //Get cohorts
+    global.api.getCompanyCohorts(global.companyCode)
       .then(
-        data => {
-          data.sort(function (a, b) {
-            return a.batchNumber - b.batchNumber;
-          });
-          this.setState({ batchData: data });
+        ({ programs }) => {
+          programs = programs.map(p => { p.label = `${p.name} (${p.users.length} Users)`; p.value = p.id; return p; })
+          this.setState({ cohorts: programs });
         });
   }
-  onBatchChange = selectedBatch => {
-    this.setState({ selectedBatch });
-    console.log(`Batch selected:`, selectedBatch.value);
-    var batchNumber = selectedBatch.value;
-    $("#gdpr").prop("checked", false);
-    this.setState({ checked: false });
-    global.api.getEmployeeList(global.companyCode, batchNumber)
-      .then(res => res)
-      .then(data => { $('#employee-content').show(); this.setState({ data }); $('#spinner').hide(); })
-      .catch(err => {
-        alert(err);
-      })
+  onCohortChange = selectedCohort => {
+    console.log(`Cohort selected:`, selectedCohort);
+    this.setState({ selectedCohort });
+    return;
+    // var batchNumber = selectedBatch.value;
+    // $("#gdpr").prop("checked", false);
+    // this.setState({ checked: false });
+    // global.api.getEmployeeList(global.companyCode, batchNumber)
+    //   .then(res => res)
+    //   .then(data => { $('#employee-content').show(); this.setState({ data }); $('#spinner').hide(); })
+    //   .catch(err => {
+    //     alert(err);
+    //   })
   };
   onBatchChangeOld = (e) => {
     //List of Batches for selected Company
@@ -674,15 +675,29 @@ class Employees extends Component {
         No Data Available...
       </div>
     );
+
+    let data = this.state.data;
+
+    // check if we have any active cohort
+    if (this.state.selectedCohort) {
+      if(this.state.selectedCohort.users.length === 0) {
+        data = [];
+      } else {
+        data = data.filter(user => this.state.selectedCohort.users.find(u => u.userId === user.userId));
+        console.log({ data });
+      }
+    }
+
+    // check if only actives to be show
+    if (this.state.showActiveUsersOnly) {
+      data = this.state.data.filter(e => moment(e.activationDate).toString() !== "Invalid date");
+    }
+
     return (
 
       <ToolkitProvider
         keyField="i_d"
-        data={(
-          this.state.showActiveUsersOnly
-            ? this.state.data.filter(e => moment(e.activationDate).toString() !== "Invalid date")
-            : this.state.data
-        )}
+        data={data}
         columns={this.state.columns}
         classes="table"
         search
@@ -700,15 +715,19 @@ class Employees extends Component {
                         <h4 className="title4 mb10">Activated Students</h4>
                         <div className="color5 fz28 fw700">{this.state.data.length}</div>
                       </div>
-                      <div className="activated_employee_it2">
+                      {/* <div className="activated_employee_it2">
                         <span>Available Slots: 36</span>
                         <img src="images/icons/twotone-people.svg" alt="" />
-                      </div>
+                      </div> */}
                     </div>
                     <div className="batch-select-box">
-                      <h4 className="title4 mb15 fw500">Batch</h4>
-                      <div style={{ 'width': '100px' }}>
-                        <Select id="batch" value={this.state.selectedBatch} onChange={this.onBatchChange} options={this.state.batchData} className="Select has-value is-clearable is-searchable Select--multi"
+                      <h4 className="title4 mb15 fw500">Cohort</h4>
+                      <div style={{ 'width': '240px' }}>
+                        <Select id="batch"
+                          value={this.state.selectedCohort}
+                          onChange={this.onCohortChange}
+                          options={this.state.cohorts}
+                          className="Select has-value is-clearable is-searchable Select--multi"
                           classNamePrefix="batch" />
                       </div>
                     </div>
