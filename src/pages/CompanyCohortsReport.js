@@ -61,6 +61,9 @@ class CompanyCohortsReport extends Component {
               <h4 className="title4 mb40">
                 For {this.state.selectedCompanyName}
               </h4>
+              <div>
+                <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic`} target="_blank" rel="noopener noreferrer">Open Unmanaged Cohort Registration Form</a>
+              </div>
             </div>
           </div>
           <div>
