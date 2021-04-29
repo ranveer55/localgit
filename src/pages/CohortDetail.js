@@ -72,7 +72,7 @@ class CohortDetail extends Component {
               <h4 className="title4 mb40">
                 For {this.state.selectedCompanyName}
               </h4>
-              <a href={`https://api2.taplingua.com/app/user-cohort-registration/${this.state.cohort.id}`} target="_blank" rel="noopener noreferrer">Open Registration Form</a>
+              <a href={`https://api2.taplingua.com/app/user-cohort-registration/${this.cohortId}`} target="_blank" rel="noopener noreferrer">Open Registration Form</a>
             </div>
           </div>
           <div>
