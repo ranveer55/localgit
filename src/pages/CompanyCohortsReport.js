@@ -57,7 +57,7 @@ class CompanyCohortsReport extends Component {
         <section className="section_box">
           <div className="row">
             <div className="col-md-6">
-              <h1 className="title1 mb25">Company Registration and Activation Report</h1>
+              <h1 className="title1 mb25">Company Cohorts</h1>
               <h4 className="title4 mb40">
                 For {this.state.selectedCompanyName}
               </h4>
@@ -68,7 +68,9 @@ class CompanyCohortsReport extends Component {
               <thead style={{ textAlign: "left" }}>
                 <tr>
                   <th>Company Code</th>
+                  <th>Cohort ID</th>
                   <th>Name</th>
+                  <th>Registration Link</th>
                   <th>Start Date</th>
                   <th>Users</th>
                 </tr>
@@ -81,9 +83,11 @@ class CompanyCohortsReport extends Component {
                         return (
                           <tr key={cohort.id}>
                             <td>{cohort.company_code}</td>
+                            <td>{cohort.id}</td>
                             <td>
                               <a target="_blank" rel="noopener noreferrer" href={"/cohort-detail/" + cohort.id}>{cohort.name}</a>
                             </td>
+                            <td> <a href={`https://api2.taplingua.com/app/user-cohort-registration/${cohort.id}`} target="_blank" rel="noopener noreferrer">Open Registration Form</a></td>
                             <td>{cohort.start_date}</td>
                             <td
                               style={{
