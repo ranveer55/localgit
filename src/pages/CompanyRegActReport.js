@@ -12,8 +12,8 @@ class CompanyRegActReport extends Component {
 
     this.state = {
       dateLoaded: false,
-      startDate: new Date("2021-03-01"),
-      endDate: new Date("2021-03-31"),
+      startDate: new Date(moment().subtract(1, "week")),
+      endDate: new Date(moment()),
       usersRegisteredCount: 0,
       usersActivatedCount: 0,
       allRegisteredUsers: [],
@@ -103,15 +103,17 @@ class CompanyRegActReport extends Component {
                 <div style={{ padding: "8px 0" }}>
                   <span style={{ padding: "2px 8px", margin: "0 8px", fontWeight: "500" }}>Date Range</span>
                   <ReactDatePicker
+                    dateFormat="dd-MM-yyyy"
                     selected={this.state.startDate}
                     showMonthDropdown
                     showYearDropdown
                     onChange={date => {
-                      this.loadData(date, this.state.endDate);
+                      this.loadData(date, new Date(moment(date).add(1, 'week')));
                     }}
                   />
                   <span style={{ padding: "2px 8px", margin: "0 8px" }}>to</span>
                   <ReactDatePicker
+                    dateFormat="dd-MM-yyyy"
                     selected={this.state.endDate}
                     showMonthDropdown
                     showYearDropdown
@@ -173,8 +175,8 @@ class CompanyRegActReport extends Component {
                             <td>{report.userId}</td>
                             <td>{report.Mobile}</td>
                             <td>{report.Location}</td>
-                            <td>{report.accountCreationDate}</td>
-                            <td>{report.activationDate}</td>
+                            <td>{report.accountCreationDate ? report.accountCreationDate.split(" ")[0] : ""}</td>
+                            <td>{report.activationDate ? report.activationDate.split(" ")[0] : ""}</td>
                             <td>{report.totalScore}</td>
                             <td>{parseInt(report.courseCompleted).toFixed(2)} %</td>
                           </tr>
