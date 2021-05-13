@@ -373,7 +373,7 @@ class Employees extends Component {
               const newRecord = { ...row, subscriptionExpires: date }
               console.log("data", this.state);
               const oldData = [...this.state.data];
-              global.api.updateEmployee(newRecord)
+              global.api.updateEmployee({ userId: row.userId, subscriptionExpires: date })
                 .then(response => {
                   // update the current state to incorporate the changes
                   const dataIndex = index;
@@ -680,7 +680,7 @@ class Employees extends Component {
 
     // check if we have any active cohort
     if (this.state.selectedCohort) {
-      if(this.state.selectedCohort.users.length === 0) {
+      if (this.state.selectedCohort.users.length === 0) {
         data = [];
       } else {
         data = data.filter(user => this.state.selectedCohort.users.find(u => u.userId === user.userId));
