@@ -158,6 +158,7 @@ class CompanyRegActReport extends Component {
                   <th>Email</th>
                   <th>Contact Number</th>
                   <th>Location</th>
+                  <th>Last Lesson</th>
                   <th>Registration Date</th>
                   <th>Activation Date</th>
                   <th>Points Scored</th>
@@ -175,8 +176,9 @@ class CompanyRegActReport extends Component {
                             <td>{report.userId}</td>
                             <td>{report.Mobile}</td>
                             <td>{report.Location}</td>
-                            <td>{report.accountCreationDate ? report.accountCreationDate.split(" ")[0] : ""}</td>
-                            <td>{report.activationDate ? report.activationDate.split(" ")[0] : ""}</td>
+                            <td>{report.last_lesson ? report.last_lesson : 0}</td>
+                            <td>{report.accountCreationDate ? moment(report.accountCreationDate).format('DD-MM-YYYY') : ""}</td>
+                            <td>{report.activationDate ? moment(report.activationDate).format('DD-MM-YYYY') : ""}</td>
                             <td>{report.totalScore}</td>
                             <td>{parseInt(report.courseCompleted).toFixed(2)} %</td>
                           </tr>
