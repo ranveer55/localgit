@@ -122,6 +122,34 @@ class CompanyRegActReport extends Component {
                     }}
                   />
                 </div>
+                {/* date range drop down */}
+                <div>
+                  <select onChange={e => {
+                    switch (e.target.value) {
+                      case "1":
+                        this.loadData(new Date(moment().startOf("day")), new Date(moment().endOf("day")));
+                        this.setState({
+                          startDate: new Date(moment().startOf("day")),
+                          endDate: new Date(moment().endOf("day")),
+                        });
+                        break;
+                      case "2":
+                        this.loadData(new Date(moment().subtract(1, "week").startOf('day')), new Date(moment().endOf("day")));
+                        break;
+                      case "3":
+                        this.loadData(new Date(moment().subtract(1, "month").startOf('day')), new Date(moment().endOf("day")));
+                        break;
+
+                      default:
+                        break;
+                    }
+                  }}>
+                    <option value="" selected disabled>Select Timespan</option>
+                    <option value="1">Today</option>
+                    <option value="2">Last Week</option>
+                    <option value="3">Last Month</option>
+                  </select>
+                </div>
                 <span style={{ padding: "2px 8px", margin: "0 8px", fontWeight: "700" }}>Students Registered: {this.state.usersRegisteredCount}</span>
                 <span style={{ padding: "2px 8px", margin: "0 8px", fontWeight: "700" }}>Students Activated: {this.state.usersActivatedCount}</span>
               </div>
