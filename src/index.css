@@ -8825,11 +8825,14 @@ label.certificate-button a {
 /* .chartjs-size-monitor { */
 /* zoom: 1.25; */
 /* } */
-.zoom-restorer {
-  zoom: 125%;
-}
-.zoom-unrestorer {
-  zoom: 100%;
+@media only screen and (max-width: 1599px) {
+
+  .zoom-restorer {
+    zoom: 125%;
+  }
+  .zoom-unrestorer {
+    zoom: 100%;
+  }
 }
 @charset "UTF-8";
 /*  <!-- RESPONSIVE
