@@ -676,7 +676,7 @@ class Employees extends Component {
       </div>
     );
 
-    let data = this.state.data;
+    let data = [...this.state.data];
 
     // check if we have any active cohort
     if (this.state.selectedCohort) {
