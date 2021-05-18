@@ -126,17 +126,24 @@ class CompanyRegActReport extends Component {
                 <div>
                   <select onChange={e => {
                     switch (e.target.value) {
-                      case "1":
+                      case "1": // today
                         this.loadData(new Date(moment().startOf("day")), new Date(moment().endOf("day")));
                         this.setState({
                           startDate: new Date(moment().startOf("day")),
                           endDate: new Date(moment().endOf("day")),
                         });
                         break;
-                      case "2":
+                      case "4": // yesterday
+                        this.loadData(new Date(moment().subtract(1, 'day').startOf("day")), new Date(moment().subtract(1, 'day').endOf("day")));
+                        this.setState({
+                          startDate: new Date(moment().startOf("day")),
+                          endDate: new Date(moment().endOf("day")),
+                        });
+                        break;
+                      case "2": // last week
                         this.loadData(new Date(moment().subtract(1, "week").startOf('day')), new Date(moment().endOf("day")));
                         break;
-                      case "3":
+                      case "3": // last month
                         this.loadData(new Date(moment().subtract(1, "month").startOf('day')), new Date(moment().endOf("day")));
                         break;
 
@@ -146,6 +153,7 @@ class CompanyRegActReport extends Component {
                   }}>
                     <option value="" selected disabled>Select Timespan</option>
                     <option value="1">Today</option>
+                    <option value="4">Last Month</option>
                     <option value="2">Last Week</option>
                     <option value="3">Last Month</option>
                   </select>

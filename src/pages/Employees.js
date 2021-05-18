@@ -210,7 +210,7 @@ class Employees extends Component {
       },
       {
         text: 'Account Created',
-        dataField: 'accountCreated',
+        dataField: 'accountCreationDate',
         formatter: this.formatDate,
         csvFormatter: this.formatDateCSV,
         csvExport: true,
