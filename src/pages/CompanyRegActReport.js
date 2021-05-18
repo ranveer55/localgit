@@ -88,17 +88,21 @@ class CompanyRegActReport extends Component {
       <main className="offset" id="content">
         <section className="section_box">
           <div className="row">
-            <div className="col-md-6">
+            <div className="">
               <h1 className="title1 mb25">Company Registration and Activation Report</h1>
               <h4 className="title4 mb40">
                 For {this.state.selectedCompanyName} ({moment(this.state.startDate).format("DD-MM-YYYY")} - {moment(this.state.endDate).format("DD-MM-YYYY")})
                 </h4>
               <div id="reports" className="scrollmenu">
-                {/* The chard */}
-                <LineChart
-                  label="Company Registration and Activation"
-                  labels={this.state.report.map(r => moment(r.date).format('DD MMM'))}
-                  data={this.state.report.map(r => r.usersRegistered.length)} />
+                {/* The chart, zoom restorer helps with the stupid zoomout previous dev put in */}
+                <div className="zoom-restorer">
+                  <div className="zoom-unrestorer">
+                    <LineChart
+                      label="Registrations"
+                      labels={this.state.report.map(r => moment(r.date).format('DD MMM'))}
+                      data={this.state.report.map(r => r.usersRegistered.length)} />
+                  </div>
+                </div>
                 {/* date range and register and activation count */}
                 <div style={{ padding: "8px 0" }}>
                   <span style={{ padding: "2px 8px", margin: "0 8px", fontWeight: "500" }}>Date Range</span>
@@ -150,8 +154,8 @@ class CompanyRegActReport extends Component {
                       default:
                         break;
                     }
-                  }}>
-                    <option value="" selected disabled>Select Timespan</option>
+                  }} defaultValue="">
+                    <option value="" disabled>Select Timespan</option>
                     <option value="1">Today</option>
                     <option value="4">Yesterday</option>
                     <option value="2">Last Week</option>
@@ -244,6 +248,7 @@ function LineChart({
   labels = ['1', '2', '3', '4', '5', '6'],
   data = [12, 19, 3, 5, 2, 3]
 }) {
+  console.log({ data })
   return (
     <Line data={{
       labels,
@@ -256,23 +261,33 @@ function LineChart({
           borderColor: 'rgba(255, 99, 132, 0.2)',
         },
       ],
-    }} options={{
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-              userCallback(label, index, labels) {
-                // only show if whole number
-                if (Math.floor(label) === label) {
-                  return label;
-                }
+    }}
+      options={{
+        responsive: true,
+        hover: true,
+        tooltips: {
+          mode: "x",
+          intersect: false
+        },
+        scales: {
+          yAxes: [
+            {
+              scaleLabel: {
+                display: true
+              },
+              ticks: {
+                beginAtZero: true,
+                userCallback(label, index, labels) {
+                  // only show if whole number
+                  if (Math.floor(label) === label) {
+                    return label;
+                  }
+                },
               },
             },
-          },
-        ],
-      },
-    }} />
+          ]
+        },
+      }} />
   );
 }
 

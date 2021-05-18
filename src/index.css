@@ -8820,6 +8820,17 @@ label.certificate-button a {
 .w-full {
   width: 100%;
 }
+/*  */
+/* .chartjs-render-monitor, */
+/* .chartjs-size-monitor { */
+/* zoom: 1.25; */
+/* } */
+.zoom-restorer {
+  zoom: 125%;
+}
+.zoom-unrestorer {
+  zoom: 100%;
+}
 @charset "UTF-8";
 /*  <!-- RESPONSIVE
 ============================================ --> */
