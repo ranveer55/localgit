@@ -153,7 +153,7 @@ class CompanyRegActReport extends Component {
                   }}>
                     <option value="" selected disabled>Select Timespan</option>
                     <option value="1">Today</option>
-                    <option value="4">Last Month</option>
+                    <option value="4">Yesterday</option>
                     <option value="2">Last Week</option>
                     <option value="3">Last Month</option>
                   </select>
