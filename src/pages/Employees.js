@@ -373,10 +373,11 @@ class Employees extends Component {
               const newRecord = { ...row, subscriptionExpires: date }
               console.log("data", this.state);
               const oldData = [...this.state.data];
+              // return;
               global.api.updateEmployee({ userId: row.userId, subscriptionExpires: date })
                 .then(response => {
                   // update the current state to incorporate the changes
-                  const dataIndex = index;
+                  const dataIndex = oldData.findIndex(o => o.userId === row.userId);
                   oldData.splice(dataIndex, 1, newRecord);
                   this.setState({
                     data: oldData
