@@ -470,6 +470,18 @@ export default class ApiService {
         });
     }
 
+    getUserMistakesByCohort(cohort_id, date) {
+        return axios.get(`${this.domain}/user-mistakes-report-by-cohort/${cohort_id}?date=${date}`, {
+            headers: {
+                'Accept': "application/json",
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
     getCohortDetail(cohort_id = 0) {
         return axios.get(`${this.domain}/cohort-detail/` + cohort_id, {
             headers: {

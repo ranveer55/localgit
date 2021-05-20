@@ -35,6 +35,7 @@ class Menu extends Component {
                             { title: "Student Registrations", url: "/registration-report-by-company" },
                             { title: "Student RegActs", url: "/regact-report-by-company" },
                             { title: "Cohorts", url: "/company-cohorts" },
+                            { title: "Cohort Mistakes", url: "/company-cohorts/mistakes" },
                         ]} />
 
                         <li className="menu_item">
