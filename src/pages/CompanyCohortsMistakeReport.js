@@ -13,6 +13,7 @@ class CompanyCohortsMistakeReport extends Component {
       dateLoaded: false,
       cohorts: [],
       report: [],
+      reportLoading: false,
       selectedCohort: null,
       selectedDate: moment(),
     };
@@ -61,6 +62,9 @@ class CompanyCohortsMistakeReport extends Component {
     if (!this.state.selectedCohort) {
       return alert("Choose a cohort first!");
     }
+    this.setState({
+      reportLoading: true
+    });
     global.api.getUserMistakesByCohort(
       this.state.selectedCohort,
       this.state.selectedDate.format("YYYY-MM-DD")
@@ -69,12 +73,13 @@ class CompanyCohortsMistakeReport extends Component {
         data => {
           this.setState({
             report: data.users,
+            reportLoading: false
           });
           // this.setState({ batchData: data });
         })
       .catch(err => {
         this.setState({
-          dateLoaded: true
+          reportLoading: false
         });
       });
   }
@@ -140,37 +145,40 @@ class CompanyCohortsMistakeReport extends Component {
           </div>
           {/* user reprots */}
           {
-            this.state.report.length > 0 ? (
+            this.state.reportLoading ? (
+              <div>Loading...</div>
+            ) :
+              this.state.report.length > 0 ? (
 
-              <div>
-                <table style={{ width: "100%" }}>
-                  <thead style={{ textAlign: "left" }}>
-                    <tr>
-                      <th></th>
+                <div>
+                  <table style={{ width: "100%" }}>
+                    <thead style={{ textAlign: "left" }}>
+                      <tr>
+                        <th></th>
+                        {
+                          Object.keys(this.state.report[0].statistics).map(name => (
+                            <th key={name}>{name}</th>
+                          ))
+                        }
+                      </tr>
+                    </thead>
+                    <tbody>
                       {
-                        Object.keys(this.state.report[0].statistics).map(name => (
-                          <th key={name}>{name}</th>
+                        this.state.report.map(user => (
+                          <tr key={user.userId}>
+                            <th>{user.name}</th>
+                            {
+                              Object.values(user.statistics).map((stat, index) => (
+                                <td key={index}>{stat}</td>
+                              ))
+                            }
+                          </tr>
                         ))
                       }
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      this.state.report.map(user => (
-                        <tr key={user.userId}>
-                          <th>{user.name}</th>
-                          {
-                            Object.values(user.statistics).map((stat, index) => (
-                              <td key={index}>{stat}</td>
-                            ))
-                          }
-                        </tr>
-                      ))
-                    }
-                  </tbody>
-                </table>
-              </div>
-            ) : <div>No data to display!</div>
+                    </tbody>
+                  </table>
+                </div>
+              ) : <div>No data to display!</div>
           }
         </section>
       </main>
