@@ -154,7 +154,7 @@ class CompanyCohortsMistakeReport extends Component {
                   <table style={{ width: "100%" }}>
                     <thead style={{ textAlign: "left" }}>
                       <tr>
-                        <th></th>
+                        <th>Name</th>
                         {
                           Object.keys(this.state.report[0].statistics).map(name => (
                             <th key={name}>{name}</th>
