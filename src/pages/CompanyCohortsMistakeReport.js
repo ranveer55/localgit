@@ -166,7 +166,7 @@ class CompanyCohortsMistakeReport extends Component {
                       {
                         this.state.report.map(user => (
                           <tr key={user.userId}>
-                            <th>{user.name}</th>
+                            <td><b>{user.name}</b></td>
                             {
                               Object.values(user.statistics).map((stat, index) => (
                                 <td key={index}>{stat}</td>
