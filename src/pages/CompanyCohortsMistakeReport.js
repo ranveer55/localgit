@@ -88,7 +88,7 @@ class CompanyCohortsMistakeReport extends Component {
       <main className="offset" id="content">
         <section className="section_box">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-12">
               <h1 className="title1 mb25">Cohorts Mistakes</h1>
               <h4 className="title4 mb40">
                 For {this.state.selectedCompanyName}
