@@ -492,6 +492,20 @@ export default class ApiService {
         });
     }
 
+    registerUsersToCohortFromCSV(cohort_id = 0, csv) {
+        const data = new FormData();
+        data.append('cohort_id', cohort_id);
+        data.append('csv', csv, csv.filename);
+        return axios.post(`${this.domain}/register-cohort-using-csv`, data, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
     fetch(url, options) {
         // performs api calls sending the required authentication headers
         const headers = {

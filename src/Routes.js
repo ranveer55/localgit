@@ -26,6 +26,7 @@ import CompanyRegActReport from './pages/CompanyRegActReport';
 import CompanyCohortsReport from './pages/CompanyCohortsReport';
 import CohortDetail from './pages/CohortDetail';
 import UserCohortDetail from './pages/UserCohortDetail';
+import CohortRegisterCSV from './pages/CohortRegisterCSV';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -43,6 +44,7 @@ class Router extends React.Component {
         <ProtectedRoute path="/regact-report-by-company" component={CompanyRegActReport} />
         <ProtectedRoute path="/company-cohorts" component={CompanyCohortsReport} />
         <ProtectedRoute path="/cohort-detail/:cohortId" component={CohortDetail} />
+        <ProtectedRoute path="/cohort-csv-register/:cohortId" component={CohortRegisterCSV} />
         <ProtectedRoute path="/user-cohort-detail/:cohortId/:userId" component={UserCohortDetail} />
         <ProtectedRoute path="/course-registration-report" component={CourseRegistrationReport} />
         <ProtectedRoute path="/activation-report-by-company" component={CompanyActivationReport} />

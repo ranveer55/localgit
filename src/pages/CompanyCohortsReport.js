@@ -76,6 +76,7 @@ class CompanyCohortsReport extends Component {
                   <th>Registration Link</th>
                   <th>Start Date</th>
                   <th>Users</th>
+                  <th>Register from CSV</th>
                 </tr>
               </thead>
               <tbody>
@@ -107,6 +108,13 @@ class CompanyCohortsReport extends Component {
                                   color: "blue",
                                   cursor: "pointer"
                                 }}>{cohort.users.length} User(s)</span>
+                            </td>
+                            <td
+                              style={{
+                                color: "blue",
+                                cursor: "pointer"
+                              }}>
+                              <a href={"/cohort-csv-register/" + cohort.id}>Upload CSV</a>
                             </td>
                           </tr>
                         )
