@@ -53,19 +53,19 @@ class CompanyCohortsMistakeReport extends Component {
       });
   }
 
-  loadReport() {
+  loadReport(selectedCohort = null) {
 
     if (!this.state.selectedStartDate) {
       return alert("Choose a date first!");
     }
-    if (!this.state.selectedCohort) {
+    if (!selectedCohort && !this.state.selectedCohort) {
       return alert("Choose a cohort first!");
     }
     this.setState({
       reportLoading: true
     });
     global.api.getUserMistakesByCohort(
-      this.state.selectedCohort,
+      selectedCohort ? selectedCohort : this.state.selectedCohort,
       this.state.selectedStartDate.format("YYYY-MM-DD")
     )
       .then(
@@ -141,6 +141,7 @@ class CompanyCohortsMistakeReport extends Component {
                     this.setState({
                       selectedCohort: e.target.value
                     });
+                    this.loadReport(e.target.value);
                   }}
                   style={{ padding: "4px 10px", borderRadius: "3px" }}>
                   <option value={""}>Select a cohort</option>
