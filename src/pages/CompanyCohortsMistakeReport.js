@@ -15,7 +15,8 @@ class CompanyCohortsMistakeReport extends Component {
       report: [],
       reportLoading: false,
       selectedCohort: null,
-      selectedDate: moment(),
+      selectedStartDate: moment().subtract(1, 'y'),
+      selectedEndDate: moment(),
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -56,7 +57,7 @@ class CompanyCohortsMistakeReport extends Component {
 
   loadReport() {
 
-    if (!this.state.selectedDate) {
+    if (!this.state.selectedStartDate) {
       return alert("Choose a date first!");
     }
     if (!this.state.selectedCohort) {
@@ -67,7 +68,7 @@ class CompanyCohortsMistakeReport extends Component {
     });
     global.api.getUserMistakesByCohort(
       this.state.selectedCohort,
-      this.state.selectedDate.format("YYYY-MM-DD")
+      this.state.selectedStartDate.format("YYYY-MM-DD")
     )
       .then(
         data => {
@@ -102,15 +103,33 @@ class CompanyCohortsMistakeReport extends Component {
                 {/* date selector */}
                 <label>&nbsp;<b>Date: </b>&nbsp;</label>
                 <select
-                  defaultValue={this.state.selectedDate}
+                  defaultValue={this.state.selectedStartDate}
                   onChange={e => {
+                    let value = moment();
+                    switch (e.target.value) {
+                      case "1":
+                        break;
+                      case "2":
+                        value = moment().subtract(1, "day");
+                        break;
+                      case "3":
+                        value = moment().subtract(7, "day");
+                        break;
+                      case "4":
+                        value = moment().subtract(31, "day");
+                        break;
+                      default:
+                        break;
+                    }
                     this.setState({
-                      selectedDate: e.target.value
+                      selectedStartDate: value
                     });
                   }}
                   style={{ padding: "4px 10px", borderRadius: "3px" }}>
-                  <option value={moment()}>Today</option>
-                  <option value={moment().subtract(1, "d")}>Yesterday</option>
+                  <option value={1}>Today</option>
+                  <option value={2}>Yesterday</option>
+                  <option value={3}>Last 7 Days</option>
+                  <option value={4}>Last 31 Days</option>
                 </select>
                 {/* cohort selector */}
                 <label><b>Cohort: </b>&nbsp;</label>
