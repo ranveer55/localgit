@@ -24,7 +24,7 @@ class CompanyCohortsMistakeReport extends Component {
   }
 
   componentDidMount() {
-    // getCompanyRegistrationReport 
+    // Load list of cohorts
     this.loadData();
   }
 
@@ -42,7 +42,7 @@ class CompanyCohortsMistakeReport extends Component {
         data => {
           this.setState({
             dataLoaded: true,
-            cohorts: data.programs,
+            cohorts: data.programs.filter(p => !p.is_dynamic),
           });
           // this.setState({ batchData: data });
         })
