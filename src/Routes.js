@@ -25,6 +25,7 @@ import Program from './pages/Program';
 import CompanyRegActReport from './pages/CompanyRegActReport';
 import CompanyCohortsReport from './pages/CompanyCohortsReport';
 import CompanyCohortsMistakeReport from './pages/CompanyCohortsMistakeReport';
+import CompanyCohortsMistakeDetailReport from './pages/CompanyCohortsMistakeDetailReport';
 import CohortDetail from './pages/CohortDetail';
 import UserCohortDetail from './pages/UserCohortDetail';
 import CohortRegisterCSV from './pages/CohortRegisterCSV';
@@ -43,6 +44,7 @@ class Router extends React.Component {
         <ProtectedRoute path="/leaderboard" component={Leaderboard} />
         <ProtectedRoute path="/registration-report-by-company" component={CompanyRegistrationReport} />
         <ProtectedRoute path="/regact-report-by-company" component={CompanyRegActReport} />
+        <ProtectedRoute path="/company-cohorts/mistakes/:cohortId/user/:userId" component={CompanyCohortsMistakeDetailReport} />
         <ProtectedRoute path="/company-cohorts/mistakes" component={CompanyCohortsMistakeReport} />
         <ProtectedRoute path="/company-cohorts" component={CompanyCohortsReport} />
         <ProtectedRoute path="/cohort-detail/:cohortId" component={CohortDetail} />
