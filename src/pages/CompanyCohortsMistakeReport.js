@@ -107,6 +107,9 @@ class CompanyCohortsMistakeReport extends Component {
                   onChange={e => {
                     let value = moment();
                     switch (e.target.value) {
+                      case "0":
+                        value = moment().subtract(1, "year");
+                        break;
                       case "1":
                         break;
                       case "2":
@@ -126,6 +129,7 @@ class CompanyCohortsMistakeReport extends Component {
                     });
                   }}
                   style={{ padding: "4px 10px", borderRadius: "3px" }}>
+                  <option value={0}>No Filter</option>
                   <option value={1}>Today</option>
                   <option value={2}>Yesterday</option>
                   <option value={3}>Last 7 Days</option>
