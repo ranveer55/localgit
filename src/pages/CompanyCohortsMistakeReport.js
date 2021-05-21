@@ -26,9 +26,6 @@ class CompanyCohortsMistakeReport extends Component {
   componentDidMount() {
     // getCompanyRegistrationReport 
     this.loadData();
-    this.loadReport();
-
-
   }
 
   /**
