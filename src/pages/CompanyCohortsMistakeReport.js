@@ -15,6 +15,7 @@ class CompanyCohortsMistakeReport extends Component {
       report: [],
       reportLoading: false,
       selectedCohort: null,
+      showPercentage: false,
       selectedStartDate: moment().subtract(1, 'y'),
       selectedEndDate: moment(),
     };
@@ -163,6 +164,13 @@ class CompanyCohortsMistakeReport extends Component {
 
               </div>
               <br />
+              <div>
+                <label><input type="checkbox" checked={this.state.showPercentage} onChange={e => {
+                  this.setState({
+                    showPercentage: e.target.checked
+                  });
+                }} /> Show percentage</label>
+              </div>
             </div>
           </div>
           {/* user reprots */}
@@ -194,8 +202,8 @@ class CompanyCohortsMistakeReport extends Component {
                                 href={`/company-cohorts/mistakes/${this.state.selectedCohort}/user/${user.userId}`}><b>{user.name}</b></a>
                             </td>
                             {
-                              Object.values(user.statistics).map((stat, index) => (
-                                <td key={index}>{stat}</td>
+                              Object.values(this.state.showPercentage ? user.incorrectPercentage : user.statistics).map((stat, index) => (
+                                <td key={index}>{stat} {this.state.showPercentage ? "%" : ""}</td>
                               ))
                             }
                           </tr>
