@@ -69,7 +69,7 @@ class CompanyCohortsPlacementMistakeDetailReport extends Component {
         <section className="section_box">
           <div className="row">
             <div className="col-md-12">
-              <h1 className="title1 mb25">Cohorts Placement Mistakes</h1>
+              <h1 className="title1 mb25">Cohorts Placement</h1>
               <h4 className="title4 mb40">
                 For {this.state.selectedCompanyName}
               </h4>

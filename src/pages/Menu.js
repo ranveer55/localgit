@@ -35,8 +35,8 @@ class Menu extends Component {
                             // { title: "Student Registrations", url: "/registration-report-by-company" },
                             { title: "Student Registrations", url: "/regact-report-by-company" },
                             { title: "Cohorts", url: "/company-cohorts" },
-                            { title: "Cohort Mistakes", url: "/company-cohorts/mistakes" },
-                            { title: "Cohort Placement Mistakes", url: "/company-cohorts/placement-mistakes" },
+                            { title: "Cohort Assessment", url: "/company-cohorts/mistakes" },
+                            { title: "Cohort Placement", url: "/company-cohorts/placement-mistakes" },
                         ]} />
 
                         <li className="menu_item">
