@@ -127,7 +127,11 @@ class CompanyRegActReport extends Component {
                   />
                 </div>
                 {/* date range drop down */}
-                <div>
+                <div style={{
+                  padding: "2px 8px",
+                  margin: "0px 8px",
+                  fontWeight: "500"
+                }}>
                   <select onChange={e => {
                     switch (e.target.value) {
                       case "1": // today

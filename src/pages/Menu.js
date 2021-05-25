@@ -31,9 +31,9 @@ class Menu extends Component {
                         </li>
 
                         <ItemWithSubMenu label="Reports" subItems={[
-                            { title: "Other Reports", url: "/reports" },
-                            { title: "Student Registrations", url: "/registration-report-by-company" },
-                            { title: "Student RegActs", url: "/regact-report-by-company" },
+                            // { title: "Other Reports", url: "/reports" },
+                            // { title: "Student Registrations", url: "/registration-report-by-company" },
+                            { title: "Student Registrations", url: "/regact-report-by-company" },
                             { title: "Cohorts", url: "/company-cohorts" },
                             { title: "Cohort Mistakes", url: "/company-cohorts/mistakes" },
                             { title: "Cohort Placement Mistakes", url: "/company-cohorts/placement-mistakes" },
