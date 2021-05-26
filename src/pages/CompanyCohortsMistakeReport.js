@@ -1,5 +1,6 @@
 import moment from "moment";
 import React, { Component } from "react";
+import { Bar } from "react-chartjs-2";
 import { Link } from 'react-router-dom';
 
 class CompanyCohortsMistakeReport extends Component {
@@ -87,7 +88,21 @@ class CompanyCohortsMistakeReport extends Component {
 
 
   render() {
+    // calculate the ranges
+    let range0to30 = 0;
+    let range31to60 = 0;
+    let range61to100 = 0;
 
+    this.state.report.forEach(user => {
+      const { Total } = user.incorrectPercentage;
+      if (Total < 31) {
+        range0to30++;
+      } else if (Total < 61) {
+        range31to60++;
+      } else {
+        range61to100++;
+      }
+    });
 
     return (
       <main className="offset" id="content">
@@ -181,6 +196,63 @@ class CompanyCohortsMistakeReport extends Component {
               this.state.report.length > 0 ? (
 
                 <div>
+                  {/* chart */}
+                  <div className="row">
+                    <div className="col-md-6">
+
+                      <div className="zoom-restorer">
+                        <div className="zoom-unrestorer">
+                          <Bar
+                            data={{
+                              labels: ["0-30%", '31-60%', "61-100%"],
+                              datasets: [{
+                                label: "No of users",
+                                data: [range0to30, range31to60, range61to100],
+                                backgroundColor: [
+                                  'rgba(255, 99, 132, 0.2)',
+                                  'rgba(255, 159, 64, 0.2)',
+                                  'rgba(255, 205, 86, 0.2)',
+                                  'rgba(75, 192, 192, 0.2)',
+                                  'rgba(54, 162, 235, 0.2)',
+                                  'rgba(153, 102, 255, 0.2)',
+                                  'rgba(201, 203, 207, 0.2)'
+                                ],
+                                borderColor: [
+                                  'rgb(255, 99, 132)',
+                                  'rgb(255, 159, 64)',
+                                  'rgb(255, 205, 86)',
+                                  'rgb(75, 192, 192)',
+                                  'rgb(54, 162, 235)',
+                                  'rgb(153, 102, 255)',
+                                  'rgb(201, 203, 207)'
+                                ],
+                                borderWidth: 1,
+                              }],
+                            }}
+                            options={{
+                              responsive: true,
+                              scales: {
+                                yAxes: [{
+                                  scaleLabel: {
+                                    display: true
+                                  },
+                                  ticks: {
+                                    beginAtZero: true,
+                                    userCallback(label, index, labels) {
+                                      // only show if whole number
+                                      if (Math.floor(label) === label) {
+                                        return label;
+                                      }
+                                    },
+                                  },
+                                }]
+                              }
+                            }} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* table data */}
                   <table style={{ width: "100%" }}>
                     <thead style={{ textAlign: "left" }}>
                       <tr>
