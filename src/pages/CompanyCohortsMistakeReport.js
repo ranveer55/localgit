@@ -1,5 +1,8 @@
 import moment from "moment";
 import React, { Component } from "react";
+import BootstrapTable from "react-bootstrap-table-next";
+import paginationFactory, { PaginationListStandalone, PaginationProvider } from "react-bootstrap-table2-paginator";
+import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import { Bar } from "react-chartjs-2";
 import { Link } from 'react-router-dom';
 
@@ -126,6 +129,25 @@ class CompanyCohortsMistakeReport extends Component {
       }
     });
 
+    // structure table
+    const columns = this.state.report.length > 0 ? [{
+      dataField: "userId",
+      text: "Name",
+      // hidden: true,
+      sort: true,
+    }, ...Object.keys(this.state.report[0].statistics).map(name => ({
+      dataField: name,
+      text: name,
+      formatter: (cell, row) => {
+        if (this.state.showPercentage) {
+          return cell + " %";
+        } else {
+          return cell
+        }
+      },
+      sort: true
+    }))] : [];
+
     return (
       <main className="offset" id="content">
         <section className="section_box">
@@ -221,7 +243,7 @@ class CompanyCohortsMistakeReport extends Component {
                   {/* chart */}
                   <div className="row">
                     <div className="col-md-6">
-
+                      {/* chart */}
                       <div className="zoom-restorer">
                         <div className="zoom-unrestorer">
                           <Bar
@@ -299,8 +321,41 @@ class CompanyCohortsMistakeReport extends Component {
                       </div>
                     </div>
                   </div>
+                  <br />
+                  {/* toolkit */}
+                  <ToolkitProvider
+                    keyField="userId"
+                    columns={columns}
+                    data={
+                      this.state.report.map(user => ({
+                        userId: user.userId,
+                        ...(this.state.showPercentage ? user.incorrectPercentage : user.statistics)
+                      }))
+                    }
+                    classes="table"
+                    search
+                  >
+                    {
+                      props => (
+                        <PaginationProvider pagination={paginationFactory({ custom: true })} >
+                          {({ paginationProps, paginationTableProps }) => (
+                            <>
+                              <BootstrapTable
+                                {...props.baseProps}
+                                classes="table"
+                                {...paginationTableProps}
+                                noDataIndication={() => <div>No data</div>} />
+                              <PaginationListStandalone
+                                {...paginationProps}
+                              />
+                            </>
+                          )}
+                        </PaginationProvider>
+                      )
+                    }
+                  </ToolkitProvider>
                   {/* table data */}
-                  <table style={{ width: "100%" }}>
+                  {/* <table style={{ width: "100%" }}>
                     <thead style={{ textAlign: "left" }}>
                       <tr>
                         <th>Name</th>
@@ -329,7 +384,7 @@ class CompanyCohortsMistakeReport extends Component {
                         ))
                       }
                     </tbody>
-                  </table>
+                  </table> */}
                 </div>
               ) : <div>No data to display!</div>
           }
