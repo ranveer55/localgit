@@ -89,18 +89,40 @@ class CompanyCohortsMistakeReport extends Component {
 
   render() {
     // calculate the ranges
-    let range0to30 = 0;
-    let range31to60 = 0;
-    let range61to100 = 0;
+    let range0to10 = 0;
+    let range11to20 = 0;
+    let range21to30 = 0;
+    let range31to40 = 0;
+    let range41to50 = 0;
+    let range51to60 = 0;
+    let range61to70 = 0;
+    let range71to80 = 0;
+    let range81to90 = 0;
+    let range91to100 = 0;
 
     this.state.report.forEach(user => {
-      const { Total } = user.incorrectPercentage;
-      if (Total < 31) {
-        range0to30++;
+      let { Total } = user.incorrectPercentage;
+      Total = 100 - Total; // to get correct percentage
+      if (Total < 11) {
+        range0to10++;
+      } else if (Total < 21) {
+        range11to20++;
+      } else if (Total < 31) {
+        range21to30++;
+      } else if (Total < 41) {
+        range31to40++;
+      } else if (Total < 51) {
+        range41to50++;
       } else if (Total < 61) {
-        range31to60++;
+        range51to60++;
+      } else if (Total < 71) {
+        range61to70++;
+      } else if (Total < 81) {
+        range71to80++;
+      } else if (Total < 91) {
+        range81to90++;
       } else {
-        range61to100++;
+        range91to100++;
       }
     });
 
@@ -204,10 +226,29 @@ class CompanyCohortsMistakeReport extends Component {
                         <div className="zoom-unrestorer">
                           <Bar
                             data={{
-                              labels: ["0-30%", '31-60%', "61-100%"],
+                              labels: ["0-10%", '11-20%'
+                                , '21-30%'
+                                , '31-40%'
+                                , '41-50%'
+                                , '51-60%'
+                                , '61-70%'
+                                , '71-80%'
+                                , '81-90%'
+                                , "91-100%"],
                               datasets: [{
                                 label: "No of users",
-                                data: [range0to30, range31to60, range61to100],
+                                data: [
+                                  range0to10,
+                                  range11to20,
+                                  range21to30,
+                                  range31to40,
+                                  range41to50,
+                                  range51to60,
+                                  range61to70,
+                                  range71to80,
+                                  range81to90,
+                                  range91to100
+                                ],
                                 backgroundColor: [
                                   'rgba(255, 99, 132, 0.2)',
                                   'rgba(255, 159, 64, 0.2)',
@@ -215,7 +256,10 @@ class CompanyCohortsMistakeReport extends Component {
                                   'rgba(75, 192, 192, 0.2)',
                                   'rgba(54, 162, 235, 0.2)',
                                   'rgba(153, 102, 255, 0.2)',
-                                  'rgba(201, 203, 207, 0.2)'
+                                  'rgba(201, 203, 207, 0.2)',
+                                  'rgba(255, 99, 132, 0.2)',
+                                  'rgba(255, 159, 64, 0.2)',
+                                  'rgba(255, 205, 86, 0.2)'
                                 ],
                                 borderColor: [
                                   'rgb(255, 99, 132)',
@@ -224,7 +268,10 @@ class CompanyCohortsMistakeReport extends Component {
                                   'rgb(75, 192, 192)',
                                   'rgb(54, 162, 235)',
                                   'rgb(153, 102, 255)',
-                                  'rgb(201, 203, 207)'
+                                  'rgb(201, 203, 207)',
+                                  'rgb(255, 99, 132)',
+                                  'rgb(255, 159, 64)',
+                                  'rgb(255, 205, 86)',
                                 ],
                                 borderWidth: 1,
                               }],
