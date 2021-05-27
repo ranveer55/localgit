@@ -8820,6 +8820,14 @@ label.certificate-button a {
 .w-full {
   width: 100%;
 }
+.CompanyCohortsMistakeReport .table .numeric {
+  display: inline-block;
+  width: 100%;
+  text-align: right;
+}
+.CompanyCohortsMistakeReport .table th {
+  text-align: center;
+}
 /*  */
 /* .chartjs-render-monitor, */
 /* .chartjs-size-monitor { */

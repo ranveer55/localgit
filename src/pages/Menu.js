@@ -30,7 +30,7 @@ class Menu extends Component {
                             </a>
                         </li>
 
-                        <ItemWithSubMenu label="Reports" subItems={[
+                        <ItemWithSubMenu label="Cohorts" subItems={[
                             // { title: "Other Reports", url: "/reports" },
                             // { title: "Student Registrations", url: "/registration-report-by-company" },
                             { title: "Student Registrations", url: "/regact-report-by-company" },
