@@ -552,6 +552,28 @@ export default class ApiService {
         });
     }
 
+    getProgramsList() {
+        return axios.get(`${this.domain}/all-programs`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
+    saveCohort(cohort = {}) {
+        return axios.post(`${this.domain}/cohorts`, cohort, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
     registerUsersToCohortFromCSV(cohort_id = 0, csv) {
         const data = new FormData();
         data.append('cohort_id', cohort_id);

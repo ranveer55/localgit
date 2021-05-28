@@ -8828,6 +8828,15 @@ label.certificate-button a {
 .CompanyCohortsMistakeReport .table th {
   text-align: center;
 }
+.CreateCohortModal .form-group {
+    margin-bottom: 12px;
+}
+.CreateCohortModal .form-group .form-control {
+    padding: 0 24px;
+}
+.CreateCohortModal .form-group .react-datepicker-wrapper {
+    width: 100%;
+}
 /*  */
 /* .chartjs-render-monitor, */
 /* .chartjs-size-monitor { */
