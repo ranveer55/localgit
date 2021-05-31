@@ -500,6 +500,24 @@ export default class ApiService {
         });
     }
 
+    /**
+     * For one user
+     * @param {*} cohort_id 
+     * @param {*} date 
+     * @returns 
+     */
+    getUserTimeLogReportByCohort(cohort_id, date, userId) {
+        return axios.get(`${this.domain}/user-time-report-by-cohort/${cohort_id}/user/${userId}?date=${date}`, {
+            headers: {
+                'Accept': "application/json",
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
     getUserPlacementMistakesByCohort(cohort_id, date) {
         return axios.get(`${this.domain}/user-placement-mistakes-report-by-cohort/${cohort_id}?date=${date}`, {
             headers: {

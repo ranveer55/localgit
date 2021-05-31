@@ -96,6 +96,9 @@ class CompanyCohortsMistakeReport extends Component {
     const columns = this.state.report.length > 0 ? [{
       dataField: "userId",
       text: "Name",
+      formatter: (cell, row) => {
+        return <a href={`/time-log/${this.state.selectedCohort}/user/${cell}`} target="_blank" rel="noreferrer noopener">{cell}</a>
+      },
       // hidden: true,
       sort: true,
     }, ...Object.keys(this.state.report[0].statistics).map(name => ({
@@ -242,7 +245,7 @@ class CompanyCohortsMistakeReport extends Component {
                   <br />
                   {/* chart */}
                   <h3>Visualizations</h3>
-                  <div className="row">
+                  <div className="row" style={{ border: "1px solid #232323", marginBottom: "1rem" }}>
                     {/* success charts */}
                     {
                       Object.keys(this.state.report[0].statistics).map(name => (
@@ -253,7 +256,7 @@ class CompanyCohortsMistakeReport extends Component {
                       ))
                     }
                   </div>
-                  <div className="row">
+                  <div className="row" style={{ border: "1px solid #232323" }}>
                     {/* failure charts */}
                     {
                       Object.keys(this.state.report[0].statistics).map(name => (
