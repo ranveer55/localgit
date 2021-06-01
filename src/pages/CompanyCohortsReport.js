@@ -88,7 +88,7 @@ class CompanyCohortsReport extends Component {
                 {
                   this.state.dataLoaded ?
                     this.state.cohorts.length > 0 ?
-                      this.state.cohorts.map(cohort => {
+                      this.state.cohorts.filter(c => !c.is_dynamic).map(cohort => {
                         return (
                           <tr key={cohort.id}>
                             <td>{cohort.company_code}</td>
