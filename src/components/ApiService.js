@@ -606,6 +606,17 @@ export default class ApiService {
         });
     }
 
+    sendLastPlacementTestResultEmail(userId) {
+        return axios.get(`${this.domain}/user/send-last-placement-test-result/${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
     fetch(url, options) {
         // performs api calls sending the required authentication headers
         const headers = {

@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Link } from 'react-router-dom';
 
 class CompanyCohortsPlacementMistakeReport extends Component {
@@ -192,6 +192,7 @@ class CompanyCohortsPlacementMistakeReport extends Component {
                               <a
                                 target="_blank" rel="noreferrer noopener"
                                 href={`/company-cohorts/placement-mistakes/${this.state.selectedCohort}/user/${user.userId}`}><b>{user.name}</b></a>
+                              <PlacementResultButton userId={user.userId} />
                             </td>
                             {
                               Object.values(user.statistics).map((stat, index) => (
@@ -210,6 +211,36 @@ class CompanyCohortsPlacementMistakeReport extends Component {
       </main>
     );
   }
+}
+
+
+function PlacementResultButton({ userId }) {
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  return (
+    <span
+      style={{ margin: "0px 5px", cursor: "pointer", color: "blue", fontSize: "smaller" }}
+      onClick={() => {
+        if (!isLoading) {
+          setIsLoading(true);
+          global.api.sendLastPlacementTestResultEmail(userId)
+            .then(response => {
+              setIsLoading(false);
+              alert(response.message);
+            })
+            .catch(error => {
+              setIsLoading(false);
+              alert("Something went wrong!");
+            });
+        }
+      }}
+    >
+      {
+        isLoading ? "Loading..." : "Send Result Email"
+      }
+    </span>
+  )
 }
 
 export default CompanyCohortsPlacementMistakeReport;
