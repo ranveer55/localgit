@@ -67,8 +67,6 @@ class Header extends React.Component {
       };
       
   render() {
-    
-    
     return (
       <div>
         <div className="overlay"></div>
@@ -88,10 +86,15 @@ class Header extends React.Component {
                         <div className="header_left">
                             <a className="logo_box" href="index.html">
                                 <div className="logo">
-                                    <img src="images/logo.svg" alt="" />
+                                    <img src="/images/logo.svg" alt="" />
                                 </div>
                                 <div className="logo_description">Dashboard</div>
                             </a>
+                            <img src={`https://langappnew.s3.amazonaws.com/logos/${this.state.selectedOption[0].value}.jpeg`} style={{
+                                marginLeft: "12px",
+                                maxHeight: "36px",
+                                maxWidth: "120px"
+                            }} alt="" />
                         </div>
                         
                         <div className="header_right">
@@ -102,7 +105,6 @@ class Header extends React.Component {
                                 <div style={{'width':'350px'}}>
                                 <Select id="company" value={this.state.selectedOption}  onChange={this.handleChange} options={this.state.companyList} className="Select has-value is-clearable is-searchable Select--multi"
     classNamePrefix="company" isDisabled={this.state.companyDisable}/>
-                                
                                 </div>
                             </div>
                             
