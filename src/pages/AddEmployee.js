@@ -100,10 +100,10 @@ class AddEmployee extends Component {
           global.api.updateEmployee(params)
           .then(res => res)
           .then((json)=>{
-            if(json.data.message==="Student data updated Successfully."){
-              notification.type='success'
-              notification.title='Success';
-              notification.message=json.data.message
+             if (json.data.message === "Employee data updated Successfully.") {
+              notification.type = 'success'
+              notification.title = 'Success';
+              notification.message = "Student data updated Successfully.";
               store.addNotification({
                 ...notification
               });
@@ -129,10 +129,10 @@ class AddEmployee extends Component {
           global.api.addEmployee(params)
           .then(res => res)
           .then((json)=>{
-            if(json.data.message==="Student data inserted Successfully."){
+            if(json.data.message==="Employee data inserted Successfully."){
               notification.type='success'
               notification.title='Success';
-              notification.message=json.data.message
+              notification.message="Student data inserted Successfully.";
               store.addNotification({
                 ...notification
               });
