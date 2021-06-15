@@ -294,7 +294,7 @@ class CourseDetails extends Component {
   // showSubscriptionExpires
   showSubscriptionExpires(cell, row) {
     return (
-      <SubscriptionExpires cell={cell} row={row} />
+      <SubscriptionExpires cell={cell} row={row} comp={this} />
     );
   }
 
@@ -629,7 +629,7 @@ class CourseDetails extends Component {
   }
 }
 
-function SubscriptionExpires({ cell, row }) {
+function SubscriptionExpires({ cell, row, comp }) {
 
   const [showDatePicker, setShowDatePicker] = useState(row.subscriptionExpiresDate ? true : false);
 
@@ -662,16 +662,16 @@ function SubscriptionExpires({ cell, row }) {
               subscriptionExpiresDate: date,
             }).then(response => {
               // update the current state to incorporate the changes
-              const oldData = [...this.state.attendanceData];
+              const oldData = [...comp.state.attendanceData];
               const dataIndex = oldData.findIndex(d => d.userId === row.userId);
               const newRecord = { ...row, subscriptionExpiresDate: date }
               oldData.splice(dataIndex, 1, newRecord);
-              this.setState({
+              comp.setState({
                 attendanceData: oldData
               });
             })
           }}
-          selected={new Date(row.subscriptionExpiresDate)} />
+          selected={row.subscriptionExpiresDate ? new Date(row.subscriptionExpiresDate) : new Date()} />
       </label>
     </div>
   );
