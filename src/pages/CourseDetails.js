@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from "react-bootstrap-table2-paginator";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
@@ -262,7 +262,7 @@ class CourseDetails extends Component {
     global.api.getCourseDetails(global.companyCode, this.state.courseId)
       .then(res => res)
       .then((json) => {
-        this.setState({ attendanceData: json.registered.map(r => { r.courseNumber = json.courseNumber; r.subscriptionExpiresDate = new Date(r.subscriptionExpiresDate); return r; }) })
+        this.setState({ attendanceData: json.registered.map(r => { r.courseNumber = json.courseNumber; return r; }) })
         this.setState({ empData: json.availableToRegister })
       })
       .catch(err => {
@@ -294,33 +294,7 @@ class CourseDetails extends Component {
   // showSubscriptionExpires
   showSubscriptionExpires(cell, row) {
     return (
-      <div className="certificate-button-holder">
-        <label className="certificate-button">
-          <ReactDatePicker
-            showMonthDropdown
-            showYearDropdown
-            className=""
-            onChange={date => {
-              // save old date
-              const oldDate = row.subscriptionExpiresDate;
-              global.api.updateCourseSubscriptionExpiresDate({
-                courseNo: row.courseNumber,
-                userId: row.userId,
-                subscriptionExpiresDate: date,
-              }).then(response => {
-                // update the current state to incorporate the changes
-                const oldData = [...this.state.attendanceData];
-                const dataIndex = oldData.findIndex(d => d.userId === row.userId);
-                const newRecord = { ...row, subscriptionExpiresDate: date }
-                oldData.splice(dataIndex, 1, newRecord);
-                this.setState({
-                  attendanceData: oldData
-                });
-              })
-            }}
-            selected={row.subscriptionExpiresDate ? row.subscriptionExpiresDate : (new Date())} />
-        </label>
-      </div>
+      <SubscriptionExpires cell={cell} row={row} />
     );
   }
 
@@ -654,4 +628,53 @@ class CourseDetails extends Component {
     );
   }
 }
+
+function SubscriptionExpires({ cell, row }) {
+
+  const [showDatePicker, setShowDatePicker] = useState(row.subscriptionExpiresDate ? true : false);
+
+  if (!showDatePicker) {
+    return (
+      <div
+        style={{ cursor: "pointer" }}
+        title="Click to set"
+        onClick={e => {
+          setShowDatePicker(true);
+        }}>
+        Null
+      </div>
+    )
+  }
+
+  return (
+    <div className="certificate-button-holder">
+      <label className="certificate-button">
+        <ReactDatePicker
+          showMonthDropdown
+          showYearDropdown
+          className=""
+          onChange={date => {
+            // save old date
+            // const oldDate = row.subscriptionExpiresDate;
+            global.api.updateCourseSubscriptionExpiresDate({
+              courseNo: row.courseNumber,
+              userId: row.userId,
+              subscriptionExpiresDate: date,
+            }).then(response => {
+              // update the current state to incorporate the changes
+              const oldData = [...this.state.attendanceData];
+              const dataIndex = oldData.findIndex(d => d.userId === row.userId);
+              const newRecord = { ...row, subscriptionExpiresDate: date }
+              oldData.splice(dataIndex, 1, newRecord);
+              this.setState({
+                attendanceData: oldData
+              });
+            })
+          }}
+          selected={new Date(row.subscriptionExpiresDate)} />
+      </label>
+    </div>
+  );
+}
+
 export default CourseDetails;
