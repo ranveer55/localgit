@@ -367,6 +367,7 @@ class Employees extends Component {
             showMonthDropdown
             showYearDropdown
             className="border-bottom-black w-full"
+            dateFormat="dd-MM-yyyy"
             onChange={date => {
               // save old date
               const oldDate = row.subscriptionExpires;
