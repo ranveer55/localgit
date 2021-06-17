@@ -343,7 +343,13 @@ class AddEmployee extends Component {
                   </div>
               </div>
               <div className="form_row_btn">
-                <button className="btn btn-white btn-radius btn-size">
+                <button onClick={e => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (window.confirm("Are you sure?")) {
+                    window.location.href = "/students";
+                  }
+                }} className="btn btn-white btn-radius btn-size">
                   <span>Cancel</span>
                 </button>
                 <button className="btn btn-blue btn-radius btn-icon-left">
