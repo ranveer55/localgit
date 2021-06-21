@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 
@@ -97,7 +98,7 @@ class CompanyCohortsReport extends Component {
                               <a target="_blank" rel="noopener noreferrer" href={"/cohort-detail/" + cohort.id}>{cohort.name}</a>
                             </td>
                             <td> <a href={`https://api2.taplingua.com/app/user-cohort-registration/${cohort.id}`} target="_blank" rel="noopener noreferrer">Open Registration Form</a></td>
-                            <td>{cohort.start_date}</td>
+                            <td>{moment(cohort.start_date).format("DD-MM-YYYY")}</td>
                             <td
                               style={{
                                 color: "blue",
