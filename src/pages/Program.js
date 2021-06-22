@@ -5,15 +5,17 @@ class Program extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
-
-    this.state.dataLoaded = false;
-    this.state.userDataLoading = false;
-    this.state.userData = null;
-    this.state.program = null;
-    this.state.employees = [];
-    this.state.selectedCompany = global.companyCode;
-    this.state.selectedCompanyName = global.companyName;
+    this.state = {
+      programsLoaded: false,
+      dataLoaded: false,
+      userDataLoading: false,
+      userData: null,
+      program: null,
+      programs: [],
+      employees: [],
+      selectedCompany: global.companyCode,
+      selectedCompanyName: global.companyName,
+    };
   }
   getDate() {
     var tempDate = new Date();
@@ -24,8 +26,31 @@ class Program extends Component {
   componentDidMount() {
     const companyCode = this.state.selectedCompany;
 
+    // get the list of all programs
+
+    global.api.getProgramsList(
+      companyCode
+    )
+      .then(
+        data => {
+          this.setState({
+            programsLoaded: true,
+            programs: data.programs,
+          });
+          // this.setState({ batchData: data });
+        })
+      .catch(err => {
+        this.setState({
+          programsLoaded: true
+        });
+      });
+
+    this.loadProgram(1);
+  }
+
+  loadProgram(program_id = 1) {
     // Get program data
-    global.api.getProgramData(companyCode, 1)
+    global.api.getProgramData(this.state.selectedCompany, program_id)
       .then(
         data => {
           this.setState({
@@ -64,6 +89,35 @@ class Program extends Component {
       <main className="offset" id="content">
         <section className="section_box">
           <h1 className="title1 mb25">Program Data</h1>
+
+          {/* show list of program */}
+          {
+            this.state.programsLoaded ? (
+              <div className="title4 mb40">
+                <label>Select the data for program:</label>
+                <br />
+                <select
+                  style={{
+                    padding: "4px 10px",
+                    borderRadius: "4px",
+                    border: "1px solid gray",
+                  }}
+                  value={this.state.program ? this.state.program.id : ""}
+                  onChange={e => {
+                    this.loadProgram(e.target.value);
+                  }}>
+                  {
+                    this.state.programs.map(p => (
+                      <option value={p.id}>{p.name}</option>
+                    ))
+                  }
+                </select>
+              </div>
+            ) : (
+              <span>Loading programs...</span>
+            )
+          }
+
           <h4 className="title4 mb40">For {this.state.selectedCompanyName}</h4>
           <div className="row">
             <div className="col-6">
