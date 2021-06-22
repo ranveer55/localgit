@@ -93,6 +93,7 @@ class Employees extends Component {
     }
     this.state = {
       showActiveUsersOnly: false,
+      dataLoaded: false,
       columns: [{
         dataField: "i_d",
         text: "Id",
@@ -401,7 +402,7 @@ class Employees extends Component {
       .then(res => res)
       .then(data => {
         $('#employee-content').show();
-        this.setState({ data }); $('#spinner').hide();
+        this.setState({ data, dataLoaded: true });
       })
       .catch(err => {
         alert(err);
@@ -715,7 +716,7 @@ class Employees extends Component {
                     <div className="activated_employee">
                       <div className="activated_employee_it">
                         <h4 className="title4 mb10">Activated Students</h4>
-                        <div className="color5 fz28 fw700">{this.state.data.length}</div>
+                        <div className="color5 fz28 fw700">{this.state.data.filter(e => moment(e.activationDate).toString() !== "Invalid date").length}</div>
                       </div>
                       {/* <div className="activated_employee_it2">
                         <span>Available Slots: 36</span>
@@ -794,7 +795,9 @@ class Employees extends Component {
                     : <NoDataAvailable />}
 
                 </div>
-                <NoDataIndication />
+                { // loader
+                  this.state.dataLoaded ? <></> : <NoDataIndication />
+                }
               </section>
             </main>
           )
