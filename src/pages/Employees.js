@@ -747,7 +747,7 @@ class Employees extends Component {
                   </div>
                   <div className="head_box_c">
                     <form className="form_search">
-                      <SearchBar {...props.searchProps} placeholder="Search for employee" />
+                      <SearchBar {...props.searchProps} placeholder="Search for student" />
                       <button>
                         <img src="images/icons/search-icon.svg" alt="" />
                       </button>
