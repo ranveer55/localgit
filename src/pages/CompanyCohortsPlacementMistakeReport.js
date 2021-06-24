@@ -186,20 +186,12 @@ class CompanyCohortsPlacementMistakeReport extends Component {
                     </thead>
                     <tbody>
                       {
-                        this.state.report.map(user => (
-                          <tr key={user.userId}>
-                            <td>
-                              <a
-                                target="_blank" rel="noreferrer noopener"
-                                href={`/company-cohorts/placement-mistakes/${this.state.selectedCohort}/user/${user.userId}`}><b>{user.name}</b></a>
-                              <PlacementResultButton userId={user.userId} />
-                            </td>
-                            {
-                              Object.values(user.statistics).map((stat, index) => (
-                                <td key={index}>{stat}</td>
-                              ))
-                            }
-                          </tr>
+                        this.state.report.map((user, index) => (
+                          <UserRow
+                            user={user}
+                            index={index}
+                            key={user.userId}
+                            selectedCohort={this.state.selectedCohort} />
                         ))
                       }
                     </tbody>
@@ -211,6 +203,27 @@ class CompanyCohortsPlacementMistakeReport extends Component {
       </main>
     );
   }
+}
+
+function UserRow({ user, index, selectedCohort }) {
+
+  const total = Object.values(user.total);
+
+  return (
+    <tr key={user.userId}>
+      <td>
+        <a
+          target="_blank" rel="noreferrer noopener"
+          href={`/company-cohorts/placement-mistakes/${selectedCohort}/user/${user.userId}`}><b>{user.name}</b></a>
+        <PlacementResultButton userId={user.userId} />
+      </td>
+      {
+        Object.values(user.statistics).map((stat, index) => (
+          <td key={index}>{stat}/{total[index]}</td>
+        ))
+      }
+    </tr>
+  );
 }
 
 
