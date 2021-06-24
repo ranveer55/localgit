@@ -99,7 +99,7 @@ class CompanyCohortsPlacementMistakeReport extends Component {
               </h4>
               <div style={{ display: "flex" }}>
                 {/* date selector */}
-                <label>&nbsp;<b>Date: </b>&nbsp;</label>
+                {/* <label>&nbsp;<b>Date: </b>&nbsp;</label>
                 <select
                   defaultValue={this.state.selectedStartDate}
                   onChange={e => {
@@ -132,7 +132,7 @@ class CompanyCohortsPlacementMistakeReport extends Component {
                   <option value={2}>Yesterday</option>
                   <option value={3}>Last 7 Days</option>
                   <option value={4}>Last 31 Days</option>
-                </select>
+                </select> */}
                 {/* cohort selector */}
                 <label><b>Cohort: </b>&nbsp;</label>
                 <select
