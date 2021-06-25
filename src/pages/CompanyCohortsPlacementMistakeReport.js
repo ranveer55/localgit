@@ -210,6 +210,8 @@ function UserRow({ user, index, selectedCohort }) {
 
   const total = Object.values(user.total);
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const rowColor = "#D15FEE";
 
   return (
@@ -221,6 +223,14 @@ function UserRow({ user, index, selectedCohort }) {
             target="_blank" rel="noreferrer noopener"
             href={`/company-cohorts/placement-mistakes/${selectedCohort}/user/${user.userId}`}><b>{user.name}</b></a>
           <PlacementResultButton userId={user.userId} />
+          {
+            user.subsequentRounds.length > 0 ? (
+              <span style={{ margin: "0px 6px", cursor: "pointer", color: "blue", fontSize: "smaller" }}
+                onClick={e => {
+                  setIsExpanded(!isExpanded);
+                }}>expand</span>
+            ) : <></>
+          }
         </td>
         {
           Object.values(user.statistics).map((stat, index) => (
@@ -231,7 +241,7 @@ function UserRow({ user, index, selectedCohort }) {
       </tr>
       {/* subsequent rounds */}
       {
-        user.subsequentRounds.map((round, index) => (
+        isExpanded && user.subsequentRounds.map((round, index) => (
           <UserSubsequentRow round={round} key={index} rowColor={rowColor + "33"} />
         ))
       }
