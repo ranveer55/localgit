@@ -182,6 +182,7 @@ class CompanyCohortsPlacementMistakeReport extends Component {
                             <th key={name}>{name}</th>
                           ))
                         }
+                        <th>Last Attempt At</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -209,21 +210,55 @@ function UserRow({ user, index, selectedCohort }) {
 
   const total = Object.values(user.total);
 
+  const rowColor = ["#f0c17f", "#95fed0", "#bbee9e", "#95fed0"][Math.floor(Math.random() * 4)];
+
   return (
-    <tr key={user.userId}>
-      <td>
-        <a
-          target="_blank" rel="noreferrer noopener"
-          href={`/company-cohorts/placement-mistakes/${selectedCohort}/user/${user.userId}`}><b>{user.name}</b></a>
-        <PlacementResultButton userId={user.userId} />
-      </td>
+    <>
+      {/* last round */}
+      <tr style={{ backgroundColor: rowColor }}>
+        <td>
+          <a
+            target="_blank" rel="noreferrer noopener"
+            href={`/company-cohorts/placement-mistakes/${selectedCohort}/user/${user.userId}`}><b>{user.name}</b></a>
+          <PlacementResultButton userId={user.userId} />
+        </td>
+        {
+          Object.values(user.statistics).map((stat, index) => (
+            <td key={index}>{stat}/{total[index]}</td>
+          ))
+        }
+        <td style={{ textAlign: "right" }}>{moment(user.created_at).format("DD-MM-YYYY")}</td>
+      </tr>
+      {/* subsequent rounds */}
       {
-        Object.values(user.statistics).map((stat, index) => (
-          <td key={index}>{stat}/{total[index]}</td>
+        user.subsequentRounds.map((round, index) => (
+          <UserSubsequentRow round={round} key={index} rowColor={rowColor + "33"} />
         ))
       }
-    </tr>
+    </>
   );
+}
+
+
+function UserSubsequentRow({ round, rowColor }) {
+  try {
+    const total = Object.values(round.total);
+
+    return (
+      <tr style={{ backgroundColor: rowColor }}>
+        <td></td>
+        {
+          Object.values(round.mistakes).map((stat, index) => (
+            <td key={index}>{stat}/{total[index]}</td>
+          ))
+        }
+        <td style={{ textAlign: "right" }}>{moment(round.attempted_at).format("DD-MM-YYYY")}</td>
+      </tr>
+    );
+  } catch (error) {
+    console.log("round failed!");
+    return <></>;
+  }
 }
 
 
