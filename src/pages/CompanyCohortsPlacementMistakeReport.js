@@ -210,7 +210,7 @@ function UserRow({ user, index, selectedCohort }) {
 
   const total = Object.values(user.total);
 
-  const rowColor = ["#f0c17f", "#95fed0", "#bbee9e", "#95fed0"][Math.floor(Math.random() * 4)];
+  const rowColor = "#D15FEE";
 
   return (
     <>
