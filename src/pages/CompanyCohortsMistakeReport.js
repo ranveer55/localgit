@@ -112,7 +112,28 @@ class CompanyCohortsMistakeReport extends Component {
         }
       },
       sort: true
-    }))] : [];
+    })), {
+      dataField: "totalScore",
+      text: "Score",
+      sort: true,
+      formatter: (cell, row) => {
+        return <span className="numeric">{cell}</span>;
+      },
+    }, {
+      dataField: "lastLesson",
+      text: "Last Lesson",
+      sort: true,
+      formatter: (cell, row) => {
+        return <span className="numeric">{cell}</span>;
+      }
+    }, {
+      dataField: "totalPercentage",
+      text: "Total Percentage",
+      sort: true,
+      formatter: (cell, row) => {
+        return <span className="numeric">{cell + " %"}</span>;
+      }
+    }] : [];
 
     return (
       <main className="CompanyCohortsMistakeReport offset" id="content">
@@ -213,7 +234,10 @@ class CompanyCohortsMistakeReport extends Component {
                     data={
                       this.state.report.map(user => ({
                         userId: user.userId,
-                        ...(this.state.showPercentage ? user.incorrectPercentage : user.statistics)
+                        ...(this.state.showPercentage ? user.incorrectPercentage : user.statistics),
+                        totalScore: user.totalScore,
+                        lastLesson: user.lastLesson,
+                        totalPercentage: user.incorrectPercentage.Total,
                       }))
                     }
                     classes="table"
