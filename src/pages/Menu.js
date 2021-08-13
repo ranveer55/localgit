@@ -38,6 +38,15 @@ class Menu extends Component {
                             { title: "Cohort Assessment", url: "/company-cohorts/mistakes" },
                             { title: "Cohort Placement", url: "/company-cohorts/placement-mistakes" },
                         ]} />
+                        <li className="menu_item">
+                            <a className={pathName === '/interview-simulator' ? 'menu_link current' : 'menu_link'} href="/interview-simulator">
+                                <i className="menu_link_icon">
+                                    <img src="/images/icons/icon4.svg" alt="" />
+                                    <img src="/images/icons/icon4hover.svg" alt="" />
+                                </i>
+                                <span>Interview Simulator</span>
+                            </a>
+                        </li>
 
                         <li className="menu_item">
                             <a className={pathName === '/courses' ? 'menu_link current' : 'menu_link'} href="/courses">

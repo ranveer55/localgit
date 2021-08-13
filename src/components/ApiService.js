@@ -470,6 +470,18 @@ export default class ApiService {
         });
     }
 
+
+    getCompanyCohortSingle(cohort_id = 0) {
+        return axios.get(`${this.domain}/cohorts-by-company/` + cohort_id, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
     getUserMistakesByCohort(cohort_id, date) {
         return axios.get(`${this.domain}/user-mistakes-report-by-cohort/${cohort_id}?date=${date}`, {
             headers: {

@@ -5,7 +5,7 @@
   "dependencies": {
     "animate.css": "^3.7.2",
     "axios": "^0.21.1",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "jquery": "^3.6.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
@@ -67,7 +67,7 @@
     ]
   },
   "devDependencies": {
-    "postcss": "^7.0.18",
+    "postcss": "^7.0.36",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
