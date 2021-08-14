@@ -83,7 +83,7 @@ class InterviewSimulatorCohortPage extends Component {
                                                     {
                                                         cohort.users.map((user) => (
                                                             <tr>
-                                                                <td>{user.userId}</td>
+                                                                <td style={{ wordBreak: "break-all" }}>{user.userId}</td>
                                                                 <td>{user.FirstName}</td>
                                                                 <td>{user.LastName}</td>
                                                                 <td>{user.distinctAttempts}</td>
