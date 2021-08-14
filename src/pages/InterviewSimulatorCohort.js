@@ -63,7 +63,6 @@ class InterviewSimulatorCohortPage extends Component {
                         <div className="col-md-12">
                             <h1 className="title1 mb25">Company Cohorts</h1>
                             <h4 className="title4 mb40">
-                                For {this.state.selectedCompanyName}
                                 {
                                     cohort ? (
                                         <>
@@ -88,14 +87,14 @@ class InterviewSimulatorCohortPage extends Component {
                                                                 <td>{user.LastName}</td>
                                                                 <td>{user.distinctAttempts}</td>
                                                                 <td>{user.totalAttempts}</td>
-                                                                <td><a href="#">Show Activity</a></td>
+                                                                <td><a href={"/interview-simulator/" + this.cohortId + "/user-attempts/" + user.userId}>Show Activity</a></td>
                                                             </tr>
                                                         ))
                                                     }
                                                 </tbody>
                                             </table>
                                         </>
-                                    ) : <></>
+                                    ) : <>No Data</>
                                 }
                             </h4>
                         </div>

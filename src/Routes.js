@@ -35,6 +35,8 @@ import CompanyCohortCreate from './pages/CompanyCohortCreate';
 import CompanyUserTimeLogReport from './pages/CompanyUserTimeLogReport';
 import InterviewSimulatorPage from './pages/InterviewSimulator';
 import InterviewSimulatorCohortPage from './pages/InterviewSimulatorCohort';
+import InterviewSimulatorCohortUserAttempsPage from './pages/InterviewSimulatorCohortUserAttempts';
+import InterviewSimulatorCohortUserAttempsAiReviewPage from './pages/InterviewSimulatorCohortUserAttemptsAiReviewPage';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -57,6 +59,8 @@ class Router extends React.Component {
         <ProtectedRoute path="/company-cohorts/placement-mistakes" component={CompanyCohortsPlacementMistakeReport} />
         <ProtectedRoute path="/company-cohorts/new" component={CompanyCohortCreate} />
         <ProtectedRoute path="/company-cohorts" component={CompanyCohortsReport} />
+        <ProtectedRoute path="/interview-simulator/:cohortId/user-attempts/:userId/:attemptId" component={InterviewSimulatorCohortUserAttempsAiReviewPage} />
+        <ProtectedRoute path="/interview-simulator/:cohortId/user-attempts/:userId" component={InterviewSimulatorCohortUserAttempsPage} />
         <ProtectedRoute path="/interview-simulator/:cohortId" component={InterviewSimulatorCohortPage} />
         <ProtectedRoute path="/interview-simulator" component={InterviewSimulatorPage} />
         <ProtectedRoute path="/cohort-detail/:cohortId" component={CohortDetail} />
