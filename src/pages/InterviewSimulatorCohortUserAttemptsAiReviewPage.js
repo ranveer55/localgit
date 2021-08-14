@@ -60,7 +60,7 @@ class InterviewSimulatorCohortUserAttempsAiReviewPage extends Component {
                     this.setState({
                         userDataLoaded: true,
                         userData: data.user,
-                        prevAttempt: data.attempts.find(a => a.id === this.attemptId),
+                        prevAttempt: data.attempts.find(a => a.id == this.attemptId),
                     });
                     // this.setState({ batchData: data });
                 })
@@ -103,33 +103,47 @@ class InterviewSimulatorCohortUserAttempsAiReviewPage extends Component {
                                 }
                                 {
                                     prevAttempt && prevAttempt.ai_rating ? (
-                                        <div style={{ marginTop: "2rem" }}>
-                                            {JSON.stringify(prevAttempt.ai_rating)}
-                                            {/* review details */}
-                                            {
-                                                prevAttempt.ai_rating.reviewJSONArray ? (
-                                                    <table className="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Parameter Name</th>
-                                                                <th>Parameter Value</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {
-                                                                prevAttempt.ai_rating.reviewJSONArray.map(data => {
-                                                                    return (
-                                                                        <tr>
-                                                                            <td>{data.parameterName}</td>
-                                                                            <td>{data.parameterValue}</td>
-                                                                        </tr>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                ) : <>No review Json Found</>
-                                            }
+                                        <div className="row" style={{ marginTop: "2rem" }}>
+                                            <div className="col-md-12" style={{margin: "1rem 0"}}>
+                                                <h2>Question: {prevAttempt.lessonName}</h2>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <h3>Recorded Video</h3>
+                                                {/* video */}
+                                                {
+                                                    prevAttempt.filePath ? (
+                                                        <video src={"https://langappnew.s3.amazonaws.com/uploads/" + prevAttempt.filePath} width="480px" controls />
+                                                    ) : <div style={{ height: "100%" }}>Video Not Available</div>
+                                                }
+                                            </div>
+                                            <div className="col-md-6">
+                                                <h3>AI Rating</h3>
+                                                {/* review details */}
+                                                {
+                                                    prevAttempt.ai_rating.reviewJSONArray ? (
+                                                        <table className="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Parameter</th>
+                                                                    <th>Rating [0-5]</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {
+                                                                    prevAttempt.ai_rating.reviewJSONArray.map(data => {
+                                                                        return (
+                                                                            <tr key={data.parameterName}>
+                                                                                <td>{data.parameterName}</td>
+                                                                                <td>{data.parameterValue}</td>
+                                                                            </tr>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    ) : <>No Parameters available</>
+                                                }
+                                            </div>
                                         </div>
                                     ) : (
                                         <div style={{ marginTop: "2rem" }}>

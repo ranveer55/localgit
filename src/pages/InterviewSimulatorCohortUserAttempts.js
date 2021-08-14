@@ -114,7 +114,9 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                             <tbody>
                                                 {
                                                     prevAttempts.map((prevAttempt, index) => (
-                                                        <tr key={prevAttempt.uuid ? prevAttempt.uuid : prevAttempt.id}>
+                                                        <tr key={prevAttempt.uuid ? prevAttempt.uuid : prevAttempt.id} style={{ cursor: "pointer" }} onClick={e => {
+                                                            window.location.href = `/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`;
+                                                        }}>
                                                             <td>{index + 1}</td>
                                                             <td style={{ wordBreak: "break-all" }}>
                                                                 {
