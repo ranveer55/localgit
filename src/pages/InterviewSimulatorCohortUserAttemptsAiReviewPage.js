@@ -102,9 +102,9 @@ class InterviewSimulatorCohortUserAttempsAiReviewPage extends Component {
                                     ) : <></>
                                 }
                                 {
-                                    prevAttempt && prevAttempt.ai_rating ? (
+                                    prevAttempt ? (
                                         <div className="row" style={{ marginTop: "2rem" }}>
-                                            <div className="col-md-12" style={{margin: "1rem 0"}}>
+                                            <div className="col-md-12" style={{ margin: "1rem 0" }}>
                                                 <h2>Question: {prevAttempt.lessonName}</h2>
                                             </div>
                                             <div className="col-md-6">
@@ -116,38 +116,46 @@ class InterviewSimulatorCohortUserAttempsAiReviewPage extends Component {
                                                     ) : <div style={{ height: "100%" }}>Video Not Available</div>
                                                 }
                                             </div>
-                                            <div className="col-md-6">
-                                                <h3>AI Rating</h3>
-                                                {/* review details */}
-                                                {
-                                                    prevAttempt.ai_rating.reviewJSONArray ? (
-                                                        <table className="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Parameter</th>
-                                                                    <th>Rating [0-5]</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {
-                                                                    prevAttempt.ai_rating.reviewJSONArray.map(data => {
-                                                                        return (
-                                                                            <tr key={data.parameterName}>
-                                                                                <td>{data.parameterName}</td>
-                                                                                <td>{data.parameterValue}</td>
-                                                                            </tr>
-                                                                        )
-                                                                    })
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    ) : <>No Parameters available</>
-                                                }
-                                            </div>
+                                            {
+                                                prevAttempt.ai_rating ? (
+                                                    <div className="col-md-6">
+                                                        <h3>AI Rating</h3>
+                                                        {/* review details */}
+                                                        {
+                                                            prevAttempt.ai_rating.reviewJSONArray ? (
+                                                                <table className="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Parameter</th>
+                                                                            <th>Rating [0-5]</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {
+                                                                            prevAttempt.ai_rating.reviewJSONArray.map(data => {
+                                                                                return (
+                                                                                    <tr key={data.parameterName}>
+                                                                                        <td>{data.parameterName}</td>
+                                                                                        <td>{data.parameterValue}</td>
+                                                                                    </tr>
+                                                                                )
+                                                                            })
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            ) : <>No Parameters available</>
+                                                        }
+                                                    </div>
+                                                ) : (
+                                                    <div style={{ marginTop: "2rem" }}>
+                                                        No Ai Rating Found!
+                                                    </div>
+                                                )
+                                            }
                                         </div>
                                     ) : (
                                         <div style={{ marginTop: "2rem" }}>
-                                            No Ai Rating Found!
+                                            No Data Found!
                                         </div>
                                     )
                                 }
