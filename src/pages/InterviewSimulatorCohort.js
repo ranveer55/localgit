@@ -75,6 +75,8 @@ class InterviewSimulatorCohortPage extends Component {
                                                         <th>Last Name</th>
                                                         <th>Questions Answered</th>
                                                         <th>Attempts</th>
+                                                        <th>Asked for Review</th>
+                                                        <th>Reviews Completed</th>
                                                         <th> </th>
                                                     </tr>
                                                 </thead>
@@ -87,6 +89,8 @@ class InterviewSimulatorCohortPage extends Component {
                                                                 <td>{user.LastName}</td>
                                                                 <td>{user.distinctAttempts}</td>
                                                                 <td>{user.totalAttempts}</td>
+                                                                <td>{user.Asked_for_Review}</td>
+                                                                <td>{user.Reviews_Completed}</td>
                                                                 <td><a href={"/interview-simulator/" + this.cohortId + "/user-attempts/" + user.userId}>Show Activity</a></td>
                                                             </tr>
                                                         ))
