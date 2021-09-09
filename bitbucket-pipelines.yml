@@ -21,17 +21,7 @@ pipelines:
             - apt-get update && apt-get install -y rsync
             - unset CI
             - npm install
-            - npm rebuild node-sass
-            - npm run build
-            - rsync -r -v -e ssh ./build/ ubuntu@3.66.13.135:/var/www/subdomains/dashboard2 --delete-before --exclude '.git' --exclude '.htaccess'
-
-pipelines:
-  default:
-    - step:
-        caches:
-          - node
-        script: # Modify the commands below to build your repository.
-          - apt-get update && apt-get install -y rsync
+ate && apt-get install -y rsync
           - unset CI
           - npm install
           - npm run build
