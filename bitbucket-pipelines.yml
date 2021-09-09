@@ -21,8 +21,5 @@ pipelines:
             - apt-get update && apt-get install -y rsync
             - unset CI
             - npm install
-ate && apt-get install -y rsync
-          - unset CI
-          - npm install
-          - npm run build
-          - rsync -r -v -e ssh ./build/ ubuntu@3.66.13.135:/var/www/subdomains/dashboard2 --delete-before --exclude '.git' --exclude '.htaccess'
+            - npm run build
+            - rsync -r -v -e ssh ./build/ ubuntu@3.66.13.135:/var/www/subdomains/dashboard2 --delete-before --exclude '.git' --exclude '.htaccess'
