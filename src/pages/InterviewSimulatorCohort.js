@@ -35,7 +35,7 @@ class InterviewSimulatorCohortPage extends Component {
     downloadCSV(data) {
 
         //define the heading for each row of the data  
-        var csv = ['Email', 'Name', 'Contact Number', 'Location', 'Registration Date', 'Activation Date', 'Points Scored', '% Completed', '\n'].join(",");
+        var csv = ['Email', 'First Name','Last Name', 'Questions Answered', 'Attempts', 'Asked for Review', 'Reviews Completed', '\n'].join(",");
 
         //merge the data with CSV  
         data.forEach(function (row) {
@@ -47,7 +47,7 @@ class InterviewSimulatorCohortPage extends Component {
         hiddenElement.target = '_blank';
 
         //provide the name for the CSV file to be downloaded  
-        hiddenElement.download = 'Registration and Activation report.csv';
+        hiddenElement.download = `${this.state.cohort.name}.csv`;
         hiddenElement.click();
     }
 
@@ -191,16 +191,15 @@ class InterviewSimulatorCohortPage extends Component {
                                             <div style={{ textAlign: "right", marginBottom: "1rem" }}>
                                                 <button
                                                     onClick={e => {
-                                                        this.downloadCSV(this.state.allRegisteredUsers.map(u => {
+                                                        this.downloadCSV(this.state.users.map(u => {
                                                             return [
                                                                 u.userId,
-                                                                u.FirstName + " " + u.LastName,
-                                                                u.Mobile,
-                                                                u.Location ? u.Location.replace(",", " ") : "",
-                                                                u.accountCreationDate,
-                                                                u.activationDate,
-                                                                u.totalScore,
-                                                                parseInt(u.courseCompleted).toFixed(2)
+                                                                u.FirstName ,
+                                                                u.LastName,
+                                                                u.distinctAttempts,
+                                                                u.totalAttempts,
+                                                                u.Asked_for_Review,
+                                                                u.Reviews_Completed,
                                                             ];
                                                         }));
                                                     }}
@@ -211,7 +210,7 @@ class InterviewSimulatorCohortPage extends Component {
                                             <table className="table" style={{ width: '100%' }}>
                                                 <thead>
                                                     <tr>
-                                                        <th>Email</th>
+                                                        <th style={{width:'250px'}}>Email</th>
                                                         <th>First Name</th>
                                                         <th>Last Name</th>
                                                         <th>Questions Answered</th>
