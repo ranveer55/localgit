@@ -631,6 +631,29 @@ export default class ApiService {
         });
     }
 
+    getAllPracticeSets() {
+        // practice-sets/all
+        return axios.get(`${this.domain}/practice-sets/all`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
+    getCohortPlacementSets(cohort_id = 0) {
+        return axios.get(`${this.domain}/cohort/${cohort_id}/get-practice-sets`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
     sendLastPlacementTestResultEmail(userId) {
         return axios.get(`${this.domain}/user/send-last-placement-test-result/${userId}`, {
             headers: {

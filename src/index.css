@@ -8822,6 +8822,110 @@ label.certificate-button a {
 .CreateCohortModal .form-group .react-datepicker-wrapper {
     width: 100%;
 }
+.interview-simulator-dropdown-holder {
+  position: relative;
+  padding-bottom: 1rem;
+}
+.interview-simulator-dropdown {
+  font-weight: bolder;
+  font-size: 23px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: white;
+  box-shadow: 0 0 5px 0 #0001;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.interview-simulator-dropdown:hover {
+  box-shadow: 0 0 5px 0 #0003;
+}
+.interview-simulator-dropdown-content {
+  display: none;
+}
+.interview-simulator-dropdown-holder:hover .interview-simulator-dropdown-content {
+  display: block;
+  position: absolute;
+  right: 2rem;
+  top: 2.5rem;
+  background-color: white;
+  border: 1px solid #0003;
+  border-radius: 6px;
+}
+.interview-simulator-dropdown-link {
+  padding: 5px 10px;
+  cursor: pointer;
+  width: 200px;
+  color: #000a !important;
+  text-decoration: none;
+}
+.interview-simulator-dropdown-link:hover {
+  background-color: #0001;
+}
+.remove-practice-set, .link {
+  color: blue;
+  cursor: pointer;
+}
+.add-practice-set-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0002;
+}
+.add-practice-set-modal-body {
+  border-radius: 6px;
+  border: 1px solid body;
+  background-color: white;
+  padding: 2rem 3rem;
+  min-width: 720px;
+}
+.add-practice-set-modal-button-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.practice-set-choice {
+  display: flex;
+  align-items: center;
+}
+.practice-set-choice-selector {
+  width: 24px;
+  height: 24px;
+  border: 1px solid gray;
+  margin-right: 1rem;
+  display: block;
+}
+.practice-set-choice-selector.selected::after {
+  display: block;
+  content: "";
+  width: 24px;
+  border-bottom: 4px solid gray;
+  border-left: 4px solid gray;
+  height: 16px;
+  transform: rotate(-45deg);
+}
+.add-practice-set-modal-button {
+  padding: 0.5rem 0;
+  width: 250px;
+  border-radius: 2rem;
+  font-size: larger;
+  border: 1px solid #000a;
+  margin: 0 5px;
+  text-align: center;
+  cursor: pointer;
+}
+.add-practice-set-modal-button.green {
+  background-color: #188978;
+  border-color: #188978;
+  color: white;
+}
 /*  */
 /* .chartjs-render-monitor, */
 /* .chartjs-size-monitor { */
