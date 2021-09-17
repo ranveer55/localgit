@@ -267,6 +267,7 @@ if(data){
         Reviews_Completed.push(data.Reviews_Completed[label]);
     }
 }
+labels = labels.map(l=> moment(l).format('DD-MM-YYYY'))
  
 
 const datasets = [
