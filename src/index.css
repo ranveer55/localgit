@@ -8894,6 +8894,7 @@ label.certificate-button a {
 .practice-set-choice {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .practice-set-choice-selector {
   width: 24px;

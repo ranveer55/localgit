@@ -643,7 +643,36 @@ export default class ApiService {
         });
     }
 
-    getCohortPlacementSets(cohort_id = 0) {
+    addPracticeSetsToCohort(cohortId, practiceSetIds = []) {
+        // practice-sets/all
+        return axios.post(`${this.domain}/cohort/add-practice-set`, {
+            cohortId,
+            practiceSetIds
+        }, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+
+    }
+
+    removePracticeSetFromCohort(cohortId, practiceSetId) {
+        // practice-sets/all
+        return axios.delete(`${this.domain}/cohort/${cohortId}/remove-practice-set/${practiceSetId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+
+    }
+
+    getCohortPracticeSets(cohort_id = 0) {
         return axios.get(`${this.domain}/cohort/${cohort_id}/get-practice-sets`, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
