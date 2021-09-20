@@ -144,6 +144,13 @@ class AddPracticeSetToCohortPage extends Component {
                             </thead>
                             <tbody>
                                 {
+                                    this.state.practiceSets.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="4" style={{textAlign: "center"}}>No practice sets added yet!</td>
+                                        </tr>
+                                    ) : <></>
+                                }
+                                {
                                     this.state.practiceSets.map(practiceSet => (
                                         <tr key={practiceSet.practiceSetId}>
                                             <td>{practiceSet.practiceSetId}</td>
