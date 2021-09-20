@@ -471,8 +471,18 @@ export default class ApiService {
     }
 
 
-    getCompanyCohortSingle(cohort_id = 0) {
-        return axios.get(`${this.domain}/cohorts-by-company/` + cohort_id, {
+    getCompanyCohortSingle(cohort_id = 0,) {
+        return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    getCompanyCohortSingleReport(cohort_id = 0, startDate='', endDate='') {
+        return axios.get(`${this.domain}/cohorts-by-company/report/${cohort_id}?startDate=${startDate}&endDate=${endDate}`, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },

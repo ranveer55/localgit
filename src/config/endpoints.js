@@ -1,7 +1,7 @@
 const localhost = {
-    ws: 'https://staging.taplingua.com:3500',
-    api: 'http://localhost:8181/api',
-    base: 'https://api2.taplingua.com',
+    ws: 'http://localhost:3005',
+    api: 'https://apistaging.taplingua.com/api',
+    base: 'https://apistaging.taplingua.com',
     social: {
         google: {
             profile: '/auth/google/profile'

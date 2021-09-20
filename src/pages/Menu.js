@@ -66,7 +66,7 @@ class Menu extends Component {
                                 <span>Leaderboard</span>
                             </a>
                         </li>
-                        {
+                        {/* {
                             (typeof localStorage['access_level'] === "string") && parseInt(localStorage['access_level']) !== accessLevels.AUDITOR ?
                                 <li className="menu_item">
                                     <a className={pathName === '/campaigns' ? 'menu_link current' : 'menu_link'} href="/campaigns">
@@ -87,7 +87,7 @@ class Menu extends Component {
                                 </i>
                                 <span>Messaging</span>
                             </a>
-                        </li>
+                        </li> */}
                         <li className="menu_item">
                             <a className={pathName === '/program' ? 'menu_link current' : 'menu_link'} href="/program">
                                 <i className="menu_link_icon">
