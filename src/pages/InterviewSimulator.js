@@ -82,6 +82,7 @@ class InterviewSimulatorPage extends Component {
                                     <th>Registration Link</th>
                                     <th>Start Date</th>
                                     <th>Users</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,6 +110,18 @@ class InterviewSimulatorPage extends Component {
                                                                     color: "blue",
                                                                     cursor: "pointer"
                                                                 }}>{cohort.users.length} User(s)</Link>
+                                                        </td>
+                                                        <td className="interview-simulator-dropdown-holder">
+                                                            <span className="interview-simulator-dropdown">⋮</span>
+                                                            <div className="interview-simulator-dropdown-content">
+                                                                <Link
+                                                                    to={"/interview-simulator/" + cohort.id + "/add-practice-set"}
+                                                                    className="interview-simulator-dropdown-link"
+                                                                    style={{
+                                                                        color: "blue",
+                                                                        cursor: "pointer"
+                                                                    }}>Add Practice Sets</Link>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 )

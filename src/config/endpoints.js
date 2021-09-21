@@ -14,8 +14,8 @@ const localhost = {
 
 const server = {
     ws: 'https://staging.taplingua.com:3500',
-    api: 'https://api2.taplingua.com/api',
-    base: 'https://api2.taplingua.com',
+    api: (window.location.hostname === "dashboard2.taplingua.com" ? "https://api2.taplingua.com/api" : "https://apistaging.taplingua.com/api"),
+    base: (window.location.hostname === "dashboard2.taplingua.com" ? "https://api2.taplingua.com" : "https://apistaging.taplingua.com"),
     social: {
         google: {
             profile: '/auth/google/profile'
