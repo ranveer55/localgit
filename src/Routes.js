@@ -74,8 +74,7 @@ class Router extends React.Component {
         {/* <ProtectedRoute path="/firebase" component={Firebase} /> */}
         {
           (typeof localStorage['access_level'] === "string") && parseInt(localStorage['access_level']) !== accessLevels.AUDITOR ?
-            <ProtectedRoute path="/campaigns" component={Campaigns} /> :
-            ''
+            <ProtectedRoute path="/campaigns" component={Campaigns} /> : ''
         }
         <ProtectedRoute path="/chats" component={Messaging} />
         <ProtectedRoute path="/overview" component={OverView} />

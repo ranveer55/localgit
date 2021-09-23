@@ -652,6 +652,28 @@ export default class ApiService {
         });
     }
 
+    getUserAccessLevel(userId) {
+        return axios.get(`${this.domain}/user/accesslevel/${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
+    makeUserlevel3(userId) {
+        return axios.post(`${this.domain}/user/makelevel3/${userId}`, {}, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
     fetch(url, options) {
         // performs api calls sending the required authentication headers
         const headers = {
