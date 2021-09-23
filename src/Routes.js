@@ -38,6 +38,7 @@ import InterviewSimulatorCohortPage from './pages/InterviewSimulatorCohort';
 import InterviewSimulatorCohortUserAttempsPage from './pages/InterviewSimulatorCohortUserAttempts';
 import InterviewSimulatorCohortUserAttempsAiReviewPage from './pages/InterviewSimulatorCohortUserAttemptsAiReviewPage';
 import AddPracticeSetToCohortPage from './pages/cohort/AddCohortPracticeSet';
+import ManageQuetions from './pages/cohort/ManageQuetions';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -60,10 +61,12 @@ class Router extends React.Component {
         <ProtectedRoute path="/company-cohorts/placement-mistakes" component={CompanyCohortsPlacementMistakeReport} />
         <ProtectedRoute path="/company-cohorts/new" component={CompanyCohortCreate} />
         <ProtectedRoute path="/company-cohorts" component={CompanyCohortsReport} />
-        <ProtectedRoute path="/interview-simulator/:cohortId/user-attempts/:userId/:attemptId" component={InterviewSimulatorCohortUserAttempsAiReviewPage} />
-        <ProtectedRoute path="/interview-simulator/:cohortId/user-attempts/:userId" component={InterviewSimulatorCohortUserAttempsPage} />
-        <ProtectedRoute path="/interview-simulator/:cohortId/add-practice-set" component={AddPracticeSetToCohortPage} />
-        <ProtectedRoute path="/interview-simulator/:cohortId" component={InterviewSimulatorCohortPage} />
+        
+        <ProtectedRoute exact path="/interview-simulator/:cohortId/user-attempts/:userId/:attemptId" component={InterviewSimulatorCohortUserAttempsAiReviewPage} />
+        <ProtectedRoute exact path="/interview-simulator/:cohortId/user-attempts/:userId" component={InterviewSimulatorCohortUserAttempsPage} />
+        <ProtectedRoute exact path="/interview-simulator/:cohortId/add-practice-set" component={AddPracticeSetToCohortPage} />
+        <ProtectedRoute exact path="/manage-quetions/:cohortId/:practicId" component={ManageQuetions} />
+        <ProtectedRoute exact path="/interview-simulator/:cohortId" component={InterviewSimulatorCohortPage} />
         <ProtectedRoute path="/interview-simulator" component={InterviewSimulatorPage} />
         <ProtectedRoute path="/cohort-detail/:cohortId" component={CohortDetail} />
         <ProtectedRoute path="/cohort-csv-register/:cohortId" component={CohortRegisterCSV} />
