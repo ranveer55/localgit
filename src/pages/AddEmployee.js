@@ -271,7 +271,7 @@ class AddEmployee extends Component {
                           dismiss: {
                             duration: 2000,
                             onScreen: true
-                          }
+                          },
                           type: 'success',
                           title: "User made admin!",
                           message: ""
