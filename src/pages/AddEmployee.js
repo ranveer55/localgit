@@ -264,7 +264,14 @@ class AddEmployee extends Component {
                           userIsNotAdmin: false,
                           checkedIfUserIsAdmin: true
                         });
-                        store.addNotification({
+                        store.addNotification({               // 'default', 'success', 'info', 'warning'
+                          container: 'top-right',                // where to position the notifications
+                          animationIn: ["animated", "fadeIn"],     // animate.css classes that's applied
+                          animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
+                          dismiss: {
+                            duration: 2000,
+                            onScreen: true
+                          },
                           type: 'success',
                           title: "User made admin!",
                           message: ""
@@ -274,7 +281,14 @@ class AddEmployee extends Component {
                         store.addNotification({
                           type: 'danger',
                           title: "Operation failed!",
-                          message: ""
+                          message: "",               // 'default', 'success', 'info', 'warning'
+                          container: 'top-right',                // where to position the notifications
+                          animationIn: ["animated", "fadeIn"],     // animate.css classes that's applied
+                          animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
+                          dismiss: {
+                            duration: 2000,
+                            onScreen: true
+                          }
                         });
                       });
                   }}>
