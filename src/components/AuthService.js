@@ -41,7 +41,7 @@ export default class AuthService {
             })
         }).then(res => {
             if(res.token){
-                if(res.accesslevel!== "0"){
+                if(res.accesslevel!= "0"){
                     this.setToken(res.token) // Setting the token in localStorage
                     this.setProfile(res)
                     return Promise.resolve(res);
