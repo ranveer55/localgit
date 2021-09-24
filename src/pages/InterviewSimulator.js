@@ -59,7 +59,7 @@ class InterviewSimulatorPage extends Component {
                         style={{
                             color: "blue",
                             cursor: "pointer"
-                        }}>Add Practice Sets</Link>
+                        }}>Manage Practice Sets</Link>
                 </div>
             </div>);
     }
@@ -116,7 +116,7 @@ class InterviewSimulatorPage extends Component {
                         <div className="col-md-6">
                             <h1 className="title1 mb25">Manage Interview Simulator Cohorts</h1>
                             <h4 className="title4 mb40">
-                                For {this.state.selectedCompanyName ? this.state.selectedCompanyName:'' }
+                                For {this.state.selectedCompanyName !='null' ? this.state.selectedCompanyName:'' }
                             </h4>
                             <div>
                                 <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic/${this.state.selectedCompany}`} target="_blank" rel="noopener noreferrer" style={{

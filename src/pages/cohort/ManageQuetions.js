@@ -270,7 +270,7 @@ class ManageQuetions extends Component {
             {
                 dataField: 'created_at',
                 text: 'Date Created',
-                formatter: () => moment().format('DD/MM/YYYY').toString(),
+                formatter: (created_at) => moment(created_at).format('DD/MM/YYYY').toString(),
             },
             {
                 dataField: 'created_at',
@@ -343,35 +343,35 @@ class ManageQuetions extends Component {
                                         <div className="row" style={{ padding: '2px 10px' }}>
                                             <div className="col-md-3">Practice Question</div>
                                             <div className="col-md-9">
-                                                <input style={{width:'100%'}} value={newQuestion.practiceSetQuestion} style={{ border: '1px solid', padding: 10, borderRadius: 5 }} name="practiceSetQuestion" placeholder="Practice Question" onChange={this.onChange} />
+                                                <textarea value={newQuestion.practiceSetQuestion} style={{ width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} name="practiceSetQuestion" placeholder="Practice Question" onChange={this.onChange} />
 
                                             </div>
                                         </div>
                                         <div className="row" style={{ padding: '2px 10px' }}>
                                             <div className="col-md-3">Hints</div>
                                             <div className="col-md-9">
-                                                <input  style={{width:'100%'}} value={newQuestion.practiceQuestionText} name="practiceQuestionText" style={{ border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Hints" onChange={this.onChange} />
+                                                <textarea value={newQuestion.practiceQuestionText} name="practiceQuestionText" style={{width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Hints" onChange={this.onChange} />
 
                                             </div>
                                         </div>
                                         <div className="row" style={{ padding: '2px 10px' }}>
                                             <div className="col-md-3">Reference Answer</div>
                                             <div className="col-md-9">
-                                                <input  style={{width:'100%'}} name="referenceAnswer" value={newQuestion.referenceAnswer} style={{ border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Reference Answer" onChange={this.onChange} />
+                                                <textarea name="referenceAnswer" value={newQuestion.referenceAnswer} style={{ width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Reference Answer" onChange={this.onChange} />
 
                                             </div>
                                         </div>
                                         <div className="row" style={{ padding: '2px 10px' }}>
                                             <div className="col-md-3">Video</div>
                                             <div className="col-md-9">
-                                                <input  style={{width:'100%'}}  name="video" type="file" onChange={this.onChangeFile} accept=".mp4" />
+                                                <input   name="video" type="file" onChange={this.onChangeFile} accept=".mp4" />
 
                                             </div>
                                         </div>
 
                                     </div>
 
-                                    {uploading && <span style={{color:'green'}}> {newQuestion && newQuestion.id ? 'Question Updating...' :'Question Adding...'} </span>}
+                                    {uploading && <span style={{color:'green'}}> The question is being saved to the database.</span>}
                                     <div style={{ display: 'flex' }}>
                                         <div disabled={!this.state.newPracticeName} style={{ backgroundColor: '#4AB93C', color:'#fff' }} className="add-practice-set-modal-button" onClick={this.addPracticeSetQuestion}>Save</div>
                                         <div className="add-practice-set-modal-button" onClick={e => {
