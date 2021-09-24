@@ -60,11 +60,11 @@ class AddPracticeSetToCohortPage extends Component {
             .then(
                 data => {
                     const dt = this.state.availablePracticeSets;
-                    dt.push(data.practiceSet)
+                    dt.push(data.practiceSet);
                     this.setState({
-                        addPracticeSetAddModal: false,
+                        selectedPracticeSets: [data.practiceSet.practiceSetId],
                         availablePracticeSets: dt,
-                    });
+                    },()=>this.addd());
                 })
             .catch(err => {
                 this.setState({
@@ -159,6 +159,26 @@ class AddPracticeSetToCohortPage extends Component {
 
                 </div>
             </div>)
+    }
+
+    addd =() =>{
+        if (this.state.selectedPracticeSets.length === 0) {
+            return alert("Please select atleast one practice set to add!");
+        }
+        // save practice sets
+        global.api.addPracticeSetsToCohort(this.cohortId, this.state.selectedPracticeSets)
+            .then((response) => {
+                // now add these to practiceSets
+                this.setState({
+                    practiceSets: [...this.state.practiceSets, ...response.cohortPracticeSets],
+                    alreadySelectedPracticeSets: [...this.state.practiceSets, ...response.cohortPracticeSets].map(e => e.practiceSetId),
+                    selectedPracticeSets: [],
+                    showPracticeSetAddModal: false,
+                    addPracticeSetAddModal: false
+                });
+            }).catch(err => {
+                alert("Something went wrong!");
+            });
     }
 
 
@@ -271,24 +291,7 @@ class AddPracticeSetToCohortPage extends Component {
                                     <div className="add-practice-set-modal-button-holder" style={{ margin: "1rem 0" }}>
                                         {
                                             this.state.selectedPracticeSets.length === 0 ? <></> : (
-                                                <div className="add-practice-set-modal-button green" onClick={e => {
-                                                    if (this.state.selectedPracticeSets.length === 0) {
-                                                        return alert("Please select atleast one practice set to add!");
-                                                    }
-                                                    // save practice sets
-                                                    global.api.addPracticeSetsToCohort(this.cohortId, this.state.selectedPracticeSets)
-                                                        .then((response) => {
-                                                            // now add these to practiceSets
-                                                            this.setState({
-                                                                practiceSets: [...this.state.practiceSets, ...response.cohortPracticeSets],
-                                                                alreadySelectedPracticeSets: [...this.state.practiceSets, ...response.cohortPracticeSets].map(e => e.practiceSetId),
-                                                                selectedPracticeSets: [],
-                                                                showPracticeSetAddModal: false
-                                                            });
-                                                        }).catch(err => {
-                                                            alert("Something went wrong!");
-                                                        });
-                                                }}>Add</div>
+                                                <div className="add-practice-set-modal-button green" onClick={this.addd}>Add</div>
                                             )
                                         }
                                         <div className="add-practice-set-modal-button" onClick={e => {
