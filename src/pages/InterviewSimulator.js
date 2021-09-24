@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-
+import BootstrapTable from 'react-bootstrap-table-next';
 class InterviewSimulatorPage extends Component {
 
     constructor(props) {
@@ -48,10 +48,73 @@ class InterviewSimulatorPage extends Component {
             });
     }
 
-
+    formatter = (cell, row) => {
+        return (
+            <div className="interview-simulator-dropdown-holder">
+                <span className="interview-simulator-dropdown">⋮</span>
+                <div className="interview-simulator-dropdown-content">
+                    <Link
+                        to={"/interview-simulator/" + row.id + "/add-practice-set"}
+                        className="interview-simulator-dropdown-link"
+                        style={{
+                            color: "blue",
+                            cursor: "pointer"
+                        }}>Add Practice Sets</Link>
+                </div>
+            </div>);
+    }
 
     render() {
+        const columns = [
+            {
+                dataField: 'company_code',
+                text: 'Company Code',
+                width: '20px'
+            },
+            {
+                dataField: 'id',
+                text: 'Cohort ID'
+            },
+            {
+                dataField: 'practiceSetQuestion',
+                text: 'Name',
+                formatter: (e, row) => <a target="_blank" rel="noopener noreferrer" href={"/cohort-detail/" + row.id}>{row.name}</a>
+            },
+            {
+                dataField: 'practiceQuestionText',
+                text: 'Registration Link',
+                formatter: (e, row) => <a href={`https://api2.taplingua.com/app/user-cohort-registration/${row.id}`} target="_blank" rel="noopener noreferrer">Open Registration Form</a>
+            },
 
+            {
+                dataField: 'created_at',
+                text: 'Date Created',
+                formatter: () => moment().format('DD/MM/YYYY').toString(),
+            },
+            {
+                dataField: 'id',
+                text: 'Users',
+                formatter: (id, row) => <td
+                    style={{
+                        color: "blue",
+                        cursor: "pointer"
+                    }}>
+                    <Link
+                        to={"/interview-simulator/" + row.id}
+                        style={{
+                            color: "blue",
+                            cursor: "pointer"
+                        }}>{row.users.length} User(s)</Link>
+                </td>,
+            },
+            {
+                dataField: 'id',
+                text: 'Action',
+                formatter: this.formatter,
+            },
+
+
+        ];
 
         return (
             <main className="offset" id="content">
@@ -73,71 +136,19 @@ class InterviewSimulatorPage extends Component {
                         </div>
                     </div>
                     <div>
-                        <table style={{ width: "100%" }}>
-                            <thead style={{ textAlign: "left" }}>
-                                <tr>
-                                    <th>Company Code</th>
-                                    <th>Cohort ID</th>
-                                    <th>Name</th>
-                                    <th>Registration Link</th>
-                                    <th>Start Date</th>
-                                    <th>Users</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    this.state.dataLoaded ?
-                                        this.state.cohorts.length > 0 ?
-                                            this.state.cohorts.filter(c => !c.is_dynamic).map(cohort => {
-                                                return (
-                                                    <tr key={cohort.id}>
-                                                        <td>{cohort.company_code}</td>
-                                                        <td>{cohort.id}</td>
-                                                        <td>
-                                                            <a target="_blank" rel="noopener noreferrer" href={"/cohort-detail/" + cohort.id}>{cohort.name}</a>
-                                                        </td>
-                                                        <td> <a href={`https://api2.taplingua.com/app/user-cohort-registration/${cohort.id}`} target="_blank" rel="noopener noreferrer">Open Registration Form</a></td>
-                                                        <td>{moment(cohort.start_date).format("DD-MM-YYYY")}</td>
-                                                        <td
-                                                            style={{
-                                                                color: "blue",
-                                                                cursor: "pointer"
-                                                            }}>
-                                                            <Link
-                                                                to={"/interview-simulator/" + cohort.id}
-                                                                style={{
-                                                                    color: "blue",
-                                                                    cursor: "pointer"
-                                                                }}>{cohort.users.length} User(s)</Link>
-                                                        </td>
-                                                        <td className="interview-simulator-dropdown-holder">
-                                                            <span className="interview-simulator-dropdown">⋮</span>
-                                                            <div className="interview-simulator-dropdown-content">
-                                                                <Link
-                                                                    to={"/interview-simulator/" + cohort.id + "/add-practice-set"}
-                                                                    className="interview-simulator-dropdown-link"
-                                                                    style={{
-                                                                        color: "blue",
-                                                                        cursor: "pointer"
-                                                                    }}>Add Practice Sets</Link>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            }) : (
-                                                <tr>
-                                                    <td colSpan="4">No Data Available</td>
-                                                </tr>
-                                            )
-                                        : (
-                                            <tr>
-                                                <td colSpan="4">Loading Data</td>
-                                            </tr>
-                                        )
-                                }
-                            </tbody>
-                        </table>
+
+                        {
+                            this.state.dataLoaded ?
+                                this.state.cohorts.length > 0 ? (
+                                    <BootstrapTable
+                                        keyField='id'
+                                        data={this.state.cohorts.filter(c => !c.is_dynamic)}
+                                        columns={columns}
+                                    />
+
+                                ) : (<span colSpan="4">No Data Available</span>)
+                                : (<span colSpan="4">Loading Data </span>)
+                        }
                     </div>
                 </section>
             </main>
