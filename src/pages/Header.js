@@ -110,7 +110,7 @@ class Header extends React.Component {
                                 }} alt="" />
                                 {
                                     this.state.companyDisable ? (
-                                        <h6 className="title1 ml15" style={{ 'fontSize': '15px', marginLeft: '15px' }}>Welcome {this.state.companyName} Team</h6>
+                                        <h6 className="title1 ml15" style={{ 'fontSize': '15px', marginLeft: '15px' }}>Welcome! {this.state.companyName} Team</h6>
                                     ) : <></>
                                 }
                             </div>
