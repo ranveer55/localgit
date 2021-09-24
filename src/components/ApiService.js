@@ -593,6 +593,46 @@ export default class ApiService {
             return res.data;
         });
     }
+    addCompanyPracticeSet(payload) {
+        return axios.post(`${this.domain}/company-practice-set`, payload, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    addCompanyPracticeSetQuetion(practiceSetId,payload) {
+        return axios.post(`${this.domain}/company-practice-set/${practiceSetId}/question`, payload, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    updateCompanyPracticeSetQuetion(practiceSetId,payload,practiceQuestionId) {
+        return axios.post(`${this.domain}/company-practice-set/${practiceSetId}/question/${practiceQuestionId}`, payload, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    deleteCompanyPracticeSetQuetion(practiceSetId,practiceQuestionId) {
+        return axios.delete(`${this.domain}/company-practice-set/${practiceSetId}/question/${practiceQuestionId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
 
     getUserCohortDetail(cohort_id = 0, userId = "") {
         return axios.get(`${this.domain}/user-cohort-detail/` + cohort_id + "/" + userId, {
@@ -691,6 +731,18 @@ export default class ApiService {
         ).then(res => {
             return res.data;
         });
+    }
+    getCohortPracticeSetsQuestions(practice_id = 0) {
+        return axios.get(`${this.domain}/company-practice-set/${practice_id}/question`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        }).catch(e=>{
+            
+        })
     }
 
     sendLastPlacementTestResultEmail(userId) {
