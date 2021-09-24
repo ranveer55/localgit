@@ -6,7 +6,7 @@ class ManageQuetions extends Component {
 
     constructor(props) {
         super(props);
-
+        this.ref =React.createRef();
         this.cohortId = props.match.params.cohortId;
         this.practiceSetId = props.match.params.practicId;
 
@@ -18,6 +18,7 @@ class ManageQuetions extends Component {
             video: '',
         }
         this.state = {
+            video: null,
             dateLoaded: false,
             cohort: null,
             questions: [],
@@ -61,8 +62,23 @@ class ManageQuetions extends Component {
     }
 
     addPracticeSetQuestion = () => {
+        let  formData = new FormData();
+        const {newQuestion,video} =this.state;
+        for(const k of Object.keys(newQuestion)){
+            if(k=='video'){
+            } else {
+                formData.append([k], newQuestion[k]);
+             }
+        }
+        
+        if(video && video.value){
+            const {value, files}=video;
+            console.log({value, files})
+            formData.append('video', files[0], files[0].name);
+        }
+        
         if (this.state.newQuestion.practiceQuestionId) {
-            global.api.updateCompanyPracticeSetQuetion(this.practiceSetId, this.state.newQuestion)
+            global.api.updateCompanyPracticeSetQuetion(this.practiceSetId, formData,this.state.newQuestion.practiceQuestionId)
                 .then(
                     data => {
                         const dt = this.state.questions.map(item => item.practiceQuestionId == this.state.newQuestion.practiceQuestionId ? data.practiceQuestion : item);
@@ -78,7 +94,7 @@ class ManageQuetions extends Component {
                     });
                 });
         } else {
-            global.api.addCompanyPracticeSetQuetion(this.practiceSetId, this.state.newQuestion)
+            global.api.addCompanyPracticeSetQuetion(this.practiceSetId, formData)
                 .then(
                     data => {
                         const dt = this.state.questions;
@@ -106,20 +122,7 @@ class ManageQuetions extends Component {
             }
         })
     }
-    onChangeFile = (e) => {
-        const { files } = e.target
-        if (files && files[0]) {
-            var reader = new FileReader();
 
-            reader.onload = () => {
-                const { newQuestion } = this.state;
-                this.setState({ newQuestion: { ...newQuestion, video: reader.result } })
-                console.log(reader.result);
-            }
-
-            reader.readAsBinaryString(files[0]);
-        }
-    }
 
     Edit = (e, row) => {
         e.preventDefault();
@@ -147,6 +150,12 @@ class ManageQuetions extends Component {
     Assign = (e, row) => {
         e.preventDefault();
         // this.setState({newQuestion: row})
+    }
+    onChangeFile =(e) =>{
+        // console.log('1',e.target.files)
+        // console.log('2',e.target.Files)
+        // console.log(e.target)
+        this.setState({video: e.target})
     }
 
 
@@ -241,7 +250,10 @@ class ManageQuetions extends Component {
             },
             {
                 dataField: 'video',
-                text: 'Video'
+                text: 'Video',
+                formatter: (v, row) =>( <video width="100" height="70" controls>
+                <source src={`https://langappnew.s3.amazonaws.com/interviewprep/${row.practiceSetId}/${row.practiceSetId}_0_${row.practiceQuestionId}.mp4`} type="video/mp4"/>
+              </video> )
             },
             {
                 dataField: 'practiceSetQuestion',
