@@ -61,40 +61,40 @@ class ManageQuetions extends Component {
     }
 
     addPracticeSetQuestion = () => {
-        if(this.state.newQuestion.practiceQuestionId){
+        if (this.state.newQuestion.practiceQuestionId) {
             global.api.updateCompanyPracticeSetQuetion(this.practiceSetId, this.state.newQuestion)
-            .then(
-                data => {
-                    const dt = this.state.questions.map(item =>item.practiceQuestionId == this.state.newQuestion.practiceQuestionId ? data.practiceQuestion :item );
-                   
+                .then(
+                    data => {
+                        const dt = this.state.questions.map(item => item.practiceQuestionId == this.state.newQuestion.practiceQuestionId ? data.practiceQuestion : item);
+
+                        this.setState({
+                            addPracticeSetAddModal: false,
+                            questions: dt,
+                        });
+                    })
+                .catch(err => {
                     this.setState({
-                        addPracticeSetAddModal: false,
-                        questions: dt,
+                        dateLoaded: true
                     });
-                })
-            .catch(err => {
-                this.setState({
-                    dateLoaded: true
                 });
-            });
-        }else {
+        } else {
             global.api.addCompanyPracticeSetQuetion(this.practiceSetId, this.state.newQuestion)
-            .then(
-                data => {
-                    const dt = this.state.questions;
-                    dt.push(data.practiceQuestion)
+                .then(
+                    data => {
+                        const dt = this.state.questions;
+                        dt.push(data.practiceQuestion)
+                        this.setState({
+                            addPracticeSetAddModal: false,
+                            questions: dt,
+                        });
+                    })
+                .catch(err => {
                     this.setState({
-                        addPracticeSetAddModal: false,
-                        questions: dt,
+                        dateLoaded: true
                     });
-                })
-            .catch(err => {
-                this.setState({
-                    dateLoaded: true
                 });
-            });
         }
-        
+
     }
 
     onChange = (e) => {
@@ -106,22 +106,32 @@ class ManageQuetions extends Component {
             }
         })
     }
-    onChangeFile =(e) =>{
-        // const {file}=e.target
-        // console.log(e.target, file)
+    onChangeFile = (e) => {
+        const { files } = e.target
+        if (files && files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = () => {
+                const { newQuestion } = this.state;
+                this.setState({ newQuestion: { ...newQuestion, video: reader.result } })
+                console.log(reader.result);
+            }
+
+            reader.readAsBinaryString(files[0]);
+        }
     }
 
-    Edit =(e, row)=>{
+    Edit = (e, row) => {
         e.preventDefault();
-        this.setState({newQuestion: row, addPracticeSetAddModal: true})
+        this.setState({ newQuestion: row, addPracticeSetAddModal: true })
     }
-    Remove =(e, row)=>{
+    Remove = (e, row) => {
         e.preventDefault();
         global.api.deleteCompanyPracticeSetQuetion(this.practiceSetId, row.practiceQuestionId)
             .then(
                 data => {
-                    const dt = this.state.questions.filter(item =>item.practiceQuestionId !== row.practiceQuestionId);
-                   
+                    const dt = this.state.questions.filter(item => item.practiceQuestionId !== row.practiceQuestionId);
+
                     this.setState({
                         addPracticeSetAddModal: false,
                         questions: dt,
@@ -132,9 +142,9 @@ class ManageQuetions extends Component {
                     dateLoaded: true
                 });
             });
-       
+
     }
-    Assign =(e, row)=>{
+    Assign = (e, row) => {
         e.preventDefault();
         // this.setState({newQuestion: row})
     }
@@ -177,7 +187,7 @@ class ManageQuetions extends Component {
             });
         }
     }
-    formatter=(cell, row) =>{
+    formatter = (cell, row) => {
         console.log(this);
         return (
             <div className="interview-simulator-dropdown-holder">
@@ -310,7 +320,7 @@ class ManageQuetions extends Component {
                         )}
 
                     </div>
-                    
+
                     {
                         this.state.addPracticeSetAddModal ? (
                             <div className="add-practice-set-modal">
@@ -336,7 +346,7 @@ class ManageQuetions extends Component {
                                         <div className="row" style={{ padding: 10 }}>
                                             <div className="col-md-5">Reference Answer</div>
                                             <div className="col-md-7">
-                                                <input name="referenceAnswer" value={newQuestion.referenceAnswer}  style={{ border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Reference Answer" onChange={this.onChange} />
+                                                <input name="referenceAnswer" value={newQuestion.referenceAnswer} style={{ border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Reference Answer" onChange={this.onChange} />
 
                                             </div>
                                         </div>
@@ -356,7 +366,7 @@ class ManageQuetions extends Component {
                                         <div className="add-practice-set-modal-button" onClick={e => {
                                             this.setState({
                                                 addPracticeSetAddModal: false,
-                                                newQuestion:this.newQuestion
+                                                newQuestion: this.newQuestion
                                             });
                                         }}>Cancel</div>
                                     </div>
