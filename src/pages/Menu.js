@@ -38,7 +38,7 @@ class Menu extends Component {
                             { title: "Cohort Assessment", url: "/company-cohorts/mistakes" },
                             { title: "Cohort Placement", url: "/company-cohorts/placement-mistakes" },
                         ]} />
-                        <li className="menu_item">
+                        {/* <li className="menu_item">
                             <a className={pathName === '/interview-simulator' ? 'menu_link current' : 'menu_link'} href="/interview-simulator">
                                 <i className="menu_link_icon">
                                     <img src="/images/icons/icon4.svg" alt="" />
@@ -46,7 +46,12 @@ class Menu extends Component {
                                 </i>
                                 <span>Interview Simulator</span>
                             </a>
-                        </li>
+                        </li> */}
+                        <ItemWithSubMenuIS label="Interview Simulator" subItems={[
+                            { title: "Interview Simulator", url: "/interview-simulator" },
+                            { title: "Practice Set", url: "/interview-simulator" },
+                            { title: "Questions", url: "/interview-simulator" },
+                        ]} />
 
                         <li className="menu_item">
                             <a className={pathName === '/courses' ? 'menu_link current' : 'menu_link'} href="/courses">
@@ -117,6 +122,39 @@ function ItemWithSubMenu({ label = "Link", subItems = [] }) {
                 <i className="menu_link_icon">
                     <img src="/images/icons/icon3.svg" alt="" />
                     <img src="/images/icons/icon3hover.svg" alt="" />
+                </i>
+                <span>{label}</span>
+            </span>
+            {
+                open ? (
+                    <span className="submenu">
+                        {
+                            subItems.map(item => (
+                                <a style={{
+                                    margin: "4px 0"
+                                }} className={pathName === item.url ? 'menu_link current-item' : 'menu_link'} href={item.url}>
+                                    <span>{item.title}</span>
+                                </a>
+                            ))
+                        }
+                    </span>
+                ) : <></>
+            }
+        </li>
+    );
+}
+function ItemWithSubMenuIS({ label = "Link", subItems = [] }) {
+
+    const [open, setOpen] = useState(false);
+
+    return (
+        <li className="menu_item submenu-holder">
+            <span className={open ? 'menu_link current' : 'menu_link'} href="/leaderboard" onClick={() => {
+                setOpen(!open);
+            }}>
+                <i className="menu_link_icon">
+                <img src="/images/icons/icon4.svg" alt="" />
+                                    <img src="/images/icons/icon4hover.svg" alt="" />
                 </i>
                 <span>{label}</span>
             </span>

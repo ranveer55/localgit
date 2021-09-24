@@ -118,21 +118,19 @@ class AddPracticeSetToCohortPage extends Component {
     }
     Remove =(e, row)=>{
         e.preventDefault();
-        global.api.deleteCompanyPracticeSet(row.practiceQuestionId)
-            .then(
-                data => {
-                    const dt = this.state.questions.filter(item =>item.practiceQuestionId !== row.practiceQuestionId);
-                   
-                    this.setState({
-                        addPracticeSetAddModal: false,
-                        questions: dt,
-                    });
-                })
-            .catch(err => {
-                this.setState({
-                    dateLoaded: true
-                });
+        global.api.removePracticeSetFromCohort(this.cohortId, row.practiceSetId)
+        .then((response) => {
+            // remove from practice sets list
+            const newState = [...this.state.practiceSets];
+            newState.splice(this.state.practiceSets.indexOf(row.practiceSetId), 1);
+            this.setState({
+                practiceSets: newState,
+                alreadySelectedPracticeSets: newState.map(d => d.practiceSetId),
             });
+        })
+        .catch(err => {
+            alert("Something went wrong!");
+        })
        
     }
     formatter = (cell, row) => {
@@ -148,7 +146,7 @@ class AddPracticeSetToCohortPage extends Component {
                             cursor: "pointer"
                         }}>Manage Questions
                     </Link>
-                    {/* <Link
+                    <Link
                         to="#"
                         onClick={e=>this.Remove(e, row)}
                         className="interview-simulator-dropdown-link"
@@ -156,7 +154,7 @@ class AddPracticeSetToCohortPage extends Component {
                             color: "blue",
                             cursor: "pointer"
                         }}>Delete Practice Set
-                    </Link> */}
+                    </Link>
 
 
                 </div>
@@ -168,11 +166,7 @@ class AddPracticeSetToCohortPage extends Component {
     render() {
 
         const columns = [
-            {
-                dataField: 'practiceSetId',
-                text: 'Practice Set Id',
-                width: '20px'
-            },
+           
             {
                 dataField: 'practiceSetName',
                 text: 'Practice Set Name'
@@ -183,29 +177,7 @@ class AddPracticeSetToCohortPage extends Component {
             },
 
 
-            {
-                dataField: 'id',
-                text: 'Action',
-                formatter: (e, row) => <td>
-                    <span className="remove-practice-set"
-                        onClick={e => {
-                            // remove the practice set
-                            global.api.removePracticeSetFromCohort(this.cohortId, row.practiceSetId)
-                                .then((response) => {
-                                    // remove from practice sets list
-                                    const newState = [...this.state.practiceSets];
-                                    newState.splice(this.state.practiceSets.indexOf(row.practiceSetId), 1);
-                                    this.setState({
-                                        practiceSets: newState,
-                                        alreadySelectedPracticeSets: newState.map(d => d.practiceSetId),
-                                    });
-                                })
-                                .catch(err => {
-                                    alert("Something went wrong!");
-                                })
-                        }}>Remove</span>
-                </td>,
-            },
+            
             {
                 dataField: 'id',
                 text: 'Action',
@@ -233,9 +205,9 @@ class AddPracticeSetToCohortPage extends Component {
                 <section className="section_box">
                     <div className="row">
                         <div className="col-md-6">
-                            <h1 className="title1 mb25">Cohort Detail</h1>
+                            <h1 className="title1 mb25">Manage Practice Sets</h1>
                             <h4 className="title4 mb40">
-                                For {this.state.selectedCompanyName}
+                                For {this.state?.cohort?.cohort_name}
                             </h4>
                             <a href={`https://api2.taplingua.com/app/user-cohort-registration/${this.cohortId}`} target="_blank" rel="noopener noreferrer">Open Registration Form</a>
                         </div>

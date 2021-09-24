@@ -740,7 +740,9 @@ export default class ApiService {
         }
         ).then(res => {
             return res.data;
-        });
+        }).catch(e=>{
+            
+        })
     }
 
     sendLastPlacementTestResultEmail(userId) {
