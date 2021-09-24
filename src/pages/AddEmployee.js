@@ -340,6 +340,7 @@ class AddEmployee extends Component {
                         <option value="T">Archive</option>
                         </select><div className="jq-selectbox__trigger-arrow"></div>
                     </div>
+                    <div className="form_row form_flex mb25">&nbsp;</div>
                   </div>
               </div>
               <div className="form_row_btn">
