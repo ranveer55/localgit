@@ -273,7 +273,7 @@ class AddEmployee extends Component {
                             onScreen: true
                           },
                           type: 'success',
-                          title: "User made admin!",
+                          title: "Admin privileges have been successfully added to student record",
                           message: ""
                         });
                       })
