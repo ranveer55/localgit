@@ -24,6 +24,7 @@ class Header extends React.Component {
         }
         this.state = {
             companyList: [],
+            companyName: '',
             selectedOption: [{ "value": global.companyCode, "label": global.companyCode + " - " + global.companyName }],
             companyDisable: ""
         };
@@ -48,6 +49,18 @@ class Header extends React.Component {
             })
             .catch(err => {
                 alert(err);
+            })
+
+        // get company name
+        global.api.getCompanyList(global.companyCode)
+            .then(res => res)
+            .then(data => {
+                const companyName = data[0].label.split(" - ").pop();
+                this.setState({ companyName });
+            })
+            .catch(err => {
+                // fail silently
+                console.log({ err, companyCode: global.companyCode });
             })
 
     }
@@ -95,14 +108,18 @@ class Header extends React.Component {
                                     maxHeight: "36px",
                                     maxWidth: "120px"
                                 }} alt="" />
+                                {
+                                    this.state.companyDisable ? (
+                                        <h6 className="title1 ml15" style={{ 'fontSize': '15px', marginLeft: '15px' }}>Welcome {this.state.companyName} Team</h6>
+                                    ) : <></>
+                                }
                             </div>
 
                             <div className="header_right">
                                 <div className="head_box_l switch">
                                     {
                                         this.state.companyDisable ? (
-                                            
-                                                <h6 className="title1 mr15" style={{ 'fontSize': '15px' }}>Welcome {(global.companyName && global.companyName != "null") ? global.companyName : ""} Team</h6>
+                                            <></>
                                         ) : (
                                             <>
 

@@ -169,10 +169,10 @@ class Login extends Component {
                     alert(res.message);
                     return false;
                 } else {
-                    if (res.accesslevel !== "0") {
+                    if (res.accesslevel != "0") {
                         window.location.href = '/overview';
                     } else {
-                        alert('Access Level Disabled, Contact Admin');
+                        alert('You do not have access to the Taplingua dashboard. Please contact your admin for dashboard access.');
                     }
                 }
             })
