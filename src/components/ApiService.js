@@ -226,6 +226,26 @@ export default class ApiService {
                 return Promise.resolve(res.data);
             })
     }
+
+
+    //get employee list
+    getEmployeeListPaginated(companyCode, page) {
+        var params = "CompanyCode=" + companyCode;
+        if (page) {
+            params = params + "&page=" + page;
+        }
+        // return axios.get(`${this.domain}/getEmployee.php?` + params)
+        return axios.get(`${this.domain}/employee-paginated?` + params, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        })
+            .then(res => {
+                return Promise.resolve(res.data);
+            })
+    }
+
     //get course list
     getCourseList(companyCode, batchNumber = 0) {
         let params = "companyCode=" + companyCode;
