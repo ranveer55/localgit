@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import BootstrapTable from 'react-bootstrap-table-next';
 import moment from "moment";
+
 class ManageQuetions extends Component {
 
     constructor(props) {
         super(props);
-
+        this.ref =React.createRef();
         this.cohortId = props.match.params.cohortId;
         this.practiceSetId = props.match.params.practicId;
 
@@ -18,8 +19,11 @@ class ManageQuetions extends Component {
             video: '',
         }
         this.state = {
+            video: null,
             dateLoaded: false,
+            uploading:false,
             cohort: null,
+            practicSet: null,
             questions: [],
             availablePracticeSets: [],
             showPracticeSetAddModal: false,
@@ -36,7 +40,7 @@ class ManageQuetions extends Component {
     componentDidMount() {
         this.loadData();
         this.loadPracticeSetsQuestions();
-        this.getAllPracticeSets();
+        this.getAllPracticeSets(this.practiceSetId);
     }
 
     loadData() {
@@ -61,8 +65,24 @@ class ManageQuetions extends Component {
     }
 
     addPracticeSetQuestion = () => {
+        this.setState({uploading:true})
+        let  formData = new FormData();
+        const {newQuestion,video} =this.state;
+        for(const k of Object.keys(newQuestion)){
+            if(k=='video'){
+            } else {
+                formData.append([k], newQuestion[k]);
+             }
+        }
+        
+        if(video && video.value){
+            const {value, files}=video;
+            console.log({value, files})
+            formData.append('video', files[0], files[0].name);
+        }
+        
         if (this.state.newQuestion.practiceQuestionId) {
-            global.api.updateCompanyPracticeSetQuetion(this.practiceSetId, this.state.newQuestion)
+            global.api.updateCompanyPracticeSetQuetion(this.practiceSetId, formData,this.state.newQuestion.practiceQuestionId)
                 .then(
                     data => {
                         const dt = this.state.questions.map(item => item.practiceQuestionId == this.state.newQuestion.practiceQuestionId ? data.practiceQuestion : item);
@@ -70,15 +90,17 @@ class ManageQuetions extends Component {
                         this.setState({
                             addPracticeSetAddModal: false,
                             questions: dt,
+                            uploading:false
                         });
                     })
                 .catch(err => {
                     this.setState({
-                        dateLoaded: true
+                        dateLoaded: true,
+                        uploading:false
                     });
                 });
         } else {
-            global.api.addCompanyPracticeSetQuetion(this.practiceSetId, this.state.newQuestion)
+            global.api.addCompanyPracticeSetQuetion(this.practiceSetId, formData)
                 .then(
                     data => {
                         const dt = this.state.questions;
@@ -86,11 +108,13 @@ class ManageQuetions extends Component {
                         this.setState({
                             addPracticeSetAddModal: false,
                             questions: dt,
+                            uploading:false
                         });
                     })
                 .catch(err => {
                     this.setState({
-                        dateLoaded: true
+                        dateLoaded: true,
+                        uploading:false
                     });
                 });
         }
@@ -106,20 +130,7 @@ class ManageQuetions extends Component {
             }
         })
     }
-    onChangeFile = (e) => {
-        const { files } = e.target
-        if (files && files[0]) {
-            var reader = new FileReader();
 
-            reader.onload = () => {
-                const { newQuestion } = this.state;
-                this.setState({ newQuestion: { ...newQuestion, video: reader.result } })
-                console.log(reader.result);
-            }
-
-            reader.readAsBinaryString(files[0]);
-        }
-    }
 
     Edit = (e, row) => {
         e.preventDefault();
@@ -148,6 +159,12 @@ class ManageQuetions extends Component {
         e.preventDefault();
         // this.setState({newQuestion: row})
     }
+    onChangeFile =(e) =>{
+        // console.log('1',e.target.files)
+        // console.log('2',e.target.Files)
+        // console.log(e.target)
+        this.setState({video: e.target})
+    }
 
 
     // get cohort practice sets
@@ -156,19 +173,22 @@ class ManageQuetions extends Component {
         global.api.getCohortPracticeSetsQuestions(this.practiceSetId)
             .then(data => {
                 this.setState({
-                    questions: data.practiceQuestions,
+                    questions: data ? data.practiceQuestions:[],
                     dataLoaded: true
                 });
             });
     }
 
     // get all the available practice sets, available
-    getAllPracticeSets() {
+    getAllPracticeSets(id) {
         global.api.getAllPracticeSets()
             .then(data => {
-                this.setState({
-                    availablePracticeSets: data.questions
-                });
+                if(data && data.practiceSets){
+                    const find = data.practiceSets.find(e=>e.practiceSetId==id)
+                    if(find){
+                        this.setState({practicSet:find})
+                    }
+                }
             });
     }
 
@@ -212,15 +232,7 @@ class ManageQuetions extends Component {
                             cursor: "pointer"
                         }}>Edit Question
                     </Link>
-                    <Link
-                        to="#"
-                        onClick={e => this.Assign(e, row)}
-                        className="interview-simulator-dropdown-link"
-                        style={{
-                            color: "blue",
-                            cursor: "pointer"
-                        }}>Assign to Practice Set
-                    </Link>
+                    
 
 
                 </div>
@@ -231,17 +243,16 @@ class ManageQuetions extends Component {
     }
 
     render() {
-        const { newQuestion, cohort, selectedCompanyName } = this.state;
+        const { newQuestion, cohort, practicSet ,uploading} = this.state;
 
         const columns = [
-            {
-                dataField: 'practiceQuestionId',
-                text: 'Question Id',
-                width: '20px'
-            },
+           
             {
                 dataField: 'video',
-                text: 'Video'
+                text: 'Video',
+                formatter: (v, row) =>( <video width="100" height="70" controls>
+                <source src={`https://langappnew.s3.amazonaws.com/interviewprep/${row.practiceSetId}/${row.practiceSetId}_0_${row.practiceQuestionId}.mp4`} type="video/mp4"/>
+              </video> )
             },
             {
                 dataField: 'practiceSetQuestion',
@@ -259,7 +270,7 @@ class ManageQuetions extends Component {
             {
                 dataField: 'created_at',
                 text: 'Date Created',
-                formatter: () => moment().format('DD/MM/YYYY').toString(),
+                formatter: (created_at) => moment(created_at).format('DD/MM/YYYY').toString(),
             },
             {
                 dataField: 'created_at',
@@ -285,9 +296,9 @@ class ManageQuetions extends Component {
                 <section className="section_box">
                     <div className="row">
                         <div className="col-md-6">
-                            <h1 className="title1 mb25">Manage Questions</h1>
+                            <h1 className="title1 mb25">Manage Practice Questions</h1>
                             <h4 className="title4 mb40">
-                                For {selectedCompanyName}
+                            Assigned to Practice Set ({practicSet ? practicSet.practiceSetName :''}) 
                             </h4>
                         </div>
                     </div>
@@ -323,46 +334,46 @@ class ManageQuetions extends Component {
 
                     {
                         this.state.addPracticeSetAddModal ? (
-                            <div className="add-practice-set-modal">
-                                <div className="add-practice-set-modal-body">
+                            <div className="add-practice-set-modal" >
+                                <div className="add-practice-set-modal-body" style={{width:'90%', height:'80%'}}>
 
-                                    <h2 style={{ padding: 10 }}>Practice Set</h2>
-                                    <h6 style={{ padding: 10 }}>Add or Edit Practice Question</h6>
+                                    <h2 style={{ padding: '2px 10px' }}>Practice Set</h2>
+                                    <h6 style={{ padding: '2px 10px' }}>Add or Edit Practice Question</h6>
                                     <div style={{ margin: "1rem 0", fontSize: "23px" }}>
-                                        <div className="row" style={{ padding: 10 }}>
-                                            <div className="col-md-5">Practice Question</div>
-                                            <div className="col-md-7">
-                                                <input value={newQuestion.practiceSetQuestion} style={{ border: '1px solid', padding: 10, borderRadius: 5 }} name="practiceSetQuestion" placeholder="Practice Question" onChange={this.onChange} />
+                                        <div className="row" style={{ padding: '2px 10px' }}>
+                                            <div className="col-md-3">Practice Question</div>
+                                            <div className="col-md-9">
+                                                <textarea value={newQuestion.practiceSetQuestion} style={{ width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} name="practiceSetQuestion" placeholder="Practice Question" onChange={this.onChange} />
 
                                             </div>
                                         </div>
-                                        <div className="row" style={{ padding: 10 }}>
-                                            <div className="col-md-5">Hints</div>
-                                            <div className="col-md-7">
-                                                <input value={newQuestion.practiceQuestionText} name="practiceQuestionText" style={{ border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Hints" onChange={this.onChange} />
+                                        <div className="row" style={{ padding: '2px 10px' }}>
+                                            <div className="col-md-3">Hints</div>
+                                            <div className="col-md-9">
+                                                <textarea value={newQuestion.practiceQuestionText} name="practiceQuestionText" style={{width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Hints" onChange={this.onChange} />
 
                                             </div>
                                         </div>
-                                        <div className="row" style={{ padding: 10 }}>
-                                            <div className="col-md-5">Reference Answer</div>
-                                            <div className="col-md-7">
-                                                <input name="referenceAnswer" value={newQuestion.referenceAnswer} style={{ border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Reference Answer" onChange={this.onChange} />
+                                        <div className="row" style={{ padding: '2px 10px' }}>
+                                            <div className="col-md-3">Reference Answer</div>
+                                            <div className="col-md-9">
+                                                <textarea name="referenceAnswer" value={newQuestion.referenceAnswer} style={{ width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Reference Answer" onChange={this.onChange} />
 
                                             </div>
                                         </div>
-                                        <div className="row" style={{ padding: 10 }}>
-                                            <div className="col-md-5">Video</div>
-                                            <div className="col-md-7">
-                                                <input name="video" type="file" onChange={this.onChangeFile} accept=".mp4" />
+                                        <div className="row" style={{ padding: '2px 10px' }}>
+                                            <div className="col-md-3">Video</div>
+                                            <div className="col-md-9">
+                                                <input   name="video" type="file" onChange={this.onChangeFile} accept=".mp4" />
 
                                             </div>
                                         </div>
 
                                     </div>
 
-
+                                    {uploading && <span style={{color:'green'}}> The question is being saved to the database.</span>}
                                     <div style={{ display: 'flex' }}>
-                                        <div disabled={!this.state.newPracticeName} style={{ backgroundColor: '#4AB93C' }} className="add-practice-set-modal-button" onClick={this.addPracticeSetQuestion}>Save</div>
+                                        <div disabled={!this.state.newPracticeName} style={{ backgroundColor: '#4AB93C', color:'#fff' }} className="add-practice-set-modal-button" onClick={this.addPracticeSetQuestion}>Save</div>
                                         <div className="add-practice-set-modal-button" onClick={e => {
                                             this.setState({
                                                 addPracticeSetAddModal: false,

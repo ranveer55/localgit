@@ -613,8 +613,8 @@ export default class ApiService {
             return res.data;
         });
     }
-    updateCompanyPracticeSetQuetion(practiceSetId,payload) {
-        return axios.post(`${this.domain}/company-practice-set/${practiceSetId}/question/${payload.practiceQuestionId}`, payload, {
+    updateCompanyPracticeSetQuetion(practiceSetId,payload,practiceQuestionId) {
+        return axios.post(`${this.domain}/company-practice-set/${practiceSetId}/question/${practiceQuestionId}`, payload, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },
@@ -740,7 +740,9 @@ export default class ApiService {
         }
         ).then(res => {
             return res.data;
-        });
+        }).catch(e=>{
+            
+        })
     }
 
     sendLastPlacementTestResultEmail(userId) {

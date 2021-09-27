@@ -59,37 +59,25 @@ class InterviewSimulatorPage extends Component {
                         style={{
                             color: "blue",
                             cursor: "pointer"
-                        }}>Add Practice Sets</Link>
+                        }}>Manage Practice Sets</Link>
                 </div>
             </div>);
     }
 
     render() {
         const columns = [
-            {
-                dataField: 'company_code',
-                text: 'Company Code',
-                width: '20px'
-            },
-            {
-                dataField: 'id',
-                text: 'Cohort ID'
-            },
+            
             {
                 dataField: 'practiceSetQuestion',
                 text: 'Name',
                 formatter: (e, row) => <a target="_blank" rel="noopener noreferrer" href={"/cohort-detail/" + row.id}>{row.name}</a>
             },
-            {
-                dataField: 'practiceQuestionText',
-                text: 'Registration Link',
-                formatter: (e, row) => <a href={`https://api2.taplingua.com/app/user-cohort-registration/${row.id}`} target="_blank" rel="noopener noreferrer">Open Registration Form</a>
-            },
+            
 
             {
                 dataField: 'created_at',
                 text: 'Date Created',
-                formatter: () => moment().format('DD/MM/YYYY').toString(),
+                formatter: (created_at) => moment(created_at).format('DD/MM/YYYY').toString(),
             },
             {
                 dataField: 'id',
@@ -107,6 +95,11 @@ class InterviewSimulatorPage extends Component {
                         }}>{row.users.length} User(s)</Link>
                 </td>,
             },
+            // {
+            //     dataField: 'created_at',
+            //     text: 'Date Created',
+            //     formatter: (created_at) =>'',
+            // },
             {
                 dataField: 'id',
                 text: 'Action',
@@ -121,9 +114,9 @@ class InterviewSimulatorPage extends Component {
                 <section className="section_box">
                     <div className="row">
                         <div className="col-md-6">
-                            <h1 className="title1 mb25">Interview Simulator</h1>
+                            <h1 className="title1 mb25">Manage Interview Simulator Cohorts</h1>
                             <h4 className="title4 mb40">
-                                For {this.state.selectedCompanyName}
+                                For {this.state.selectedCompanyName !='null' ? this.state.selectedCompanyName:'' }
                             </h4>
                             <div>
                                 <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic/${this.state.selectedCompany}`} target="_blank" rel="noopener noreferrer" style={{
