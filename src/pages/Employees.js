@@ -94,6 +94,9 @@ class Employees extends Component {
     this.state = {
       showActiveUsersOnly: false,
       dataLoaded: false,
+      metaData: null,
+      isLoadingData: false,
+      currentPage: 1,
       columns: [{
         dataField: "i_d",
         text: "Id",
@@ -398,11 +401,11 @@ class Employees extends Component {
   }
 
   componentDidMount() {
-    global.api.getEmployeeList(global.companyCode)
+    global.api.getEmployeeListPaginated(global.companyCode)
       .then(res => res)
       .then(data => {
         $('#employee-content').show();
-        this.setState({ data, dataLoaded: true });
+        this.setState({ data: data.data, dataLoaded: true, metaData: data.meta });
       })
       .catch(err => {
         alert(err);
@@ -529,13 +532,55 @@ class Employees extends Component {
     }
   }
   render() {
+    const pageButtonRenderer = ({
+      page,
+      active,
+      disabled,
+      title,
+      onPageChange
+    }) => {
+      const handleClick = (e) => {
+        e.preventDefault();
+
+        this.setState({
+          isLoadingData: true
+        });
+        global.api.getEmployeeListPaginated(global.companyCode, page)
+          .then(res => res)
+          .then(data => {
+            this.setState({
+              data: data.data,
+              // metaData: data.meta,
+              currentPage: page,
+              isLoadingData: false
+            });
+          })
+          .catch(err => {
+            this.setState({
+              isLoadingData: false
+            });
+            alert(err);
+          })
+      };
+      // ....
+      return (
+        <li className={(active ? "active" : "") + " page-item"} key={page}>
+          <a href="#" className="page-link" onClick={handleClick}>{page}</a>
+        </li >
+      );
+    };
 
     const options = {
       custom: true,
       /* page: 1, */
       /* totalSize: this.state.data.length */
-      slected: [],
+      page: this.state.currentPage,
+      sizePerPage: 10,
+      pageButtonRenderer,
+      totalSize: this.state.metaData ? this.state.metaData.total : 0,
+      // slected: [],
     };
+
     const MyExportCSV = props => {
       const handleClick = () => {
         props.onExport();
@@ -668,7 +713,7 @@ class Employees extends Component {
       <div className="table_wraps" id="spinner">
         <div className="spinner" >
           <Loader type="Grid" color="#4441E2" height={100} width={100} />
-                  Loading....
+          Loading....
         </div>
       </div>
     );
@@ -704,6 +749,7 @@ class Employees extends Component {
         columns={this.state.columns}
         classes="table"
         search
+        remote
         exportCSV={{ fileName: this.state.csvFileName }}
       >
         {
@@ -775,7 +821,6 @@ class Employees extends Component {
                     <PaginationProvider pagination={paginationFactory(options)}>
                       {({ paginationProps, paginationTableProps }) => (
                         <div>
-
                           <BootstrapTable
                             {...props.baseProps}
                             selectRow={selectRow}
@@ -783,11 +828,16 @@ class Employees extends Component {
                             {...paginationTableProps}
                             filter={filterFactory()}
                             classes="table"
+                            remote
                             noDataIndication={() => <NoDataAvailable />}
                           />
-                          <PaginationListStandalone
-                            {...paginationProps}
-                          />
+                          {
+                            this.state.isLoadingData ? (
+                              <span style={{ paddingLeft: "40px" }}>Fetching data...</span>
+                            ) : <PaginationListStandalone
+                              {...paginationProps}
+                            />
+                          }
                         </div>
                       )
                       }
