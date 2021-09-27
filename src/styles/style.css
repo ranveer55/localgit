@@ -1945,53 +1945,6 @@ input:focus::-webkit-input-placeholder,
   opacity: 1;
 }
 
-.owl-carousel.course_carousel {
-    /* padding-bottom: 136px;*/
-    /* .owl-nav{*/
-    /*     position: absolute;*/
-    /*     bottom: 0;*/
-    /*     right: 0;*/
-    /*     width: 110px;*/
-    /*     height: 16px;*/
-    /*     */
-    /* color: #4A4A4B;*/
-    /**/
-    /* }*/
-    /* .owl-prev,*/
-    /* .owl-next{*/
-    /*     position: absolute;*/
-    /*     top: 0;*/
-    /*     width: 27px;*/
-    /*     height: 16px;*/
-    /*     overflow: hidden;*/
-    /*     &:before{*/
-    /*         content: "";*/
-    /*         position: absolute;*/
-    /*         top: 0;*/
-    /*         right: 0;*/
-    /*         height: 100%;*/
-    /*         width: 100%;*/
-    /*         background: url(/images/icons/arr-right.png) right center no-repeat !important;*/
-    /*         -webkit-background-size: auto 16px !important;*/
-    /*                 background-size: auto 16px !important;*/
-    /*     }*/
-    /*     span{*/
-    /*         display: none;*/
-    /*     }*/
-    /* }*/
-    /* .owl-prev{*/
-    /*     left: 0;*/
-    /*     &:before{*/
-    /*         -webkit-transform: scale(-1,1);*/
-    /*             -ms-transform: scale(-1,1);*/
-    /*                 transform: scale(-1,1);*/
-    /*     }*/
-    /* }*/
-    /* .owl-next{*/
-    /*     right: 0;*/
-    /* }*/;
-}
-
 .owl-carousel.course_carousel .owl-dots {
   position: absolute;
   right: 5px;
@@ -2216,11 +2169,6 @@ html .ui-button.ui-state-disabled:active {
   color: #A5A9AA !important;
   font-weight: 700;
   text-align: center;
-}
-
-.ui-datepicker-week-end,
-.ui-datepicker-week-end .ui-state-default {
-  /* color: #fd482a !important;*/;
 }
 
 .ui-state-default.ui-state-active {
@@ -5061,13 +5009,6 @@ html:not(.md_touch) .todos_dots:hover .todos_dot_box {
   display: flex;
 }
 
-/* - - - - - - - - - -/ end of .box1 - - - - - - - - - - */
-
-/* - - - - - - - - - - .box1 - - - - - - - - - - */
-.result_datetime {
-  /* font-size: 18px;*/
-  /* line-height: 1.2;*/;
-}
 
 .report_wrap {
   display: -webkit-box;
@@ -6090,7 +6031,6 @@ label.certificate-button a {
 .CreateCohortModal .form-group .react-datepicker-wrapper {
     width: 100%;
 }
-
 .interview-simulator-dropdown-holder {
   position: relative;
   padding-bottom: 1rem;
@@ -6207,6 +6147,7 @@ label.certificate-button a {
   border-color: #188978;
   color: white;
 }
+
 /*  */
 /* .chartjs-render-monitor, */
 /* .chartjs-size-monitor { */

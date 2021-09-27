@@ -11,6 +11,8 @@ import 'react-notifications-component/dist/theme.css';
 import { Progress } from 'reactstrap';
 import ReactDatePicker from "react-datepicker";
 import moment from "moment";
+import "../styles/employees.css";
+
 const { SearchBar } = Search;
 
 class Employees extends Component {
@@ -571,11 +573,12 @@ class Employees extends Component {
     };
 
     const options = {
-      custom: true,
+      // custom: true,
       /* page: 1, */
+      hideSizePerPage: true,
       /* totalSize: this.state.data.length */
       page: this.state.currentPage,
-      sizePerPage: 10,
+      // sizePerPage: 10,
       pageButtonRenderer,
       totalSize: this.state.metaData ? this.state.metaData.total : 0,
       // slected: [],
@@ -814,30 +817,40 @@ class Employees extends Component {
                     </span>
                   </div>
                 </div>
-                <div id="employee-content" style={{ 'display': 'none', 'width': '145%' }}>
+                <div id="employee-content" style={{ 'display': 'none' }}>
                   {(this.state.data.length !== 0) ? <div className="head_box_l mb15"><MyExportCSV {...props.csvProps} /></div> : ''}
 
                   {this.state.data.length !== 0 ?
                     <PaginationProvider pagination={paginationFactory(options)}>
                       {({ paginationProps, paginationTableProps }) => (
                         <div>
-                          <BootstrapTable
-                            {...props.baseProps}
-                            selectRow={selectRow}
-                            rowEvents={rowEvents}
-                            {...paginationTableProps}
-                            filter={filterFactory()}
-                            classes="table"
-                            remote
-                            noDataIndication={() => <NoDataAvailable />}
-                          />
+                          <div style={{ overflowY: "auto" }}>
+                            <div style={{ paddingBottom: "1rem" }}>
+                              <BootstrapTable
+                                {...props.baseProps}
+                                selectRow={selectRow}
+                                rowEvents={rowEvents}
+                                {...paginationTableProps}
+                                filter={filterFactory()}
+                                classes="table w-145"
+                                remote
+                                noDataIndication={() => <NoDataAvailable />}
+                              />
+                            </div>
+                          </div>
                           {
                             this.state.isLoadingData ? (
-                              <span style={{ paddingLeft: "40px" }}>Fetching data...</span>
-                            ) : <PaginationListStandalone
-                              {...paginationProps}
-                            />
+                              <div className="row">
+                                <div className="col-md-6 col-xs-6 col-sm-6 col-lg-6"></div>
+                                <div className="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                  <div style={{ paddingLeft: "40px" }}>Fetching data...</div>
+                                </div>
+                              </div>
+                            ) : <></>
                           }
+                          {/* <PaginationListStandalone
+                              {...paginationProps}
+                            /> */}
                         </div>
                       )
                       }
