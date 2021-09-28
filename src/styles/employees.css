@@ -1,0 +1,11 @@
+
+.react-bootstrap-table-pagination {
+  width: 100%;
+}
+#employee-content .react-bootstrap-table { overflow-y: auto; margin-bottom: 1rem; }
+
+#employee-content .react-bootstrap-table ul.pagination { padding-left: 0; }
+
+.w-145 {
+  width: 145%;
+}

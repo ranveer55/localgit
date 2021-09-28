@@ -11,6 +11,8 @@ import 'react-notifications-component/dist/theme.css';
 import { Progress } from 'reactstrap';
 import ReactDatePicker from "react-datepicker";
 import moment from "moment";
+import "../styles/employees.css";
+
 const { SearchBar } = Search;
 
 class Employees extends Component {
@@ -94,6 +96,9 @@ class Employees extends Component {
     this.state = {
       showActiveUsersOnly: false,
       dataLoaded: false,
+      metaData: null,
+      isLoadingData: false,
+      currentPage: 1,
       columns: [{
         dataField: "i_d",
         text: "Id",
@@ -398,11 +403,11 @@ class Employees extends Component {
   }
 
   componentDidMount() {
-    global.api.getEmployeeList(global.companyCode)
+    global.api.getEmployeeListPaginated(global.companyCode)
       .then(res => res)
       .then(data => {
         $('#employee-content').show();
-        this.setState({ data, dataLoaded: true });
+        this.setState({ data: data.data, dataLoaded: true, metaData: data.meta });
       })
       .catch(err => {
         alert(err);
@@ -529,13 +534,56 @@ class Employees extends Component {
     }
   }
   render() {
+    const pageButtonRenderer = ({
+      page,
+      active,
+      disabled,
+      title,
+      onPageChange
+    }) => {
+      const handleClick = (e) => {
+        e.preventDefault();
+
+        this.setState({
+          isLoadingData: true
+        });
+        global.api.getEmployeeListPaginated(global.companyCode, page)
+          .then(res => res)
+          .then(data => {
+            this.setState({
+              data: data.data,
+              // metaData: data.meta,
+              currentPage: page,
+              isLoadingData: false
+            });
+          })
+          .catch(err => {
+            this.setState({
+              isLoadingData: false
+            });
+            alert(err);
+          })
+      };
+      // ....
+      return (
+        <li className={(active ? "active" : "") + " page-item"} key={page}>
+          <a href="#" className="page-link" onClick={handleClick}>{page}</a>
+        </li >
+      );
+    };
 
     const options = {
-      custom: true,
+      // custom: true,
       /* page: 1, */
+      hideSizePerPage: true,
       /* totalSize: this.state.data.length */
-      slected: [],
+      page: this.state.currentPage,
+      // sizePerPage: 10,
+      pageButtonRenderer,
+      totalSize: this.state.metaData ? this.state.metaData.total : 0,
+      // slected: [],
     };
+
     const MyExportCSV = props => {
       const handleClick = () => {
         props.onExport();
@@ -668,7 +716,7 @@ class Employees extends Component {
       <div className="table_wraps" id="spinner">
         <div className="spinner" >
           <Loader type="Grid" color="#4441E2" height={100} width={100} />
-                  Loading....
+          Loading....
         </div>
       </div>
     );
@@ -704,6 +752,7 @@ class Employees extends Component {
         columns={this.state.columns}
         classes="table"
         search
+        remote
         exportCSV={{ fileName: this.state.csvFileName }}
       >
         {
@@ -768,26 +817,40 @@ class Employees extends Component {
                     </span>
                   </div>
                 </div>
-                <div id="employee-content" style={{ 'display': 'none', 'width': '145%' }}>
+                <div id="employee-content" style={{ 'display': 'none' }}>
                   {(this.state.data.length !== 0) ? <div className="head_box_l mb15"><MyExportCSV {...props.csvProps} /></div> : ''}
 
                   {this.state.data.length !== 0 ?
                     <PaginationProvider pagination={paginationFactory(options)}>
                       {({ paginationProps, paginationTableProps }) => (
                         <div>
-
-                          <BootstrapTable
-                            {...props.baseProps}
-                            selectRow={selectRow}
-                            rowEvents={rowEvents}
-                            {...paginationTableProps}
-                            filter={filterFactory()}
-                            classes="table"
-                            noDataIndication={() => <NoDataAvailable />}
-                          />
-                          <PaginationListStandalone
-                            {...paginationProps}
-                          />
+                          <div style={{ overflowY: "auto" }}>
+                            <div style={{ paddingBottom: "1rem" }}>
+                              <BootstrapTable
+                                {...props.baseProps}
+                                selectRow={selectRow}
+                                rowEvents={rowEvents}
+                                {...paginationTableProps}
+                                filter={filterFactory()}
+                                classes="table w-145"
+                                remote
+                                noDataIndication={() => <NoDataAvailable />}
+                              />
+                            </div>
+                          </div>
+                          {
+                            this.state.isLoadingData ? (
+                              <div className="row">
+                                <div className="col-md-6 col-xs-6 col-sm-6 col-lg-6"></div>
+                                <div className="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                  <div style={{ paddingLeft: "40px" }}>Fetching data...</div>
+                                </div>
+                              </div>
+                            ) : <></>
+                          }
+                          {/* <PaginationListStandalone
+                              {...paginationProps}
+                            /> */}
                         </div>
                       )
                       }
