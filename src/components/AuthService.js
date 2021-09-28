@@ -40,18 +40,19 @@ export default class AuthService {
                 password
             })
         }).then(res => {
-            if(res.token){
-                if(res.accesslevel!= "0"){
+            console.log({ loginResponse: res });
+            if (res.token) {
+                if (res.accesslevel != "0") {
                     this.setToken(res.token) // Setting the token in localStorage
                     this.setProfile(res)
                     return Promise.resolve(res);
-                }else{
-                    const result = {firstName: '', email: '', company_code:'', company_name: '',  access_level:'', accepted_gdpr:''}
+                } else {
+                    const result = { firstName: '', email: '', company_code: '', company_name: '', access_level: '', accepted_gdpr: '' }
                     this.setProfile(result)
-                    return {message: "Disabled Access."};
+                    return { message: "You do not have access to the Taplingua dashboard. Please contact your admin for dashboard access." };
                 }
             }
-            if(res.message){
+            if (res.message) {
                 return Promise.reject(res.message);
             }
         })
@@ -147,7 +148,7 @@ export default class AuthService {
     }
 
     setToken(idToken) {
-        console.log('idToken',idToken)
+        console.log('idToken', idToken)
         // Saves user token to localStorage
         localStorage.setItem('id_token', idToken)
     }
@@ -169,7 +170,7 @@ export default class AuthService {
         // Saves user token to localStorage
         localStorage.setItem('company_name', companyName)
     }
-    
+
 
     logout() {
         // Clear user token and profile data from localStorage
