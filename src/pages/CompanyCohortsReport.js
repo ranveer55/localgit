@@ -63,9 +63,9 @@ class CompanyCohortsReport extends Component {
                 For {this.state.selectedCompanyName}
               </h4>
               <div>
-                <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic/${this.state.selectedCompany}`} target="_blank" rel="noopener noreferrer" style={{
+                {/* <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic/${this.state.selectedCompany}`} target="_blank" rel="noopener noreferrer" style={{
                   margin: "0 4px"
-                }}>Open Dynamic Cohort Registration Form</a>
+                }}>Open Dynamic Cohort Registration Form</a> */}
                 <a href={`/company-cohorts/new`} style={{
                   margin: "0 4px"
                 }}>Create Cohort</a>
