@@ -102,6 +102,13 @@ class InterviewSimulatorPage extends Component {
             // },
             {
                 dataField: 'id',
+                text: "Registration Link",
+                formatter: (id, row) => <td>
+                    <a href={`https://api2.taplingua.com/app/user-cohort-registration/${row.id}`} target="_blank" rel="noopener noreferrer">Open Registration Form</a>
+                </td>
+            },
+            {
+                dataField: 'id',
                 text: 'Action',
                 formatter: this.formatter,
             },
