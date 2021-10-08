@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { Line } from "react-chartjs-2";
 import ReactDatePicker from "react-datepicker";
 
-export const interviewSimulatorCohortQuizAttemptUsersLogRoute = "/interview-simulator/:cohortId/quiz-attempt-users/:userId/log";
+export const interviewSimulatorCohortQuizAttemptUsersLogRoute = "/interview-simulator/:cohortId/quiz-attempt-users/:quizSetId/:userId/log";
 
 // function to create route
-export const createInterviewSimulatorCohortQuizAttemptUsersLogRoute = (cohortId, userId) => `/interview-simulator/${cohortId}/quiz-attempt-users/${userId}/log`;
+export const createInterviewSimulatorCohortQuizAttemptUsersLogRoute = (cohortId, quizSetId, userId) => `/interview-simulator/${cohortId}/quiz-attempt-users/${quizSetId}/${userId}/log`;
 
 class InterviewSimulatorCohortQuizAttemptUsersLogPage extends Component {
 
@@ -16,6 +16,7 @@ class InterviewSimulatorCohortQuizAttemptUsersLogPage extends Component {
 
         this.cohortId = props.match.params.cohortId;
         this.userId = props.match.params.userId;
+        this.quizSetId = props.match.params.quizSetId;
 
         this.companyCode = global.companyCode;
 
@@ -45,6 +46,7 @@ class InterviewSimulatorCohortQuizAttemptUsersLogPage extends Component {
         });
         global.api.getCompanyCohortUserLogWhoAttemptedQuiz(
             this.cohortId,
+            this.quizSetId,
             this.userId
         )
             .then(
@@ -75,9 +77,11 @@ class InterviewSimulatorCohortQuizAttemptUsersLogPage extends Component {
             <main className="offset" id="content">
                 <div className="row">
                     <div className="">
-                        <h4 className="title4 mb40">
-                            For {this.state?.cohort?.name}
-                        </h4>
+                        {this.state.attempts.length > 0 ? (
+                            <h4 className="title4 mb40">
+                                For {this.state.attempts[0].quizTopic}
+                            </h4>
+                        ) : <></>}
                         <br />
                     </div>
 
