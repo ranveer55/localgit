@@ -501,8 +501,30 @@ export default class ApiService {
             return res.data;
         });
     }
-    getCompanyCohortSingleReport(cohort_id = 0, startDate='', endDate='') {
+    getCompanyCohortSingleReport(cohort_id = 0, startDate = '', endDate = '') {
         return axios.get(`${this.domain}/cohorts-by-company/report/${cohort_id}?startDate=${startDate}&endDate=${endDate}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
+    getCompanyCohortUsersWhoAttemptedQuiz(cohort_id = 0) {
+        return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}/users-who-attempted-quiz`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
+    getCompanyCohortUserLogWhoAttemptedQuiz(cohort_id = 0, quizSetId, userId) {
+        return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}/users-who-attempted-quiz/${quizSetId}/${userId}`, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },
@@ -623,7 +645,7 @@ export default class ApiService {
             return res.data;
         });
     }
-    addCompanyPracticeSetQuetion(practiceSetId,payload) {
+    addCompanyPracticeSetQuetion(practiceSetId, payload) {
         return axios.post(`${this.domain}/company-practice-set/${practiceSetId}/question`, payload, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
@@ -633,7 +655,7 @@ export default class ApiService {
             return res.data;
         });
     }
-    updateCompanyPracticeSetQuetion(practiceSetId,payload,practiceQuestionId) {
+    updateCompanyPracticeSetQuetion(practiceSetId, payload, practiceQuestionId) {
         return axios.post(`${this.domain}/company-practice-set/${practiceSetId}/question/${practiceQuestionId}`, payload, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
@@ -643,7 +665,7 @@ export default class ApiService {
             return res.data;
         });
     }
-    deleteCompanyPracticeSetQuetion(practiceSetId,practiceQuestionId) {
+    deleteCompanyPracticeSetQuetion(practiceSetId, practiceQuestionId) {
         return axios.delete(`${this.domain}/company-practice-set/${practiceSetId}/question/${practiceQuestionId}`, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
@@ -760,8 +782,8 @@ export default class ApiService {
         }
         ).then(res => {
             return res.data;
-        }).catch(e=>{
-            
+        }).catch(e => {
+
         })
     }
 
