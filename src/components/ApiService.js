@@ -523,8 +523,8 @@ export default class ApiService {
         });
     }
 
-    getCompanyCohortUserLogWhoAttemptedQuiz(cohort_id = 0, userId) {
-        return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}/users-who-attempted-quiz/${userId}`, {
+    getCompanyCohortUserLogWhoAttemptedQuiz(cohort_id = 0, quizSetId, userId) {
+        return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}/users-who-attempted-quiz/${quizSetId}/${userId}`, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },

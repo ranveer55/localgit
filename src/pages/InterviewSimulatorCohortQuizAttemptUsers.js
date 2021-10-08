@@ -114,6 +114,7 @@ class InterviewSimulatorCohortQuizAttemptUsersPage extends Component {
                                                         <th style={{ width: '250px' }}>Email</th>
                                                         <th>First Name</th>
                                                         <th>Last Name</th>
+                                                        <th>Quiz Topic</th>
                                                         <th>Attempts</th>
                                                         <th>View Details</th>
                                                     </tr>
@@ -121,12 +122,13 @@ class InterviewSimulatorCohortQuizAttemptUsersPage extends Component {
                                                 <tbody>
                                                     {
                                                         this.state.users.map((user) => (
-                                                            <tr>
+                                                            <tr key={user.userId + "" + user.quizSetId}>
                                                                 <td style={{ wordBreak: "break-all" }}>{user.userId}</td>
                                                                 <td>{user.FirstName}</td>
                                                                 <td>{user.LastName}</td>
+                                                                <td>{user.quizTopic}</td>
                                                                 <td>{user.attemptCount}</td>
-                                                                <td><a href={"/interview-simulator/" + this.cohortId + "/quiz-attempt-users/" + user.userId + "/log"}>Show Attempts Log</a></td>
+                                                                <td><a href={"/interview-simulator/" + this.cohortId + "/quiz-attempt-users/" + user.quizSetId + "/" + user.userId + "/log"}>Show Attempts Log</a></td>
                                                             </tr>
                                                         ))
                                                     }
