@@ -2112,7 +2112,6 @@ Copyright (c) 2015 Daniel Eden
   }
 }
 .animated.flip {
-  -webkit-backface-visibility: visible;
   backface-visibility: visible;
   animation-name: flip;
 }
@@ -2142,7 +2141,6 @@ Copyright (c) 2015 Daniel Eden
   }
 }
 .flipInX {
-  -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
   animation-name: flipInX;
 }
@@ -2172,7 +2170,6 @@ Copyright (c) 2015 Daniel Eden
   }
 }
 .flipInY {
-  -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
   animation-name: flipInY;
 }
@@ -2193,7 +2190,6 @@ Copyright (c) 2015 Daniel Eden
 }
 .flipOutX {
   animation-name: flipOutX;
-  -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
 }
 @keyframes flipOutY {
@@ -2212,7 +2208,6 @@ Copyright (c) 2015 Daniel Eden
   }
 }
 .flipOutY {
-  -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
   animation-name: flipOutY;
 }
@@ -2812,12 +2807,12 @@ Copyright (c) 2015 Daniel Eden
 .owl-carousel .owl-item img{display:block;width:100%}
 .owl-carousel .owl-dots.disabled,.owl-carousel .owl-nav.disabled{display:none}
 .no-js .owl-carousel,.owl-carousel.owl-loaded{display:block}
-.owl-carousel .owl-dot,.owl-carousel .owl-nav .owl-next,.owl-carousel .owl-nav .owl-prev{cursor:pointer;-webkit-user-select:none;user-select:none}
+.owl-carousel .owl-dot,.owl-carousel .owl-nav .owl-next,.owl-carousel .owl-nav .owl-prev{cursor:pointer;user-select:none}
 .owl-carousel .owl-nav button.owl-next,.owl-carousel .owl-nav button.owl-prev,.owl-carousel button.owl-dot{background:0 0;color:inherit;border:none;padding:0!important;font:inherit}
 .owl-carousel.owl-loading{opacity:0;display:block}
 .owl-carousel.owl-hidden{opacity:0}
 .owl-carousel.owl-refresh .owl-item{visibility:hidden}
-.owl-carousel.owl-drag .owl-item{touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.owl-carousel.owl-drag .owl-item{touch-action:pan-y;user-select:none}
 .owl-carousel.owl-grab{cursor:move;cursor:grab}
 .owl-carousel.owl-rtl{direction:rtl}
 .owl-carousel.owl-rtl .owl-item{float:right}
@@ -2841,7 +2836,6 @@ Copyright (c) 2015 Daniel Eden
 	position: relative;
 	display: inline-block;
 	overflow: hidden;
-	-webkit-user-select: none;
 	user-select: none;
 }
 .jq-checkbox input,
@@ -2891,7 +2885,6 @@ Copyright (c) 2015 Daniel Eden
 }
 .jq-selectbox li,
 .jq-select-multiple li {
-	-webkit-user-select: none;
 	user-select: none;
 	white-space: nowrap;
 }
@@ -2903,7 +2896,6 @@ Copyright (c) 2015 Daniel Eden
 }
 .jq-selectbox__select-text {
 	overflow: hidden;
-	-webkit-user-select: none;
 	user-select: none;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -3072,7 +3064,6 @@ Copyright (c) 2015 Daniel Eden
 	background: linear-gradient(#FFF, #E6E6E6);
 	box-shadow: 0 1px 2px rgba(0,0,0,.1);
 	box-shadow: inset 1px -1px #F1F1F1, inset -1px 0 #F1F1F1, 0 1px 2px rgba(0,0,0,.1);
-	-webkit-user-select: none;
 	user-select: none;
 	text-shadow: 1px 1px #FFF;
 	cursor: pointer;
@@ -3326,7 +3317,6 @@ textarea.styler {
 	color: #333;
 }
 input[type='search'].styler {
-	-webkit-appearance: none;
 	appearance: none;
 }
 textarea.styler {
@@ -3991,7 +3981,6 @@ input[type='submit'].styler[disabled] {
 .mfp-arrow,
 .mfp-preloader,
 .mfp-counter {
-  -webkit-user-select: none;
   user-select: none; }
 .mfp-loading.mfp-figure {
   display: none; }
@@ -5261,7 +5250,6 @@ input:focus::-webkit-input-placeholder,
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.29);
   border-radius: 8px;
   opacity: 1;
-  -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
   transition: all ease 0.5s;
@@ -5714,52 +5702,6 @@ input:focus::-webkit-input-placeholder,
   background-color: #4441E2;
   opacity: 1;
 }
-.owl-carousel.course_carousel {
-    /* padding-bottom: 136px;*/
-    /* .owl-nav{*/
-    /*     position: absolute;*/
-    /*     bottom: 0;*/
-    /*     right: 0;*/
-    /*     width: 110px;*/
-    /*     height: 16px;*/
-    /*     */
-    /* color: #4A4A4B;*/
-    /**/
-    /* }*/
-    /* .owl-prev,*/
-    /* .owl-next{*/
-    /*     position: absolute;*/
-    /*     top: 0;*/
-    /*     width: 27px;*/
-    /*     height: 16px;*/
-    /*     overflow: hidden;*/
-    /*     &:before{*/
-    /*         content: "";*/
-    /*         position: absolute;*/
-    /*         top: 0;*/
-    /*         right: 0;*/
-    /*         height: 100%;*/
-    /*         width: 100%;*/
-    /*         background: url(/images/icons/arr-right.png) right center no-repeat !important;*/
-    /*         -webkit-background-size: auto 16px !important;*/
-    /*                 background-size: auto 16px !important;*/
-    /*     }*/
-    /*     span{*/
-    /*         display: none;*/
-    /*     }*/
-    /* }*/
-    /* .owl-prev{*/
-    /*     left: 0;*/
-    /*     &:before{*/
-    /*         -webkit-transform: scale(-1,1);*/
-    /*             -ms-transform: scale(-1,1);*/
-    /*                 transform: scale(-1,1);*/
-    /*     }*/
-    /* }*/
-    /* .owl-next{*/
-    /*     right: 0;*/
-    /* }*/;
-}
 .owl-carousel.course_carousel .owl-dots {
   position: absolute;
   right: 5px;
@@ -5952,10 +5894,6 @@ html .ui-button.ui-state-disabled:active {
   color: #A5A9AA !important;
   font-weight: 700;
   text-align: center;
-}
-.ui-datepicker-week-end,
-.ui-datepicker-week-end .ui-state-default {
-  /* color: #fd482a !important;*/;
 }
 .ui-state-default.ui-state-active {
   border-radius: 50px;
@@ -7913,12 +7851,6 @@ html:not(.md_touch) .todos_dots:hover .todos_dot_box {
 .course_table .course_child_tags {
   display: flex;
 }
-/* - - - - - - - - - -/ end of .box1 - - - - - - - - - - */
-/* - - - - - - - - - - .box1 - - - - - - - - - - */
-.result_datetime {
-  /* font-size: 18px;*/
-  /* line-height: 1.2;*/;
-}
 .report_wrap {
   display: flex;
   margin-bottom: 108px;
@@ -8659,7 +8591,6 @@ div.scrollmenu {
   margin-bottom: 0px;
   cursor: pointer;
   font-size: 22px;
-  -webkit-user-select: none;
   user-select: none;
 }
 /* Hide the browser's default radio button */

@@ -337,7 +337,7 @@ class ManageQuetions extends Component {
                             <div className="add-practice-set-modal" >
                                 <div className="add-practice-set-modal-body" style={{width:'90%', height:'80%'}}>
 
-                                    <h2 style={{ padding: '2px 10px' }}>Practice Set</h2>
+                                    <h2 style={{ padding: '2px 10px' }}>Practice Set Question</h2>
                                     <h6 style={{ padding: '2px 10px' }}>Add or Edit Practice Question</h6>
                                     <div style={{ margin: "1rem 0", fontSize: "23px" }}>
                                         <div className="row" style={{ padding: '2px 10px' }}>

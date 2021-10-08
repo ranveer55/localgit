@@ -66,13 +66,13 @@ class InterviewSimulatorPage extends Component {
 
     render() {
         const columns = [
-            
+
             {
                 dataField: 'practiceSetQuestion',
                 text: 'Name',
                 formatter: (e, row) => <a target="_blank" rel="noopener noreferrer" href={"/cohort-detail/" + row.id}>{row.name}</a>
             },
-            
+
 
             {
                 dataField: 'created_at',
@@ -102,8 +102,25 @@ class InterviewSimulatorPage extends Component {
             // },
             {
                 dataField: 'id',
+                text: "Registration Link",
+                formatter: (id, row) => <td>
+                    <a href={`https://api2.taplingua.com/app/user-cohort-registration/${row.id}`} target="_blank" rel="noopener noreferrer">Open Registration Form</a>
+                </td>
+            },
+            {
+                dataField: 'id',
                 text: 'Action',
                 formatter: this.formatter,
+            },
+            {
+                dataField: 'id',
+                text: "Quiz Attempts",
+                formatter: (id, row) => (
+                    row.quizAttempts ? 
+                    <td>
+                        <a href={'/interview-simulator/' + row.id + '/quiz-attempt-users'} target="_blank" rel="noopener noreferrer">Show Users List</a>
+                    </td> : <></>
+                )
             },
 
 
@@ -116,12 +133,12 @@ class InterviewSimulatorPage extends Component {
                         <div className="col-md-6">
                             <h1 className="title1 mb25">Manage Interview Simulator Cohorts</h1>
                             <h4 className="title4 mb40">
-                                For {this.state.selectedCompanyName !='null' ? this.state.selectedCompanyName:'' }
+                                For {this.state.selectedCompanyName != 'null' ? this.state.selectedCompanyName : ''}
                             </h4>
                             <div>
-                                <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic/${this.state.selectedCompany}`} target="_blank" rel="noopener noreferrer" style={{
+                                {/* <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic/${this.state.selectedCompany}`} target="_blank" rel="noopener noreferrer" style={{
                                     margin: "0 4px"
-                                }}>Open Dynamic Cohort Registration Form</a>
+                                }}>Open Dynamic Cohort Registration Form</a> */}
                                 <a href={`/company-cohorts/new`} style={{
                                     margin: "0 4px"
                                 }}>Create Cohort</a>
