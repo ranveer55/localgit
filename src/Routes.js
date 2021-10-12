@@ -41,6 +41,7 @@ import AddPracticeSetToCohortPage from './pages/cohort/AddCohortPracticeSet';
 import ManageQuetions from './pages/cohort/ManageQuetions';
 import InterviewSimulatorCohortQuizAttemptUsersPage, { interviewSimulatorCohortQuizAttemptUsersRoute } from './pages/InterviewSimulatorCohortQuizAttemptUsers';
 import InterviewSimulatorCohortQuizAttemptUsersLogPage, { interviewSimulatorCohortQuizAttemptUsersLogRoute } from './pages/InterviewSimulatorCohortQuizAttemptUsersLog';
+import InterviewSimulatorCohortQuizProctoredScore from './pages/InterviewSimulatorCohortQuizProctoredScore';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -66,6 +67,7 @@ class Router extends React.Component {
 
         <ProtectedRoute exact path={interviewSimulatorCohortQuizAttemptUsersRoute} component={InterviewSimulatorCohortQuizAttemptUsersPage} />
         <ProtectedRoute exact path={interviewSimulatorCohortQuizAttemptUsersLogRoute} component={InterviewSimulatorCohortQuizAttemptUsersLogPage} />
+        <ProtectedRoute exact path="/interview-simulator/:cohortId/quiz-proctored-attempts/" component={InterviewSimulatorCohortQuizProctoredScore} />
         <ProtectedRoute exact path="/interview-simulator/:cohortId/user-attempts/:userId/:attemptId" component={InterviewSimulatorCohortUserAttempsAiReviewPage} />
         <ProtectedRoute exact path="/interview-simulator/:cohortId/user-attempts/:userId" component={InterviewSimulatorCohortUserAttempsPage} />
         <ProtectedRoute exact path="/interview-simulator/:cohortId/add-practice-set" component={AddPracticeSetToCohortPage} />

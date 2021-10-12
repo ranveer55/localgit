@@ -522,6 +522,16 @@ export default class ApiService {
             return res.data;
         });
     }
+    getCompanyCohortUsersQuizProctoredScore(cohort_id = 0) {
+        return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}/quizProctoredScore`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
 
     getCompanyCohortUserLogWhoAttemptedQuiz(cohort_id = 0, quizSetId, userId) {
         return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}/users-who-attempted-quiz/${quizSetId}/${userId}`, {
