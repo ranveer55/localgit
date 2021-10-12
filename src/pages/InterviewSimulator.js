@@ -114,6 +114,16 @@ class InterviewSimulatorPage extends Component {
             },
             {
                 dataField: 'id',
+                text: "Quiz proctored attempts",
+                formatter: (id, row) => (
+                    row.quizAttempts ? 
+                    <td>
+                        <a href={'/interview-simulator/' + row.id + '/quiz-proctored-attempts'} target="_blank" rel="noopener noreferrer">View</a>
+                    </td> : <></>
+                )
+            },
+            {
+                dataField: 'id',
                 text: "Quiz Attempts",
                 formatter: (id, row) => (
                     row.quizAttempts ? 
