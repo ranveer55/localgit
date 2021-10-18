@@ -8658,7 +8658,11 @@ div.scrollmenu {
   border: 1.1em solid rgba(0, 0, 0, 0.2);
   border-left: 1.1em solid #000000;
   border-radius: 50%;
-  animation: load8 1.1s infinite linear;
+  animation:spin 2s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 .css-79elbk{
   position: unset !important;
