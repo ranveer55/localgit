@@ -542,6 +542,19 @@ export default class ApiService {
             return res.data;
         });
     }
+
+    unlockProctoredTest(data) {
+            return axios.post(`${this.domain}/unlock-proctored-test`,data, {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                },
+            }
+            ).then(res => {
+                return res.data;
+            });
+        }
+
+
     getCompanyCohortUsersQuizProctoredScore(cohort_id = 0) {
         return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}/quizProctoredScore`, {
             headers: {
