@@ -97,10 +97,17 @@ class ProctoredTestDetail extends Component {
       });
   };
   unlockRender = (datum) => {
+      const s ={
+          color:'blue',
+          cursor:'pointer'
+      }
     if (datum.attemptStatus == 2) {
-      return <img width="15" src="/images/icons/unlocked.png" alt="unLocked" onClick={(e) => this.lock(datum.id, 0)}/>
-    } else {
-      return <img  width="15" src="/images/icons/submitted.png" alt="Locked" onClick={(e) => this.lock(datum.id, 2)}/>;
+      return <span style={s} onClick={(e) => this.lock(datum.id, 0)}>Unblocked</span>
+    }
+     else if (datum.attemptStatus == 1) {
+        return <span style={s} onClick={(e) => this.lock(datum.id, 2)}>Complete </span>;
+    }else if (datum.attemptStatus == 0) {
+        return <span style={s} onClick={(e) => this.lock(datum.id, 2)}>Incomplete </span>;
     }
   };
 
@@ -118,7 +125,7 @@ class ProctoredTestDetail extends Component {
               color: "#408BF9",
             }}
           >
-            <a href={"/proctored-test/"}>{row.userId}</a>
+            <a href={`/proctored-test/user/${row.id}`}>{row.userId}</a>
           </span>
         ),
       },

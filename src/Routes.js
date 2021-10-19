@@ -44,6 +44,7 @@ import InterviewSimulatorCohortQuizAttemptUsersLogPage, { interviewSimulatorCoho
 import InterviewSimulatorCohortQuizProctoredScore from './pages/ProctoredTest/Detail';
 import ProctoredTest from './pages/ProctoredTest';
 import ProctoredTestDetail from './pages/ProctoredTest/Detail';
+import ProctoredTestUserDetail from './pages/ProctoredTest/User';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -83,6 +84,7 @@ class Router extends React.Component {
         <ProtectedRoute path="/daily-goal-log" component={DailyGoalLog} />
         <ProtectedRoute path="/coursedetail" component={CourseDetails} />
         <ProtectedRoute path="/courses" component={Courses} />
+        <ProtectedRoute exact path="/proctored-test/user/:attemptLogId" component={ProctoredTestUserDetail} />
         <ProtectedRoute exact path="/proctored-test/:cohortId/:quizId" component={ProctoredTestDetail} />
         <ProtectedRoute exact path="/proctored-test" component={ProctoredTest} />
         <ProtectedRoute exact path="/proctored-test/:cohortId/quiz-proctored-attempts/" component={InterviewSimulatorCohortQuizProctoredScore} />

@@ -553,6 +553,16 @@ export default class ApiService {
                 return res.data;
             });
         }
+        getProctoredTestUserDetail(id) {
+            return axios.get(`${this.domain}/proctored-test/user/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                },
+            }
+            ).then(res => {
+                return res.data;
+            });
+        }
 
 
     getCompanyCohortUsersQuizProctoredScore(cohort_id = 0) {
