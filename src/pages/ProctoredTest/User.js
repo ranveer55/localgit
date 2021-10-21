@@ -186,10 +186,8 @@ class ProctoredTestUserDetail extends Component {
                         {data.resumeContent[k]}
                       </li>
                     ))}
-                    <video width="320" height="240" controls>
-                      <source src={`https://langappnew.s3.amazonaws.com/proctored-exam-videos//21123_3_1.webm`} type="video/mp4" />
-                    </video>
-                    <video width="320" height="240" controls>
+                  
+                    <video width="320" height="240" controls style={{marginTop:20}}>
                       <source src={`https://langappnew.s3.amazonaws.com/${data.proctoredVideo}`} type="video/mp4" />
                     </video>
                   </>
