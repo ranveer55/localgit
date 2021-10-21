@@ -84,61 +84,11 @@ class ProctoredTestUserDetail extends Component {
 
   render() {
     const { data, cohort } = this.state;
-    const columns = [
-      {
-        dataField: "userId",
-        text: "Email",
-      },
-
-      {
-        dataField: "employee.FirstName",
-        text: "First Name",
-      },
-      {
-        dataField: "employee.LastName",
-        text: "Last Name",
-      },
-      {
-        dataField: "attemptNumber",
-        text: "Attempts",
-      },
-      {
-        dataField: "attemptStatus",
-        text: "Complete",
-        // formatter: (e, row) => (e == 1 ? "Y" : e == 0 ? "N" : ""),
-      },
-      {
-        dataField: "attemptStatus",
-        text: "Exam Attempt",
-        // formatter: (e, row) => this.unlockRender(row),
-      },
-      {
-        dataField: "answerJSON",
-        text: "Score",
-        // formatter: (e, row) => this.score(e),
-      },
-      {
-        dataField: "employee.Location",
-        text: "Location",
-      },
-      {
-        dataField: "resumeContent.basicInfo.address",
-        text: "Current Address",
-      },
-      {
-        dataField: "resumeContent.basicInfo.phone",
-        text: "WhatsApp",
-      },
-      {
-        dataField: "resumeContent.education[0].institution",
-        text: "College",
-      },
-    ];
     return (
       <main className="offset" id="content">
         <div className="row">
           <div className="">
-            <h4 className="title4 mb40">Procotored Tests</h4>
+            <h4 className="title4 mb40">Candidate Full Details</h4>
             <br />
           </div>
         </div>
@@ -146,58 +96,65 @@ class ProctoredTestUserDetail extends Component {
         <section className="section_box">
           <div className="row">
             <div className="col-md-12">
-              <h1 className="title1 mb25">Cohorts: {cohort?.name}</h1>
-              <h4 className="title4 mb40">
+              <h1 className="title1 mb25">Email:{data?.userId}</h1>
+              <div className="title4 mb40">
                 {data && data.employee && (
-                  <>
-                    <li>
-                      <b>Email </b> : {data?.userId}{" "}
-                    </li>
-                    <li>
-                      <b>First Name </b> : {data?.employee?.FirstName}{" "}
-                    </li>
-                    <li>
-                      <b>Last Name </b> : {data?.employee?.LastName}{" "}
-                    </li>
-                    <li>
-                      <b>Attempts </b> : {data?.attemptNumber}{" "}
-                    </li>
-                    <li>
-                      <b>Complete </b> :{" "}
-                      {data.attemptStatus == 1
-                        ? "Yes"
-                        : data.attemptStatus == 0
-                        ? "No"
-                        : ""}{" "}
-                    </li>
-                    <li>
-                      <b>Exam Attempt </b> : {this.unlockRender(data)}{" "}
-                    </li>
-                    <li>
-                      <b>Score </b> : {this.score(data.answerJSON)}{" "}
-                    </li>
-                    <li>
-                      <b>Location </b> : {data?.employee?.Location}{" "}
-                    </li>
+                  <div className="row">
+                    <div className="col-md-7">
+                      <div className="flex">
+                        <div className="col-md-5  label">Email </div><div className="col-md-7  labelval"> {data?.userId}</div>
+                      </div>
+                      <div className="flex">
+                        <div className="col-md-5  label">First Name </div><div className="col-md-7  labelval"> {data?.employee?.FirstName}</div>
+                      </div>
+                      <div className="flex">
+                        <div className="col-md-5  label">Last Name </div><div className="col-md-7  labelval"> {data?.employee?.LastName}</div>
+                      </div>
+                      <div className="flex">
+                        <div className="col-md-5  label">Attempts </div><div className="col-md-7  labelval"> {data?.attemptNumber}</div>
+                      </div>
+                      <div className="flex">
+                        <div className="col-md-5  label">Complete </div><div className="col-md-7  labelval">
+                          {data.attemptStatus == 1
+                            ? "Yes"
+                            : data.attemptStatus == 0
+                              ? "No"
+                              : ""}</div>
+                      </div>
+                      <div className="flex">
+                        <div className="col-md-5  label">Exam Attempt </div><div className="col-md-7  labelval"> {this.unlockRender(data)}</div>
+                      </div>
+                      <div className="flex">
+                        <div className="col-md-5  label">Score </div><div className="col-md-7  labelval"> {this.score(data.answerJSON)}</div>
+                      </div>
+                      <div className="flex">
+                        <div className="col-md-5  label">Location </div><div className="col-md-7  labelval"> {data?.employee?.Location}</div>
+                      </div>
 
-                    {Object.keys(data.resumeContent).map((k) => (
-                      <li key={k}>
-                        <b>{k.replace(/([a-z])([A-Z])/g, "$1 $2")}: </b>
-                        {data.resumeContent[k]}
-                      </li>
-                    ))}
-                  
-                    <video width="320" height="240" controls style={{marginTop:20}}>
-                      <source src={`https://langappnew.s3.amazonaws.com/${data.proctoredVideo}`} type="video/mp4" />
-                    </video>
-                  </>
+                      {Object.keys(data.resumeContent).map((k) => (
+                        <div className="flex" key={k}>
+                          <div className="col-md-5  label">{k.replace(/([a-z])([A-Z])/g, "$1 $2")}: </div>
+                          <div className="col-md-7  labelval">{data.resumeContent[k]}</div>
+                        </div>
+
+                      ))}
+
+                    </div>
+                    <div className="col-md-5 proctoredVideo">
+                    <div className="proctoredVideo">
+                      <video controls width="100%">
+                        <source src={`https://langappnew.s3.amazonaws.com/${data.proctoredVideo}`} type="video/mp4" />
+                      </video>
+                    </div>
+                    </div>
+                  </div>
                 )}
-              </h4>
+              </div>
             </div>
           </div>
           <div></div>
         </section>
-      </main>
+      </main >
     );
   }
 }
