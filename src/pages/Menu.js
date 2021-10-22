@@ -46,6 +46,15 @@ class Menu extends Component {
                                 </i>
                                 <span>Interview Simulator</span>
                             </a>
+                        </li> 
+                        <li className="menu_item">
+                            <a className={pathName === '/proctored-test' ? 'menu_link current' : 'menu_link'} href="/proctored-test">
+                                <i className="menu_link_icon">
+                                    <img src="/images/icons/exam.png" alt="" />
+                                    <img src="/images/icons/exam.png" alt="" />
+                                </i>
+                                <span>Proctored Test</span>
+                            </a>
                         </li>
 
                         <li className="menu_item">

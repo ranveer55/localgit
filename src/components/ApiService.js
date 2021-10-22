@@ -542,6 +542,49 @@ export default class ApiService {
             return res.data;
         });
     }
+    getProctoredTest(id) {
+        return axios.get(`${this.domain}/get-proctored-test/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    getProctoredTestDetail(cohortId, quizId) {
+        return axios.get(`${this.domain}/get-proctored-test/detail/${cohortId}/${quizId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
+    unlockProctoredTest(data) {
+            return axios.post(`${this.domain}/unlock-proctored-test`,data, {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                },
+            }
+            ).then(res => {
+                return res.data;
+            });
+        }
+        getProctoredTestUserDetail(id) {
+            return axios.get(`${this.domain}/proctored-test/user/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                },
+            }
+            ).then(res => {
+                return res.data;
+            });
+        }
+
+
     getCompanyCohortUsersQuizProctoredScore(cohort_id = 0) {
         return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}/quizProctoredScore`, {
             headers: {

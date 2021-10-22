@@ -77,7 +77,6 @@ class ManageQuetions extends Component {
         
         if(video && video.value){
             const {value, files}=video;
-            console.log({value, files})
             formData.append('video', files[0], files[0].name);
         }
         
@@ -90,13 +89,15 @@ class ManageQuetions extends Component {
                         this.setState({
                             addPracticeSetAddModal: false,
                             questions: dt,
-                            uploading:false
+                            uploading:false,
+                            newQuestion:this.newQuestion, 
+                            video: null
                         });
                     })
                 .catch(err => {
                     this.setState({
                         dateLoaded: true,
-                        uploading:false
+                        uploading:false,
                     });
                 });
         } else {
@@ -108,13 +109,15 @@ class ManageQuetions extends Component {
                         this.setState({
                             addPracticeSetAddModal: false,
                             questions: dt,
-                            uploading:false
+                            uploading:false,
+                            newQuestion:this.newQuestion,
+                            video: null
                         });
                     })
                 .catch(err => {
                     this.setState({
                         dateLoaded: true,
-                        uploading:false
+                        uploading:false,
                     });
                 });
         }
@@ -243,7 +246,7 @@ class ManageQuetions extends Component {
     }
 
     render() {
-        const { newQuestion, cohort, practicSet ,uploading} = this.state;
+        const { newQuestion, cohort, practicSet ,uploading, } = this.state;
 
         const columns = [
            
@@ -293,6 +296,7 @@ class ManageQuetions extends Component {
 
         return (
             <main className="offset" id="content">
+               
                 <section className="section_box">
                     <div className="row">
                         <div className="col-md-6">
@@ -335,36 +339,37 @@ class ManageQuetions extends Component {
                     {
                         this.state.addPracticeSetAddModal ? (
                             <div className="add-practice-set-modal" >
-                                <div className="add-practice-set-modal-body" style={{width:'90%', height:'80%'}}>
-
+                                 {uploading && <div className="loader" style={{zIndex:999}}></div>}
+                                <div disabled={true} className="add-practice-set-modal-body" style={{width:'90%', height:'80%', zIndex:99, }}>
+                                    <div>
                                     <h2 style={{ padding: '2px 10px' }}>Practice Set Question</h2>
                                     <h6 style={{ padding: '2px 10px' }}>Add or Edit Practice Question</h6>
                                     <div style={{ margin: "1rem 0", fontSize: "23px" }}>
                                         <div className="row" style={{ padding: '2px 10px' }}>
                                             <div className="col-md-3">Practice Question</div>
                                             <div className="col-md-9">
-                                                <textarea value={newQuestion.practiceSetQuestion} style={{ width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} name="practiceSetQuestion" placeholder="Practice Question" onChange={this.onChange} />
+                                                <textarea disabled={uploading} value={newQuestion.practiceSetQuestion} style={{ width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} name="practiceSetQuestion" placeholder="Practice Question" onChange={this.onChange} />
 
                                             </div>
                                         </div>
                                         <div className="row" style={{ padding: '2px 10px' }}>
                                             <div className="col-md-3">Hints</div>
                                             <div className="col-md-9">
-                                                <textarea value={newQuestion.practiceQuestionText} name="practiceQuestionText" style={{width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Hints" onChange={this.onChange} />
+                                                <textarea disabled={uploading} value={newQuestion.practiceQuestionText} name="practiceQuestionText" style={{width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Hints" onChange={this.onChange} />
 
                                             </div>
                                         </div>
                                         <div className="row" style={{ padding: '2px 10px' }}>
                                             <div className="col-md-3">Reference Answer</div>
                                             <div className="col-md-9">
-                                                <textarea name="referenceAnswer" value={newQuestion.referenceAnswer} style={{ width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Reference Answer" onChange={this.onChange} />
+                                                <textarea disabled={uploading} name="referenceAnswer" value={newQuestion.referenceAnswer} style={{ width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Reference Answer" onChange={this.onChange} />
 
                                             </div>
                                         </div>
                                         <div className="row" style={{ padding: '2px 10px' }}>
                                             <div className="col-md-3">Video</div>
                                             <div className="col-md-9">
-                                                <input   name="video" type="file" onChange={this.onChangeFile} accept=".mp4" />
+                                                <input disabled={uploading}  name="video" type="file" onChange={this.onChangeFile} accept=".mp4" />
 
                                             </div>
                                         </div>
@@ -372,14 +377,20 @@ class ManageQuetions extends Component {
                                     </div>
 
                                     {uploading && <span style={{color:'green'}}> The question is being saved to the database.</span>}
+                                   
                                     <div style={{ display: 'flex' }}>
                                         <div disabled={!this.state.newPracticeName} style={{ backgroundColor: '#4AB93C', color:'#fff' }} className="add-practice-set-modal-button" onClick={this.addPracticeSetQuestion}>Save</div>
-                                        <div className="add-practice-set-modal-button" onClick={e => {
+                                        <div className="add-practice-set-modal-button"
+                                        disabled={!uploading}
+                                         onClick={e => {
+                                             if(!uploading){
                                             this.setState({
                                                 addPracticeSetAddModal: false,
                                                 newQuestion: this.newQuestion
                                             });
+                                        }
                                         }}>Cancel</div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
