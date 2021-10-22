@@ -534,6 +534,23 @@ class Employees extends Component {
     }
   }
   render() {
+
+    const onTableChange = (type, { searchText }) => {
+      if (type === "search" && searchText) {
+        // search for the result
+        console.log(searchText);
+        global.api.getEmployeeListSearchPaginated(global.companyCode, 1, searchText)
+          .then(res => res)
+          .then(data => {
+            $('#employee-content').show();
+            this.setState({ data: data.data, dataLoaded: true, metaData: data.meta });
+          })
+          .catch(err => {
+            alert(err);
+          })
+      }
+    };
+
     const pageButtonRenderer = ({
       page,
       active,
@@ -833,6 +850,7 @@ class Employees extends Component {
                                 {...paginationTableProps}
                                 filter={filterFactory()}
                                 classes="table w-145"
+                                onTableChange={onTableChange}
                                 remote
                                 noDataIndication={() => <NoDataAvailable />}
                               />

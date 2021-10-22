@@ -243,7 +243,27 @@ export default class ApiService {
         })
             .then(res => {
                 return Promise.resolve(res.data);
-            })
+            });
+    }
+
+    getEmployeeListSearchPaginated(companyCode, page, search = null) {
+        var params = "CompanyCode=" + companyCode;
+        if (page) {
+            params = params + "&page=" + page;
+        }
+        if (search) {
+            params = params + "&search=" + search;
+        }
+        // return axios.get(`${this.domain}/getEmployee.php?` + params)
+        return axios.get(`${this.domain}/employee-paginated?` + params, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        })
+            .then(res => {
+                return Promise.resolve(res.data);
+            });
     }
 
     //get course list
@@ -491,8 +511,18 @@ export default class ApiService {
     }
 
 
-    getCompanyCohortSingle(cohort_id = 0) {
-        return axios.get(`${this.domain}/cohorts-by-company/` + cohort_id, {
+    getCompanyCohortSingle(cohort_id = 0,) {
+        return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    getCompanyCohortSingleReport(cohort_id = 0, startDate = '', endDate = '') {
+        return axios.get(`${this.domain}/cohorts-by-company/report/${cohort_id}?startDate=${startDate}&endDate=${endDate}`, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },
@@ -603,6 +633,46 @@ export default class ApiService {
             return res.data;
         });
     }
+    addCompanyPracticeSet(payload) {
+        return axios.post(`${this.domain}/company-practice-set`, payload, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    addCompanyPracticeSetQuetion(practiceSetId, payload) {
+        return axios.post(`${this.domain}/company-practice-set/${practiceSetId}/question`, payload, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    updateCompanyPracticeSetQuetion(practiceSetId, payload, practiceQuestionId) {
+        return axios.post(`${this.domain}/company-practice-set/${practiceSetId}/question/${practiceQuestionId}`, payload, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    deleteCompanyPracticeSetQuetion(practiceSetId, practiceQuestionId) {
+        return axios.delete(`${this.domain}/company-practice-set/${practiceSetId}/question/${practiceQuestionId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
 
     getUserCohortDetail(cohort_id = 0, userId = "") {
         return axios.get(`${this.domain}/user-cohort-detail/` + cohort_id + "/" + userId, {
@@ -649,6 +719,70 @@ export default class ApiService {
         ).then(res => {
             return res.data;
         });
+    }
+
+    getAllPracticeSets() {
+        // practice-sets/all
+        return axios.get(`${this.domain}/practice-sets/all`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
+    addPracticeSetsToCohort(cohortId, practiceSetIds = []) {
+        // practice-sets/all
+        return axios.post(`${this.domain}/cohort/add-practice-set`, {
+            cohortId,
+            practiceSetIds
+        }, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+
+    }
+
+    removePracticeSetFromCohort(cohortId, practiceSetId) {
+        // practice-sets/all
+        return axios.delete(`${this.domain}/cohort/${cohortId}/remove-practice-set/${practiceSetId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+
+    }
+
+    getCohortPracticeSets(cohort_id = 0) {
+        return axios.get(`${this.domain}/cohort/${cohort_id}/get-practice-sets`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    getCohortPracticeSetsQuestions(practice_id = 0) {
+        return axios.get(`${this.domain}/company-practice-set/${practice_id}/question`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        }).catch(e => {
+
+        })
     }
 
     sendLastPlacementTestResultEmail(userId) {
