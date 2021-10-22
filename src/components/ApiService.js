@@ -243,7 +243,27 @@ export default class ApiService {
         })
             .then(res => {
                 return Promise.resolve(res.data);
-            })
+            });
+    }
+
+    getEmployeeListSearchPaginated(companyCode, page, search = null) {
+        var params = "CompanyCode=" + companyCode;
+        if (page) {
+            params = params + "&page=" + page;
+        }
+        if (search) {
+            params = params + "&search=" + search;
+        }
+        // return axios.get(`${this.domain}/getEmployee.php?` + params)
+        return axios.get(`${this.domain}/employee-paginated?` + params, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        })
+            .then(res => {
+                return Promise.resolve(res.data);
+            });
     }
 
     //get course list
