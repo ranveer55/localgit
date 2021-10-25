@@ -259,15 +259,17 @@ class ManageQuetions extends Component {
             },
             {
                 dataField: 'practiceSetQuestion',
-                text: 'Question'
+                text: 'Question',
             },
             {
                 dataField: 'practiceQuestionText',
-                text: 'Hints'
+                text: 'Hints',
+                formatter: (datum) => datum && datum != null && datum != 'null' ? datum :''
             },
             {
                 dataField: 'referenceAnswer',
-                text: 'Reference Answer'
+                text: 'Reference Answer',
+                formatter: (datum) => datum && datum != null && datum != 'null' ? datum :''
             },
 
             {
