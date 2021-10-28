@@ -68,14 +68,23 @@ class InterviewSimulatorPage extends Component {
       {
         dataField: "practiceSetQuestion",
         text: "Name",
-        formatter: (e, row) => (
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={"/cohort-detail/" + row.id}
+        formatter: (id, row) => (
+          <td
+            style={{
+              color: "blue",
+              cursor: "pointer",
+            }}
           >
-            {row.name}
-          </a>
+            <Link
+              to={"/interview-simulator/" + row.id}
+              style={{
+                color: "blue",
+                cursor: "pointer",
+              }}
+            >
+              {row.name} 
+            </Link>
+          </td>
         ),
       },
 
