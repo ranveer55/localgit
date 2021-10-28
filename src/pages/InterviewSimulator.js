@@ -70,7 +70,7 @@ class InterviewSimulatorPage extends Component {
             {
                 dataField: 'practiceSetQuestion',
                 text: 'Name',
-                formatter: (e, row) => <a target="_blank" rel="noopener noreferrer" href={"/cohort-detail/" + row.id}>{row.name}</a>
+                formatter: (e, row) => <a target="_blank" rel="noopener noreferrer" href={"/interview-simulator/" + row.id}>{row.name}</a>
             },
 
 
