@@ -112,7 +112,9 @@ class InterviewSimulatorCohortUserAttempsAiReviewPage extends Component {
                                                 {/* video */}
                                                 {
                                                     prevAttempt.filePath ? (
-                                                        <video src={"https://langappnew.s3.amazonaws.com/uploads/" + prevAttempt.filePath} width="480px" controls />
+                                                        <video controls width="480px">
+                                                            <source src={"https://langappnew.s3.amazonaws.com/uploads/" + prevAttempt.filePath} type="video/webm" />
+                                                        </video>
                                                     ) : <div style={{ height: "100%" }}>Video Not Available</div>
                                                 }
                                             </div>
