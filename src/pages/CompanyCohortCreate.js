@@ -13,6 +13,7 @@ class CompanyCohortCreate extends Component {
     this.state = {
       dateLoaded: false,
       programs: [],
+      types: [],
       selectedProgram: "",
       cohortName: "",
       cohortStartDate: new Date(),
@@ -42,6 +43,7 @@ class CompanyCohortCreate extends Component {
           this.setState({
             dataLoaded: true,
             programs: data.programs,
+            types: data.types,
           });
           // this.setState({ batchData: data });
         })
@@ -55,8 +57,7 @@ class CompanyCohortCreate extends Component {
 
 
   render() {
-
-
+    const {types } =this.state;
     return (
       <main className="offset CreateCohortModal" id="content">
         <section className="section_box">
@@ -82,6 +83,26 @@ class CompanyCohortCreate extends Component {
                   <ErrorDiv errors={this.state.errors} label="name" />
                 </div>
                 <div className="form-group">
+                  <label>Cohort Type</label>
+                  <select
+                    value={this.state.cohortType ?? ""}
+                    onChange={e => {
+                      this.setState({
+                        cohortType: e.target.value
+                      });
+                    }}
+                    className="form-control"
+                    style={{ borderRadius: "3px" }}>
+                    <option value={""}>Select a Type</option>
+                    {
+                      types.map(type => (
+                        <option key={type.id} value={type.id}>{type.type}</option>
+                      ))
+                    }
+                  </select>
+                </div>
+                {this.state.cohortType == 4 && (
+                <div className="form-group">
                   <label>Select Program</label>
                   <select
                     value={this.state.selectedProgram ?? ""}
@@ -94,12 +115,13 @@ class CompanyCohortCreate extends Component {
                     style={{ borderRadius: "3px" }}>
                     <option value={""}>Select a program</option>
                     {
-                      this.state.programs.map(program => (
+                      this.state.programs.filter(item=>item.id !==9999).map(program => (
                         <option key={program.id} value={program.id}>{program.id} - {program.name}</option>
                       ))
                     }
                   </select>
                 </div>
+                )}
                 <div className="form-group">
                   <label>Cohort Start Date</label>
                   <ReactDatePicker
@@ -123,6 +145,7 @@ class CompanyCohortCreate extends Component {
                     const payload = {
                       name: this.state.cohortName,
                       program_id: this.state.selectedProgram,
+                      type_id: this.state.cohortType,
                       start_date: this.state.cohortStartDate,
                       company_code: this.companyCode
                     };
