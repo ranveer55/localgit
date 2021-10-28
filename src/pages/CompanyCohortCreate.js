@@ -15,6 +15,7 @@ class CompanyCohortCreate extends Component {
       programs: [],
       types: [],
       selectedProgram: "",
+      instructorEmails: "",
       cohortName: "",
       cohortStartDate: new Date(),
       errors: null,
@@ -121,7 +122,20 @@ class CompanyCohortCreate extends Component {
                     }
                   </select>
                 </div>
+               
                 )}
+                 <div className="form-group">
+                <label>Cohort instructor support Email</label>
+                <input
+                  value={this.state.instructorEmails ?? ""}
+                  onChange={e => {
+                    this.setState({
+                      instructorEmails: e.target.value
+                    });
+                  }}
+                  className="form-control"
+                  style={{ borderRadius: "3px" }}/>
+              </div>
                 <div className="form-group">
                   <label>Cohort Start Date</label>
                   <ReactDatePicker
@@ -145,6 +159,7 @@ class CompanyCohortCreate extends Component {
                     const payload = {
                       name: this.state.cohortName,
                       program_id: this.state.selectedProgram,
+                      instructorEmails: this.state.instructorEmails,
                       type_id: this.state.cohortType,
                       start_date: this.state.cohortStartDate,
                       company_code: this.companyCode
