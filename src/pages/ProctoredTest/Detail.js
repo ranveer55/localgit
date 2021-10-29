@@ -174,6 +174,11 @@ class ProctoredTestDetail extends Component {
         text: "College",
       },
     ];
+    let dataSource =[];
+    if(data && Object.keys(data) && Object.keys(data).length > 0){
+      dataSource = Object.values(data);
+    }
+    
     return (
       <main className="offset" id="content">
         <div className="row">
@@ -188,8 +193,8 @@ class ProctoredTestDetail extends Component {
             <div className="col-md-12">
               <h1 className="title1 mb25">Cohorts: {cohort?.name}</h1>
               <h4 className="title4 mb40">
-                {data && data.length > 0 ? (
-                  <BootstrapTable keyField="id" data={data} columns={columns} />
+                {dataSource && dataSource.length > 0 ? (
+                  <BootstrapTable keyField="id" data={dataSource} columns={columns} />
                 ) : (
                   <>No Data</>
                 )}
