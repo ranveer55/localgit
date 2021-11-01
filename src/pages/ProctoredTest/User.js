@@ -84,6 +84,15 @@ class ProctoredTestUserDetail extends Component {
 
   render() {
     const { data, cohort } = this.state;
+    let aiOutput ={};
+    if(data.aiOutput ){
+      try {
+        aiOutput =(JSON.parse(data.aiOutput));
+      } catch (e){
+
+      }
+    }
+    console.log({aiOutput});
     return (
       <main className="offset" id="content">
         <div className="row">
@@ -130,8 +139,19 @@ class ProctoredTestUserDetail extends Component {
                       <div className="flex">
                         <div className="col-md-5  label">Location </div><div className="col-md-7  labelval"> {data?.employee?.Location}</div>
                       </div>
+                      {/* <div className="flex">
+                        <div className="col-md-5  label">AI Analysis  </div><div className="col-md-7  labelval"> {data.aiStatus == 0 ? 'Not Started' : data.aiStatus == 1 ? 'Completed' : data.aiStatus == 2 ? 'Errored' : ''}</div>
+                      </div> */}
+                      <div className="flex">
+                        <div className="col-md-5  label">AI Analysis Result </div><div className="col-md-7  labelval">
+                          { aiOutput &&  Object.keys(aiOutput).length > 0 ? Object.keys(aiOutput).map((k) => (<div className="flex" key={k}>
+                            <div className="col-md-5  label">{k.replace(/([a-z])([A-Z])/g, "$1 $2")}: </div>
+                            <div className="col-md-7  labelval">{aiOutput && aiOutput[k] ? aiOutput[k] :''}</div>
+                          </div>)) : null}
+                        </div>
+                      </div>
 
-                      {Object.keys(data.resumeContent).map((k) => (
+                      {data.resumeContent && Object.keys(data.resumeContent).length > 0 && Object.keys(data.resumeContent).map((k) => (
                         <div className="flex" key={k}>
                           <div className="col-md-5  label">{k.replace(/([a-z])([A-Z])/g, "$1 $2")}: </div>
                           <div className="col-md-7  labelval">{data.resumeContent[k]}</div>
@@ -141,11 +161,11 @@ class ProctoredTestUserDetail extends Component {
 
                     </div>
                     <div className="col-md-5 proctoredVideo">
-                    <div className="proctoredVideo">
-                      <video controls width="100%">
-                        <source src={`https://langappnew.s3.amazonaws.com/${data.proctoredVideo}`} type="video/mp4" />
-                      </video>
-                    </div>
+                      <div className="proctoredVideo">
+                        <video controls width="100%">
+                          <source src={`https://langappnew.s3.amazonaws.com/${data.proctoredVideo}`} type="video/mp4" />
+                        </video>
+                      </div>
                     </div>
                   </div>
                 )}
