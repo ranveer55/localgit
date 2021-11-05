@@ -18,6 +18,8 @@ class CompanyCohortCreate extends Component {
       instructorEmails: "",
       cohortName: "",
       cohortStartDate: new Date(),
+      exam_start_time:'',
+      exam_end_time:'',
       errors: null,
     };
 
@@ -102,7 +104,43 @@ class CompanyCohortCreate extends Component {
                     }
                   </select>
                 </div>
-                {this.state.cohortType == 4 && (
+                {this.state.cohortType == 2 && ( 
+                <>
+                <div className="form-group">
+                  <label>Exam start time</label>
+                  <ReactDatePicker
+                    dateFormat="dd-MM-yyyy hh:mm:ss"
+                    selected={this.state.exam_start_time}
+                    showMonthDropdown
+                    showTimeSelect
+                    showYearDropdown
+                    className="form-control"
+                    placeholderText="Cohort Start Date"
+                    onChange={date => {
+                      this.setState({
+                        exam_start_time: date
+                      });
+                    }} />
+                </div> 
+                <div className="form-group">
+                  <label>Exam End time</label>
+                  <ReactDatePicker
+                    dateFormat="dd-MM-yyyy hh:mm:ss"
+                    selected={this.state.exam_end_time}
+                    showMonthDropdown
+                    showTimeSelect
+                    showYearDropdown
+                    className="form-control"
+                    placeholderText="Cohort Start Date"
+                    onChange={date => {
+                      this.setState({
+                        exam_end_time: date
+                      });
+                    }} />
+                </div>
+                </>
+                )}
+                 {this.state.cohortType == 4 && (
                 <div className="form-group">
                   <label>Select Program</label>
                   <select
@@ -162,7 +200,9 @@ class CompanyCohortCreate extends Component {
                       instructorEmails: this.state.instructorEmails,
                       type_id: this.state.cohortType,
                       start_date: this.state.cohortStartDate,
-                      company_code: this.companyCode
+                      company_code: this.companyCode,
+                     exam_end_time: this.state.exam_end_time,
+                      exam_start_time: this.state.exam_start_time,
                     };
 
 
