@@ -45,6 +45,7 @@ import InterviewSimulatorCohortQuizProctoredScore from './pages/ProctoredTest/De
 import ProctoredTest from './pages/ProctoredTest';
 import ProctoredTestDetail from './pages/ProctoredTest/Detail';
 import ProctoredTestUserDetail from './pages/ProctoredTest/User';
+import CohortEdit from './pages/CohortEdit';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -65,7 +66,9 @@ class Router extends React.Component {
         <ProtectedRoute path="/company-cohorts/mistakes" component={CompanyCohortsMistakeReport} />
         <ProtectedRoute path="/company-cohorts/placement-mistakes/:cohortId/user/:userId" component={CompanyCohortsPlacementMistakeDetailReport} />
         <ProtectedRoute path="/company-cohorts/placement-mistakes" component={CompanyCohortsPlacementMistakeReport} />
+        
         <ProtectedRoute path="/company-cohorts/new" component={CompanyCohortCreate} />
+        <ProtectedRoute path="/company-cohorts/:id" component={CohortEdit} />
         <ProtectedRoute path="/company-cohorts" component={CompanyCohortsReport} />
 
         <ProtectedRoute exact path={interviewSimulatorCohortQuizAttemptUsersRoute} component={InterviewSimulatorCohortQuizAttemptUsersPage} />

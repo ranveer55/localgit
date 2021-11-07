@@ -708,6 +708,16 @@ export default class ApiService {
             return res.data;
         });
     }
+    getCohort(cohort_id) {
+        return axios.get(`${this.domain}/cohort/` + cohort_id, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
     addCompanyPracticeSet(payload) {
         return axios.post(`${this.domain}/company-practice-set`, payload, {
             headers: {
@@ -773,6 +783,16 @@ export default class ApiService {
 
     saveCohort(cohort = {}) {
         return axios.post(`${this.domain}/cohorts`, cohort, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    updateCohort(cohort) {
+        return axios.put(`${this.domain}/cohorts/${cohort.id}`, cohort, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },
