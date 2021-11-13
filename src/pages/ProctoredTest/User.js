@@ -163,14 +163,14 @@ class ProctoredTestUserDetail extends Component {
                       {/* <div className="flex">
                         <div className="col-md-5  label">AI Analysis  </div><div className="col-md-7  labelval"> {data.aiStatus == 0 ? 'Not Started' : data.aiStatus == 1 ? 'Completed' : data.aiStatus == 2 ? 'Errored' : ''}</div>
                       </div> */}
-                      <div className="flex">
+                      {/* <div className="flex">
                         <div className="col-md-5  label">AI Analysis Result </div><div className="col-md-7  labelval">
                           { aiOutput &&  Object.keys(aiOutput).length > 0 ? Object.keys(aiOutput).map((k) => (<div className="flex" key={k}>
                             <div className="col-md-5  label">{k.replace(/([a-z])([A-Z])/g, "$1 $2")}: </div>
                             <div className="col-md-7  labelval">{aiOutput && aiOutput[k] ? aiOutput[k] :''}</div>
                           </div>)) : null}
                         </div>
-                      </div>
+                      </div> */}
 
                       {data.resumeContent && Object.keys(data.resumeContent).length > 0 && Object.keys(data.resumeContent).map((k) => (
                         <div className="flex" key={k}>
