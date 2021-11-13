@@ -73,7 +73,6 @@ class ProctoredTest extends Component {
     render() {
 
         const {data} = this.state;
-        console.log(data);
 
         return (
             <main className="offset" id="content">

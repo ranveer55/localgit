@@ -73,9 +73,7 @@ class ProctoredTestDetail extends Component {
   score = (data) => {
     try {
       data = JSON.parse(data);
-      const total = data.length;
-      let correct = data.filter((item) => item.isAnswerCorrect);
-      return total > 0 ? ((correct.length / total) * 100).toFixed(2) + "%" : "";
+      return data && data.processed && data.processed.finalResult ? data.processed.finalResult:'' 
     } catch (e) {
       return "";
     }
@@ -153,8 +151,8 @@ class ProctoredTestDetail extends Component {
         formatter: (e, row) => this.unlockRender(row),
       },
       {
-        dataField: "answerJSON",
-        text: "Score",
+        dataField: "ai_result",
+        text: "UFM Score",
         formatter: (e, row) => this.score(e),
       },
       {
