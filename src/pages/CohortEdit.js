@@ -3,25 +3,21 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import ReactDatePicker from "react-datepicker";
 
-class CompanyCohortCreate extends Component {
+class CohortEdit extends Component {
 
   constructor(props) {
     super(props);
 
     this.companyCode = global.companyCode;
-
+    this.cohortId = props.match.params.id;
     this.state = {
       dateLoaded: false,
       programs: [],
       types: [],
       selectedProgram: "",
       instructorEmails: "",
-      cohortName: "",
-      cohortStartDate: new Date(),
-      exam_start_time:'',
-      exam_end_time:'',
-      allotted_time:'',
       errors: null,
+      cohort: null,
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -29,10 +25,28 @@ class CompanyCohortCreate extends Component {
   }
 
   componentDidMount() {
-    // getCompanyRegistrationReport 
+    this.getCohortData();
     this.loadData();
-
-
+  }
+  getCohortData() {
+    this.setState({
+      dateLoaded: false
+    });
+    global.api.getCohort(
+      this.cohortId
+    )
+      .then(
+        data => {
+          this.setState({
+            dataLoaded: true,
+            cohort: data,
+          });
+        })
+      .catch(err => {
+        this.setState({
+          dateLoaded: true
+        });
+      });
   }
 
   loadData() {
@@ -61,7 +75,17 @@ class CompanyCohortCreate extends Component {
 
 
   render() {
-    const {types } =this.state;
+    const {types,cohort } =this.state;
+    if (!cohort) {
+        return (
+  
+          <main className="offset" id="content">
+            <section className="section_box">
+              Loading...
+            </section>
+          </main>
+        )
+      }
     return (
       <main className="offset CreateCohortModal" id="content">
         <section className="section_box">
@@ -78,10 +102,13 @@ class CompanyCohortCreate extends Component {
                     type="text"
                     className="form-control"
                     placeholder="Cohort Name"
-                    value={this.state.cohortName}
+                    value={cohort.name ?? ''}
                     onChange={e => {
                       this.setState({
-                        cohortName: e.target.value
+                         cohort:{
+                             ...cohort,
+                           name:e.target.value  
+                         }
                       });
                     }} />
                   <ErrorDiv errors={this.state.errors} label="name" />
@@ -89,11 +116,15 @@ class CompanyCohortCreate extends Component {
                 <div className="form-group">
                   <label>Cohort Type</label>
                   <select
-                    value={this.state.cohortType ?? ""}
+                    disabled
+                    value={cohort.type_id ?? ""}
                     onChange={e => {
-                      this.setState({
-                        cohortType: e.target.value
-                      });
+                        this.setState({
+                            cohort:{
+                                ...cohort,
+                              type_id:e.target.value  
+                            }
+                         });
                     }}
                     className="form-control"
                     style={{ borderRadius: "3px" }}>
@@ -105,38 +136,44 @@ class CompanyCohortCreate extends Component {
                     }
                   </select>
                 </div>
-                {this.state.cohortType == 2 && ( 
+                {cohort.type_id == 2 && ( 
                 <>
                 <div className="form-group">
                   <label>Exam start time</label>
                   <ReactDatePicker
                     dateFormat="dd-MM-yyyy hh:mm:ss"
-                    selected={this.state.exam_start_time}
+                    selected={new Date(cohort.exam_start_time)}
                     showMonthDropdown
                     showTimeSelect
                     showYearDropdown
                     className="form-control"
                     placeholderText="Cohort Start Date"
                     onChange={date => {
-                      this.setState({
-                        exam_start_time: date
-                      });
+                        this.setState({
+                            cohort:{
+                                ...cohort,
+                              exam_start_time: date
+                            }
+                         });
                     }} />
                 </div> 
                 <div className="form-group">
                   <label>Exam End time</label>
                   <ReactDatePicker
                     dateFormat="dd-MM-yyyy hh:mm:ss"
-                    selected={this.state.exam_end_time}
+                    selected={new Date(cohort.exam_end_time)}
                     showMonthDropdown
                     showTimeSelect
                     showYearDropdown
                     className="form-control"
                     placeholderText="Cohort Start Date"
                     onChange={date => {
-                      this.setState({
-                        exam_end_time: date
-                      });
+                        this.setState({
+                            cohort:{
+                                ...cohort,
+                              exam_end_time:date
+                            }
+                         });
                     }} />
                 </div>
                 <div className="form-group">
@@ -145,17 +182,23 @@ class CompanyCohortCreate extends Component {
                     type="number"
                     min="1"
                     max="1000"
-                    value={this.state.allotted_time}
+                    value={cohort.allotted_time}
                     className="form-control"
                     placeholderText="Allotted time"
                     onChange={e => {
                       if(e.target.value){
                         this.setState({
+                          cohort:{
+                            ...cohort,
                           allotted_time: parseInt(e.target.value)
+                          }
                         });
                       } else {
                         this.setState({
-                          allotted_time: 0
+                          cohort:{
+                            ...cohort,
+                          allotted_time: 0,
+                          }
                         });
                       }
                       
@@ -163,16 +206,12 @@ class CompanyCohortCreate extends Component {
                 </div>
                 </>
                 )}
-                 {this.state.cohortType == 4 && (
+                 {cohort.type_id == 4 && (
                 <div className="form-group">
                   <label>Select Program</label>
                   <select
-                    value={this.state.selectedProgram ?? ""}
-                    onChange={e => {
-                      this.setState({
-                        selectedProgram: e.target.value
-                      });
-                    }}
+                    value={cohort.program_id ?? ""}
+                    disabled
                     className="form-control"
                     style={{ borderRadius: "3px" }}>
                     <option value={""}>Select a program</option>
@@ -188,11 +227,14 @@ class CompanyCohortCreate extends Component {
                  <div className="form-group">
                 <label>Cohort instructor support Email</label>
                 <input
-                  value={this.state.instructorEmails ?? ""}
+                  value={cohort.instructorEmails ?? ""}
                   onChange={e => {
                     this.setState({
-                      instructorEmails: e.target.value
-                    });
+                        cohort:{
+                            ...cohort,
+                          instructorEmails:e.target.value  
+                        }
+                     });
                   }}
                   className="form-control"
                   style={{ borderRadius: "3px" }}/>
@@ -201,15 +243,18 @@ class CompanyCohortCreate extends Component {
                   <label>Cohort Start Date</label>
                   <ReactDatePicker
                     dateFormat="dd-MM-yyyy"
-                    selected={this.state.cohortStartDate}
+                    selected={new Date(cohort.start_date)}
                     showMonthDropdown
                     showYearDropdown
                     className="form-control"
                     placeholderText="Cohort Start Date"
                     onChange={date => {
-                      this.setState({
-                        cohortStartDate: date
-                      });
+                        this.setState({
+                            cohort:{
+                                ...cohort,
+                              start_date:date 
+                            }
+                         });
                     }} />
                 </div>
                 {/* submit button */}
@@ -217,20 +262,8 @@ class CompanyCohortCreate extends Component {
                   className="btn btn-radius btn-blue btn-icon-right export"
                   onClick={e => {
                     e.preventDefault();
-                    const payload = {
-                      name: this.state.cohortName,
-                      program_id: this.state.selectedProgram,
-                      instructorEmails: this.state.instructorEmails,
-                      type_id: this.state.cohortType,
-                      start_date: this.state.cohortStartDate,
-                      company_code: this.companyCode,
-                     exam_end_time: this.state.exam_end_time,
-                      exam_start_time: this.state.exam_start_time,
-                      allotted_time: this.state.allotted_time,
-                    };
-
-
-                    global.api.saveCohort(payload)
+                    
+                    global.api.updateCohort(cohort)
                       .then(response => {
                         window.location.href = "/company-cohorts";
                       })
@@ -245,9 +278,9 @@ class CompanyCohortCreate extends Component {
                         }
                       })
 
-                    console.log({ payload });
+                   
                   }}>
-                  <span>Create Cohort</span>
+                  <span>Update Cohort</span>
                 </button>
               </form>
             </div>
@@ -271,4 +304,4 @@ function ErrorDiv({ errors = null, label = "red" }) {
   )
 }
 
-export default CompanyCohortCreate;
+export default CohortEdit;

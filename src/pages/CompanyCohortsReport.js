@@ -83,6 +83,7 @@ class CompanyCohortsReport extends Component {
                   <th>Start Date</th>
                   <th>Users</th>
                   <th>Register from CSV</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -121,6 +122,13 @@ class CompanyCohortsReport extends Component {
                                 cursor: "pointer"
                               }}>
                               <a href={"/cohort-csv-register/" + cohort.id}>Upload CSV</a>
+                            </td>
+                            <td
+                              style={{
+                                color: "blue",
+                                cursor: "pointer"
+                              }}>
+                              <Link to={"/company-cohorts/" + cohort.id}>Edit</Link>
                             </td>
                           </tr>
                         )

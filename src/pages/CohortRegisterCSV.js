@@ -85,7 +85,7 @@ class CohortRegisterCSV extends Component {
                     Cohort Id: {this.cohortId}
                   </h4>
                   <h4 className="title4 mb40">
-                    Cohort Name: {this.state.cohort.name}
+                    Cohort Name: {this.state.cohort.cohort_name}
                   </h4>
                 </div>
                 {/* form */}

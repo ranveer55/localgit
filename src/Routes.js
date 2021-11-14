@@ -41,6 +41,11 @@ import AddPracticeSetToCohortPage from './pages/cohort/AddCohortPracticeSet';
 import ManageQuetions from './pages/cohort/ManageQuetions';
 import InterviewSimulatorCohortQuizAttemptUsersPage, { interviewSimulatorCohortQuizAttemptUsersRoute } from './pages/InterviewSimulatorCohortQuizAttemptUsers';
 import InterviewSimulatorCohortQuizAttemptUsersLogPage, { interviewSimulatorCohortQuizAttemptUsersLogRoute } from './pages/InterviewSimulatorCohortQuizAttemptUsersLog';
+import InterviewSimulatorCohortQuizProctoredScore from './pages/ProctoredTest/Detail';
+import ProctoredTest from './pages/ProctoredTest';
+import ProctoredTestDetail from './pages/ProctoredTest/Detail';
+import ProctoredTestUserDetail from './pages/ProctoredTest/User';
+import CohortEdit from './pages/CohortEdit';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -61,7 +66,9 @@ class Router extends React.Component {
         <ProtectedRoute path="/company-cohorts/mistakes" component={CompanyCohortsMistakeReport} />
         <ProtectedRoute path="/company-cohorts/placement-mistakes/:cohortId/user/:userId" component={CompanyCohortsPlacementMistakeDetailReport} />
         <ProtectedRoute path="/company-cohorts/placement-mistakes" component={CompanyCohortsPlacementMistakeReport} />
+        
         <ProtectedRoute path="/company-cohorts/new" component={CompanyCohortCreate} />
+        <ProtectedRoute path="/company-cohorts/:id" component={CohortEdit} />
         <ProtectedRoute path="/company-cohorts" component={CompanyCohortsReport} />
 
         <ProtectedRoute exact path={interviewSimulatorCohortQuizAttemptUsersRoute} component={InterviewSimulatorCohortQuizAttemptUsersPage} />
@@ -80,6 +87,11 @@ class Router extends React.Component {
         <ProtectedRoute path="/daily-goal-log" component={DailyGoalLog} />
         <ProtectedRoute path="/coursedetail" component={CourseDetails} />
         <ProtectedRoute path="/courses" component={Courses} />
+        <ProtectedRoute exact path="/proctored-test/user/:attemptLogId" component={ProctoredTestUserDetail} />
+        <ProtectedRoute exact path="/proctored-test/:cohortId/:quizId" component={ProctoredTestDetail} />
+        <ProtectedRoute exact path="/proctored-test" component={ProctoredTest} />
+        <ProtectedRoute exact path="/proctored-test/:cohortId/quiz-proctored-attempts/" component={InterviewSimulatorCohortQuizProctoredScore} />
+        
         {/* <ProtectedRoute path="/firebase" component={Firebase} /> */}
         {
           (typeof localStorage['access_level'] === "string") && parseInt(localStorage['access_level']) !== accessLevels.AUDITOR ?

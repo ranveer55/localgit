@@ -542,6 +542,59 @@ export default class ApiService {
             return res.data;
         });
     }
+    getProctoredTest(id) {
+        return axios.get(`${this.domain}/get-proctored-test/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    getProctoredTestDetail(cohortId, quizId) {
+        return axios.get(`${this.domain}/get-proctored-test/detail/${cohortId}/${quizId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
+    unlockProctoredTest(data) {
+            return axios.post(`${this.domain}/unlock-proctored-test`,data, {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                },
+            }
+            ).then(res => {
+                return res.data;
+            });
+        }
+        getProctoredTestUserDetail(id) {
+            return axios.get(`${this.domain}/proctored-test/user/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                },
+            }
+            ).then(res => {
+                return res.data;
+            });
+        }
+
+
+    getCompanyCohortUsersQuizProctoredScore(cohort_id = 0) {
+        return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}/quizProctoredScore`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
 
     getCompanyCohortUserLogWhoAttemptedQuiz(cohort_id = 0, quizSetId, userId) {
         return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}/users-who-attempted-quiz/${quizSetId}/${userId}`, {
@@ -655,6 +708,16 @@ export default class ApiService {
             return res.data;
         });
     }
+    getCohort(cohort_id) {
+        return axios.get(`${this.domain}/cohort/` + cohort_id, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
     addCompanyPracticeSet(payload) {
         return axios.post(`${this.domain}/company-practice-set`, payload, {
             headers: {
@@ -720,6 +783,16 @@ export default class ApiService {
 
     saveCohort(cohort = {}) {
         return axios.post(`${this.domain}/cohorts`, cohort, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    updateCohort(cohort) {
+        return axios.put(`${this.domain}/cohorts/${cohort.id}`, cohort, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },
