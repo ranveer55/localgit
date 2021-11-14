@@ -20,6 +20,7 @@ class CompanyCohortCreate extends Component {
       cohortStartDate: new Date(),
       exam_start_time:'',
       exam_end_time:'',
+      allotted_time:'',
       errors: null,
     };
 
@@ -138,6 +139,28 @@ class CompanyCohortCreate extends Component {
                       });
                     }} />
                 </div>
+                <div className="form-group">
+                  <label>Allotted time</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="1000"
+                    value={this.state.allotted_time}
+                    className="form-control"
+                    placeholderText="Allotted time"
+                    onChange={e => {
+                      if(e.target.value){
+                        this.setState({
+                          allotted_time: parseInt(e.target.value)
+                        });
+                      } else {
+                        this.setState({
+                          allotted_time: 0
+                        });
+                      }
+                      
+                    }} />
+                </div>
                 </>
                 )}
                  {this.state.cohortType == 4 && (
@@ -203,6 +226,7 @@ class CompanyCohortCreate extends Component {
                       company_code: this.companyCode,
                      exam_end_time: this.state.exam_end_time,
                       exam_start_time: this.state.exam_start_time,
+                      allotted_time: this.state.allotted_time,
                     };
 
 

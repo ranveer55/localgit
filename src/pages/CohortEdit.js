@@ -176,6 +176,34 @@ class CohortEdit extends Component {
                          });
                     }} />
                 </div>
+                <div className="form-group">
+                  <label>Allotted time</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="1000"
+                    value={cohort.allotted_time}
+                    className="form-control"
+                    placeholderText="Allotted time"
+                    onChange={e => {
+                      if(e.target.value){
+                        this.setState({
+                          cohort:{
+                            ...cohort,
+                          allotted_time: parseInt(e.target.value)
+                          }
+                        });
+                      } else {
+                        this.setState({
+                          cohort:{
+                            ...cohort,
+                          allotted_time: 0,
+                          }
+                        });
+                      }
+                      
+                    }} />
+                </div>
                 </>
                 )}
                  {cohort.type_id == 4 && (
