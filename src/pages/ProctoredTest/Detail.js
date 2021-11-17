@@ -111,6 +111,8 @@ class ProctoredTestDetail extends Component {
         });
       });
   };
+  
+  
   unlockRender = (datum) => {
       const s ={
           color:'blue',
