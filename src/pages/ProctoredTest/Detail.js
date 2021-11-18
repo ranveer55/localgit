@@ -27,15 +27,21 @@ class ProctoredTestDetail extends Component {
       "Email",
       "First Name",
       "Last Name",
-      "Questions Answered",
-      "Attempts",
-      "Asked for Review",
-      "Reviews Completed",
+      "ATTEMPTS",
+      "COMPLETE",
+      "EXAM ATTEMPT",
+      "UFM SCORE",
+      "LOCATION",
+      "CURRENT ADDRESS",
+      "WHATSAPP",
+      "COLLEGE",
       "\n",
     ].join(",");
 
     //merge the data with CSV
     data.forEach(function (row) {
+      console.log(row)
+
       csv += row.join(",");
       csv += "\n";
     });
@@ -46,6 +52,16 @@ class ProctoredTestDetail extends Component {
     //provide the name for the CSV file to be downloaded
     hiddenElement.download = `${this.state.cohort.name}.csv`;
     hiddenElement.click();
+  }  
+  unlockRenderStatus= (a) => {
+    if (a == 2) {
+      return 'Unblocked';
+    }
+     else if (a == 1) {
+        return 'Complete';
+    }else if (a == 0) {
+        return 'Incomplete';
+    }
   }
 
   loadData(startDate, endDate) {
@@ -94,8 +110,12 @@ class ProctoredTestDetail extends Component {
         });
       });
   };
+  
+ 
+  
+  
   unlockRender = (datum) => {
-      const s ={
+      const s ={ 
           color:'blue',
           cursor:'pointer'
       }
@@ -188,7 +208,28 @@ class ProctoredTestDetail extends Component {
 
         <section className="section_box">
           <div className="row">
+            
             <div className="col-md-12">
+            <div style={{ textAlign: "right", marginBottom: "1rem" }}>
+                  <button
+                      onClick={e => {
+                          this.downloadCSV(dataSource.map(u => {
+                              return [
+                                  u.userId,
+                                  u.employee.FirstName ,
+                                  u.employee.LastName,
+                                  u.attemptNumber,
+                                  u.attemptStatus ? 'Y':'N',
+                                  this.unlockRenderStatus(u.attemptStatus),
+                                 
+                                 
+                              ];
+                          }));
+                      }}
+                      className="btn btn-size3 btn-blue btn-radius export">
+                      <span>Download CSV</span>
+                  </button>
+              </div>
               <h1 className="title1 mb25">Cohorts: {cohort?.name}</h1>
               <h4 className="title4 mb40">
                 {dataSource && dataSource.length > 0 ? (
