@@ -52,8 +52,7 @@ class ProctoredTestDetail extends Component {
     //provide the name for the CSV file to be downloaded
     hiddenElement.download = `${this.state.cohort.name}.csv`;
     hiddenElement.click();
-  }
-  
+  }  
   unlockRenderStatus= (a) => {
     if (a == 2) {
       return 'Unblocked';
