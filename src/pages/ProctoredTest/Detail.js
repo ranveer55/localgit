@@ -162,6 +162,11 @@ class ProctoredTestDetail extends Component {
         text: "Complete",
         formatter: (e, row) => (e == 1 ? "Y" : e == 0 ? "N" : ""),
       },
+       {
+        dataField: "reasonIncomplete",
+        text: "reason of Incomplete",
+        formatter: (e, row) => (e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : ""),
+      },
       {
         dataField: "attemptStatus",
         text: "Exam Attempt",
@@ -176,10 +181,10 @@ class ProctoredTestDetail extends Component {
         dataField: "employee.Location",
         text: "Location",
       },
-      {
-        dataField: "resumeContent.basicInfo.address",
-        text: "Current Address",
-      },
+      // {
+      //   dataField: "resumeContent.basicInfo.address",
+      //   text: "Current Address",
+      // },
       {
         dataField: "resumeContent.basicInfo.phone",
         text: "WhatsApp",
