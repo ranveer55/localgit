@@ -115,19 +115,16 @@ class ProctoredTestDetail extends Component {
   
   
   unlockRender = (datum) => {
-      const s ={ 
-          color:'blue',
-          cursor:'pointer'
-      }
-    if (datum.attemptStatus == 2) {
-      return <span style={s} onClick={(e) => this.lock(datum.id, 0)}>Unblocked</span>
+    const s ={ 
+        color:'blue',
+        cursor:'pointer'
     }
-     else if (datum.attemptStatus == 1) {
-        return <span style={s} onClick={(e) => this.lock(datum.id, 2)}>Complete </span>;
-    }else if (datum.attemptStatus == 0) {
-        return <span style={s} onClick={(e) => this.lock(datum.id, 2)}>Incomplete </span>;
-    }
-  };
+  if (datum.allowedReattempt == 1) {
+    return <span style={s} onClick={(e) => this.lock(datum.id, 0)}>Unblocked</span>
+  } else {
+      return <span style={s} onClick={(e) => this.lock(datum.id, 1)}>Blocked </span>;
+  }
+};
 
   render() {
     const { data, cohort } = this.state;
@@ -165,6 +162,11 @@ class ProctoredTestDetail extends Component {
         text: "Complete",
         formatter: (e, row) => (e == 1 ? "Y" : e == 0 ? "N" : ""),
       },
+       {
+        dataField: "reasonIncomplete",
+        text: "reason of Incomplete",
+        formatter: (e, row) => (e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : ""),
+      },
       {
         dataField: "attemptStatus",
         text: "Exam Attempt",
@@ -179,10 +181,10 @@ class ProctoredTestDetail extends Component {
         dataField: "employee.Location",
         text: "Location",
       },
-      {
-        dataField: "resumeContent.basicInfo.address",
-        text: "Current Address",
-      },
+      // {
+      //   dataField: "resumeContent.basicInfo.address",
+      //   text: "Current Address",
+      // },
       {
         dataField: "resumeContent.basicInfo.phone",
         text: "WhatsApp",
