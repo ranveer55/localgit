@@ -115,19 +115,16 @@ class ProctoredTestDetail extends Component {
   
   
   unlockRender = (datum) => {
-      const s ={ 
-          color:'blue',
-          cursor:'pointer'
-      }
-    if (datum.attemptStatus == 2) {
-      return <span style={s} onClick={(e) => this.lock(datum.id, 0)}>Unblocked</span>
+    const s ={ 
+        color:'blue',
+        cursor:'pointer'
     }
-     else if (datum.attemptStatus == 1) {
-        return <span style={s} onClick={(e) => this.lock(datum.id, 2)}>Complete </span>;
-    }else if (datum.attemptStatus == 0) {
-        return <span style={s} onClick={(e) => this.lock(datum.id, 2)}>Incomplete </span>;
-    }
-  };
+  if (datum.allowedReattempt == 1) {
+    return <span style={s} onClick={(e) => this.lock(datum.id, 0)}>Unblocked</span>
+  } else {
+      return <span style={s} onClick={(e) => this.lock(datum.id, 1)}>Blocked </span>;
+  }
+};
 
   render() {
     const { data, cohort } = this.state;
