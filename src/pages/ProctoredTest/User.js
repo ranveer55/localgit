@@ -44,7 +44,7 @@ class ProctoredTestUserDetail extends Component {
   score = (data) => {
     try {
       data = JSON.parse(data);
-      return data && data.processed && data.processed.finalResult ? data.processed.finalResult:'' 
+      return data && data.processed && data.processed.finalResult ? data.processed.finalResult : ''
     } catch (e) {
       return "";
     }
@@ -82,23 +82,23 @@ class ProctoredTestUserDetail extends Component {
 
   render() {
     const { data, cohort } = this.state;
-    let aiOutput ={};
-    let ai_result ={};
-    if(data.aiOutput ){
+    let aiOutput = {};
+    let ai_result = {};
+    if (data.aiOutput) {
       try {
-        aiOutput =(JSON.parse(data.aiOutput));
-      } catch (e){
+        aiOutput = (JSON.parse(data.aiOutput));
+      } catch (e) {
 
       }
     }
-    if(data.ai_result ){
+    if (data.ai_result) {
       try {
-        ai_result =(JSON.parse(data.ai_result));
-      } catch (e){
+        ai_result = (JSON.parse(data.ai_result));
+      } catch (e) {
 
       }
     }
-    console.log({aiOutput});
+    console.log({ aiOutput });
     return (
       <main className="offset" id="content">
         <div className="row">
@@ -139,22 +139,33 @@ class ProctoredTestUserDetail extends Component {
                       <div className="flex">
                         <div className="col-md-5  label">Exam Attempt </div><div className="col-md-7  labelval"> {this.unlockRender(data)}</div>
                       </div>
+
+                      <div className="flex">
+                        <div className="col-md-5  label">Right Answers</div><div className="col-md-7  labelval"> {data.right}</div>
+                      </div>
+                      <div className="flex">
+                        <div className="col-md-5  label">Wrong Answer </div><div className="col-md-7  labelval"> {data.wrong}</div>
+                      </div>
+                      <div className="flex">
+                        <div className="col-md-5  label">Percentage </div><div className="col-md-7  labelval"> {data.percent}</div>
+                      </div>
                       <div className="flex">
                         <div className="col-md-5  label">UFM Score </div><div className="col-md-7  labelval"> {this.score(data.ai_result)}</div>
                       </div>
+
                       <div className="flex">
                         <div className="col-md-5  label">Looking Sideways </div><div className="col-md-7  labelval"> {ai_result?.processed?.away_looking_percent}%</div>
                       </div>
-                       <div className="flex">
+                      <div className="flex">
                         <div className="col-md-5  label">Looking  Up/Down </div><div className="col-md-7  labelval">{ai_result?.processed?.up_looking_percent}%</div>
                       </div>
-                       <div className="flex">
+                      <div className="flex">
                         <div className="col-md-5  label">Total time of test </div><div className="col-md-7  labelval">{ai_result?.processed?.total_time} Seconds</div>
                       </div>
-                       <div className="flex">
+                      <div className="flex">
                         <div className="col-md-5  label">Time stepped away </div><div className="col-md-7  labelval">{ai_result?.processed?.zero_candidate_time} Seconds</div>
                       </div>
-                       <div className="flex">
+                      <div className="flex">
                         <div className="col-md-5  label">> 1 person </div><div className="col-md-7  labelval">{ai_result?.processed?.multi_user_percent}%</div>
                       </div>
                       <div className="flex">

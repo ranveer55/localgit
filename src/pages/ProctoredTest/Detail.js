@@ -162,20 +162,25 @@ class ProctoredTestDetail extends Component {
         text: "Complete",
         formatter: (e, row) => (e == 1 ? "Y" : e == 0 ? "N" : ""),
       },
-       {
-        dataField: "reasonIncomplete",
-        text: "reason of Incomplete",
-        formatter: (e, row) => (e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : ""),
-      },
+       
       {
         dataField: "attemptStatus",
         text: "Exam Attempt",
         formatter: (e, row) => this.unlockRender(row),
       },
       {
+        dataField: "reasonIncomplete",
+        text: "reason Incomplete",
+        formatter: (e, row) => (e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : ""),
+      },
+      {
         dataField: "ai_result",
         text: "UFM Score",
         formatter: (e, row) => this.score(e),
+      },
+      {
+        dataField: "percent",
+        text: "Percentage",
       },
       {
         dataField: "employee.Location",
@@ -189,10 +194,10 @@ class ProctoredTestDetail extends Component {
         dataField: "resumeContent.basicInfo.phone",
         text: "WhatsApp",
       },
-      {
-        dataField: "resumeContent.education[0].institution",
-        text: "College",
-      },
+      // {
+      //   dataField: "resumeContent.education[0].institution",
+      //   text: "College",
+      // },
     ];
     let dataSource =[];
     if(data && Object.keys(data) && Object.keys(data).length > 0){
