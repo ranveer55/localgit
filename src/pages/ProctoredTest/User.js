@@ -1,5 +1,6 @@
 import moment from "moment";
 import React, { Component } from "react";
+import { Button } from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 
 class ProctoredTestUserDetail extends Component {
@@ -11,6 +12,7 @@ class ProctoredTestUserDetail extends Component {
       dateLoaded: false,
       cohort: null,
       dateLoaded: false,
+      showAnswer: false,
 
       data: [],
     };
@@ -80,8 +82,9 @@ class ProctoredTestUserDetail extends Component {
     }
   };
 
+
   render() {
-    const { data, cohort } = this.state;
+    const { data, cohort, showAnswer } = this.state;
     let aiOutput = {};
     let ai_result = {};
     if (data.aiOutput) {
@@ -98,7 +101,8 @@ class ProctoredTestUserDetail extends Component {
 
       }
     }
-    console.log({ aiOutput });
+    const answers = data && data.answers && data.answers.length > 0 ? data.answers : [];
+
     return (
       <main className="offset" id="content">
         <div className="row">
@@ -190,6 +194,43 @@ class ProctoredTestUserDetail extends Component {
                         </div>
 
                       ))}
+                      <div className="flex">
+                        <div className="col-md-5  label">
+                          <Button type="primary" onClick={e => this.setState({ showAnswer: !showAnswer })}>
+                            See Answer
+                          </Button>
+                        </div>
+                      </div>
+                      {showAnswer && (
+                        <>
+                        <div className="flex">
+                              <div className="col-md-4  label">
+                               Question
+                              </div>
+                              <div className="col-md-4 label">
+                                Correct Answer
+                              </div>
+                              <div className="col-md-4 label" >
+                               Candidate Answer
+                              </div>
+                            
+                            </div>
+                          {answers.map((ans) => (
+                            <div className="flex" style={{marginTop:10}}>
+                              <div className="col-md-4  label">
+                                {ans.q}
+                              </div>
+                            
+                              <div className="col-md-4 label">
+                                {ans.correctAnswer}
+                              </div>
+                              <div className="col-md-4 label" style={{color:ans.isAnswerCorrect ? 'green':'red'}}>
+                                {ans.selectedAnswer}
+                              </div>
+                            </div>
+                          ))}
+                        </>
+                      )}
 
                     </div>
                     <div className="col-md-5 proctoredVideo">
