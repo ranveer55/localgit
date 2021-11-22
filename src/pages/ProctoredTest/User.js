@@ -1,8 +1,5 @@
-import moment from "moment";
-import React, { Component } from "react";
-import { Button } from "react-bootstrap";
-import BootstrapTable from "react-bootstrap-table-next";
 
+import React, { Component } from "react";
 class ProctoredTestUserDetail extends Component {
   constructor(props) {
     super(props);
@@ -118,67 +115,68 @@ class ProctoredTestUserDetail extends Component {
               <h1 className="title1 mb25">Email:{data?.userId}</h1>
               <div className="title4 mb40">
                 {data && data.employee && (
-                  <div className="row">
-                    <div className="col-md-7">
-                      <div className="flex">
-                        <div className="col-md-5  label">Email </div><div className="col-md-7  labelval"> {data?.userId}</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">First Name </div><div className="col-md-7  labelval"> {data?.employee?.FirstName}</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">Last Name </div><div className="col-md-7  labelval"> {data?.employee?.LastName}</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">Attempts </div><div className="col-md-7  labelval"> {data?.attemptNumber}</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">Complete </div><div className="col-md-7  labelval">
-                          {data.attemptStatus == 1
-                            ? "Yes"
-                            : data.attemptStatus == 0
-                              ? "No"
-                              : ""}</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">Exam Attempt </div><div className="col-md-7  labelval"> {this.unlockRender(data)}</div>
-                      </div>
+                  <>
+                    <div className="row">
+                      <div className="col-md-7">
+                        <div className="flex">
+                          <div className="col-md-5  label">Email </div><div className="col-md-7  labelval"> {data?.userId}</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">First Name </div><div className="col-md-7  labelval"> {data?.employee?.FirstName}</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">Last Name </div><div className="col-md-7  labelval"> {data?.employee?.LastName}</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">Attempts </div><div className="col-md-7  labelval"> {data?.attemptNumber}</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">Complete </div><div className="col-md-7  labelval">
+                            {data.attemptStatus == 1
+                              ? "Yes"
+                              : data.attemptStatus == 0
+                                ? "No"
+                                : ""}</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">Exam Attempt </div><div className="col-md-7  labelval"> {this.unlockRender(data)}</div>
+                        </div>
 
-                      <div className="flex">
-                        <div className="col-md-5  label">Right Answers</div><div className="col-md-7  labelval"> {data.right}</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">Wrong Answer </div><div className="col-md-7  labelval"> {data.wrong}</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">Percentage </div><div className="col-md-7  labelval"> {data.percent}</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">UFM Score </div><div className="col-md-7  labelval"> {this.score(data.ai_result)}</div>
-                      </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">Right Answers</div><div className="col-md-7  labelval"> {data.right}</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">Wrong Answer </div><div className="col-md-7  labelval"> {data.wrong}</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">Percentage </div><div className="col-md-7  labelval"> {data.percent}</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">UFM Score </div><div className="col-md-7  labelval"> {this.score(data.ai_result)}</div>
+                        </div>
 
-                      <div className="flex">
-                        <div className="col-md-5  label">Looking Sideways </div><div className="col-md-7  labelval"> {ai_result?.processed?.away_looking_percent}%</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">Looking  Up/Down </div><div className="col-md-7  labelval">{ai_result?.processed?.up_looking_percent}%</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">Total time of test </div><div className="col-md-7  labelval">{ai_result?.processed?.total_time} Seconds</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">Time stepped away </div><div className="col-md-7  labelval">{ai_result?.processed?.zero_candidate_time} Seconds</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">> 1 person </div><div className="col-md-7  labelval">{ai_result?.processed?.multi_user_percent}%</div>
-                      </div>
-                      <div className="flex">
-                        <div className="col-md-5  label">Location </div><div className="col-md-7  labelval"> {data?.employee?.Location}</div>
-                      </div>
-                      {/* <div className="flex">
+                        <div className="flex">
+                          <div className="col-md-5  label">Looking Sideways </div><div className="col-md-7  labelval"> {ai_result?.processed?.away_looking_percent}%</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">Looking  Up/Down </div><div className="col-md-7  labelval">{ai_result?.processed?.up_looking_percent}%</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">Total time of test </div><div className="col-md-7  labelval">{ai_result?.processed?.total_time} Seconds</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">Time stepped away </div><div className="col-md-7  labelval">{ai_result?.processed?.zero_candidate_time} Seconds</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">> 1 person </div><div className="col-md-7  labelval">{ai_result?.processed?.multi_user_percent}%</div>
+                        </div>
+                        <div className="flex">
+                          <div className="col-md-5  label">Location </div><div className="col-md-7  labelval"> {data?.employee?.Location}</div>
+                        </div>
+                        {/* <div className="flex">
                         <div className="col-md-5  label">AI Analysis  </div><div className="col-md-7  labelval"> {data.aiStatus == 0 ? 'Not Started' : data.aiStatus == 1 ? 'Completed' : data.aiStatus == 2 ? 'Errored' : ''}</div>
                       </div> */}
-                      {/* <div className="flex">
+                        {/* <div className="flex">
                         <div className="col-md-5  label">AI Analysis Result </div><div className="col-md-7  labelval">
                           { aiOutput &&  Object.keys(aiOutput).length > 0 ? Object.keys(aiOutput).map((k) => (<div className="flex" key={k}>
                             <div className="col-md-5  label">{k.replace(/([a-z])([A-Z])/g, "$1 $2")}: </div>
@@ -187,60 +185,67 @@ class ProctoredTestUserDetail extends Component {
                         </div>
                       </div> */}
 
-                      {data.resumeContent && Object.keys(data.resumeContent).length > 0 && Object.keys(data.resumeContent).map((k) => (
-                        <div className="flex" key={k}>
-                          <div className="col-md-5  label">{k.replace(/([a-z])([A-Z])/g, "$1 $2")}: </div>
-                          <div className="col-md-7  labelval">{data.resumeContent[k]}</div>
-                        </div>
+                        {data.resumeContent && Object.keys(data.resumeContent).length > 0 && Object.keys(data.resumeContent).map((k) => (
+                          <div className="flex" key={k}>
+                            <div className="col-md-5  label">{k.replace(/([a-z])([A-Z])/g, "$1 $2")}: </div>
+                            <div className="col-md-7  labelval">{data.resumeContent[k]}</div>
+                          </div>
 
-                      ))}
-                      <div className="flex">
-                        <div className="col-md-5  label">
-                          <Button type="primary" onClick={e => this.setState({ showAnswer: !showAnswer })}>
-                            See Answer
-                          </Button>
+                        ))}
+
+
+                      </div>
+                      <div className="col-md-5 proctoredVideo">
+                        <div className="proctoredVideo">
+                          <video controls width="100%">
+                            <source src={`https://langappnew.s3.amazonaws.com/${data.proctoredVideo}`} type="video/mp4" />
+                          </video>
                         </div>
                       </div>
-                      {showAnswer && (
-                        <>
+                    </div>
+                    <div className="flex">
+                      <div className="col-md-5  label">
+                        <button
+                          className="btn btn-radius btn-blue btn-icon-right export" onClick={e => this.setState({ showAnswer: !showAnswer })}>
+                          See Answer
+                        </button>
+                      </div>
+                    </div>
+                    {showAnswer && (
+                      <>
                         <div className="flex">
-                              <div className="col-md-4  label">
-                               Question
-                              </div>
-                              <div className="col-md-4 label">
-                                Correct Answer
-                              </div>
-                              <div className="col-md-4 label" >
-                               Candidate Answer
-                              </div>
-                            
-                            </div>
-                          {answers.map((ans) => (
-                            <div className="flex" style={{marginTop:10}}>
-                              <div className="col-md-4  label">
-                                {ans.q}
-                              </div>
-                            
-                              <div className="col-md-4 label">
-                                {ans.correctAnswer}
-                              </div>
-                              <div className="col-md-4 label" style={{color:ans.isAnswerCorrect ? 'green':'red'}}>
-                                {ans.selectedAnswer}
-                              </div>
-                            </div>
-                          ))}
-                        </>
-                      )}
+                          <div className="col-md-4  label">
+                            Question
+                          </div>
+                          <div className="col-md-4 label">
+                            Correct Answer
+                          </div>
+                          <div className="col-md-4 label" >
+                            Candidate Answer
+                          </div>
 
-                    </div>
-                    <div className="col-md-5 proctoredVideo">
-                      <div className="proctoredVideo">
-                        <video controls width="100%">
-                          <source src={`https://langappnew.s3.amazonaws.com/${data.proctoredVideo}`} type="video/mp4" />
-                        </video>
-                      </div>
-                    </div>
-                  </div>
+                        </div>
+                        <ol style={{ listStyle: 'decimal', marginLeft: '33px' }}>
+                          {answers.map((ans, i) => (
+                            <li>
+                              <div className="flex" style={{ marginTop: 10 }}>
+                                <div className="col-md-4  label">
+                                  &nbsp;{ans.q}
+                                </div>
+
+                                <div className="col-md-4 label">
+                                  {ans.correctAnswer}
+                                </div>
+                                <div className="col-md-4 label" style={{ color: ans.isAnswerCorrect ? 'green' : 'red' }}>
+                                  {ans.selectedAnswer}
+                                </div>
+                              </div>
+                            </li>
+                          ))}
+                        </ol>
+                      </>
+                    )}
+                  </>
                 )}
               </div>
             </div>
