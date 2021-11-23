@@ -23,25 +23,26 @@ class ProctoredTestDetail extends Component {
   }
   downloadCSV(data) {
     //define the heading for each row of the data
-    var csv = [
+    let csv = [
       "Email",
       "First Name",
       "Last Name",
       "ATTEMPTS",
       "COMPLETE",
-      "EXAM ATTEMPT",
+      // "EXAM ATTEMPT",
+      "Reason Incomplete",
       "UFM SCORE",
+      "PERCENT",
       "LOCATION",
-      "CURRENT ADDRESS",
       "WHATSAPP",
-      "COLLEGE",
-      "\n",
-    ].join(",");
-
+      "Right Answers","Wrong Answer ","Looking Sideways ","Looking Up/Down ","Total time of test ","Time stepped away ","> 1 person ",
+      "jee Rank", "location", "company Name", "state Exam Rank", "work Experience", "are You Working YN", "branch Or Department", "class10GPAor Percent", "college Entrance Name", "plans To Work Full Time","graduation College Name","graduation GPAor Percent","final Exam Start If Student","graduation Date If Student"
+    ]
+    
     //merge the data with CSV
+    csv =[...csv,"\n"].join(",");
+    
     data.forEach(function (row) {
-      console.log(row)
-
       csv += row.join(",");
       csv += "\n";
     });
@@ -217,19 +218,49 @@ class ProctoredTestDetail extends Component {
           <div className="row">
             
             <div className="col-md-12">
+              
             <div style={{ textAlign: "right", marginBottom: "1rem" }}>
                   <button
                       onClick={e => {
                           this.downloadCSV(dataSource.map(u => {
+                            const rc =u.resumeContent && Object.keys(u.resumeContent).length > 0 ?
+                            Object.keys(u.resumeContent).map((k) => u.resumeContent[k] ?  u.resumeContent[k].replaceAll(',',' ').replaceAll('\n',' '):'' ):[]
+                            
+                            if(u && u.employee && u.employee ){
+                              rc.push(u.employee.Location)
+                              
+                            }
+                            let aiResult =null;
+                            try{
+                              aiResult = u.ai_result ? JSON.parse(u.ai_result) :null
+                              aiResult =aiResult && aiResult.processed ? aiResult.processed :null
+                            } catch (e){
+                             
+                            }
+                            if(u && u.employee && u.employee ){
+                              rc.push(u.employee.Location)
+                              
+                            }
                               return [
                                   u.userId,
                                   u.employee.FirstName ,
                                   u.employee.LastName,
                                   u.attemptNumber,
                                   u.attemptStatus ? 'Y':'N',
-                                  this.unlockRenderStatus(u.attemptStatus),
-                                 
-                                 
+                                  u.reasonIncomplete  == 1 ? "User Cancel" : u.reasonIncomplete == 2 ? "Alt tab" : "",
+                                  this.score(u.ai_result),
+                                  u.percent,
+                                  u?.employee?.Location,
+                                  u?.resumeContent?.basicInfo?.phone,
+                                  u.right,
+                                  u.wrong,
+                                  aiResult ? aiResult.away_looking_percent:'',
+                                  aiResult ? aiResult.up_looking_percent:'',
+                                  aiResult ? aiResult.total_time:'',
+                                  aiResult ? aiResult.zero_candidate_time:'',
+                                  aiResult ? aiResult.multi_user_percent:'',
+
+                                  ...rc
                               ];
                           }));
                       }}
