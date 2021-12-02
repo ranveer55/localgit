@@ -229,8 +229,8 @@ class ProctoredTestUserDetail extends Component {
                           {answers.map((ans, i) => (
                             <li>
                               <div className="flex" style={{ marginTop: 10 }}>
-                                <div className="col-md-4  label">
-                                  &nbsp;{ans.q}
+                                <div className="col-md-4  label" dangerouslySetInnerHTML={{__html:ans.q}}>
+                                
                                 </div>
 
                                 <div className="col-md-4 label">
