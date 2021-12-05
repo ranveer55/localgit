@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class CohortDetail extends Component {
 
@@ -85,6 +86,7 @@ class CohortDetail extends Component {
                 return (
                   <div style={{ padding: "1rem 0" }}>
                     <h3 className="level" key={level.level_number}>Level {level.level_number}</h3>
+                    <Link to={`/cohort-detail/${this.cohortId}/quiz-set`} >Add Quiz Set</Link>
                     {
                       level.modules.map(module => (
                         <div className="module row" style={{ padding: "6px", borderTop: '1px solid #888', marginTop: "1rem" }} key={module.id}>

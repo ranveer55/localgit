@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import BootstrapTable from 'react-bootstrap-table-next';
 import moment from "moment";
-import RTEditor from './RTEditor'
 
 class ManageQuetions extends Component {
 
@@ -361,10 +360,7 @@ class ManageQuetions extends Component {
                                         <div className="row" style={{ padding: '2px 10px' }}>
                                             <div className="col-md-3">Practice Question</div>
                                             <div className="col-md-9">
-                                                <RTEditor  disabled={uploading} 
-                                                data={newQuestion.practiceSetQuestion}
-                                                 placeholder="Practice Question" onChange={this.onChangeEditor} />
-
+                                            <textarea disabled={uploading} value={newQuestion.practiceSetQuestion} name="practiceSetQuestion" style={{width:'100%', border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Practice Question" onChange={this.onChange} />
                                             </div>
                                         </div>
                                         <div className="row" style={{ padding: '2px 10px' }}>
