@@ -38,6 +38,8 @@ import InterviewSimulatorCohortPage from './pages/InterviewSimulatorCohort';
 import InterviewSimulatorCohortUserAttempsPage from './pages/InterviewSimulatorCohortUserAttempts';
 import InterviewSimulatorCohortUserAttempsAiReviewPage from './pages/InterviewSimulatorCohortUserAttemptsAiReviewPage';
 import AddPracticeSetToCohortPage from './pages/cohort/AddCohortPracticeSet';
+import AddQuizSetToCohortPage from './pages/cohort/AddQuizSetToCohortPage';
+import ManageQuizSetQuetions from './pages/cohort/ManageQuizSetQuetions';
 import ManageQuetions from './pages/cohort/ManageQuetions';
 import InterviewSimulatorCohortQuizAttemptUsersPage, { interviewSimulatorCohortQuizAttemptUsersRoute } from './pages/InterviewSimulatorCohortQuizAttemptUsers';
 import InterviewSimulatorCohortQuizAttemptUsersLogPage, { interviewSimulatorCohortQuizAttemptUsersLogRoute } from './pages/InterviewSimulatorCohortQuizAttemptUsersLog';
@@ -79,6 +81,9 @@ class Router extends React.Component {
         <ProtectedRoute exact path="/manage-quetions/:cohortId/:practicId" component={ManageQuetions} />
         <ProtectedRoute exact path="/interview-simulator/:cohortId" component={InterviewSimulatorCohortPage} />
         <ProtectedRoute path="/interview-simulator" component={InterviewSimulatorPage} />
+        
+        <ProtectedRoute path="/cohort-detail/:cohortId/manage-quetions/:quizSetId" component={ManageQuizSetQuetions} />
+        <ProtectedRoute path="/cohort-detail/:cohortId/quiz-set" component={AddQuizSetToCohortPage} />
         <ProtectedRoute path="/cohort-detail/:cohortId" component={CohortDetail} />
         <ProtectedRoute path="/cohort-csv-register/:cohortId" component={CohortRegisterCSV} />
         <ProtectedRoute path="/user-cohort-detail/:cohortId/:userId" component={UserCohortDetail} />

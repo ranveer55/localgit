@@ -1,17 +1,34 @@
-import React from 'react';
-import FroalaEditor from 'react-froala-wysiwyg';
+import React, { Component } from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+class RTEditor extends Component {
+    render() {
+        return (
+           <CKEditor
+            
+                    editor={ ClassicEditor }
+                    data={this.props.data}
+                    config={ {
+                        toolbar: [ 'heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
+                        heading: {
+                            options: [
+                                { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                                { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+                            ]
+                        }
+                    } }
+                   
+                    onChange={ ( event, editor ) => {
+                        const data = editor.getData();
+                        if(this.props.onChange){
+                            this.props.onChange(data)
+                        }
+                    } }
+                    
+                />
+        );
+    }
+}
 
-// Require Editor JS files.
-import 'froala-editor/js/froala_editor.pkgd.min.js';
-
-// Require Editor CSS files.
-import 'froala-editor/css/froala_style.min.css';
-import 'froala-editor/css/froala_editor.pkgd.min.css';
-
-// Require Font Awesome.
-// import 'font-awesome/css/font-awesome.css';
-const RTEditor =({data,onChange}) =><FroalaEditor
-model={data}
-onModelChange={onChange}
-/>
 export default RTEditor;

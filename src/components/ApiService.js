@@ -759,6 +759,8 @@ export default class ApiService {
         });
     }
 
+   
+
     getUserCohortDetail(cohort_id = 0, userId = "") {
         return axios.get(`${this.domain}/user-cohort-detail/` + cohort_id + "/" + userId, {
             headers: {
@@ -943,5 +945,101 @@ export default class ApiService {
             error.response = response
             throw error
         }
+    }
+
+
+    //----------------------------------
+    addCohortQuizSet(payload) {
+        if(payload.id){
+            return axios.put(`${this.domain}/cohortQuizSets/${payload.id}`, payload, {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                },
+            }
+            ).then(res => {
+                return res.data;
+            });
+
+        } else {
+        return axios.post(`${this.domain}/cohortQuizSets`, payload, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    }
+    getCohortQuizSets(cohortId) {
+        return axios.get(`${this.domain}/cohortQuizSets?cohortId=${cohortId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    getCohortQuizSet(id) {
+        return axios.get(`${this.domain}/cohortQuizSets/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    
+    addQuizSetsToCohort(cohortId, quizSetIds = []) {
+        // quiz-sets/all
+        return axios.post(`${this.domain}/cohort/add-quiz-set`, {
+            cohortId,
+            quizSetIds
+        }, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    
+    }
+    
+    deleteQuizSetQuetion(id) {
+        // quiz-sets/all
+        return axios.delete(`${this.domain}/quizSetsQuestions/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    
+    }
+    addQuizSetQuetion(payload) {
+        if(payload.id){
+            return axios.put(`${this.domain}/quizSetsQuestions/${payload.id}`, payload, {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                },
+            }
+            ).then(res => {
+                return res.data;
+            });
+        } else {
+            return axios.post(`${this.domain}/quizSetsQuestions`, payload, {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                },
+            }
+            ).then(res => {
+                return res.data;
+            });
+        }
+        
     }
 }

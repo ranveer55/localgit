@@ -10594,6 +10594,9 @@ label.certificate-button a {
     padding-top: 43px;
   }
 }
+.ck-editor__editable {
+  max-height: 150px;
+}
 /* <!-- max-width: 479px --> */
 /* <!-- maxw end 
 	============================================ --> */
