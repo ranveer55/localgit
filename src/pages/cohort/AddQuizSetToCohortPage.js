@@ -16,7 +16,7 @@ class AddQuizSetToCohortPage extends Component {
             quizSets: [],
             showQuizSetAddModal: false,
             newSet:{
-                "cohortId":this.cohortId,"companyCode":this.companyCodec,"quizTopic":"",
+                "cohortId":this.cohortId,"companyCode":this.companyCode,"quizTopic":"",
                 "questionCap":10,"quizSubTopic":"","quizSubject":"STATS"
             }
         };
@@ -81,7 +81,7 @@ class AddQuizSetToCohortPage extends Component {
                         "cohortId":n.cohortId,"companyCode":n.companyCode,"quizTopic":n.quizTopic,
                         "questionCap":n.questionCap,"quizSubTopic":n.quizSubTopic,"quizSubject":n.quizSubject
                     }: {
-                        "cohortId":this.cohortId,"companyCode":this.companyCodec,"quizTopic":"",
+                        "cohortId":this.cohortId,"companyCode":this.companyCode,"quizTopic":"",
                         "questionCap":10,"quizSubTopic":"","quizSubject":"STATS"
                     },
                     addQuizSetAddModal:false
@@ -168,7 +168,14 @@ class AddQuizSetToCohortPage extends Component {
             {
                 dataField: 'id',
                 text: 'Action',
-                formatter: this.formatter,
+                formatter: (id)=><Link
+                to={`manage-quetions/${id}`}
+                className=""
+                style={{
+                    color: "blue",
+                    cursor: "pointer"
+                }}>Manage Questions
+            </Link>
             },
 
 

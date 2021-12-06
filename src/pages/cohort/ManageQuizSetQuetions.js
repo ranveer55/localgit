@@ -9,7 +9,7 @@ class ManageQuizSetQuetions extends Component {
 
     constructor(props) {
         super(props);
-        this.ref =React.createRef();
+        this.ref = React.createRef();
         this.cohortId = props.match.params.cohortId;
         this.Id = props.match.params.quizSetId;
 
@@ -20,10 +20,10 @@ class ManageQuizSetQuetions extends Component {
             questionText: '',
             optionChoices: '',
             difficultyLevel: 1,
-            quizSetId:''
+            quizSetId: ''
         }
         this.state = {
-            data:null,
+            data: null,
             dateLoaded: false,
             newQuestion: this.newQuestion
         };
@@ -43,26 +43,26 @@ class ManageQuizSetQuetions extends Component {
                 this.setState({
                     data: data,
                     dataLoaded: true,
-                    addQuizSetAddModal:false
+                    addQuizSetAddModal: false
                 });
             });
     }
 
-   
+
 
     addQuestion = () => {
-            const datum =this.state.newQuestion;
-            datum.quizSetId=this.state.data.quizSetId;
-            global.api.addQuizSetQuetion(datum)
-                .then(
-                    data => {
-                        this.loadQuizSetsQuestions()
-                    })
-                .catch(err => {
-                    this.setState({
-                        dateLoaded: true,
-                    });
+        const datum = this.state.newQuestion;
+        datum.quizSetId = this.state.data.quizSetId;
+        global.api.addQuizSetQuetion(datum)
+            .then(
+                data => {
+                    this.loadQuizSetsQuestions()
+                })
+            .catch(err => {
+                this.setState({
+                    dateLoaded: true,
                 });
+            });
     }
 
     onChange = (e) => {
@@ -73,7 +73,7 @@ class ManageQuizSetQuetions extends Component {
                 [e.target.name]: e.target.value
             }
         })
-    } 
+    }
     onChangeEditor = (e) => {
         let { newQuestion } = this.state;
         this.setState({
@@ -98,12 +98,12 @@ class ManageQuizSetQuetions extends Component {
         e.preventDefault();
         this.setState({ newQuestion: row, addQuizSetAddModal: true })
     }
-    Remove = (e, row) => {
+    Remove = (e, id) => {
         e.preventDefault();
-        global.api.deleteQuizSetQuetion(row.id)
+        global.api.deleteQuizSetQuetion(id)
             .then(
                 data => this.loadQuizSetsQuestions()
-                )
+            )
             .catch(err => {
                 this.setState({
                     dateLoaded: true
@@ -111,78 +111,60 @@ class ManageQuizSetQuetions extends Component {
             });
 
     }
-    formatter = (cell, row) => {
-        console.log(this);
-        return (
-            <div className="interview-simulator-dropdown-holder">
-                <span className="interview-simulator-dropdown">⋮</span>
-                <div className="interview-simulator-dropdown-content">
-                    <Link
-                        to="#"
-                        onClick={e => this.Remove(e, row)}
-                        className="interview-simulator-dropdown-link"
-                        style={{
-                            color: "blue",
-                            cursor: "pointer"
-                        }}
-                    >Remove Question
-                    </Link>
-                    <Link
-                        to="#"
-                        onClick={e => this.Edit(e, row)}
-                        className="interview-simulator-dropdown-link"
-                        style={{
-                            color: "blue",
-                            cursor: "pointer"
-                        }}>Edit Question
-                    </Link>
-                    
-
-
-                </div>
-            </div>
-
-
-        );
-    }
 
     render() {
-        const { newQuestion, data} = this.state;
-        const inputClass ={width:'100%',border: '1px solid', padding: 10, borderRadius: 5, margin:'5px 0' }
+        const { newQuestion, data } = this.state;
+        const inputClass = { width: '100%', border: '1px solid', padding: 10, borderRadius: 5, margin: '5px 0' }
 
         const columns = [
-           
-           
+
+
             {
                 dataField: 'quizSetQuestionId',
                 text: 'Question Id',
             },
-             {
+            {
                 dataField: 'questionText',
                 text: 'Question',
-                formatter:(d)=><div>{d.substr(0,40).replace(/<[^>]*>?/gm, '').replace('&nbsp;', '')}</div>
+                formatter: (d) => <div>{d.substr(0, 40).replace(/<[^>]*>?/gm, '').replace('&nbsp;', '')}</div>
             },
             {
                 dataField: 'questionType',
                 text: 'Question Type',
             },
-             {
+            {
                 dataField: 'quizSubTopic',
                 text: 'Quiz Sub Topic',
-            }, 
+            },
             {
                 dataField: 'difficultyLevel',
                 text: 'difficulty Level',
             },
+
             {
-                dataField: 'created_at',
-                text: 'Date Created',
-                formatter: (created_at) => created_at ? moment(created_at).format('DD/MM/YYYY').toString():'',
+                dataField: 'id',
+                text: 'Remove',
+                formatter: (id) => <Link
+                    to="#"
+                    onClick={e => this.Remove(e, id)}
+                    style={{
+                        color: "blue",
+                        cursor: "pointer"
+                    }}
+                >Remove Question
+                </Link>
             },
             {
                 dataField: 'id',
-                text: 'Action',
-                formatter: this.formatter,
+                text: 'Edit',
+                formatter: (id, row) => <Link
+                    to="#"
+                    onClick={e => this.Edit(e, row)}
+                    style={{
+                        color: "blue",
+                        cursor: "pointer"
+                    }}>Edit Question
+                </Link>
             },
 
 
@@ -200,13 +182,13 @@ class ManageQuizSetQuetions extends Component {
 
         return (
             <main className="offset" id="content">
-               
+
                 <section className="section_box">
                     <div className="row">
                         <div className="col-md-6">
                             <h1 className="title1 mb25">Manage Quiz Questions</h1>
                             <h4 className="title4 mb40">
-                            Assigned to Quiz Set ({data ? data.quizTopic :''}) 
+                                Assigned to Quiz Set ({data ? data.quizTopic : ''})
                             </h4>
                         </div>
                     </div>
@@ -243,29 +225,46 @@ class ManageQuizSetQuetions extends Component {
                     {
                         this.state.addQuizSetAddModal ? (
                             <div className="add-practice-set-modal">
-                                <div className="add-practice-set-modal-body" style={{width:'90%', overflow:'auto', margin: "0", fontSize: "16px" }}>
+                                <div className="add-practice-set-modal-body" style={{ width: '90%', height:'80%', overflow: 'auto', margin: "0", fontSize: "16px" }}>
                                     <h2>Quiz Set Question</h2>
-                                    <div className="row">
-                                    <div className="col-md-7">
-                                    <div >Question 
-                                        <RTEditor data={newQuestion.questionText} onChange={this.onChangeEditor}/>
-                                    </div>
-                                    <div className="card">Answer Options 
-                                        <AnswerOptions data={newQuestion.optionChoices} inputClass={inputClass} callbacks={this.onChangeOptions}/>
-                                    </div>
-                                    </div>
-                                    <div className="col-md-5">
-                                   
-                                    <div>Difficulty Level<input type="number" style={inputClass} name="difficultyLevel"  value={newQuestion.difficultyLevel}  placeholder="Difficulty Level" onChange={this.onChange} /></div>
-                                    <div>Quiz Sub Topic<input type="number" min="0" style={inputClass} name="quizSubTopic"   value={newQuestion.quizSubTopic} placeholder="Quiz Sub Topic" onChange={this.onChange} /></div>
-                                   
-                                    <div>Question Type<input  type="number" min="1" max="2" style={inputClass} name="questionType"  value={newQuestion.questionType}  placeholder="Question Type" onChange={this.onChange} /></div>
-                                    </div>
-                                    </div>
-                                    
+                                    <div>
+                                        <div className="card">
+                                        <div className="row">
+                                            <div className="col-md-5">
+                                                <div style={{ alignContent: 'center', paddingTop: '30px' }}>
+                                                    <h3>Quiz Question</h3>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-7">
+                                                <RTEditor data={newQuestion.questionText} onChange={this.onChangeEditor} />
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div className="card">
+                                        <div className="row">
+                                            <div className="col-md-5">
+                                                <div style={{ alignContent: 'center' }}>
+                                                    <h3>Quiz Answers Options</h3>
+                                                    <p>Add the <b> correct answer as the first choice (Option 1).</b> </p>
+                                                    <p>The choices will be randomly shuffled during display.    </p>
+                                                </div>
+                                                </div>
 
-                                    
+                                                <div className="col-md-7">
+                                                    <AnswerOptions data={newQuestion.optionChoices} inputClass={inputClass} callbacks={this.onChangeOptions} />
+                                                </div>
+                                           
+                                        </div>
+                                        </div>
+                                    </div>
+                                    {/* <div className="col-md-5">
 
+                                            <div>Difficulty Level<input type="number" style={inputClass} name="difficultyLevel" value={newQuestion.difficultyLevel} placeholder="Difficulty Level" onChange={this.onChange} /></div>
+                                            <div>Quiz Sub Topic<input type="number" min="0" style={inputClass} name="quizSubTopic" value={newQuestion.quizSubTopic} placeholder="Quiz Sub Topic" onChange={this.onChange} /></div>
+
+                                            <div>Question Type<input type="number" min="1" max="2" style={inputClass} name="questionType" value={newQuestion.questionType} placeholder="Question Type" onChange={this.onChange} /></div>
+                                        </div> */}
+                                     <div className="card">
                                     <div style={{ display: 'flex' }}>
                                         <div disabled={!this.state.valid} style={{ backgroundColor: '#4AB93C' }} className="add-practice-set-modal-button" onClick={this.addQuestion}>Save</div>
                                         <div className="add-practice-set-modal-button" onClick={e => {
@@ -273,6 +272,7 @@ class ManageQuizSetQuetions extends Component {
                                                 addQuizSetAddModal: false
                                             });
                                         }}>Cancel</div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
