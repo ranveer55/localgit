@@ -18,6 +18,10 @@ class AddQuizSetToCohortPage extends Component {
             newSet:{
                 "cohortId":this.cohortId,"companyCode":this.companyCode,"quizTopic":"",
                 "questionCap":10,"quizSubTopic":"","quizSubject":"STATS"
+            },
+            newSetDesign:{
+                "cohortId":this.cohortId,"companyCode":this.companyCode,"quizTopic":"",
+                "questionCap":10,"quizSubTopic":"","quizSubject":"STATS"
             }
         };
 
@@ -76,17 +80,16 @@ class AddQuizSetToCohortPage extends Component {
                 const n = data && data.length > 0 ? data[0]:null;
                 this.setState({
                     quizSets: data,
-                    newSet: n ? {
-                        "id":n.id,
-                        "cohortId":n.cohortId,"companyCode":n.companyCode,"quizTopic":n.quizTopic,
-                        "questionCap":n.questionCap,"quizSubTopic":n.quizSubTopic,"quizSubject":n.quizSubject
-                    }: {
-                        "cohortId":this.cohortId,"companyCode":this.companyCode,"quizTopic":"",
-                        "questionCap":10,"quizSubTopic":"","quizSubject":"STATS"
-                    },
                     addQuizSetAddModal:false
                 });
             });
+    }
+    EditQuizSet =(e, set) =>{
+        e.preventDefault();
+        this.setState({
+            newSet:set,
+            addQuizSetAddModal: true
+        })
     }
     
     formatter = (cell, row) => {
@@ -177,10 +180,24 @@ class AddQuizSetToCohortPage extends Component {
                 }}>Manage Questions
             </Link>
             },
+             {
+                dataField: 'id',
+                text: 'Action',
+                formatter: (id,row)=><Link
+                to={`#`}
+                onClick={e=>this.EditQuizSet(e,row)}
+                className=""
+                style={{
+                    color: "blue",
+                    cursor: "pointer"
+                }}>Edit Quiz Set
+            </Link>
+            },
 
 
         ];
         const newSet =this.state.newSet;
+        const newSetDesign =this.state.newSetDesign;
         let quizSet =this.state.quizSets;
         quizSet =quizSet && quizSet.length > 0 ? quizSet[0]: null;
         const inputClass ={width:'100%',border: '1px solid', padding: 10, borderRadius: 5, margin:'5px 0' }
@@ -214,9 +231,10 @@ class AddQuizSetToCohortPage extends Component {
                        
                         <span onClick={e => {
                             this.setState({
-                                addQuizSetAddModal: true
+                                addQuizSetAddModal: true,
+                                newSet:newSetDesign
                             });
-                        }} className="link" style={{ marginLeft: "1rem", fontSize: "16px" }}>{quizSet ? 'Edit ':'Add '} Quiz Set</span>
+                        }} className="link" style={{ marginLeft: "1rem", fontSize: "16px" }}>Add Quiz Set</span>
                        
 
                     </div>

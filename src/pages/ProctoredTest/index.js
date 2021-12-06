@@ -1,5 +1,6 @@
 import moment from "moment";
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class ProctoredTest extends Component {
 
@@ -100,6 +101,7 @@ class ProctoredTest extends Component {
                                                     <tr>
                                                         <th style={{ width: '250px' }}>Cohort Name</th>
                                                         <th>Cohort Start Date</th>
+                                                        <th>View Quiz set</th>
                                                         <th>Quiz Topic</th>
                                                         <th>Number of Candidates</th>
                                                         <th>Tests Completed</th>
@@ -112,6 +114,9 @@ class ProctoredTest extends Component {
                                                             <tr key={datum.id + "" + datum.quizSetId}>
                                                                 <td style={{ wordBreak: "break-all", color:'#408BF9' }}><a href={"/proctored-test/"  + datum.id + "/" + datum.quizSetId }>{datum.name}</a></td>
                                                                 <td>{datum?.start_date}</td>
+                                                                <td>
+                                                                    <Link to={`/cohort-detail/${datum.id}/quiz-set`}>Quiz Set</Link>
+                                                                </td>
                                                                 <td>{datum.quizTopic}</td>
                                                                 <td>{datum.students}</td>
                                                                 <td>{datum.completed}</td>
