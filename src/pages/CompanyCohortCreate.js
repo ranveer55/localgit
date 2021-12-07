@@ -87,6 +87,43 @@ class CompanyCohortCreate extends Component {
                   <ErrorDiv errors={this.state.errors} label="name" />
                 </div>
                 <div className="form-group">
+                  <label>Email Sender Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Cohort Name"
+                    value={this.state.senderEmail ?? ''}
+                    onChange={e => {
+                      this.setState({senderEmail:e.target.value  });
+                    }} />
+                  <ErrorDiv errors={this.state.errors} label="senderEmail" />
+                </div>
+                <div className="form-group" style={{display:'flex'}}>
+                  <label style={{margin:10}}>Profile Required</label>
+                  <input
+                    style={{margin:10}}
+                    type="radio"
+                    name="profile_questionnaire"
+                    className=""
+                    placeholder="Cohort Name"
+                    checked={this.state.profile_questionnaire ==true}
+                    onChange={e => {
+                      this.setState({profile_questionnaire:true});
+                    }} /><span style={{margin:10}}> Yes</span>
+                    <input
+                    style={{margin:10}}
+                    type="radio"
+                    name="profile_questionnaire"
+                    className=""
+                    placeholder="Cohort Name"
+                    checked={this.state.profile_questionnaire !=true}
+                    onChange={e => {
+                      this.setState({
+                             profile_questionnaire:false });
+                    }} /><span style={{margin:10}}> No</span>
+                  
+                </div>
+                <div className="form-group">
                   <label>Cohort Type</label>
                   <select
                     value={this.state.cohortType ?? ""}
