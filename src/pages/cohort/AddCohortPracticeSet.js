@@ -118,7 +118,7 @@ class AddPracticeSetToCohortPage extends Component {
     }
     Remove =(e, row)=>{
         e.preventDefault();
-        global.api.removePracticeSetFromCohort(this.cohortId, row.practiceSetId)
+        global.api.removePracticeSetFromCohort(this.cohortId, row.id)
         .then((response) => {
             // remove from practice sets list
             const newState = [...this.state.practiceSets];
