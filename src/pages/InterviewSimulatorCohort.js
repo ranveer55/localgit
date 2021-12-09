@@ -158,6 +158,9 @@ class InterviewSimulatorCohortPage extends Component {
                                         case "3": // last month
                                             this.loadData(new Date(moment().subtract(1, "month").startOf('day')), new Date(moment().endOf("day")));
                                             break;
+                                            case "5": // all
+                                            this.loadData(new Date(moment().subtract(1, "year").startOf('day')), new Date(moment().endOf("day")));
+                                            break;
 
                                         default:
                                             break;
@@ -168,6 +171,7 @@ class InterviewSimulatorCohortPage extends Component {
                                     <option value="4">Yesterday</option>
                                     <option value="2">Last Week</option>
                                     <option value="3">Last Month</option>
+                                    <option value="5">Current Year</option>
                                 </select>
                             </div>
                            
@@ -217,6 +221,7 @@ class InterviewSimulatorCohortPage extends Component {
                                                         <th>Attempts</th>
                                                         <th>Asked for Review</th>
                                                         <th>Reviews Completed</th>
+                                                        <th>Practice Answer</th>
                                                         <th> </th>
                                                     </tr>
                                                 </thead>
@@ -231,8 +236,9 @@ class InterviewSimulatorCohortPage extends Component {
                                                                 <td>{user.totalAttempts}</td>
                                                                 <td>{user.Asked_for_Review}</td>
                                                                 <td>{user.Reviews_Completed}</td>
+                                                                <td>{user.Practice_Answer}</td>
                                                                 <td><a href={"/interview-simulator/" + this.cohortId + "/user-attempts/" + user.userId}>Show Activity</a></td>
-                                                            </tr>
+                                                                </tr>
                                                         ))
                                                     }
                                                 </tbody>
@@ -258,7 +264,7 @@ let distinctAttempts =[];
 let totalAttempts =[];
 let Asked_for_Review =[];
 let Reviews_Completed =[];
-if(data){
+if(data && data.Asked_for_Review){
     for (const label of Object.keys(data.Asked_for_Review)) {
         labels.push(label);
         distinctAttempts.push(data.distinctAttempts[label]);

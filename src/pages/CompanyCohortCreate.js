@@ -21,7 +21,9 @@ class CompanyCohortCreate extends Component {
       exam_start_time:'',
       exam_end_time:'',
       allotted_time:'',
+      senderEmail:'',
       errors: null,
+      profile_questionnaire: false,
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -261,6 +263,8 @@ class CompanyCohortCreate extends Component {
                       type_id: this.state.cohortType,
                       start_date: this.state.cohortStartDate,
                       company_code: this.companyCode,
+                      profile_questionnaire: this.state.profile_questionnaire,
+                      senderEmail: this.state.senderEmail,
                      exam_end_time: this.state.exam_end_time,
                       exam_start_time: this.state.exam_start_time,
                       allotted_time: this.state.allotted_time,

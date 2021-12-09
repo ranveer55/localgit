@@ -109,6 +109,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                                     <th>Video</th>
                                                     <th>Lesson Name</th>
                                                     <th>AI Review</th>
+                                                    <th>User Answer</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -129,6 +130,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                                             <td>
                                                                 <a href={`/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`}>{getAiRatingMedal(prevAttempt.ai_rating_avg)}</a>
                                                             </td>
+                                                            <td dangerouslySetInnerHTML={{__html:prevAttempt?.student_practice_answers?.studentResponse}} ></td>
                                                         </tr>
                                                     ))
                                                 }
