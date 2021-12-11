@@ -94,6 +94,7 @@ class ProctoredTestDetail extends Component {
       global.api
         .getProctoredTestDetailDownloadExcel(this.cohortId, this.quizId)
         .then(() => {
+          alert('Email Sent')
           this.setState({
             downloading:false
           });
@@ -147,7 +148,7 @@ class ProctoredTestDetail extends Component {
 };
 
   render() {
-    const { data, cohort } = this.state;
+    const { data, cohort, downloading } = this.state;
     const columns = [
       {
         dataField: "Email",
@@ -237,7 +238,7 @@ class ProctoredTestDetail extends Component {
           <div className="row">
             
             <div className="col-md-12">
-              
+              {downloading && <h3>Generating Report ...</h3>}
             <div style={{ textAlign: "right", marginBottom: "1rem" }}>
                   <button
                       onClick={e => {
@@ -286,8 +287,8 @@ class ProctoredTestDetail extends Component {
                       className="btn btn-size3 btn-blue btn-radius export">
                       <span>Download CSV</span>
                   </button>
-                  <button onClick={this.downloadExcel} className="btn btn-size3 btn-blue btn-radius export">
-                      <span>Download CSV 2</span>
+                  <button style={{marginLeft:10}} onClick={this.downloadExcel} className="btn btn-size3 btn-blue btn-radius export">
+                      <span>Email Report</span>
                   </button> 
               </div>
               <h1 className="title1 mb25">Cohorts: {cohort?.name}</h1>
