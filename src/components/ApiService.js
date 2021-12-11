@@ -562,6 +562,17 @@ export default class ApiService {
             return res.data;
         });
     }
+    getProctoredTestDetailDownloadExcel(cohortId, quizId,state) {
+        return axios.post(`${this.domain}/get-proctored-test/detail/${cohortId}/${quizId}`,{}, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            console.log({res});
+            return res.data;
+        });
+    }
 
     unlockProctoredTest(data) {
             return axios.post(`${this.domain}/unlock-proctored-test`,data, {

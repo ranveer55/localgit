@@ -86,6 +86,25 @@ class ProctoredTestDetail extends Component {
         });
       });
   }
+  downloadExcel=() =>{
+      this.setState({
+        downloading:true
+      });
+
+      global.api
+        .getProctoredTestDetailDownloadExcel(this.cohortId, this.quizId)
+        .then(() => {
+          this.setState({
+            downloading:false
+          });
+          // this.setState({ batchData: data });
+        })
+        .catch((err) => {
+          this.setState({
+            downloading:false
+          });
+        });
+    }
 
   score = (data) => {
     try {
@@ -267,6 +286,9 @@ class ProctoredTestDetail extends Component {
                       className="btn btn-size3 btn-blue btn-radius export">
                       <span>Download CSV</span>
                   </button>
+                  <button onClick={this.downloadExcel} className="btn btn-size3 btn-blue btn-radius export">
+                      <span>Download CSV 2</span>
+                  </button> 
               </div>
               <h1 className="title1 mb25">Cohorts: {cohort?.name}</h1>
               <h4 className="title4 mb40">
