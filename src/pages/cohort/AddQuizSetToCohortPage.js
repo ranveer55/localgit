@@ -57,7 +57,9 @@ class AddQuizSetToCohortPage extends Component {
     }
 
     addQuizSet = () => {
-
+        const data =this.state.newSet;
+        delete data.questionsCount;
+        delete data.questions;
         global.api.addCohortQuizSet(this.state.newSet)
             .then(
                 data => {
@@ -133,6 +135,17 @@ class AddQuizSetToCohortPage extends Component {
             newSet,valid:!valid
         })
     }
+    onChangeCheckbox =(e) =>{
+        let {newSet} =this.state;
+        newSet ={
+            ...newSet,
+            archive:e.target.checked
+        }
+        console.log(newSet);
+        this.setState({
+            newSet
+        })
+    }
 
 
 
@@ -155,6 +168,11 @@ class AddQuizSetToCohortPage extends Component {
             {
                 dataField: 'quizSubTopic',
                 text: 'quiz Sub Topic'
+            },
+             {
+                dataField: 'archive',
+                text: 'Archive',
+                formatter:(a) => a ? 'Archived':""
             },
              {
                 dataField: 'quizSubject',
@@ -264,6 +282,7 @@ class AddQuizSetToCohortPage extends Component {
                                     <div>Question Cap<input style={inputClass} name="questionCap"  value={newSet.questionCap}  placeholder="Question Cap" onChange={this.onChange} /></div>
                                     <div>Quiz Sub Topic<input style={inputClass} name="quizSubTopic"   value={newSet.quizSubTopic} placeholder="Quiz Sub Topic" onChange={this.onChange} /></div>
                                     <div>Quiz Subject<input style={inputClass} name="quizSubject"  value={newSet.quizSubject}  placeholder="Quiz Subject" onChange={this.onChange} /></div>
+                                    <div>Archive<input type="checkbox" style={{width:'25px'}} name="archive"  checked={newSet.archive}  onChange={this.onChangeCheckbox} /></div>
 
 
                                     <div style={{ display: 'flex' }}>
