@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-
+import { ReactComponent as Star } from './start_icon.svg';
 class InterviewSimulatorCohortUserAttempsPage extends Component {
 
     constructor(props) {
@@ -109,6 +109,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                                     <th>Video</th>
                                                     <th>Lesson Name</th>
                                                     <th>AI Review</th>
+                                                    <th>Mentor Review</th>
                                                     <th>User Answer</th>
                                                 </tr>
                                             </thead>
@@ -129,6 +130,22 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                                             <td>{prevAttempt.lessonName}</td>
                                                             <td>
                                                                 <a href={`/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`}>{getAiRatingMedal(prevAttempt.ai_rating_avg)}</a>
+                                                            </td>
+                                                            <td>
+                                                            {
+                                                prevAttempt.external_rating_avg ? (
+                                                    <div className={prevAttempt.external_rating_avg ? prevAttempt.external_rating_avg <= 2 ? "review-red cursor-pointer" : prevAttempt.external_rating_avg <= 3 ? "review-yellow cursor-pointer" : "review-green cursor-pointer" : "ai-review NA cursor-pointer"} >
+                                                        <div className="">
+                                                            {prevAttempt.external_rating_avg ? <Star /> : <div className="circle cursor-pointer"></div>}
+                                                        </div>
+                                                        <div className="ml-2">
+                                                            {prevAttempt.external_rating_avg === null ? "NA" : prevAttempt.external_rating_avg.toFixed(2)}
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <div style={{ fontWeight: "lighter", color: "#1A43F0", cursor: "pointer", textAlign: "center" }} >No Review</div>
+                                                )
+                                            }
                                                             </td>
                                                             <td dangerouslySetInnerHTML={{__html:prevAttempt?.student_practice_answers?.studentResponse}} ></td>
                                                         </tr>
