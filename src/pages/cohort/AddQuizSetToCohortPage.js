@@ -171,8 +171,8 @@ class AddQuizSetToCohortPage extends Component {
             },
              {
                 dataField: 'archive',
-                text: 'Archive',
-                formatter:(a) => a ? 'Archived':""
+                text: 'Publish',
+                formatter:(a) => a ? 'UnPublished':"Published"
             },
              {
                 dataField: 'quizSubject',
