@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { Line } from "react-chartjs-2";
 import ReactDatePicker from "react-datepicker";
+import endpoints from "../config/endpoints";
 class InterviewSimulatorCohortPage extends Component {
 
     constructor(props) {
@@ -78,6 +79,32 @@ class InterviewSimulatorCohortPage extends Component {
                 });
             });
     }
+
+     showCertificateButton = (row)=> {
+        return (
+          <div className="">
+            <label className="certificate-button" onClick={() => {
+              global.api.createACertificate({
+                courseNo: row.courseNumber,
+                userId: row.userId,
+                interviewSimulator:true
+              }).then(response => {
+                // certificate created, refresh the page
+                window.location.reload();
+              })
+            }}>
+              <input className="checkbox" type="checkbox" defaultChecked={row.certificate ? true : false} />
+              {
+                row.certificate ? (
+                  <a target="_blank" rel="noopener noreferrer" href={endpoints.base + "/certificate/" + row.certificate.certificateId}>View</a>
+                ) : (
+                  <span>Create</span>
+                )
+              }
+            </label>
+          </div>
+        );
+      }
 
 
 
@@ -222,6 +249,7 @@ class InterviewSimulatorCohortPage extends Component {
                                                         <th>Asked for Review</th>
                                                         <th>Reviews Completed</th>
                                                         <th>Practice Answer</th>
+                                                        <th>Certificate</th>
                                                         <th> </th>
                                                     </tr>
                                                 </thead>
@@ -237,6 +265,7 @@ class InterviewSimulatorCohortPage extends Component {
                                                                 <td>{user.Asked_for_Review}</td>
                                                                 <td>{user.Reviews_Completed}</td>
                                                                 <td>{user.Practice_Answer}</td>
+                                                                <td>{this.showCertificateButton(user)}</td>
                                                                 <td><a href={"/interview-simulator/" + this.cohortId + "/user-attempts/" + user.userId}>Show Activity</a></td>
                                                                 </tr>
                                                         ))

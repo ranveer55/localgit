@@ -123,7 +123,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                                             <td style={{ wordBreak: "break-all" }}>
                                                                 {
                                                                     prevAttempt.filePath ? (
-                                                                        <video src={"https://langappnew.s3.amazonaws.com/uploads/" + prevAttempt.filePath} width="320px" />
+                                                                        <video src={"https://langappnew.s3.amazonaws.com/uploads/" + prevAttempt.filePath} width="200px" />
                                                                     ) : <div style={{ height: "100%" }}>Video Not Available</div>
                                                                 }
                                                             </td>
@@ -132,22 +132,22 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                                                 <a href={`/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`}>{getAiRatingMedal(prevAttempt.ai_rating_avg)}</a>
                                                             </td>
                                                             <td>
-                                                            {
-                                                prevAttempt.external_rating_avg ? (
-                                                    <div className={prevAttempt.external_rating_avg ? prevAttempt.external_rating_avg <= 2 ? "review-red cursor-pointer" : prevAttempt.external_rating_avg <= 3 ? "review-yellow cursor-pointer" : "review-green cursor-pointer" : "ai-review NA cursor-pointer"} >
-                                                        <div className="">
-                                                            {prevAttempt.external_rating_avg ? <Star /> : <div className="circle cursor-pointer"></div>}
-                                                        </div>
-                                                        <div className="ml-2">
-                                                            {prevAttempt.external_rating_avg === null ? "NA" : prevAttempt.external_rating_avg.toFixed(2)}
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <div style={{ fontWeight: "lighter", color: "#1A43F0", cursor: "pointer", textAlign: "center" }} >No Review</div>
-                                                )
-                                            }
+                                                                {
+                                                                    prevAttempt.external_rating_avg ? (
+                                                                        <div className={prevAttempt.external_rating_avg ? prevAttempt.external_rating_avg <= 2 ? "review-red cursor-pointer" : prevAttempt.external_rating_avg <= 3 ? "review-yellow cursor-pointer" : "review-green cursor-pointer" : "ai-review NA cursor-pointer"} >
+                                                                            <div className="">
+                                                                                {prevAttempt.external_rating_avg ? <Star /> : <div className="circle cursor-pointer"></div>}
+                                                                            </div>
+                                                                            <div className="ml-2">
+                                                                                {prevAttempt.external_rating_avg === null ? "NA" : prevAttempt.external_rating_avg.toFixed(2)}
+                                                                            </div>
+                                                                        </div>
+                                                                    ) : (
+                                                                        <div style={{ fontWeight: "lighter", color: "#1A43F0", cursor: "pointer", textAlign: "center" }} >No Review</div>
+                                                                    )
+                                                                }
                                                             </td>
-                                                            <td dangerouslySetInnerHTML={{__html:prevAttempt?.student_practice_answers?.studentResponse}} ></td>
+                                                            <td dangerouslySetInnerHTML={{ __html: prevAttempt?.student_practice_answers?.studentResponse }} ></td>
                                                         </tr>
                                                     ))
                                                 }

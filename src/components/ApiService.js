@@ -401,9 +401,9 @@ export default class ApiService {
         })
     }
 
-    createACertificate({ userId, courseNo }) {
+    createACertificate({ userId, courseNo, interviewSimulator }) {
         return axios.post(`${this.domain}/create-certificate`, {
-            userId, courseNo
+            userId, courseNo,interviewSimulator
         }, {
             headers: {
                 'Authorization': `Bearer ${this.token}`

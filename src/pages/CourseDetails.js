@@ -228,7 +228,8 @@ class CourseDetails extends Component {
           <label className="certificate-button" onClick={() => {
             global.api.createACertificate({
               courseNo: row.courseNumber,
-              userId: row.userId
+              userId: row.userId,
+              interviewSimulator:false
             }).then(response => {
               // certificate created, refresh the page
               window.location.reload();
