@@ -135,7 +135,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                                                 {
                                                                     prevAttempt.external_rating_avg ? (
                                                                         <div className={prevAttempt.external_rating_avg ? prevAttempt.external_rating_avg <= 2 ? "review-red cursor-pointer" : prevAttempt.external_rating_avg <= 3 ? "review-yellow cursor-pointer" : "review-green cursor-pointer" : "ai-review NA cursor-pointer"} >
-                                                                            <div className="">
+                                                                            <div className="" style={{paddingTop:'7px',marginRight:6}}>
                                                                                 {prevAttempt.external_rating_avg ? <Star /> : <div className="circle cursor-pointer"></div>}
                                                                             </div>
                                                                             <div className="ml-2">
@@ -143,7 +143,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                                                             </div>
                                                                         </div>
                                                                     ) : (
-                                                                        <div style={{ fontWeight: "lighter", color: "#1A43F0", cursor: "pointer", textAlign: "center" }} >No Review</div>
+                                                                        <div style={{ fontWeight: "lighter", color: "#1A43F0", cursor: "pointer", textAlign: "left" }} >No Review</div>
                                                                     )
                                                                 }
                                                             </td>

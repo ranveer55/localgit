@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Line } from "react-chartjs-2";
 import ReactDatePicker from "react-datepicker";
 import endpoints from "../config/endpoints";
+import Loader from '../components/Loader/Loader'
 class InterviewSimulatorCohortPage extends Component {
 
     constructor(props) {
@@ -21,6 +22,7 @@ class InterviewSimulatorCohortPage extends Component {
             endDate: new Date(moment()),
             users:[],
             dataSets: null,
+            loading:false
         };
 
         this.state.selectedCompany = global.companyCode;
@@ -54,7 +56,8 @@ class InterviewSimulatorCohortPage extends Component {
 
     loadData(startDate, endDate) {
         this.setState({
-            dateLoaded: false
+            dateLoaded: false,
+            loading:true
         });
         global.api.getCompanyCohortSingleReport(
             this.cohortId,
@@ -70,12 +73,14 @@ class InterviewSimulatorCohortPage extends Component {
                         cohort: data.program,
                         users: data.users,
                         dataSets: data.dataSets,
+                        loading:false
                     });
                     // this.setState({ batchData: data });
                 })
             .catch(err => {
                 this.setState({
-                    dateLoaded: true
+                    dateLoaded: true,
+                    loading:false
                 });
             });
     }
@@ -84,13 +89,20 @@ class InterviewSimulatorCohortPage extends Component {
         return (
           <div className="">
             <label className="certificate-button" onClick={() => {
+                this.setState({loading:true})
               global.api.createACertificate({
                 courseNo: row.courseNumber,
                 userId: row.userId,
                 interviewSimulator:true
               }).then(response => {
+                  this.setState({loading:false})
                 // certificate created, refresh the page
-                window.location.reload();
+                if(response && response.error){
+                    alert(response.message)
+                } else {
+                     window.location.reload();
+                }
+               
               })
             }}>
               <input className="checkbox" type="checkbox" defaultChecked={row.certificate ? true : false} />
@@ -111,10 +123,11 @@ class InterviewSimulatorCohortPage extends Component {
     render() {
 
         const cohort = this.state.cohort;
-
+        const {loading} =this.state;
 
         return (
             <main className="offset" id="content">
+                {loading && <Loader />}
                 <div className="row">
                     <div className="">
                        
