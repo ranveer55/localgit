@@ -126,7 +126,7 @@ class ManageQuizSetQuetions extends Component {
             {
                 dataField: 'questionText',
                 text: 'Question',
-                formatter: (d) => <div>{d.substr(0, 40).replace(/<[^>]*>?/gm, '').replace('&nbsp;', '')}</div>
+                formatter: (d) => <div>{d? d.substr(0, 40).replace(/<[^>]*>?/gm, '').replace('&nbsp;', ''):''}</div>
             },
             {
                 dataField: 'questionType',
