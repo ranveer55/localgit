@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-
+const optionSaperator =' ^&^ ';
 const AnswerOptions = ({ data, inputClass, callbacks }) => {
-    data = data ? data.split(',') : []
+    data = data ? data.split(optionSaperator) : []
     const [op, setop] = useState(data)
     const [newInputVisible, setNewInputVisible] = useState(false)
     const [newInput, setNewInput] = useState('')
     const remove = (index) => {
         const datum = op.filter((item, i) => i !== index)
         setop(datum)
-        callbacks(datum.toString())
+        callbacks(datum.join(optionSaperator))
     }
     const showaddNew = (index) => {
         setop([...op, ''])
@@ -20,7 +20,7 @@ const AnswerOptions = ({ data, inputClass, callbacks }) => {
             const o = [...op, newInput];
             setop(o)
 
-            callbacks(o.toString())
+            callbacks(o.join(optionSaperator))
         }
         setNewInputVisible(false)
         setNewInput('')
@@ -50,14 +50,15 @@ const AnswerOptions = ({ data, inputClass, callbacks }) => {
     }
     const onChange = (e, i) => {
         let datum = op.map((ans,index)=>{
-            if(index==i){
-                return e.target.value.replaceAll(',','')
+            if(index===i){
+                // return e.target.value.replaceAll(',','')
+                return e.target.value
             } else {
                 return ans;
             }
         });
         setop([...datum])
-        callbacks([...datum].toString())
+        callbacks([...datum].join(optionSaperator))
     }
    
     return (
