@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-
+import Mp3Player from './Mp3Player'
 class InterviewSimulatorCohortUserAttempsAiReviewPage extends Component {
 
     constructor(props) {
@@ -78,7 +78,7 @@ class InterviewSimulatorCohortUserAttempsAiReviewPage extends Component {
         const cohort = this.state.cohort;
         const userData = this.state.userData;
         const prevAttempt = this.state.prevAttempt;
-
+        const external_rating = prevAttempt && prevAttempt.external_rating
         return (
             <main className="offset InterciewSimulationUserAttempts" id="content">
                 <section className="section_box">
@@ -108,6 +108,7 @@ class InterviewSimulatorCohortUserAttempsAiReviewPage extends Component {
                                                 <h2>Question: {prevAttempt.lessonName}</h2>
                                             </div>
                                             <div className="col-md-6">
+                                                <div>
                                                 <h3>Recorded Video</h3>
                                                 {/* video */}
                                                 {
@@ -120,6 +121,14 @@ class InterviewSimulatorCohortUserAttempsAiReviewPage extends Component {
                                                         </>
                                                     ) : <div style={{ height: "100%" }}>Video Not Available</div>
                                                 }
+                                                </div>
+                                                <div>
+                                                {external_rating.map((item) => 
+                                                        <Mp3Player key={item.id} url={item.audio} name={item.reviewerName}/>
+                                                    
+                                                )}
+                                                </div>
+                                               
                                             </div>
                                             {
                                                 prevAttempt.ai_rating ? (
