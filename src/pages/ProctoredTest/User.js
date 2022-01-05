@@ -79,6 +79,26 @@ class ProctoredTestUserDetail extends Component {
     }
   };
 
+  combineChunks =()=>{
+    this.setState({
+      dateLoaded: false,
+    });
+
+    global.api
+      .combineChunks(this.attemptLogId)
+      .then((data) => {
+        this.setState({
+          dataLoaded: true,
+        });
+        // this.setState({ batchData: data });
+      })
+      .catch((err) => {
+        this.setState({
+          dateLoaded: true,
+        });
+      });
+  }
+
 
   render() {
     const { data, cohort, showAnswer } = this.state;
@@ -196,11 +216,23 @@ class ProctoredTestUserDetail extends Component {
 
                       </div>
                       <div className="col-md-5 proctoredVideo">
+                        <h3>Proctored Video</h3>
                         <div className="proctoredVideo">
                           <video controls width="100%">
                             <source src={`https://langappnew.s3.amazonaws.com/${data.proctoredVideo}`} type="video/mp4" />
                           </video>
                         </div>
+                        <h3>Proctored Video Chunks</h3>
+                        {data.streamId ? (
+                           <div className="proctoredVideo">
+                           <video controls width="100%">
+                             <source src={`https://langappnew.s3.amazonaws.com/${data.streamId}`} type="video/mp4" />
+                           </video>
+                         </div>
+                        ):(
+                          <button onClick={this.combineChunks}>Generate</button>
+                        )}
+                       
                       </div>
                     </div>
                     <div className="flex">

@@ -403,7 +403,7 @@ export default class ApiService {
 
     createACertificate({ userId, courseNo, interviewSimulator }) {
         return axios.post(`${this.domain}/create-certificate`, {
-            userId, courseNo,interviewSimulator
+            userId, courseNo, interviewSimulator
         }, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
@@ -563,7 +563,7 @@ export default class ApiService {
         });
     }
     getProctoredTestDetailDownloadExcel(cohortId, quizId) {
-        return axios.post(`${this.domain}/get-proctored-test/detail/${cohortId}/${quizId}`,{}, {
+        return axios.post(`${this.domain}/get-proctored-test/detail/${cohortId}/${quizId}`, {}, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },
@@ -572,25 +572,35 @@ export default class ApiService {
     }
 
     unlockProctoredTest(data) {
-            return axios.post(`${this.domain}/unlock-proctored-test`,data, {
-                headers: {
-                    'Authorization': `Bearer ${this.token}`
-                },
-            }
-            ).then(res => {
-                return res.data;
-            });
+        return axios.post(`${this.domain}/unlock-proctored-test`, data, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
         }
-        getProctoredTestUserDetail(id) {
-            return axios.get(`${this.domain}/proctored-test/user/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${this.token}`
-                },
-            }
-            ).then(res => {
-                return res.data;
-            });
+        ).then(res => {
+            return res.data;
+        });
+    }
+    getProctoredTestUserDetail(id) {
+        return axios.get(`${this.domain}/proctored-test/user/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
         }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    combineChunks(id) {
+        return axios.get(`${this.domain}/signed-url/combine/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
 
 
     getCompanyCohortUsersQuizProctoredScore(cohort_id = 0) {
@@ -767,7 +777,7 @@ export default class ApiService {
         });
     }
 
-   
+
 
     getUserCohortDetail(cohort_id = 0, userId = "") {
         return axios.get(`${this.domain}/user-cohort-detail/` + cohort_id + "/" + userId, {
@@ -958,7 +968,7 @@ export default class ApiService {
 
     //----------------------------------
     addCohortQuizSet(payload) {
-        if(payload.id){
+        if (payload.id) {
             return axios.put(`${this.domain}/cohortQuizSets/${payload.id}`, payload, {
                 headers: {
                     'Authorization': `Bearer ${this.token}`
@@ -969,15 +979,15 @@ export default class ApiService {
             });
 
         } else {
-        return axios.post(`${this.domain}/cohortQuizSets`, payload, {
-            headers: {
-                'Authorization': `Bearer ${this.token}`
-            },
+            return axios.post(`${this.domain}/cohortQuizSets`, payload, {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                },
+            }
+            ).then(res => {
+                return res.data;
+            });
         }
-        ).then(res => {
-            return res.data;
-        });
-    }
     }
     getCohortQuizSets(cohortId) {
         return axios.get(`${this.domain}/cohortQuizSets?cohortId=${cohortId}`, {
@@ -999,7 +1009,7 @@ export default class ApiService {
             return res.data;
         });
     }
-    
+
     addQuizSetsToCohort(cohortId, quizSetIds = []) {
         // quiz-sets/all
         return axios.post(`${this.domain}/cohort/add-quiz-set`, {
@@ -1013,9 +1023,9 @@ export default class ApiService {
         ).then(res => {
             return res.data;
         });
-    
+
     }
-    
+
     deleteQuizSetQuetion(id) {
         // quiz-sets/all
         return axios.delete(`${this.domain}/quizSetsQuestions/${id}`, {
@@ -1026,10 +1036,10 @@ export default class ApiService {
         ).then(res => {
             return res.data;
         });
-    
+
     }
     addQuizSetQuetion(payload) {
-        if(payload.id){
+        if (payload.id) {
             return axios.put(`${this.domain}/quizSetsQuestions/${payload.id}`, payload, {
                 headers: {
                     'Authorization': `Bearer ${this.token}`
@@ -1048,6 +1058,6 @@ export default class ApiService {
                 return res.data;
             });
         }
-        
+
     }
 }
