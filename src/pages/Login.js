@@ -162,7 +162,7 @@ class Login extends Component {
         )
     }
     handleFormSubmit(e) {
-
+        localStorage.setItem("mytime",'')
         e.preventDefault();
         this.Auth.login(this.state.email, this.state.password)
             .then(res => {

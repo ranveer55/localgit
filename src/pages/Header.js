@@ -66,6 +66,7 @@ class Header extends React.Component {
     }
 
     handleLogout = (props) => {
+        localStorage.setItem("mytime",'')
         Auth.logout()
         window.location.href = '/login';
     }
