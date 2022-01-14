@@ -4581,6 +4581,17 @@ html:not(.md_touch) .todos_dots:hover .todos_dot_box {
   padding-left: 30px;
 }
 
+.table th:nth-child(1) {
+  width: 10%;
+}
+span.dropdown,span.dropup {
+  display: none;
+}
+span.caret {
+  display: none;
+}
+
+
 .table td {
   /* padding: 12px 10px; */
   padding: 12px 6px;

@@ -119,13 +119,13 @@ class ManageQuizSetQuetions extends Component {
         const columns = [
 
 
+            // {
+            //     dataField: 'quizSetQuestionId',
+            //     text: 'Question Id',
+            // },
             {
-                dataField: 'quizSetQuestionId',
-                text: 'Question Id',
-            },
-            {
-                dataField: 's.no',
-                text: 'S No.',
+                dataField: 'seq no',
+                text: 'SEQ NO',
                 formatter: (cell, row, rowIndex, formatExtraData) => {
                     return rowIndex + 1;
                   },
