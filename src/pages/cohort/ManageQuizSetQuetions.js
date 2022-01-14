@@ -124,9 +124,17 @@ class ManageQuizSetQuetions extends Component {
                 text: 'Question Id',
             },
             {
+                dataField: 's.no',
+                text: 'S No.',
+                formatter: (cell, row, rowIndex, formatExtraData) => {
+                    return rowIndex + 1;
+                  },
+                  sort: true,
+            },
+            {
                 dataField: 'questionText',
                 text: 'Question',
-                formatter: (d) => <div>{d? d.substr(0, 40).replace(/<[^>]*>?/gm, '').replace('&nbsp;', ''):''}</div>
+                formatter: (d) => <div>{d ? d.replace(/<[^>]*>?/gm, '').replace('&nbsp;', '').length > 60 ?  d.substr(0, 60).replace(/<[^>]*>?/gm, '').replace('&nbsp;', '') + '...' : d.replace(/<[^>]*>?/gm, '').replace('&nbsp;', '') :''}</div>
             },
             {
                 dataField: 'questionType',
