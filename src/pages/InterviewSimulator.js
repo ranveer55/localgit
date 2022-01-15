@@ -2,6 +2,8 @@ import moment from "moment";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
+import Loader from "react-loader-spinner";
+
 class InterviewSimulatorPage extends Component {
   constructor(props) {
     super(props);
@@ -23,15 +25,15 @@ class InterviewSimulatorPage extends Component {
     this.loadData();
   }
 
-  loadData() {
+  loadData(status) {
     this.setState({
-      dateLoaded: false,
+      dateLoaded: true,
     });
     global.api
-      .getCompanyCohorts(this.companyCode)
+      .getCompanyCohorts(this.companyCode,status)
       .then((data) => {
         this.setState({
-          dataLoaded: true,
+          dataLoaded: false,
           cohorts: data.programs,
         });
         // this.setState({ batchData: data });
@@ -44,21 +46,12 @@ class InterviewSimulatorPage extends Component {
   }
 
   onChangeStatus = (e) => {
-    global.api
-    .getCompanyCohorts(this.companyCode,e.target.value)
-    .then((data) => {
-      console.log('onChangeStatus--',data)
-      this.setState({
-        dataLoaded: true,
-        cohorts: data.programs,
-      });
-      // this.setState({ batchData: data });
-    })
-    .catch((err) => {
-      this.setState({
-        dateLoaded: true,
-      });
+    this.loadData(e.target.value)
+    this.setState({
+      dataLoaded: true,
+      cohorts: [],
     });
+    
   }
 
   formatter = (cell, row) => {
@@ -82,6 +75,16 @@ class InterviewSimulatorPage extends Component {
   };
 
   render() {
+
+    const NoDataIndication = () => (
+      <div className="table_wraps" id="spinner">
+        <div className="spinner" >
+          <Loader type="Grid" color="#4441E2" height={100} width={100} />
+          Loading....
+        </div>
+      </div>
+    );
+
     const columns = [
       {
         dataField: "practiceSetQuestion",
@@ -256,7 +259,7 @@ class InterviewSimulatorPage extends Component {
             </div>
           </div>
           <div>
-            {this.state.dataLoaded ? (
+        {!this.state.dataLoaded ? (
               this.state.cohorts.length > 0 ? (
                 <BootstrapTable
                   keyField="id"
@@ -264,10 +267,12 @@ class InterviewSimulatorPage extends Component {
                   columns={columns}
                 />
               ) : (
-                <span colSpan="4">No Data Available</span>
+                <span colSpan="4">No record found</span>
               )
             ) : (
-              <span colSpan="4">Loading Data </span>
+              // loader
+                <NoDataIndication />
+              
             )}
           </div>
         </section>

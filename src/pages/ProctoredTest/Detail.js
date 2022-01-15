@@ -532,7 +532,7 @@ class ProctoredTestDetail extends Component {
                     />
                   </>
                 ) : (
-                  <>No Data</>
+                  <>No record found</>
                 )}
               </h4>
             </div>
