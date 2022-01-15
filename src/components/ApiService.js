@@ -499,12 +499,23 @@ export default class ApiService {
 
     }
 
-    getCompanyCohorts(company_code = 0) {
-        return axios.get(`${this.domain}/cohorts-by-company?company_code=` + company_code, {
+    getCompanyCohorts(company_code = 0,value) {
+        
+        var params = "company_code=" + company_code;
+        if (value) {
+            params = params + "&status=" + value;
+        }
+        return axios.get(`${this.domain}/cohorts-by-company?` + params, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },
         }
+
+        // return axios.get(`${this.domain}/cohorts-by-company?company_code=` + company_code, {
+        //     headers: {
+        //         'Authorization': `Bearer ${this.token}`
+        //     },
+        // }
         ).then(res => {
             return res.data;
         });
@@ -562,6 +573,19 @@ export default class ApiService {
             return res.data;
         });
     }
+
+    getProctoredTestDetailSearch(cohortId, quizId,page,search) {
+        
+        return axios.get(`${this.domain}/get-proctored-test/detail/${cohortId}/${quizId}?page=${page}&search=${search}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
     getProctoredTestDetailDownloadExcel(cohortId, quizId) {
         return axios.post(`${this.domain}/get-proctored-test/detail/${cohortId}/${quizId}`, {}, {
             headers: {

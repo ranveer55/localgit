@@ -214,7 +214,6 @@ class InterviewSimulatorCohortPage extends Component {
                                 fontWeight: "500"
                             }}>
                                 <select onChange={e => {
-                                    console.log('onChange--',e.target.value)
                                     switch (e.target.value) {
                                         case "1": // today
                                             this.loadData(new Date(moment().startOf("day")), new Date(moment().endOf("day")));

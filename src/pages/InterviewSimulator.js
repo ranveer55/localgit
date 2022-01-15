@@ -43,6 +43,24 @@ class InterviewSimulatorPage extends Component {
       });
   }
 
+  onChangeStatus = (e) => {
+    global.api
+    .getCompanyCohorts(this.companyCode,e.target.value)
+    .then((data) => {
+      console.log('onChangeStatus--',data)
+      this.setState({
+        dataLoaded: true,
+        cohorts: data.programs,
+      });
+      // this.setState({ batchData: data });
+    })
+    .catch((err) => {
+      this.setState({
+        dateLoaded: true,
+      });
+    });
+  }
+
   formatter = (cell, row) => {
     return (
       <div className="interview-simulator-dropdown-holder">
@@ -104,7 +122,7 @@ class InterviewSimulatorPage extends Component {
               cursor: "pointer",
             }}
           >
-            <Link
+       <Link
               to={"/interview-simulator/" + row.id}
               style={{
                 color: "blue",
@@ -147,6 +165,8 @@ class InterviewSimulatorPage extends Component {
         formatter: (id, row) =>
           row.quizAttempts ? (
             <td>
+              {            console.log('formatter--',row,id)
+}     
               <a
                 href={
                   "/interview-simulator/" + row.id + "/quiz-proctored-attempts"
@@ -166,8 +186,7 @@ class InterviewSimulatorPage extends Component {
         text: "Quiz Attempts",
         formatter: (id, row) =>
           row.quizAttempts ? (
-            <td>
-              <a
+            <td>         <a
                 href={"/interview-simulator/" + row.id + "/quiz-attempt-users"}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -209,6 +228,18 @@ class InterviewSimulatorPage extends Component {
                   ? this.state.selectedCompanyName
                   : ""}
               </h4>
+              <div style={{
+                                padding: "2px 8px",
+                                margin: "0px 8px",
+                                fontWeight: "500"
+                            }}>
+                                <select onChange={this.onChangeStatus}
+                                     defaultValue="">
+                                    <option value="" disabled>Select Status</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">InActive</option>
+                                </select>
+                            </div>
               <div>
                 {/* <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic/${this.state.selectedCompany}`} target="_blank" rel="noopener noreferrer" style={{
                                     margin: "0 4px"

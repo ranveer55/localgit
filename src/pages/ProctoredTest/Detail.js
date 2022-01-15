@@ -1,8 +1,11 @@
 import moment from "moment";
 import React, { Component } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
-import ReactPaginate from "react-paginate";
 import paginationFactory from "react-bootstrap-table2-paginator";
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
+import Loader from "react-loader-spinner";
+
+const { SearchBar } = Search;
 
 class ProctoredTestDetail extends Component {
   constructor(props) {
@@ -17,12 +20,15 @@ class ProctoredTestDetail extends Component {
       startDate: new Date(moment().subtract(1, "week")),
       endDate: new Date(moment()),
       data: [],
-      totalRecords:0
+      totalRecords: 0,
+      isUpdatingTable: false,
+      searchVal:'',
+      page:1
     };
   }
 
   componentDidMount() {
-    this.loadData(this.state.startDate, this.state.endDate,1);
+    this.loadData(1);
   }
   downloadCSV(data) {
     //define the heading for each row of the data
@@ -38,13 +44,32 @@ class ProctoredTestDetail extends Component {
       "PERCENT",
       "LOCATION",
       "WHATSAPP",
-      "Right Answers","Wrong Answer ","Looking Sideways ","Looking Up/Down ","Total time of test ","Time stepped away ","> 1 person ",
-      "jee Rank", "location", "company Name", "state Exam Rank", "work Experience", "are You Working YN", "branch Or Department", "class10GPAor Percent", "college Entrance Name", "plans To Work Full Time","graduation College Name","graduation GPAor Percent","final Exam Start If Student","graduation Date If Student"
-    ]
-    
+      "Right Answers",
+      "Wrong Answer ",
+      "Looking Sideways ",
+      "Looking Up/Down ",
+      "Total time of test ",
+      "Time stepped away ",
+      "> 1 person ",
+      "jee Rank",
+      "location",
+      "company Name",
+      "state Exam Rank",
+      "work Experience",
+      "are You Working YN",
+      "branch Or Department",
+      "class10GPAor Percent",
+      "college Entrance Name",
+      "plans To Work Full Time",
+      "graduation College Name",
+      "graduation GPAor Percent",
+      "final Exam Start If Student",
+      "graduation Date If Student",
+    ];
+
     //merge the data with CSV
-    csv =[...csv,"\n"].join(",");
-    
+    csv = [...csv, "\n"].join(",");
+
     data.forEach(function (row) {
       csv += row.join(",");
       csv += "\n";
@@ -56,32 +81,29 @@ class ProctoredTestDetail extends Component {
     //provide the name for the CSV file to be downloaded
     hiddenElement.download = `${this.state.cohort.name}.csv`;
     hiddenElement.click();
-  }  
-  unlockRenderStatus= (a) => {
-    if (a == 2) {
-      return 'Unblocked';
-    }
-     else if (a == 1) {
-        return 'Complete';
-    }else if (a == 0) {
-        return 'Incomplete';
-    }
   }
+  unlockRenderStatus = (a) => {
+    if (a == 2) {
+      return "Unblocked";
+    } else if (a == 1) {
+      return "Complete";
+    } else if (a == 0) {
+      return "Incomplete";
+    }
+  };
 
-  loadData(startDate, endDate,page) {
+  loadData(page) {
     this.setState({
       dateLoaded: false,
     });
-
     global.api
-      .getProctoredTestDetail(this.cohortId, this.quizId,page)
+      .getProctoredTestDetail(this.cohortId, this.quizId, page)
       .then((data) => {
-        console.log('getProctoredTestDetail--',data.data.total)
         this.setState({
           dataLoaded: true,
           data: data.data.data,
           cohort: data.cohort,
-          totalRecords:data.data.total
+          totalRecords: data.data.total,
         });
         // this.setState({ batchData: data });
       })
@@ -91,31 +113,33 @@ class ProctoredTestDetail extends Component {
         });
       });
   }
-  downloadExcel=() =>{
-      this.setState({
-        downloading:true
-      });
+  downloadExcel = () => {
+    this.setState({
+      downloading: true,
+    });
 
-      global.api
-        .getProctoredTestDetailDownloadExcel(this.cohortId, this.quizId)
-        .then(() => {
-          alert('Email Sent')
-          this.setState({
-            downloading:false
-          });
-          // this.setState({ batchData: data });
-        })
-        .catch((err) => {
-          this.setState({
-            downloading:false
-          });
+    global.api
+      .getProctoredTestDetailDownloadExcel(this.cohortId, this.quizId)
+      .then(() => {
+        alert("Email Sent");
+        this.setState({
+          downloading: false,
         });
-    }
+        // this.setState({ batchData: data });
+      })
+      .catch((err) => {
+        this.setState({
+          downloading: false,
+        });
+      });
+  };
 
   score = (data) => {
     try {
       data = JSON.parse(data);
-      return data && data.processed && data.processed.finalResult ? data.processed.finalResult:'' 
+      return data && data.processed && data.processed.finalResult
+        ? data.processed.finalResult
+        : "";
     } catch (e) {
       return "";
     }
@@ -128,7 +152,7 @@ class ProctoredTestDetail extends Component {
     global.api
       .unlockProctoredTest({ id, status })
       .then((data) => {
-        this.loadData();
+        this.loadData(this.state.page);
       })
       .catch((err) => {
         this.setState({
@@ -136,59 +160,105 @@ class ProctoredTestDetail extends Component {
         });
       });
   };
-  
- 
-  
-  
+
   unlockRender = (datum) => {
-    const s ={ 
-        color:'blue',
-        cursor:'pointer'
+    const s = {
+      color: "blue",
+      cursor: "pointer",
+    };
+    if (datum?.allowedReattempt == 1) {
+      return (
+        <span style={s} onClick={(e) => this.lock(datum.id, 0)}>
+          Unblocked
+        </span>
+      );
+    } else {
+      return (
+        <span style={s} onClick={(e) => this.lock(datum.id, 1)}>
+          Blocked{" "}
+        </span>
+      );
     }
-  if (datum?.allowedReattempt == 1) {
-    return <span style={s} onClick={(e) => this.lock(datum.id, 0)}>Unblocked</span>
-  } else {
-      return <span style={s} onClick={(e) => this.lock(datum.id, 1)}>Blocked </span>;
-  }
-};
+  };
 
- handlePageClick = (event, val) => {
-  const newPage = event.selected;
-  // handlePagination(newPage)
-};
+  handlePageClick = (event, val) => {
+    const newPage = event.selected;
+    // handlePagination(newPage)
+  };
 
-onPageChange = (page)  => {
-  this.setState({page: page})
-  console.log('onPageChange--',page)
-  this.loadData(1,1,page)
+  onPageChange = (page) => {
+    this.setState({ page: page });
+    if(this.state.searchVal != ''){
+      this.onTableChange(this.state.searchVal,page);
 
-}
+    }else{
+      this.loadData(page);
+    }
+  };
+   onTableChange = (type, { searchText }) => {
+    this.setState({ 
+      searchVal:searchText
+    });
+    if (type === "search" && searchText) {
+      // search for the result
+      this.setState({ 
+        isUpdatingTable: true
+      });
+      global.api
+        .getProctoredTestDetailSearch(
+          this.cohortId,
+          this.quizId,
+          1,
+          searchText
+        )
+        .then((res) => res)
+        .then((data) => {
+          // $('#employee-content').show();
+          this.setState({
+            dataLoaded: true,
+            data: data.data.data,
+            cohort: data.cohort,
+            totalRecords: data.data.total,
+            isUpdatingTable: false,
+          });
+        })
+        .catch((err) => {
+          alert(err);
+          this.setState({ isUpdatingTable: false });
+        });
+    }else{
+      if (type == "search"){
+        this.loadData(1) 
+        this.setState({page:1})
+      }
+
+    }
+  };
+
+
   render() {
-    const defaultSorted = [{
-      dataField: 'name',
-      order: 'desc'
-    }];
+    const NoDataIndication = () => (
+      <div className="table_wraps" id="spinner">
+        <div className="spinner" >
+          <Loader type="Grid" color="#4441E2" height={100} width={100} />
+          Loading....
+        </div>
+      </div>
+    );
+
     const pagination = paginationFactory({
+      page:this.state.page,
       sizePerPage: 5,
-      lastPageText: '>>',
-      firstPageText: '<<',
-      nextPageText: '>',
-      prePageText: '<',
+      lastPageText: ">>",
+      firstPageText: "<<",
+      nextPageText: ">",
+      prePageText: "<",
       showTotal: true,
       alwaysShowAllBtns: true,
-      // page: this.state.page,
-      custom:false,
-      // dataSize:5,
-      // paginationSize:5,
-      // alwaysShowAllBtns:true, 
-      // totalSize:180,
-      // showTotal:true,
-      // sizePerPage:5,
+      custom: false,
       onPageChange: this.onPageChange,
-
-      // sizePerPageRenderer,
       totalSize: this.state.totalRecords,
-  });
+    });
 
     const { data, cohort, downloading } = this.state;
     const columns = [
@@ -225,7 +295,7 @@ onPageChange = (page)  => {
         text: "Complete",
         formatter: (e, row) => (e == 1 ? "Y" : e == 0 ? "N" : ""),
       },
-       
+
       {
         dataField: "attemptStatus",
         text: "Exam Attempt",
@@ -234,7 +304,8 @@ onPageChange = (page)  => {
       {
         dataField: "reasonIncomplete",
         text: "reason Incomplete",
-        formatter: (e, row) => (e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : ""),
+        formatter: (e, row) =>
+          e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : "",
       },
       {
         dataField: "ai_result",
@@ -262,12 +333,25 @@ onPageChange = (page)  => {
       //   text: "College",
       // },
     ];
-    let dataSource =[];
-    if(data && Object.keys(data) && Object.keys(data).length > 0){
+    let dataSource = [];
+    if (data && Object.keys(data) && Object.keys(data).length > 0) {
       dataSource = Object.values(data);
     }
-    
+    const NoDataAvailable = () => (
+      <div className="spinner nodata-available">
+        No Data Available...
+      </div>
+    );
     return (
+      
+      <ToolkitProvider
+  keyField="id"
+  data={dataSource}
+  columns={columns}
+  search
+>
+  {
+    props => (
       <main className="offset" id="content">
         <div className="row">
           <div className="">
@@ -278,85 +362,174 @@ onPageChange = (page)  => {
 
         <section className="section_box">
           <div className="row">
-            
             <div className="col-md-12">
-              {downloading && <h3>Generating Report ...</h3>}
-            <div style={{ textAlign: "right", marginBottom: "1rem" }}>
-                  <button
-                      onClick={e => {
-                          this.downloadCSV(dataSource.map(u => {
-                            const rc =u.resumeContent && Object.keys(u.resumeContent).length > 0 ?
-                            Object.keys(u.resumeContent).map((k) => u.resumeContent[k] ?  u.resumeContent[k].replaceAll(',',' ').replaceAll('\n',' '):'' ):[]
-                            
-                            if(u && u.employee && u.employee ){
-                              rc.push(u.employee.Location)
-                              
-                            }
-                            let aiResult =null;
-                            try{
-                              aiResult = u.ai_result ? JSON.parse(u.ai_result) :null
-                              aiResult =aiResult && aiResult.processed ? aiResult.processed :null
-                            } catch (e){
-                             
-                            }
-                            if(u && u.employee && u.employee ){
-                              rc.push(u.employee.Location)
-                              
-                            }
-                              return [
-                                  u.userId,
-                                  u.employee.FirstName ,
-                                  u.employee.LastName,
-                                  u.attemptNumber,
-                                  u.attemptStatus ? 'Y':'N',
-                                  u.reasonIncomplete  == 1 ? "User Cancel" : u.reasonIncomplete == 2 ? "Alt tab" : "",
-                                  this.score(u.ai_result),
-                                  u.percent,
-                                  u?.employee?.Location,
-                                  u?.resumeContent?.basicInfo?.phone,
-                                  u.right,
-                                  u.wrong,
-                                  aiResult ? aiResult.away_looking_percent:'',
-                                  aiResult ? aiResult.up_looking_percent:'',
-                                  aiResult ? aiResult.total_time:'',
-                                  aiResult ? aiResult.zero_candidate_time:'',
-                                  aiResult ? aiResult.multi_user_percent:'',
+              <div
+                clasName="col-md-6"
+                style={{ textAlign: "left", marginBottom: "1rem" }}
+              >
+                <div className="head_box_c">
+                  {this.state.isUpdatingTable ? (
+                    <svg
+                      height="40"
+                      width="40"
+                      fill="green"
+                      viewBox="0 0 55 80"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-label="audio-loading"
+                    >
+                      <g transform="matrix(1 0 0 -1 0 80)">
+                        <rect width="10" height="20" rx="3">
+                          <animate
+                            attributeName="height"
+                            begin="0s"
+                            dur="4.3s"
+                            values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20"
+                            calcMode="linear"
+                            repeatCount="indefinite"
+                          ></animate>
+                        </rect>
+                        <rect x="15" width="10" height="80" rx="3">
+                          <animate
+                            attributeName="height"
+                            begin="0s"
+                            dur="2s"
+                            values="80;55;33;5;75;23;73;33;12;14;60;80"
+                            calcMode="linear"
+                            repeatCount="indefinite"
+                          ></animate>
+                        </rect>
+                        <rect x="30" width="10" height="50" rx="3">
+                          <animate
+                            attributeName="height"
+                            begin="0s"
+                            dur="1.4s"
+                            values="50;34;78;23;56;23;34;76;80;54;21;50"
+                            calcMode="linear"
+                            repeatCount="indefinite"
+                          ></animate>
+                        </rect>
+                        <rect x="45" width="10" height="30" rx="3">
+                          <animate
+                            attributeName="height"
+                            begin="0s"
+                            dur="2s"
+                            values="30;45;13;80;56;72;45;76;34;23;67;30"
+                            calcMode="linear"
+                            repeatCount="indefinite"
+                          ></animate>
+                        </rect>
+                      </g>
+                    </svg>
+                  ) : (
+                    <></>
+                  )}
+                  <form className="form_search">
+                  <SearchBar { ...props.searchProps } />
 
-                                  ...rc
-                              ];
-                          }));
-                      }}
-                      className="btn btn-size3 btn-blue btn-radius export">
-                      <span>Download CSV</span>
-                  </button>
-                  <button style={{marginLeft:10}} onClick={this.downloadExcel} className="btn btn-size3 btn-blue btn-radius export">
-                      <span>Email Report</span>
-                  </button> 
+                    {/* <SearchBar
+                      value={this.state.searchVal}
+                      onSearch={onTableChange}
+                      // onChange={onTableChange}
+                      {...this.props.searchProps}
+                      placeholder="Search for student"
+                    /> */}
+                    <button>
+                      <img src="search-icon.svg" alt="" />
+                    </button>
+                  </form>
+                </div>
+              </div>
+              {downloading && <h3>Generating Report ...</h3>}
+              <div
+                clasName="col-md-6"
+                style={{ textAlign: "right", marginBottom: "1rem" }}
+              >
+                <button
+                  onClick={(e) => {
+                    this.downloadCSV(
+                      dataSource.map((u) => {
+                        const rc =
+                          u.resumeContent &&
+                          Object.keys(u.resumeContent).length > 0
+                            ? Object.keys(u.resumeContent).map((k) =>
+                                u.resumeContent[k]
+                                  ? u.resumeContent[k]
+                                      .replaceAll(",", " ")
+                                      .replaceAll("\n", " ")
+                                  : ""
+                              )
+                            : [];
+
+                        if (u && u.employee && u.employee) {
+                          rc.push(u.employee.Location);
+                        }
+                        let aiResult = null;
+                        try {
+                          aiResult = u.ai_result
+                            ? JSON.parse(u.ai_result)
+                            : null;
+                          aiResult =
+                            aiResult && aiResult.processed
+                              ? aiResult.processed
+                              : null;
+                        } catch (e) {}
+                        if (u && u.employee && u.employee) {
+                          rc.push(u.employee.Location);
+                        }
+                        return [
+                          u.userId,
+                          u.employee.FirstName,
+                          u.employee.LastName,
+                          u.attemptNumber,
+                          u.attemptStatus ? "Y" : "N",
+                          u.reasonIncomplete == 1
+                            ? "User Cancel"
+                            : u.reasonIncomplete == 2
+                            ? "Alt tab"
+                            : "",
+                          this.score(u.ai_result),
+                          u.percent,
+                          u?.employee?.Location,
+                          u?.resumeContent?.basicInfo?.phone,
+                          u.right,
+                          u.wrong,
+                          aiResult ? aiResult.away_looking_percent : "",
+                          aiResult ? aiResult.up_looking_percent : "",
+                          aiResult ? aiResult.total_time : "",
+                          aiResult ? aiResult.zero_candidate_time : "",
+                          aiResult ? aiResult.multi_user_percent : "",
+
+                          ...rc,
+                        ];
+                      })
+                    );
+                  }}
+                  className="btn btn-size3 btn-blue btn-radius export"
+                >
+                  <span>Download CSV</span>
+                </button>
+                <button
+                  style={{ marginLeft: 10 }}
+                  onClick={this.downloadExcel}
+                  className="btn btn-size3 btn-blue btn-radius export"
+                >
+                  <span>Email Report</span>
+                </button>
               </div>
               <h1 className="title1 mb25">Cohorts: {cohort?.name}</h1>
               <h4 className="title4 mb40">
                 {dataSource && dataSource.length > 0 ? (
                   <>
-                  <BootstrapTable
-                  remote={true}
-                   keyField="id" 
-                   data={dataSource}
-                  columns={columns} 
-                  pagination={pagination}
-                  defaultSorted={defaultSorted} 
-                  />
-              {/* <ReactPaginate
-                  className="pagination react-bootstrap-table-page-btns-ul"
-                  breakLabel="..."
-                  nextLabel=">"
-                  onPageChange={(e) => this.handlePageClick(e)}
-                  pageRangeDisplayed={5}
-                  // pageCount={100}
-                  pageCount={10}
-                  previousLabel="<"
-                  renderOnZeroPageCount={null}
-                /> */}
-                </>
+                    <BootstrapTable
+                     { ...props.baseProps }
+                      remote={true}
+                      keyField="id"
+                      onTableChange={this.onTableChange}
+                      pagination={pagination}
+                      noDataIndication={() => <NoDataAvailable />}
+
+                    />
+                  </>
                 ) : (
                   <>No Data</>
                 )}
@@ -364,8 +537,14 @@ onPageChange = (page)  => {
             </div>
           </div>
           <div></div>
+          { // loader
+                  this.state.dataLoaded ? <></> : <NoDataIndication />
+                }
         </section>
       </main>
+  )
+}
+         </ToolkitProvider>
     );
   }
 }
