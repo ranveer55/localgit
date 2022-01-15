@@ -202,7 +202,8 @@ class ProctoredTestDetail extends Component {
     if (type === "search" && searchText) {
       // search for the result
       this.setState({ 
-        isUpdatingTable: true
+        isUpdatingTable: true,
+        page:1
       });
       global.api
         .getProctoredTestDetailSearch(
@@ -248,7 +249,7 @@ class ProctoredTestDetail extends Component {
 
     const pagination = paginationFactory({
       page:this.state.page,
-      sizePerPage: 5,
+      sizePerPage: 20,
       lastPageText: ">>",
       firstPageText: "<<",
       nextPageText: ">",
