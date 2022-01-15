@@ -552,8 +552,8 @@ export default class ApiService {
             return res.data;
         });
     }
-    getProctoredTestDetail(cohortId, quizId) {
-        return axios.get(`${this.domain}/get-proctored-test/detail/${cohortId}/${quizId}`, {
+    getProctoredTestDetail(cohortId, quizId,page) {
+        return axios.get(`${this.domain}/get-proctored-test/detail/${cohortId}/${quizId}?page=${page}`, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },

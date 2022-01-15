@@ -1,6 +1,8 @@
 import moment from "moment";
 import React, { Component } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
+import ReactPaginate from "react-paginate";
+import paginationFactory from "react-bootstrap-table2-paginator";
 
 class ProctoredTestDetail extends Component {
   constructor(props) {
@@ -15,11 +17,12 @@ class ProctoredTestDetail extends Component {
       startDate: new Date(moment().subtract(1, "week")),
       endDate: new Date(moment()),
       data: [],
+      totalRecords:0
     };
   }
 
   componentDidMount() {
-    this.loadData(this.state.startDate, this.state.endDate);
+    this.loadData(this.state.startDate, this.state.endDate,1);
   }
   downloadCSV(data) {
     //define the heading for each row of the data
@@ -65,18 +68,20 @@ class ProctoredTestDetail extends Component {
     }
   }
 
-  loadData(startDate, endDate) {
+  loadData(startDate, endDate,page) {
     this.setState({
       dateLoaded: false,
     });
 
     global.api
-      .getProctoredTestDetail(this.cohortId, this.quizId)
+      .getProctoredTestDetail(this.cohortId, this.quizId,page)
       .then((data) => {
+        console.log('getProctoredTestDetail--',data.data.total)
         this.setState({
           dataLoaded: true,
-          data: data.data,
+          data: data.data.data,
           cohort: data.cohort,
+          totalRecords:data.data.total
         });
         // this.setState({ batchData: data });
       })
@@ -140,14 +145,51 @@ class ProctoredTestDetail extends Component {
         color:'blue',
         cursor:'pointer'
     }
-  if (datum.allowedReattempt == 1) {
+  if (datum?.allowedReattempt == 1) {
     return <span style={s} onClick={(e) => this.lock(datum.id, 0)}>Unblocked</span>
   } else {
       return <span style={s} onClick={(e) => this.lock(datum.id, 1)}>Blocked </span>;
   }
 };
 
+ handlePageClick = (event, val) => {
+  const newPage = event.selected;
+  // handlePagination(newPage)
+};
+
+onPageChange = (page)  => {
+  this.setState({page: page})
+  console.log('onPageChange--',page)
+  this.loadData(1,1,page)
+
+}
   render() {
+    const defaultSorted = [{
+      dataField: 'name',
+      order: 'desc'
+    }];
+    const pagination = paginationFactory({
+      sizePerPage: 5,
+      lastPageText: '>>',
+      firstPageText: '<<',
+      nextPageText: '>',
+      prePageText: '<',
+      showTotal: true,
+      alwaysShowAllBtns: true,
+      // page: this.state.page,
+      custom:false,
+      // dataSize:5,
+      // paginationSize:5,
+      // alwaysShowAllBtns:true, 
+      // totalSize:180,
+      // showTotal:true,
+      // sizePerPage:5,
+      onPageChange: this.onPageChange,
+
+      // sizePerPageRenderer,
+      totalSize: this.state.totalRecords,
+  });
+
     const { data, cohort, downloading } = this.state;
     const columns = [
       {
@@ -161,7 +203,7 @@ class ProctoredTestDetail extends Component {
               color: "#408BF9",
             }}
           >
-            <a href={`/proctored-test/user/${row.id}`}>{row.userId}</a>
+            <a href={`/proctored-test/user/${row?.id}`}>{row?.userId}</a>
           </span>
         ),
       },
@@ -294,7 +336,27 @@ class ProctoredTestDetail extends Component {
               <h1 className="title1 mb25">Cohorts: {cohort?.name}</h1>
               <h4 className="title4 mb40">
                 {dataSource && dataSource.length > 0 ? (
-                  <BootstrapTable keyField="id" data={dataSource} columns={columns} />
+                  <>
+                  <BootstrapTable
+                  remote={true}
+                   keyField="id" 
+                   data={dataSource}
+                  columns={columns} 
+                  pagination={pagination}
+                  defaultSorted={defaultSorted} 
+                  />
+              {/* <ReactPaginate
+                  className="pagination react-bootstrap-table-page-btns-ul"
+                  breakLabel="..."
+                  nextLabel=">"
+                  onPageChange={(e) => this.handlePageClick(e)}
+                  pageRangeDisplayed={5}
+                  // pageCount={100}
+                  pageCount={10}
+                  previousLabel="<"
+                  renderOnZeroPageCount={null}
+                /> */}
+                </>
                 ) : (
                   <>No Data</>
                 )}
