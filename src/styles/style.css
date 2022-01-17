@@ -6050,7 +6050,7 @@ label.certificate-button a {
 .interview-simulator-dropdown-holder {
   position: relative;
   padding-bottom: 1rem;
-  max-width: 250px;
+  max-width: 100%;
 }
 .interview-simulator-dropdown {
   font-weight: bolder;
@@ -6201,3 +6201,4 @@ label.certificate-button a {
 .proctoredVideo {
   margin: 2px auto;
 }
+

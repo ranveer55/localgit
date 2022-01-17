@@ -135,9 +135,9 @@ class AddPracticeSetToCohortPage extends Component {
     }
     formatter = (cell, row) => {
         return (
-            <div className="interview-simulator-dropdown-holder">
-                <span className="interview-simulator-dropdown">⋮</span>
-                <div className="interview-simulator-dropdown-content">
+            <div className="interview-simulator-dropdown-holder Inerpractice">
+                {/* <span className="interview-simulator-dropdown">⋮</span> */}
+                {/* <div className="interview-simulator-dropdown-content"> */}
                     <Link
                         to={`/manage-quetions/${this.cohortId}/${row.practiceSetId}`}
                         className="interview-simulator-dropdown-link"
@@ -157,7 +157,7 @@ class AddPracticeSetToCohortPage extends Component {
                     </Link>
 
 
-                </div>
+                {/* </div> */}
             </div>)
     }
 

@@ -57,9 +57,8 @@ class InterviewSimulatorPage extends Component {
   formatter = (cell, row) => {
     return (
       <div className="interview-simulator-dropdown-holder">
-        <span className="interview-simulator-dropdown">⋮</span>
-        <div className="interview-simulator-dropdown-content">
-          <Link
+      
+      <Link
             to={"/interview-simulator/" + row.id + "/add-practice-set"}
             className="interview-simulator-dropdown-link"
             style={{
@@ -69,7 +68,8 @@ class InterviewSimulatorPage extends Component {
           >
             Manage Practice Sets
           </Link>
-        </div>
+        {/* <div className="interview-simulator-dropdown-content"> */}
+        {/* </div> */}
       </div>
     );
   };
@@ -96,7 +96,8 @@ class InterviewSimulatorPage extends Component {
               cursor: "pointer",
             }}
           >
-            <Link
+            
+            {/* <Link
               to={"/interview-simulator/" + row.id}
               style={{
                 color: "blue",
@@ -104,7 +105,7 @@ class InterviewSimulatorPage extends Component {
               }}
             >
               {row.name} 
-            </Link>
+            </Link> */}
           </td>
         ),
       },
@@ -162,45 +163,43 @@ class InterviewSimulatorPage extends Component {
         text: "Action",
         formatter: this.formatter,
       },
-      {
-        dataField: "id",
-        text: "Quiz proctored attempts",
-        formatter: (id, row) =>
-          row.quizAttempts ? (
-            <td>
-              {            console.log('formatter--',row,id)
-}     
-              <a
-                href={
-                  "/interview-simulator/" + row.id + "/quiz-proctored-attempts"
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View
-              </a>
-            </td>
-          ) : (
-            <></>
-          ),
-      },
-      {
-        dataField: "id",
-        text: "Quiz Attempts",
-        formatter: (id, row) =>
-          row.quizAttempts ? (
-            <td>         <a
-                href={"/interview-simulator/" + row.id + "/quiz-attempt-users"}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Show Users List
-              </a>
-            </td>
-          ) : (
-            <></>
-          ),
-      },
+      // {
+      //   dataField: "id",
+      //   text: "Quiz proctored attempts",
+      //   formatter: (id, row) =>
+      //     row.quizAttempts ? (
+      //       <td>
+      //         <a
+      //           href={
+      //             "/interview-simulator/" + row.id + "/quiz-proctored-attempts"
+      //           }
+      //           target="_blank"
+      //           rel="noopener noreferrer"
+      //         >
+      //           View
+      //         </a>
+      //       </td>
+      //     ) : (
+      //       <></>
+      //     ),
+      // },
+      // {
+      //   dataField: "id",
+      //   text: "Quiz Attempts",
+      //   formatter: (id, row) =>
+      //     row.quizAttempts ? (
+      //       <td>         <a
+      //           href={"/interview-simulator/" + row.id + "/quiz-attempt-users"}
+      //           target="_blank"
+      //           rel="noopener noreferrer"
+      //         >
+      //           Show Users List
+      //         </a>
+      //       </td>
+      //     ) : (
+      //       <></>
+      //     ),
+      // },
       {
         dataField: "csv",
         text: "Register from CSV",
@@ -239,8 +238,8 @@ class InterviewSimulatorPage extends Component {
                                 <select onChange={this.onChangeStatus}
                                      defaultValue="">
                                     <option value="" disabled>Select Status</option>
-                                    <option value="1">Active</option>
-                                    <option value="0">InActive</option>
+                                    <option value="0">Active</option>
+                                    <option value="1">InActive</option>
                                 </select>
                             </div>
               <div>
