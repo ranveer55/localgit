@@ -9526,9 +9526,9 @@ label.certificate-button a {
     line-height: 1.2;
   }
 
-  /* .table > tbody > tr:first-child {
+  .table > tbody > tr:first-child {
     display: none;
-  } */
+  }
 
   .table_item td {
     position: relative;
