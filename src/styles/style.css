@@ -6202,3 +6202,21 @@ label.certificate-button a {
   margin: 2px auto;
 }
 
+video.record-video.c212121 {
+  width: 200px;
+}
+
+video#video {
+  width: 200px;
+}
+.selectOptions{
+  display: flex;
+}
+span.slashBtw {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+p.selectVideo {
+  cursor: pointer;
+}
