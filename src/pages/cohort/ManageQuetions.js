@@ -112,8 +112,6 @@ class ManageQuetions extends Component {
 
     }
     console.log('addPrac--',video)
-    // const fileName = "UserAttempt.webm";
-    // const file = new File([downloadLink], fileName);
 
 
     if (this.state.newQuestion.practiceQuestionId) {
