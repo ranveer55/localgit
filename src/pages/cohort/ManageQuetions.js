@@ -104,8 +104,12 @@ class ManageQuetions extends Component {
     if (video && video.value) {
       const { value, files } = video;
       formData.append("video", files[0], files[0].name);
+      formData.append("video_type", files[0].name);
+
     }else{
       formData.append("video", video, video.name);
+      formData.append("video_type", video.name);
+
     }
     console.log('addPrac--',video)
     // const fileName = "UserAttempt.webm";
@@ -628,7 +632,7 @@ class ManageQuetions extends Component {
       },
       {
         dataField: "referenceAnswer",
-        text: "Reference Answer--",
+        text: "Reference Answer",
         formatter: (datum) =>
           datum && datum != null && datum != "null" ? datum : "",
       },
