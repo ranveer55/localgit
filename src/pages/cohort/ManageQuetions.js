@@ -10,7 +10,6 @@ import { toast } from "../../components/Toast/Toast";
 const s3Url = "https://langappnew.s3.amazonaws.com/uploads/";
 // let baseUrl = process.env.NODE_ENV === 'development' ? "http://localhost:8000/api/" : (window.location.hostname === "app.taplingua.com" ? "https://api2.taplingua.com/api/" : "https://apistaging.taplingua.com/api/");
 let baseUrl = "http://localhost:8000/api/";
-// "http://localhost:8000/api/";
 
 class ManageQuetions extends Component {
   constructor(props) {
