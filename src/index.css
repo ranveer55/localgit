@@ -8837,6 +8837,7 @@ label.certificate-button a {
   align-items: center;
   background-color: #0002;
   z-index: 99;
+  overflow: auto;
 }
 .recorder {
   flex-grow: 1;
@@ -8845,8 +8846,8 @@ label.certificate-button a {
 .countdown-counter {
   position: absolute;
   z-index: 1;
-  top: 1rem;
-  left: -41rem;
+  top: -2rem;
+  /* left: -41rem; */
   right: 1rem;
   bottom: 1rem;
   display: flex;
@@ -8854,6 +8855,7 @@ label.certificate-button a {
   align-items: center;
   /* background-color: #0003; */
   color: red;
+  left: calc(12% - 100px);
   font-size: 100px;
 }
 .add-practice-set-modal-body {
@@ -8941,16 +8943,20 @@ label.certificate-button a {
   margin: 2px auto;
 }
 video.record-video.c212121 {
-  /* width: 50%; */
-  height: 252px;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
 video.record-video.c111111 {
-  width: 33%;
-  height: 252px;
+  margin: auto;
+  width: 50%;
+  /* border: 3px solid #73AD21; */
+  padding: 10px
 }
 video#video {
-  /* width: 50%; */
-  height: 252px;
+margin: auto;
+width: 50%;
+padding: 10px;
 }
 button#stop-camera {
   background-color: white;
@@ -8960,28 +8966,32 @@ button#stop-camera {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  right: 1.5rem;
+  right: -4.5rem;
   top: 1.5rem;
   position: absolute;
   color: red;
   font-size: x-large;
   opacity: 0.5;
   z-index: 99999;
+  margin: auto;
   left: calc(38% - 100px);
 }
 
 #stop-record {
   position: absolute;
-  bottom: 1rem;
+  text-align: center;
   font-weight: bold;
   bottom: 2rem;
-  left: calc(18% - 100px);
+  left: calc(47% - 100px);
   background-color: red;
   color: white;
-  width: 200px;
-  height: 40px;
+  /* width: 200px; */
+  /* height: 40px; */
   border-radius: 20px;
-  padding: 3px 8px;
+  /* padding: 3px 8px; */
+  margin: auto;
+  width: 29%;
+  padding: 10px;
 }
 
 #recording-time {
@@ -8992,11 +9002,12 @@ button#stop-camera {
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  left: 2rem;
+  left: calc(40% - 100px);
   top: 2rem;
   position: absolute;
   font-size: x-large;
   opacity: 0.5;
+  right: -4.5rem;
 }
 .re-record {
   /* display: none; */
@@ -9010,7 +9021,7 @@ button#stop-camera {
   text-align: center;
   position: absolute;
   top: 2rem;
-  left: 3rem;
+  left: calc(49% - 100px);
   vertical-align: middle;
 }
 /* .video-box.flex.items-left.justify-around {
@@ -9021,13 +9032,16 @@ button#start-record {
   text-align: center;
   font-weight: bold;
   bottom: 2rem;
-  left: calc(17% - 100px);
+  left: calc(49% - 100px);
   background-color: red;
   color: white;
-  width: 200px;
-  height: 40px;
+  /* width: 200px; */
+  /* height: 40px; */
   border-radius: 20px;
-  padding: 3px 8px;
+  /* padding: 3px 8px; */
+    margin: auto;
+    width: 29%;
+    padding: 10px;
 }
 .selectOptions{
   display: flex;
@@ -9042,6 +9056,17 @@ p.selectVideo {
 .recorder {
   flex-grow: 1;
   position: relative;
+}
+.btnDivs{
+  display: flex;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.saveMessge{
+  text-align: center;
+  color: green;
 }
 
 @charset "UTF-8";
