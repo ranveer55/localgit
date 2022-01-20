@@ -52,8 +52,8 @@ class ManageQuetions extends Component {
       mediaRecorder: [],
       moduleName: "test",
       isCompleted: false,
-      uploadVideo:false,
-      recordVideo:false,
+      uploadVideo: false,
+      recordVideo: false,
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -90,6 +90,15 @@ class ManageQuetions extends Component {
   }
 
   addPracticeSetQuestion = () => {
+    if(this.state.stream){
+      let streamVideo = this.state.stream;
+      const tracks = streamVideo.getTracks();
+      
+      tracks.forEach(function (track) {
+        track.stop();
+      });
+    }
+
     this.setState({ uploading: true });
     let formData = new FormData();
     const { newQuestion, video } = this.state;
@@ -104,15 +113,13 @@ class ManageQuetions extends Component {
       const { value, files } = video;
       formData.append("video", files[0], files[0].name);
       formData.append("video_type", files[0].name);
-
-    }else{
-      if(video&& video.name){
+    } else {
+      if (video && video.name) {
         formData.append("video", video, video.name);
         formData.append("video_type", video.name);
       }
     }
-    console.log('addPrac--',video)
-
+    console.log("addPrac--", video);
 
     if (this.state.newQuestion.practiceQuestionId) {
       global.api
@@ -133,9 +140,11 @@ class ManageQuetions extends Component {
             uploading: false,
             newQuestion: this.newQuestion,
             video: null,
+            videoObj:null,
+             downloadLink: null,
+             stream: ""
           });
           this.loadPracticeSetsQuestions();
-
         })
         .catch((err) => {
           this.notifyError(err.practiceSetQuestion[0]);
@@ -156,13 +165,15 @@ class ManageQuetions extends Component {
             uploading: false,
             newQuestion: this.newQuestion,
             video: null,
+            videoObj:null,
+            downloadLink: null,
+            stream: ""
           });
           this.loadPracticeSetsQuestions();
-
         })
         .catch((err) => {
           // this.notifyError(err?.practiceSetQuestion[0]);
-          this.notifyError('Request is not completed');
+          this.notifyError("Request is not completed");
           this.setState({
             dateLoaded: true,
             uploading: false,
@@ -309,19 +320,19 @@ class ManageQuetions extends Component {
     );
   };
 
-  selectVideoOption = (val) =>{
-    if(val == 'uploadVideo'){
+  selectVideoOption = (val) => {
+    if (val == "uploadVideo") {
       this.setState({
-        uploadVideo:true,
-        recordVideo:false
-      })
-    }else{
+        uploadVideo: true,
+        recordVideo: false,
+      });
+    } else {
       this.setState({
-        uploadVideo:false,
-        recordVideo:true
-      })
+        uploadVideo: false,
+        recordVideo: true,
+      });
     }
-  }
+  };
   render(props) {
     // const { addToast } = withToastManager();
 
@@ -492,8 +503,8 @@ class ManageQuetions extends Component {
 
     const stopRecording = (e) => {
       if (this.state.isRecording) {
-        //this.mediaRecorder.stop();
-        this.state.mediaRecorder.stop();
+        // this.mediaRecorder.stop();
+        // this.state.mediaRecorder.stop();
 
         this.setState({
           mediaRecorder: undefined,
@@ -512,18 +523,25 @@ class ManageQuetions extends Component {
         //   type: "video/mp4",
         // });
 
-        const file = new File([video_local], 'question.webm');
+        const file = new File([video_local], "question.webm");
 
-       
         this.setState({
           downloadLink: video_local,
           videoObj: URL.createObjectURL(video_local),
-          video: file
+          video: file,
         });
       }
       console.log("here", {
         isRecording: JSON.stringify(isRecording),
       });
+
+      let streamVideo = this.state.stream;
+      const tracks = streamVideo.getTracks();
+      
+      tracks.forEach(function (track) {
+        track.stop();
+      });
+
     };
 
     const stopCamera = (discardFootage = false) => {
@@ -532,9 +550,12 @@ class ManageQuetions extends Component {
         vid.pause();
         vid.src = "";
       }
-      // this.state.stream?.getTracks().forEach(function (track) {
-      //   track.stop();
-      // });
+      let streamVideo = this.state.stream;
+      const tracks = streamVideo.getTracks();
+      
+      tracks.forEach(function (track) {
+        track.stop();
+      });
       // this.state.mediaRecorder.stop();
 
       this.setState({
@@ -614,11 +635,15 @@ class ManageQuetions extends Component {
         dataField: "video",
         text: "Video",
         formatter: (v, row) => (
-          <video width="250" height="230" controls> 
+          <video width="250" height="230" controls>
             <source
-            className="chkVideo"
-              src={`https://langappnew.s3.amazonaws.com/interviewprep/${row?.practiceSetId}/${row?.practiceSetId}_0_${row?.practiceQuestionId}.${row?.video_type ? row?.video_type : 'mp4'}`}
-              type={`video/${row?.video_type ? row?.video_type : 'mp4'}`}
+              className="chkVideo"
+              src={`https://langappnew.s3.amazonaws.com/interviewprep/${
+                row?.practiceSetId
+              }/${row?.practiceSetId}_0_${row?.practiceQuestionId}.${
+                row?.video_type ? row?.video_type : "mp4"
+              }`}
+              type={`video/${row?.video_type ? row?.video_type : "mp4"}`}
             />
           </video>
         ),
@@ -660,6 +685,28 @@ class ManageQuetions extends Component {
       );
     }
 
+    const cancelForm  = () => {
+      if(this.state.stream){
+        let streamVideo = this.state.stream;
+        const tracks = streamVideo.getTracks();
+        
+        tracks.forEach(function (track) {
+          track.stop();
+        });
+      }
+  
+
+      if (!uploading) {
+        this.setState({
+          addPracticeSetAddModal: false,
+          newQuestion: this.newQuestion,
+          videoObj:null,
+          downloadLink: null,
+          stream: ""
+        });
+      }
+    }
+
     return (
       <main className="offset" id="content">
         <section className="section_box">
@@ -683,9 +730,9 @@ class ManageQuetions extends Component {
               onClick={(e) => {
                 this.setState({
                   addPracticeSetAddModal: true,
-                  video:null,
-                  uploadVideo:false,
-                  recordVideo:false
+                  video: null,
+                  uploadVideo: false,
+                  recordVideo: false,
                 });
               }}
               className="link"
@@ -785,163 +832,180 @@ class ManageQuetions extends Component {
                       <div className="col-md-3">Video</div>
                       <div className="col-md-9">
                         <div className="selectOptions">
-                      <p onClick={()=>{this.selectVideoOption('uploadVideo')}} className="selectVideo">Upload video</p> 
-                      <span className="slashBtw">/</span>
-                       <p onClick={()=>{this.selectVideoOption('recordVideo')}} className="selectVideo">Record video</p>
-                       </div>
+                          <p
+                            onClick={() => {
+                              this.selectVideoOption("uploadVideo");
+                            }}
+                            className="selectVideo"
+                          >
+                            Upload video
+                          </p>
+                          <span className="slashBtw">/</span>
+                          <p
+                            onClick={() => {
+                              this.selectVideoOption("recordVideo");
+                            }}
+                            className="selectVideo"
+                          >
+                            Record video
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  {this.state.uploadVideo &&
-                    <div className="row" style={{ padding: "2px 10px" }}>
-                      <div className="col-md-3">Video</div>
-                      <div className="col-md-9">
-                        <input
-                          disabled={uploading}
-                          name="video"
-                          type="file"
-                          onChange={this.onChangeFile}
-                          accept=".mp4"
-                        />
+                    {this.state.uploadVideo && (
+                      <div className="row" style={{ padding: "2px 10px" }}>
+                        <div className="col-md-3"></div>
+                        <div className="col-md-9">
+                          <input
+                            disabled={uploading}
+                            name="video"
+                            type="file"
+                            onChange={this.onChangeFile}
+                            accept=".mp4"
+                          />
+                        </div>
                       </div>
-                    </div>
-                  }
+                    )}
                     {/* recording and preview section */}
 
-                  {this.state.recordVideo  &&
-                    <div className="row" style={{ padding: "2px 10px" }}>
-                      <div className="col-md-3">Video</div>
-                      <div className="col-md-9">
-                      <div className="video-box flex items-left justify-around">
-                        {/* preview */}
-                        {/* <div className="question-view">
+                    {this.state.recordVideo && (
+                      <div className="row" style={{ padding: "2px 10px" }}>
+                        <div className="col-md-3"></div>
+                        <div className="col-md-9">
+                          <div className="video-box flex items-left justify-around">
+                            {/* preview */}
+                            {/* <div className="question-view">
                           <video className={"question-video"} autoPlay={true} src={videoLink} controls></video>
                         </div> */}
-                        {/* recorder */}
-                        <div className="recorder">
-                          {counterVisible ? (
-                            <div className="countdown-counter">
-                              {counterCount}
-                            </div>
-                          ) : (
-                            <></>
-                          )}
-                          {progress && (
-                            <div className="progressBar">
-                              <ProgressBar
-                                variant="success"
-                                now={progress}
-                                label={`${progress}%`}
-                              />
-                            </div>
-                          )}
-                          {console.log("videoRef--", this.videoRef)}
-                          {!downloadLink ? (
-                            !stream ? (
-                              <video
-                                id="video"
-                                style={{ display: "none" }}
-                                className="record-video c1234"
-                                ref={this.videoRef}
-                                autoPlay
-                              ></video>
-                            ) : (
-                              <video
-                                id="video"
-                                className="record-video c12345"
-                                ref={this.videoRef}
-                                autoPlay
-                              ></video>
-                            )
-                          ) : (
-                            <video
-                              id="video"
-                              style={{ display: "none" }}
-                              className="record-video c2134567"
-                              ref={this.videoRef}
-                              autoPlay
-                            ></video>
-                          )}
+                            {/* recorder */}
+                            <div className="recorder">
+                              {counterVisible ? (
+                                <div className="countdown-counter">
+                                  {counterCount}
+                                </div>
+                              ) : (
+                                <></>
+                              )}
+                              {progress && (
+                                <div className="progressBar">
+                                  <ProgressBar
+                                    variant="success"
+                                    now={progress}
+                                    label={`${progress}%`}
+                                  />
+                                </div>
+                              )}
+                              {console.log("videoRef--", this.videoRef)}
+                              {!downloadLink ? (
+                                !stream ? (
+                                  <video
+                                    id="video"
+                                    style={{ display: "none" }}
+                                    className="record-video c1234"
+                                    ref={this.videoRef}
+                                    autoPlay
+                                  ></video>
+                                ) : (
+                                  <video
+                                    id="video"
+                                    className="record-video c12345"
+                                    ref={this.videoRef}
+                                    autoPlay
+                                  ></video>
+                                )
+                              ) : (
+                                <video
+                                  id="video"
+                                  style={{ display: "none" }}
+                                  className="record-video c2134567"
+                                  ref={this.videoRef}
+                                  autoPlay
+                                ></video>
+                              )}
 
-                          {/* {!downloadLink && stream ? <video id="video" ref={videoRef} width="320" height="240" autoPlay></video> : null} */}
-                          {downloadLink ? (
-                            <video
-                              className="record-video c212121"
-                              src={videoObj}
-                              autoPlay
-                              controls
-                            ></video>
-                          ) : null}
-                          {!stream ? (
-                            <video
-                              src={s3Url + previousAttempts[0]?.filePath}
-                              className="record-video c111111"
-                              style={{ backgroundColor: "black" }}
-                            ></video>
-                          ) : null}
-                          {stream &&
-                          !counterVisible &&
-                          !isRecording &&
-                          !downloadLink ? (
-                            <button
-                              id="start-record"
-                              onClick={(e) => preStartRecording(e)}
-                            >
-                              Start Recording
-                            </button>
-                          ) : null}
+                              {/* {!downloadLink && stream ? <video id="video" ref={videoRef} width="320" height="240" autoPlay></video> : null} */}
+                              {downloadLink ? (
+                                <video
+                                  className="record-video c212121"
+                                  src={videoObj}
+                                  autoPlay
+                                  controls
+                                ></video>
+                              ) : null}
+                              {!stream ? (
+                                <video
+                                  src={s3Url + previousAttempts[0]?.filePath}
+                                  className="record-video c111111"
+                                  style={{ backgroundColor: "black" }}
+                                ></video>
+                              ) : null}
+                              {stream &&
+                              !counterVisible &&
+                              !isRecording &&
+                              !downloadLink ? (
+                                <button
+                                  id="start-record"
+                                  onClick={(e) => preStartRecording(e)}
+                                >
+                                  Start Recording
+                                </button>
+                              ) : null}
 
-                          {stream && !isRecording && !downloadLink && !counterVisible ? (
-                            <button
-                              id="stop-camera"
-                              onClick={() => stopCamera()}
-                            >
-                              <span>&times;</span>
-                            </button>
-                          ) : null}
-                          {previousAttempts.length === 0 && !stream ? (
-                            <button
-                              id="start-record"
-                              onClick={() => startCamera()}
-                            >
-                              Start Camera
-                            </button>
-                          ) : null}
+                              {stream &&
+                              !isRecording &&
+                              !downloadLink &&
+                              !counterVisible ? (
+                                <button
+                                  id="stop-camera"
+                                  onClick={() => stopCamera()}
+                                >
+                                  <span>&times;</span>
+                                </button>
+                              ) : null}
+                              {previousAttempts.length === 0 && !stream ? (
+                                <button
+                                  id="start-record"
+                                  onClick={() => startCamera()}
+                                >
+                                  Start Camera
+                                </button>
+                              ) : null}
 
-                          {!isRecording && downloadLink ? (
-                            <button
-                              className="re-record"
-                              onClick={() => startCamera()}
-                            >
-                              Re-record
-                            </button>
-                          ) : null}
-                          {previousAttempts.length > 0 && !stream ? (
-                            <button
-                              className="re-record2"
-                              onClick={() => startCamera()}
-                            >
-                              Re-record
-                            </button>
-                          ) : null}
+                              {!isRecording && downloadLink ? (
+                                <button
+                                  className="re-record"
+                                  onClick={() => startCamera()}
+                                >
+                                  Re-record
+                                </button>
+                              ) : null}
+                              {previousAttempts.length > 0 && !stream ? (
+                                <button
+                                  className="re-record2"
+                                  onClick={() => startCamera()}
+                                >
+                                  Re-record
+                                </button>
+                              ) : null}
 
-                          {/* the recording timer */}
-                          {isRecording ? (
-                            <button
-                              id="recording-time"
-                              onClick={() => stopCamera()}
-                            >
-                              <span></span>
-                            </button>
-                          ) : null}
-                          {isRecording ? (
-                            <button
-                              id="stop-record"
-                              onClick={(e) => stopRecording(e)}
-                            >
-                              Stop Recording
-                            </button>
-                          ) : null}
-                          {/* {!isRecording && downloadLink ? (
+                              {/* the recording timer */}
+                              {isRecording ? (
+                                <button
+                                  id="recording-time"
+                                  onClick={() => stopCamera()}
+                                >
+                                  <span></span>
+                                </button>
+                              ) : null}
+                              {isRecording ? (
+                                <button
+                                  id="stop-record"
+                                  onClick={(e) => stopRecording(e)}
+                                >
+                                  Stop Recording
+                                </button>
+                              ) : null}
+                              {/* {!isRecording && downloadLink ? (
                             <button
                               className="save-answer"
                               onClick={(e) => {
@@ -951,13 +1015,16 @@ class ManageQuetions extends Component {
                               Save Answer
                             </button>
                           ) : null} */}
+                            </div>
+                          </div>
+                          {!isRecording && downloadLink ? (
+                          <p className="saveMessge">Please click on save button to save video</p>
+
+                          ): null}
                         </div>
                       </div>
-                      </div>
-                      </div>
-                  }
-               {/* end recording */}
-
+                    )}
+                    {/* end recording */}
                   </div>
 
                   {uploading && (
@@ -966,29 +1033,26 @@ class ManageQuetions extends Component {
                       The question is being saved to the database.
                     </span>
                   )}
-
-                  <div style={{ display: "flex" }}>
-                    <div
-                      disabled={!this.state.newPracticeName}
-                      style={{ backgroundColor: "#4AB93C", color: "#fff" }}
-                      className="add-practice-set-modal-button"
-                      onClick={this.addPracticeSetQuestion}
-                    >
-                      Save
-                    </div>
-                    <div
-                      className="add-practice-set-modal-button"
-                      disabled={!uploading}
-                      onClick={(e) => {
-                        if (!uploading) {
-                          this.setState({
-                            addPracticeSetAddModal: false,
-                            newQuestion: this.newQuestion,
-                          });
-                        }
-                      }}
-                    >
-                      Cancel
+                  <div className="row" style={{ padding: "2px 10px" }}>
+                    <div className="col-md-3"></div>
+                    <div className="col-md-9">
+                      <div className="btnDivs">
+                        <div
+                          disabled={!this.state.newPracticeName}
+                          style={{ backgroundColor: "#4AB93C", color: "#fff" }}
+                          className="add-practice-set-modal-button"
+                          onClick={this.addPracticeSetQuestion}
+                        >
+                          Save
+                        </div>
+                        <div
+                          className="add-practice-set-modal-button"
+                          disabled={!uploading}
+                          onClick={cancelForm}
+                        >
+                          Cancel
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
