@@ -8846,7 +8846,7 @@ label.certificate-button a {
   position: absolute;
   z-index: 1;
   top: 1rem;
-  left: -27rem;
+  left: -41rem;
   right: 1rem;
   bottom: 1rem;
   display: flex;
@@ -8941,14 +8941,16 @@ label.certificate-button a {
   margin: 2px auto;
 }
 video.record-video.c212121 {
-  width: 350px;
+  /* width: 50%; */
+  height: 252px;
 }
 video.record-video.c111111 {
-  width: 350px;
+  width: 33%;
   height: 252px;
 }
 video#video {
-  width: 350px;
+  /* width: 50%; */
+  height: 252px;
 }
 button#stop-camera {
   background-color: white;
@@ -8965,6 +8967,7 @@ button#stop-camera {
   font-size: x-large;
   opacity: 0.5;
   z-index: 99999;
+  left: calc(38% - 100px);
 }
 
 #stop-record {
@@ -8972,7 +8975,7 @@ button#stop-camera {
   bottom: 1rem;
   font-weight: bold;
   bottom: 2rem;
-  left: calc(22% - 100px);
+  left: calc(18% - 100px);
   background-color: red;
   color: white;
   width: 200px;
@@ -9001,13 +9004,13 @@ button#stop-camera {
   cursor: pointer;
   background-color: #fff;
   color: #4964BE;
-  width: 36%;
-  height: 5vh;
+  width: 21%;
+  height: 7vh;
   border-radius: 20px;
   text-align: center;
   position: absolute;
   top: 2rem;
-  left: 2rem;
+  left: 3rem;
   vertical-align: middle;
 }
 /* .video-box.flex.items-left.justify-around {
@@ -9018,7 +9021,7 @@ button#start-record {
   text-align: center;
   font-weight: bold;
   bottom: 2rem;
-  left: calc(22% - 100px);
+  left: calc(17% - 100px);
   background-color: red;
   color: white;
   width: 200px;
