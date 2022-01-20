@@ -7554,7 +7554,7 @@ html:not(.md_touch) .todos_dots:hover .todos_dot_box {
   padding-left: 30px;
 }
 .table th:nth-child(1) {
-  width: 10%;
+  width: 20%;
 }
 span.dropdown,span.dropup {
   display: none;
@@ -8846,7 +8846,7 @@ label.certificate-button a {
   position: absolute;
   z-index: 1;
   top: 1rem;
-  left: 1rem;
+  left: -27rem;
   right: 1rem;
   bottom: 1rem;
   display: flex;
@@ -8972,7 +8972,7 @@ button#stop-camera {
   bottom: 1rem;
   font-weight: bold;
   bottom: 2rem;
-  left: calc(50% - 100px);
+  left: calc(22% - 100px);
   background-color: red;
   color: white;
   width: 200px;
@@ -9001,7 +9001,7 @@ button#stop-camera {
   cursor: pointer;
   background-color: #fff;
   color: #4964BE;
-  width: 40%;
+  width: 36%;
   height: 5vh;
   border-radius: 20px;
   text-align: center;
@@ -9010,15 +9010,15 @@ button#stop-camera {
   left: 2rem;
   vertical-align: middle;
 }
-.video-box.flex.items-left.justify-around {
+/* .video-box.flex.items-left.justify-around {
   margin-left: 267px;
-}
+} */
 button#start-record {
   position: absolute;
   text-align: center;
   font-weight: bold;
   bottom: 2rem;
-  left: calc(50% - 100px);
+  left: calc(22% - 100px);
   background-color: red;
   color: white;
   width: 200px;
@@ -9040,20 +9040,7 @@ p.selectVideo {
   flex-grow: 1;
   position: relative;
 }
-countdown-counter {
-  position: absolute;
-  z-index: 1;
-  top: 1rem;
-  left: 1rem;
-  right: 1rem;
-  bottom: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background-color: #0003; */
-  color: red;
-  font-size: 100px;
-}
+
 @charset "UTF-8";
 /*  <!-- RESPONSIVE
 ============================================ --> */

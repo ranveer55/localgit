@@ -97,7 +97,7 @@ class InterviewSimulatorPage extends Component {
             }}
           >
             
-            {/* <Link
+            <Link
               to={"/interview-simulator/" + row.id}
               style={{
                 color: "blue",
@@ -105,7 +105,7 @@ class InterviewSimulatorPage extends Component {
               }}
             >
               {row.name} 
-            </Link> */}
+            </Link>
           </td>
         ),
       },
