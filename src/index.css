@@ -8991,7 +8991,7 @@ button#stop-camera {
   /* padding: 3px 8px; */
   margin: auto;
   width: 29%;
-  padding: 10px;
+  padding: 32px ​41px;
 }
 
 #recording-time {
@@ -9039,9 +9039,9 @@ button#start-record {
   /* height: 40px; */
   border-radius: 20px;
   /* padding: 3px 8px; */
-    margin: auto;
-    width: 29%;
-    padding: 10px;
+  /* margin: auto; */
+  /* width: 32%; */
+  padding: 14px 41px;
 }
 .selectOptions{
   display: flex;
