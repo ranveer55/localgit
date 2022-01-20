@@ -8988,10 +8988,9 @@ button#stop-camera {
   /* width: 200px; */
   /* height: 40px; */
   border-radius: 20px;
-  /* padding: 3px 8px; */
+  padding: 14px 41px;
   margin: auto;
   width: 29%;
-  padding: 32px ​41px;
 }
 
 #recording-time {
