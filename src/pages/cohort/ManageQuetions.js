@@ -63,7 +63,7 @@ class ManageQuetions extends Component {
     this.videoRef = React.createRef();
   }
   notifySuccess = () => toast.success("success");
-  notifyError = () => toast.error("error");
+  notifyError = (val) => toast.error(val);
 
   componentDidMount() {
     this.loadData();
@@ -107,9 +107,10 @@ class ManageQuetions extends Component {
       formData.append("video_type", files[0].name);
 
     }else{
-      formData.append("video", video, video.name);
-      formData.append("video_type", video.name);
-
+      if(video&& video.name){
+        formData.append("video", video, video.name);
+        formData.append("video_type", video.name);
+      }
     }
     console.log('addPrac--',video)
 
@@ -127,16 +128,18 @@ class ManageQuetions extends Component {
               ? data.practiceQuestion
               : item
           );
-
           this.setState({
             addPracticeSetAddModal: false,
-            questions: dt,
+            // questions: dt,
             uploading: false,
             newQuestion: this.newQuestion,
             video: null,
           });
+          this.loadPracticeSetsQuestions();
+
         })
         .catch((err) => {
+          this.notifyError(err.practiceSetQuestion[0]);
           this.setState({
             dateLoaded: true,
             uploading: false,
@@ -150,13 +153,17 @@ class ManageQuetions extends Component {
           dt.push(data.practiceQuestion);
           this.setState({
             addPracticeSetAddModal: false,
-            questions: dt,
+            // questions: dt,
             uploading: false,
             newQuestion: this.newQuestion,
             video: null,
           });
+          this.loadPracticeSetsQuestions();
+
         })
         .catch((err) => {
+          // this.notifyError(err?.practiceSetQuestion[0]);
+          this.notifyError('Request is not completed');
           this.setState({
             dateLoaded: true,
             uploading: false,
@@ -406,7 +413,7 @@ class ManageQuetions extends Component {
             stopCamera();
             clearRecording();
             this.setState({ isSavingAttempt: true });
-            this.notifyError();
+            this.notifyError("Could not save attempt");
 
             // addToast("Could not save attempt", {
             //   appearance: "error",
@@ -417,7 +424,7 @@ class ManageQuetions extends Component {
           this.setState({ isSavingAttempt: true });
           stopCamera();
           clearRecording();
-          this.notifyError();
+          this.notifyError("Could not save attempt");
 
           //   addToast("Could not save attempt", {
           //     appearance: "error",
@@ -608,12 +615,11 @@ class ManageQuetions extends Component {
         dataField: "video",
         text: "Video",
         formatter: (v, row) => (
-          <video width="100" height="70" controls>
-            {console.log('formatter--',row)}
+          <video width="250" height="230" controls> 
             <source
             className="chkVideo"
-              src={`https://langappnew.s3.amazonaws.com/interviewprep/${row?.practiceSetId}/${row?.practiceSetId}_0_${row?.practiceQuestionId}.mp4`}
-              type="video/mp4"
+              src={`https://langappnew.s3.amazonaws.com/interviewprep/${row?.practiceSetId}/${row?.practiceSetId}_0_${row?.practiceQuestionId}.${row?.video_type ? row?.video_type : 'mp4'}`}
+              type={`video/${row?.video_type ? row?.video_type : 'mp4'}`}
             />
           </video>
         ),
@@ -678,6 +684,9 @@ class ManageQuetions extends Component {
               onClick={(e) => {
                 this.setState({
                   addPracticeSetAddModal: true,
+                  video:null,
+                  uploadVideo:false,
+                  recordVideo:false
                 });
               }}
               className="link"
@@ -801,7 +810,8 @@ class ManageQuetions extends Component {
 
                   {this.state.recordVideo  &&
                     <div className="row" style={{ padding: "2px 10px" }}>
-
+                      <div className="col-md-3">Video</div>
+                      <div className="col-md-9">
                       <div className="video-box flex items-left justify-around">
                         {/* preview */}
                         {/* <div className="question-view">
@@ -943,6 +953,7 @@ class ManageQuetions extends Component {
                             </button>
                           ) : null} */}
                         </div>
+                      </div>
                       </div>
                       </div>
                   }
