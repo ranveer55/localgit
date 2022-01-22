@@ -23,7 +23,11 @@ class ProctoredTestDetail extends Component {
       totalRecords: 0,
       isUpdatingTable: false,
       searchVal:'',
-      page:1
+      page:1,
+      up_looking:0.1,
+      away_looking:0.1,
+      multi_user:0.45,
+      zero_candidate:0.35,
     };
   }
 
@@ -135,6 +139,7 @@ class ProctoredTestDetail extends Component {
   };
 
   score = (data) => {
+    console.log('score--',JSON.parse(data))
     try {
       data = JSON.parse(data);
       return data && data.processed && data.processed.finalResult
@@ -144,6 +149,37 @@ class ProctoredTestDetail extends Component {
       return "";
     }
   };
+
+  totalScore = (data) => {
+    try {
+      data = JSON.parse(data);
+      let processedItmes = data?.processed;
+      let lookingUp = 0;
+      let lookingDown = 0;
+      let persons = 0;
+      let totalTime = 0;
+      if(processedItmes?.up_looking_percent){
+        lookingUp = parseFloat(processedItmes?.up_looking_percent) * parseFloat(this.state.up_looking)
+      }
+      if(processedItmes?.away_looking_percent){
+        lookingDown = parseFloat(processedItmes?.away_looking_percent) * parseFloat(this.state.away_looking)
+      }
+
+      if(processedItmes?.multi_user_percent > 0){
+        persons = parseFloat(processedItmes?.multi_user_percent) * parseFloat(this.state.multi_user)
+      }
+
+      if(processedItmes?.zero_candidate_time > 0){
+        totalTime = (parseFloat(processedItmes?.zero_candidate_time) / parseFloat(processedItmes?.total_time)) * 100
+        totalTime = totalTime * parseFloat(this.state.zero_candidate)
+      }
+      let totalFinal = +lookingUp + +lookingDown + +persons + +totalTime;
+      return totalFinal.toFixed(2);
+    } catch (e) {
+      return "";
+    }
+  };
+
   lock = (id, status) => {
     this.setState({
       dateLoaded: false,
@@ -306,12 +342,21 @@ class ProctoredTestDetail extends Component {
         dataField: "reasonIncomplete",
         text: "reason Incomplete",
         formatter: (e, row) =>
-          e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : "",
+         e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : "",
+        
       },
       {
         dataField: "ai_result",
         text: "UFM Score",
-        formatter: (e, row) => this.score(e),
+        formatter: (e, row) => {
+          return this.score(e)},
+      },
+      {
+        dataField: "ai_result",
+        text: "% UFM ",
+        formatter: (e, row) => {
+
+          return this.totalScore(e)},
       },
       {
         dataField: "percent",
@@ -350,6 +395,7 @@ class ProctoredTestDetail extends Component {
   data={dataSource}
   columns={columns}
   search
+  clasName="proTable"
 >
   {
     props => (
@@ -522,6 +568,7 @@ class ProctoredTestDetail extends Component {
                 {dataSource && dataSource.length > 0 ? (
                   <>
                     <BootstrapTable
+                    clasName="proTest"
                      { ...props.baseProps }
                       remote={true}
                       keyField="id"

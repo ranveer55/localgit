@@ -10741,3 +10741,10 @@ p.selectVideo {
 /* <!-- maxw end 
 	============================================ --> */
 
+
+  table.table.table-bordered > .table th {
+    font-size: 12px;
+  }
+  .table th {
+    font-size: 12px;
+  }
