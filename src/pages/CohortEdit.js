@@ -1,8 +1,10 @@
-import moment from "moment";
+import moment from 'moment-timezone'
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
-import ReactDatePicker from "react-datepicker";
+import Datetime from 'react-datetime';
+import "react-datetime/css/react-datetime.css";
 
+const timezone ='Asia/Kolkata';
+moment.tz.setDefault(timezone);
 class CohortEdit extends Component {
 
   constructor(props) {
@@ -88,6 +90,7 @@ class CohortEdit extends Component {
       }
     return (
       <main className="offset CreateCohortModal" id="content">
+        
         <section className="section_box">
           <div className="row">
             <div className="col-md-6">
@@ -166,6 +169,7 @@ class CohortEdit extends Component {
                 </div>
                 <div className="form-group">
                   <label>Cohort Type</label>
+                 
                   <select
                     disabled
                     value={cohort.type_id ?? ""}
@@ -191,41 +195,33 @@ class CohortEdit extends Component {
                 <>
                 <div className="form-group">
                   <label>Exam start time</label>
-                  <ReactDatePicker
-                    dateFormat="dd-MM-yyyy hh:mm:ss"
-                    selected={new Date(cohort.exam_start_time)}
-                    showMonthDropdown
-                    showTimeSelect
-                    showYearDropdown
-                    className="form-control"
-                    placeholderText="Cohort Start Date"
-                    onChange={date => {
-                        this.setState({
-                            cohort:{
-                                ...cohort,
-                              exam_start_time: date
-                            }
-                         });
-                    }} />
+                  <Datetime  value={moment(cohort.exam_start_time)} 
+                   placeholderText="Exam start time"
+                   onChange={date => {
+                       this.setState({
+                           cohort:{
+                               ...cohort,
+                             exam_start_time: moment(date).utcOffset(330).format()
+                           }
+                        });
+                   }}
+                  />
+                 
                 </div> 
                 <div className="form-group">
                   <label>Exam End time</label>
-                  <ReactDatePicker
-                    dateFormat="dd-MM-yyyy hh:mm:ss"
-                    selected={new Date(cohort.exam_end_time)}
-                    showMonthDropdown
-                    showTimeSelect
-                    showYearDropdown
-                    className="form-control"
-                    placeholderText="Cohort Start Date"
-                    onChange={date => {
-                        this.setState({
-                            cohort:{
-                                ...cohort,
-                              exam_end_time:date
-                            }
-                         });
-                    }} />
+                  <Datetime  value={moment(cohort.exam_end_time)} 
+                   placeholderText="Exam End time"
+                   onChange={date => {
+                       this.setState({
+                           cohort:{
+                               ...cohort,
+                               exam_end_time:  moment(date).utcOffset(330).format()
+                           }
+                        });
+                   }}
+                  />
+                  
                 </div>
                 <div className="form-group">
                   <label>Allotted time</label>
@@ -292,21 +288,19 @@ class CohortEdit extends Component {
               </div>
                 <div className="form-group">
                   <label>Cohort Start Date</label>
-                  <ReactDatePicker
-                    dateFormat="dd-MM-yyyy"
-                    selected={new Date(cohort.start_date)}
-                    showMonthDropdown
-                    showYearDropdown
-                    className="form-control"
-                    placeholderText="Cohort Start Date"
-                    onChange={date => {
-                        this.setState({
-                            cohort:{
-                                ...cohort,
-                              start_date:date 
-                            }
-                         });
-                    }} />
+                  <Datetime  value={moment(cohort.start_date)} 
+                  timeFormat={false}
+                   placeholderText="Cohort Start Date"
+                   onChange={date => {
+                       this.setState({
+                           cohort:{
+                               ...cohort,
+                               start_date:  moment(date).utcOffset(330).format()
+                           }
+                        });
+                   }}
+                  />
+                 
                 </div>
                 {/* submit button */}
                 <button
