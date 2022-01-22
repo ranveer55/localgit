@@ -44,7 +44,7 @@ class ProctoredTestDetail extends Component {
       "COMPLETE",
       // "EXAM ATTEMPT",
       "Reason Incomplete",
-      "UFM SCORE",
+      "UFM Percentage",
       "PERCENT",
       "LOCATION",
       "WHATSAPP",
@@ -139,7 +139,6 @@ class ProctoredTestDetail extends Component {
   };
 
   score = (data) => {
-    console.log('score--',JSON.parse(data))
     try {
       data = JSON.parse(data);
       return data && data.processed && data.processed.finalResult
@@ -290,7 +289,7 @@ class ProctoredTestDetail extends Component {
       firstPageText: "<<",
       nextPageText: ">",
       prePageText: "<",
-      showTotal: true,
+      showTotal: false,
       alwaysShowAllBtns: true,
       custom: false,
       onPageChange: this.onPageChange,
@@ -345,12 +344,12 @@ class ProctoredTestDetail extends Component {
          e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : "",
         
       },
-      {
-        dataField: "ai_result",
-        text: "UFM Score",
-        formatter: (e, row) => {
-          return this.score(e)},
-      },
+      // {
+      //   dataField: "ai_result",
+      //   text: "UFM Score",
+      //   formatter: (e, row) => {
+      //     return this.score(e)},
+      // },
       {
         dataField: "ai_result",
         text: "% UFM ",
@@ -534,7 +533,8 @@ class ProctoredTestDetail extends Component {
                             : u.reasonIncomplete == 2
                             ? "Alt tab"
                             : "",
-                          this.score(u.ai_result),
+                          // this.score(u.ai_result),
+                          this.totalScore(u.ai_result),
                           u.percent,
                           u?.employee?.Location,
                           u?.resumeContent?.basicInfo?.phone,
@@ -565,7 +565,7 @@ class ProctoredTestDetail extends Component {
               </div>
               <h1 className="title1 mb25">Cohorts: {cohort?.name}</h1>
               <h4 className="title4 mb40">
-                {dataSource && dataSource.length > 0 ? (
+               
                   <>
                     <BootstrapTable
                     clasName="proTest"
@@ -578,9 +578,9 @@ class ProctoredTestDetail extends Component {
 
                     />
                   </>
-                ) : (
-                  <>No record found</>
-                )}
+                  {dataSource && dataSource.length == 0 &&
+                  <NoDataAvailable />
+                }
               </h4>
             </div>
           </div>
