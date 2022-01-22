@@ -119,14 +119,22 @@ class ManageQuizSetQuetions extends Component {
         const columns = [
 
 
+            // {
+            //     dataField: 'quizSetQuestionId',
+            //     text: 'Question Id',
+            // },
             {
-                dataField: 'quizSetQuestionId',
-                text: 'Question Id',
+                dataField: 'seq no',
+                text: 'SEQ NO',
+                formatter: (cell, row, rowIndex, formatExtraData) => {
+                    return rowIndex + 1;
+                  },
+                  sort: true,
             },
             {
                 dataField: 'questionText',
                 text: 'Question',
-                formatter: (d) => <div>{d? d.substr(0, 40).replace(/<[^>]*>?/gm, '').replace('&nbsp;', ''):''}</div>
+                formatter: (d) => <div>{d ? d.replace(/<[^>]*>?/gm, '').replace('&nbsp;', '').length > 60 ?  d.substr(0, 60).replace(/<[^>]*>?/gm, '').replace('&nbsp;', '') + '...' : d.replace(/<[^>]*>?/gm, '').replace('&nbsp;', '') :''}</div>
             },
             {
                 dataField: 'questionType',

@@ -22,7 +22,8 @@ class InterviewSimulatorCohortPage extends Component {
             endDate: new Date(moment()),
             users:[],
             dataSets: null,
-            loading:false
+            loading:false,
+            currentValue:''
         };
 
         this.state.selectedCompany = global.companyCode;
@@ -30,8 +31,44 @@ class InterviewSimulatorCohortPage extends Component {
     }
 
     componentDidMount() {
+
+      
+       this.setState({currentValue : localStorage.getItem("mytime")})
         // getCompanyRegistrationReport 
-        this.loadData(this.state.startDate, this.state.endDate);
+        switch (localStorage.getItem("mytime")) {
+            case "1": // today
+                this.loadData(new Date(moment().startOf("day")), new Date(moment().endOf("day")));
+                this.setState({
+                    startDate: new Date(moment().startOf("day")),
+                    endDate: new Date(moment().endOf("day")),
+                });
+                //localStorage.setItem('mytime',1)
+                break;
+            case "4": // yesterday
+                this.loadData(new Date(moment().subtract(1, 'day').startOf("day")), new Date(moment().subtract(1, 'day').endOf("day")));
+                this.setState({
+                    startDate: new Date(moment().startOf("day")),
+                    endDate: new Date(moment().endOf("day")),
+                });
+                // localStorage.setItem('mytime',4);
+                break;
+            case "2": // last week
+                this.loadData(new Date(moment().subtract(1, "week").startOf('day')), new Date(moment().endOf("day")));
+                // localStorage.setItem('mytime-',2);
+                break;
+            case "3": // last month
+                // localStorage.setItem('mytime',3);
+                this.loadData(new Date(moment().subtract(1, "month").startOf('day')), new Date(moment().endOf("day")));
+                break;
+                case "5": // all
+                // localStorage.setItem('mytime',5);
+                this.loadData(new Date(moment().subtract(1, "year").startOf('day')), new Date(moment().endOf("day")));
+                break;
+
+            default:
+                break;
+        }
+       // this.loadData(this.state.startDate, this.state.endDate);
 
 
     }
@@ -184,6 +221,7 @@ class InterviewSimulatorCohortPage extends Component {
                                                 startDate: new Date(moment().startOf("day")),
                                                 endDate: new Date(moment().endOf("day")),
                                             });
+                                            localStorage.setItem('mytime',1)
                                             break;
                                         case "4": // yesterday
                                             this.loadData(new Date(moment().subtract(1, 'day').startOf("day")), new Date(moment().subtract(1, 'day').endOf("day")));
@@ -191,14 +229,18 @@ class InterviewSimulatorCohortPage extends Component {
                                                 startDate: new Date(moment().startOf("day")),
                                                 endDate: new Date(moment().endOf("day")),
                                             });
+                                            localStorage.setItem('mytime',4);
                                             break;
                                         case "2": // last week
                                             this.loadData(new Date(moment().subtract(1, "week").startOf('day')), new Date(moment().endOf("day")));
+                                            localStorage.setItem('mytime',2);
                                             break;
                                         case "3": // last month
+                                            localStorage.setItem('mytime',3);
                                             this.loadData(new Date(moment().subtract(1, "month").startOf('day')), new Date(moment().endOf("day")));
                                             break;
                                             case "5": // all
+                                            localStorage.setItem('mytime',5);
                                             this.loadData(new Date(moment().subtract(1, "year").startOf('day')), new Date(moment().endOf("day")));
                                             break;
 
@@ -207,11 +249,11 @@ class InterviewSimulatorCohortPage extends Component {
                                     }
                                 }} defaultValue="">
                                     <option value="" disabled>Select Timespan</option>
-                                    <option value="1">Today</option>
-                                    <option value="4">Yesterday</option>
-                                    <option value="2">Last Week</option>
-                                    <option value="3">Last Month</option>
-                                    <option value="5">Current Year</option>
+                                    <option selected={this.state.currentValue == 1} value="1">Today</option>
+                                    <option selected={this.state.currentValue == 4} value="4">Yesterday</option>
+                                    <option selected={this.state.currentValue == 2} value="2">Last Week</option>
+                                    <option selected={this.state.currentValue == 3} value="3">Last Month</option>
+                                    <option selected={this.state.currentValue == 5} value="5">Current Year</option>
                                 </select>
                             </div>
                            

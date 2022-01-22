@@ -4581,6 +4581,17 @@ html:not(.md_touch) .todos_dots:hover .todos_dot_box {
   padding-left: 30px;
 }
 
+.table th:nth-child(1) {
+  width: 10%;
+}
+span.dropdown,span.dropup {
+  display: none;
+}
+span.caret {
+  display: none;
+}
+
+
 .table td {
   /* padding: 12px 10px; */
   padding: 12px 6px;
@@ -6039,7 +6050,7 @@ label.certificate-button a {
 .interview-simulator-dropdown-holder {
   position: relative;
   padding-bottom: 1rem;
-  max-width: 250px;
+  max-width: 100%;
 }
 .interview-simulator-dropdown {
   font-weight: bolder;
@@ -6189,4 +6200,23 @@ label.certificate-button a {
 }
 .proctoredVideo {
   margin: 2px auto;
+}
+
+video.record-video.c212121 {
+  width: 200px;
+}
+
+video#video {
+  width: 200px;
+}
+.selectOptions{
+  display: flex;
+}
+span.slashBtw {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+p.selectVideo {
+  cursor: pointer;
 }

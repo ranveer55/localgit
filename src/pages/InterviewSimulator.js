@@ -2,6 +2,8 @@ import moment from "moment";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
+import Loader from "react-loader-spinner";
+
 class InterviewSimulatorPage extends Component {
   constructor(props) {
     super(props);
@@ -23,15 +25,15 @@ class InterviewSimulatorPage extends Component {
     this.loadData();
   }
 
-  loadData() {
+  loadData(status) {
     this.setState({
-      dateLoaded: false,
+      dateLoaded: true,
     });
     global.api
-      .getCompanyCohorts(this.companyCode)
+      .getCompanyCohorts(this.companyCode,status)
       .then((data) => {
         this.setState({
-          dataLoaded: true,
+          dataLoaded: false,
           cohorts: data.programs,
         });
         // this.setState({ batchData: data });
@@ -43,12 +45,20 @@ class InterviewSimulatorPage extends Component {
       });
   }
 
+  onChangeStatus = (e) => {
+    this.loadData(e.target.value)
+    this.setState({
+      dataLoaded: true,
+      cohorts: [],
+    });
+    
+  }
+
   formatter = (cell, row) => {
     return (
       <div className="interview-simulator-dropdown-holder">
-        <span className="interview-simulator-dropdown">⋮</span>
-        <div className="interview-simulator-dropdown-content">
-          <Link
+      
+      <Link
             to={"/interview-simulator/" + row.id + "/add-practice-set"}
             className="interview-simulator-dropdown-link"
             style={{
@@ -58,12 +68,23 @@ class InterviewSimulatorPage extends Component {
           >
             Manage Practice Sets
           </Link>
-        </div>
+        {/* <div className="interview-simulator-dropdown-content"> */}
+        {/* </div> */}
       </div>
     );
   };
 
   render() {
+
+    const NoDataIndication = () => (
+      <div className="table_wraps" id="spinner">
+        <div className="spinner" >
+          <Loader type="Grid" color="#4441E2" height={100} width={100} />
+          Loading....
+        </div>
+      </div>
+    );
+
     const columns = [
       {
         dataField: "practiceSetQuestion",
@@ -75,6 +96,7 @@ class InterviewSimulatorPage extends Component {
               cursor: "pointer",
             }}
           >
+            
             <Link
               to={"/interview-simulator/" + row.id}
               style={{
@@ -104,7 +126,7 @@ class InterviewSimulatorPage extends Component {
               cursor: "pointer",
             }}
           >
-            <Link
+       <Link
               to={"/interview-simulator/" + row.id}
               style={{
                 color: "blue",
@@ -141,44 +163,43 @@ class InterviewSimulatorPage extends Component {
         text: "Action",
         formatter: this.formatter,
       },
-      {
-        dataField: "id",
-        text: "Quiz proctored attempts",
-        formatter: (id, row) =>
-          row.quizAttempts ? (
-            <td>
-              <a
-                href={
-                  "/interview-simulator/" + row.id + "/quiz-proctored-attempts"
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View
-              </a>
-            </td>
-          ) : (
-            <></>
-          ),
-      },
-      {
-        dataField: "id",
-        text: "Quiz Attempts",
-        formatter: (id, row) =>
-          row.quizAttempts ? (
-            <td>
-              <a
-                href={"/interview-simulator/" + row.id + "/quiz-attempt-users"}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Show Users List
-              </a>
-            </td>
-          ) : (
-            <></>
-          ),
-      },
+      // {
+      //   dataField: "id",
+      //   text: "Quiz proctored attempts",
+      //   formatter: (id, row) =>
+      //     row.quizAttempts ? (
+      //       <td>
+      //         <a
+      //           href={
+      //             "/interview-simulator/" + row.id + "/quiz-proctored-attempts"
+      //           }
+      //           target="_blank"
+      //           rel="noopener noreferrer"
+      //         >
+      //           View
+      //         </a>
+      //       </td>
+      //     ) : (
+      //       <></>
+      //     ),
+      // },
+      // {
+      //   dataField: "id",
+      //   text: "Quiz Attempts",
+      //   formatter: (id, row) =>
+      //     row.quizAttempts ? (
+      //       <td>         <a
+      //           href={"/interview-simulator/" + row.id + "/quiz-attempt-users"}
+      //           target="_blank"
+      //           rel="noopener noreferrer"
+      //         >
+      //           Show Users List
+      //         </a>
+      //       </td>
+      //     ) : (
+      //       <></>
+      //     ),
+      // },
       {
         dataField: "csv",
         text: "Register from CSV",
@@ -209,6 +230,18 @@ class InterviewSimulatorPage extends Component {
                   ? this.state.selectedCompanyName
                   : ""}
               </h4>
+              <div style={{
+                                padding: "2px 8px",
+                                margin: "0px 8px",
+                                fontWeight: "500"
+                            }}>
+                                <select onChange={this.onChangeStatus}
+                                     defaultValue="">
+                                    <option value="" disabled>Select Status</option>
+                                    <option value="0">Active</option>
+                                    <option value="1">InActive</option>
+                                </select>
+                            </div>
               <div>
                 {/* <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic/${this.state.selectedCompany}`} target="_blank" rel="noopener noreferrer" style={{
                                     margin: "0 4px"
@@ -225,7 +258,7 @@ class InterviewSimulatorPage extends Component {
             </div>
           </div>
           <div>
-            {this.state.dataLoaded ? (
+        {!this.state.dataLoaded ? (
               this.state.cohorts.length > 0 ? (
                 <BootstrapTable
                   keyField="id"
@@ -233,10 +266,12 @@ class InterviewSimulatorPage extends Component {
                   columns={columns}
                 />
               ) : (
-                <span colSpan="4">No Data Available</span>
+                <span colSpan="4">No record found</span>
               )
             ) : (
-              <span colSpan="4">Loading Data </span>
+              // loader
+                <NoDataIndication />
+              
             )}
           </div>
         </section>
