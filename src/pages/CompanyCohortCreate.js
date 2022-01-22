@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment-timezone'
 import React, { Component } from "react";
 import Datetime from 'react-datetime';
 import "react-datetime/css/react-datetime.css";
