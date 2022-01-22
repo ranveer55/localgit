@@ -23,7 +23,11 @@ class ProctoredTestDetail extends Component {
       totalRecords: 0,
       isUpdatingTable: false,
       searchVal:'',
-      page:1
+      page:1,
+      up_looking:0.1,
+      away_looking:0.1,
+      multi_user:0.45,
+      zero_candidate:0.35,
     };
   }
 
@@ -40,7 +44,7 @@ class ProctoredTestDetail extends Component {
       "COMPLETE",
       // "EXAM ATTEMPT",
       "Reason Incomplete",
-      "UFM SCORE",
+      "UFM Percentage",
       "PERCENT",
       "LOCATION",
       "WHATSAPP",
@@ -144,6 +148,37 @@ class ProctoredTestDetail extends Component {
       return "";
     }
   };
+
+  totalScore = (data) => {
+    try {
+      data = JSON.parse(data);
+      let processedItmes = data?.processed;
+      let lookingUp = 0;
+      let lookingDown = 0;
+      let persons = 0;
+      let totalTime = 0;
+      if(processedItmes?.up_looking_percent){
+        lookingUp = parseFloat(processedItmes?.up_looking_percent) * parseFloat(this.state.up_looking)
+      }
+      if(processedItmes?.away_looking_percent){
+        lookingDown = parseFloat(processedItmes?.away_looking_percent) * parseFloat(this.state.away_looking)
+      }
+
+      if(processedItmes?.multi_user_percent > 0){
+        persons = parseFloat(processedItmes?.multi_user_percent) * parseFloat(this.state.multi_user)
+      }
+
+      if(processedItmes?.zero_candidate_time > 0){
+        totalTime = (parseFloat(processedItmes?.zero_candidate_time) / parseFloat(processedItmes?.total_time)) * 100
+        totalTime = totalTime * parseFloat(this.state.zero_candidate)
+      }
+      let totalFinal = +lookingUp + +lookingDown + +persons + +totalTime;
+      return totalFinal.toFixed(2);
+    } catch (e) {
+      return "";
+    }
+  };
+
   lock = (id, status) => {
     this.setState({
       dateLoaded: false,
@@ -254,7 +289,7 @@ class ProctoredTestDetail extends Component {
       firstPageText: "<<",
       nextPageText: ">",
       prePageText: "<",
-      showTotal: true,
+      showTotal: false,
       alwaysShowAllBtns: true,
       custom: false,
       onPageChange: this.onPageChange,
@@ -306,12 +341,21 @@ class ProctoredTestDetail extends Component {
         dataField: "reasonIncomplete",
         text: "reason Incomplete",
         formatter: (e, row) =>
-          e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : "",
+         e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : "",
+        
       },
+      // {
+      //   dataField: "ai_result",
+      //   text: "UFM Score",
+      //   formatter: (e, row) => {
+      //     return this.score(e)},
+      // },
       {
         dataField: "ai_result",
-        text: "UFM Score",
-        formatter: (e, row) => this.score(e),
+        text: "% UFM ",
+        formatter: (e, row) => {
+
+          return this.totalScore(e)},
       },
       {
         dataField: "percent",
@@ -350,6 +394,7 @@ class ProctoredTestDetail extends Component {
   data={dataSource}
   columns={columns}
   search
+  clasName="proTable"
 >
   {
     props => (
@@ -488,7 +533,8 @@ class ProctoredTestDetail extends Component {
                             : u.reasonIncomplete == 2
                             ? "Alt tab"
                             : "",
-                          this.score(u.ai_result),
+                          // this.score(u.ai_result),
+                          this.totalScore(u.ai_result),
                           u.percent,
                           u?.employee?.Location,
                           u?.resumeContent?.basicInfo?.phone,
@@ -519,9 +565,10 @@ class ProctoredTestDetail extends Component {
               </div>
               <h1 className="title1 mb25">Cohorts: {cohort?.name}</h1>
               <h4 className="title4 mb40">
-                {dataSource && dataSource.length > 0 ? (
+               
                   <>
                     <BootstrapTable
+                    clasName="proTest"
                      { ...props.baseProps }
                       remote={true}
                       keyField="id"
@@ -531,9 +578,9 @@ class ProctoredTestDetail extends Component {
 
                     />
                   </>
-                ) : (
-                  <>No record found</>
-                )}
+                  {dataSource && dataSource.length == 0 &&
+                  <NoDataAvailable />
+                }
               </h4>
             </div>
           </div>
