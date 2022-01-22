@@ -616,7 +616,7 @@ export default class ApiService {
         });
     }
     combineChunks(id) {
-        return axios.get(`${this.domain}/signed-url/combine/${id}`, {
+        return axios.post(`${this.domain}/signed-url/complete`,{quizAttemptLogId:id, now:true}, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },
