@@ -59,9 +59,9 @@ class CompanyCohortsReport extends Component {
           <div className="row">
             <div className="col-md-6">
               <h1 className="title1 mb25">Company Cohorts</h1>
-              <h4 className="title4 mb40">
+              {/* <h4 className="title4 mb40">
                 For {this?.state.selectedCompanyName}
-              </h4>
+              </h4> */}
               <div>
                 {/* <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic/${this.state.selectedCompany}`} target="_blank" rel="noopener noreferrer" style={{
                   margin: "0 4px"

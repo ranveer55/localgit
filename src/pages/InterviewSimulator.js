@@ -222,20 +222,21 @@ class InterviewSimulatorPage extends Component {
       <main className="offset" id="content">
         <section className="section_box">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-12">
               <h1 className="title1 mb25">
                 Manage Interview Simulator Cohorts
               </h1>
-              <h4 className="title4 mb40">
+              {/* <h4 className="title4 mb40">
                 For{" "}
                 {this.state.selectedCompanyName != "null"
                   ? this.state.selectedCompanyName
                   : ""}
-              </h4>
+              </h4> */}
               <div style={{
                                 padding: "2px 8px",
                                 margin: "0px 8px",
-                                fontWeight: "500"
+                                fontWeight: "500",
+                                float: "right"
                             }}>
                                 <select onChange={this.onChangeStatus}
                                      defaultValue="">
