@@ -1,5 +1,7 @@
 
 import React, { Component } from "react";
+import {up_looking,away_looking,multi_user,zero_candidate} from "../../constant";
+
 class ProctoredTestUserDetail extends Component {
   constructor(props) {
     super(props);
@@ -40,10 +42,43 @@ class ProctoredTestUserDetail extends Component {
         });
       });
   }
+
   score = (data) => {
     try {
       data = JSON.parse(data);
       return data && data.processed && data.processed.finalResult ? data.processed.finalResult : ''
+    } catch (e) {
+      return "";
+    }
+  };
+
+
+  totalScore = (data) => {
+    try {
+      data = JSON.parse(data);
+      let processedItmes = data?.processed;
+      let lookingUp = 0;
+      let lookingDown = 0;
+      let persons = 0;
+      let totalTime = 0;
+      
+      if(processedItmes?.up_looking_percent){
+        lookingUp = parseFloat(processedItmes?.up_looking_percent) * parseFloat(up_looking)
+      }
+      if(processedItmes?.away_looking_percent){
+        lookingDown = parseFloat(processedItmes?.away_looking_percent) * parseFloat(away_looking)
+      }
+
+      if(processedItmes?.multi_user_percent > 0){
+        persons = parseFloat(processedItmes?.multi_user_percent) * parseFloat(multi_user)
+      }
+
+      if(processedItmes?.zero_candidate_time > 0){
+        totalTime = (parseFloat(processedItmes?.zero_candidate_time) / parseFloat(processedItmes?.total_time)) * 100
+        totalTime = totalTime * parseFloat(zero_candidate)
+      }
+      let totalFinal = +lookingUp + +lookingDown + +persons + +totalTime;
+      return totalFinal.toFixed(2);
     } catch (e) {
       return "";
     }
@@ -169,10 +204,10 @@ class ProctoredTestUserDetail extends Component {
                           <div className="col-md-5  label">Wrong Answer </div><div className="col-md-7  labelval"> {data.wrong}</div>
                         </div>
                         <div className="flex">
-                          <div className="col-md-5  label">Percentage </div><div className="col-md-7  labelval"> {data.percent}</div>
+                          <div className="col-md-5  label">Percentage </div><div className="col-md-7  labelval"> {data?.percent.toFixed(2)}</div>
                         </div>
                         <div className="flex">
-                          <div className="col-md-5  label">UFM Score </div><div className="col-md-7  labelval"> {this.score(data.ai_result)}</div>
+                          <div className="col-md-5  label">UFM % </div><div className="col-md-7  labelval"> {this.totalScore(data.ai_result)}%</div>
                         </div>
 
                         <div className="flex">
