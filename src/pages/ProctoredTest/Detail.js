@@ -4,6 +4,8 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import Loader from "react-loader-spinner";
+import {up_looking,away_looking,multi_user,zero_candidate} from "../../constant";
+
 
 const { SearchBar } = Search;
 
@@ -24,10 +26,6 @@ class ProctoredTestDetail extends Component {
       isUpdatingTable: false,
       searchVal:'',
       page:1,
-      up_looking:0.1,
-      away_looking:0.1,
-      multi_user:0.45,
-      zero_candidate:0.35,
     };
   }
 
@@ -157,20 +155,21 @@ class ProctoredTestDetail extends Component {
       let lookingDown = 0;
       let persons = 0;
       let totalTime = 0;
+      
       if(processedItmes?.up_looking_percent){
-        lookingUp = parseFloat(processedItmes?.up_looking_percent) * parseFloat(this.state.up_looking)
+        lookingUp = parseFloat(processedItmes?.up_looking_percent) * parseFloat(up_looking)
       }
       if(processedItmes?.away_looking_percent){
-        lookingDown = parseFloat(processedItmes?.away_looking_percent) * parseFloat(this.state.away_looking)
+        lookingDown = parseFloat(processedItmes?.away_looking_percent) * parseFloat(away_looking)
       }
 
       if(processedItmes?.multi_user_percent > 0){
-        persons = parseFloat(processedItmes?.multi_user_percent) * parseFloat(this.state.multi_user)
+        persons = parseFloat(processedItmes?.multi_user_percent) * parseFloat(multi_user)
       }
 
       if(processedItmes?.zero_candidate_time > 0){
         totalTime = (parseFloat(processedItmes?.zero_candidate_time) / parseFloat(processedItmes?.total_time)) * 100
-        totalTime = totalTime * parseFloat(this.state.zero_candidate)
+        totalTime = totalTime * parseFloat(zero_candidate)
       }
       let totalFinal = +lookingUp + +lookingDown + +persons + +totalTime;
       return totalFinal.toFixed(2);
