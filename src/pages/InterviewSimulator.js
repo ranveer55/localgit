@@ -32,9 +32,11 @@ class InterviewSimulatorPage extends Component {
     global.api
       .getCompanyCohorts(this.companyCode,status)
       .then((data) => {
+        let resData =  data.programs
+        let filterData = resData.filter((item)=> item.type_id == '3')
         this.setState({
           dataLoaded: false,
-          cohorts: data.programs,
+          cohorts: filterData,
         });
         // this.setState({ batchData: data });
       })
@@ -266,7 +268,7 @@ class InterviewSimulatorPage extends Component {
                   columns={columns}
                 />
               ) : (
-                <span colSpan="4">No record found</span>
+                <span colSpan="4">No cohorts were found for Interview Simulator</span>
               )
             ) : (
               // loader

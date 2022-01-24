@@ -56,9 +56,11 @@ class ProctoredTest extends Component {
         global.api.getProctoredTest(global.companyCode)
             .then(
                 data => {
+                    let resData =  data.data
+                    let filterData = resData.filter((item)=> item.type_id == '2')
                     this.setState({
                         dataLoaded: true,
-                        data: data.data,
+                        data: filterData,
                     });
                     // this.setState({ batchData: data });
                 })
@@ -128,7 +130,7 @@ class ProctoredTest extends Component {
                                                 </tbody>
                                             </table>
                                         </>
-                                    ) : <>No Data</>
+                                    ) : <>No cohorts were found for Proctored Test</>
                                 }
                             </h4>
                         </div>
