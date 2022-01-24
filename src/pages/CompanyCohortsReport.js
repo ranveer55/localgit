@@ -60,7 +60,7 @@ class CompanyCohortsReport extends Component {
             <div className="col-md-6">
               <h1 className="title1 mb25">Company Cohorts</h1>
               <h4 className="title4 mb40">
-                For {this.state.selectedCompanyName}
+                For {this?.state.selectedCompanyName}
               </h4>
               <div>
                 {/* <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic/${this.state.selectedCompany}`} target="_blank" rel="noopener noreferrer" style={{
@@ -78,6 +78,7 @@ class CompanyCohortsReport extends Component {
                 <tr>
                   <th>Company Code</th>
                   <th>Cohort ID</th>
+                  <th>Cohort Type</th>
                   <th>Name</th>
                   <th>Registration Link</th>
                   <th>Start Date</th>
@@ -95,6 +96,11 @@ class CompanyCohortsReport extends Component {
                           <tr key={cohort.id}>
                             <td>{cohort.company_code}</td>
                             <td>{cohort.id}</td>
+                            <td>{cohort.type_id == '2' ? 'Proctored Test': 
+                            cohort.type_id == '3' ? 'Interview Simulator' :
+                            cohort.type_id == '4' ? 'Business English' :
+                            '-'
+                            }</td>
                             <td>
                               <a target="_blank" rel="noopener noreferrer" href={"/cohort-detail/" + cohort.id}>{cohort.name}</a>
                             </td>
