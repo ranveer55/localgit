@@ -1,7 +1,12 @@
 import moment from "moment";
 import React, { Component } from "react";
+import { Row,Button } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal'
 import { Link } from 'react-router-dom';
 import { ReactComponent as Star } from './start_icon.svg';
+import {InterviewSimulatorReviewModal} from './InterviewSimulatorReviewModal';
+// import "bootstrap/dist/css/bootstrap.min.css";
+
 class InterviewSimulatorCohortUserAttempsPage extends Component {
 
     constructor(props) {
@@ -18,6 +23,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
             cohort: null,
             userData: null,
             prevAttempts: [],
+            reviewModal:false,
         };
 
         this.state.selectedCompany = global.companyCode;
@@ -71,7 +77,12 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
     }
 
 
+handleCloseReview = () => {
+this.setState({
+    reviewModal:false
+})
 
+}
     render() {
 
         const cohort = this.state.cohort;
@@ -79,7 +90,9 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
         const prevAttempts = this.state.prevAttempts;
 
         return (
-            <main className="offset InterciewSimulationUserAttempts" id="content">
+            <>
+
+           {!this.state.reviewModal &&  <main className="offset InterciewSimulationUserAttempts" id="content">
                 <section className="section_box">
                     <div className="row">
                         <div className="col-md-12">
@@ -108,7 +121,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                                     <th style={{ width: "56px" }}>S No</th>
                                                     <th>Video</th>
                                                     <th>Lesson Name</th>
-                                                    <th>AI Review</th>
+                                                    <th>Date</th>
                                                     <th>Mentor Review</th>
                                                     <th>User Answer</th>
                                                 </tr>
@@ -116,9 +129,9 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                             <tbody>
                                                 {
                                                     prevAttempts.map((prevAttempt, index) => (
-                                                        <tr key={prevAttempt.uuid ? prevAttempt.uuid : prevAttempt.id} style={{ cursor: "pointer" }} onClick={e => {
-                                                            window.location.href = `/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`;
-                                                        }}>
+                                                        <tr key={prevAttempt.uuid ? prevAttempt.uuid : prevAttempt.id} style={{ cursor: "pointer" }} 
+                                                        // onClick={e => { window.location.href = `/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`; }}
+                                                        >
                                                             <td>{index + 1}</td>
                                                             <td style={{ wordBreak: "break-all" }}>
                                                                 {
@@ -128,13 +141,20 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                                                 }
                                                             </td>
                                                             <td>{prevAttempt.lessonName}</td>
-                                                            <td>
+                                                            <td>{moment(prevAttempt.created_at).format("MMM DD YYYY")}</td>
+
+                                                            {/* <td>
                                                                 <a href={`/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`}>{getAiRatingMedal(prevAttempt.ai_rating_avg)}</a>
-                                                            </td>
-                                                            <td>
+                                                            </td> */}
+                                                            <td className="testClick" onClick={()=>{
+                                                                console.log('reviewModal-',this.state.reviewModal)
+                                                                               this.setState({currentAttempt:prevAttempt,
+                                                                                reviewModal:true})
+                                                                        }}>
                                                                 {
                                                                     prevAttempt.external_rating_avg ? (
-                                                                        <div className={prevAttempt.external_rating_avg ? prevAttempt.external_rating_avg <= 2 ? "review-red cursor-pointer" : prevAttempt.external_rating_avg <= 3 ? "review-yellow cursor-pointer" : "review-green cursor-pointer" : "ai-review NA cursor-pointer"} >
+                                                                        <div 
+                                                                         className={prevAttempt.external_rating_avg ? prevAttempt.external_rating_avg <= 2 ? "review-red cursor-pointer" : prevAttempt.external_rating_avg <= 3 ? "review-yellow cursor-pointer" : "review-green cursor-pointer" : "ai-review NA cursor-pointer"} >
                                                                             <div className="" style={{paddingTop:'7px',marginRight:6}}>
                                                                                 {prevAttempt.external_rating_avg ? <Star /> : <div className="circle cursor-pointer"></div>}
                                                                             </div>
@@ -161,7 +181,18 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                     <div>
                     </div>
                 </section>
+          
             </main>
+            }
+                  {this.state.reviewModal && 
+                    <InterviewSimulatorReviewModal
+                    handleCloseReview={this.handleCloseReview}
+                     show={this.state.reviewModal}
+                     attempt={this.state.currentAttempt}
+                     mentor={true}
+    
+                     />}
+                     </>
         );
     }
 }
