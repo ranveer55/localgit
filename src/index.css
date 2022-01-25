@@ -7578,8 +7578,8 @@ span.caret {
   padding-right: 30px;
 }
 .table td:last-child {
-  padding-right: 24px;
-  width: 37px;
+  /* padding-right: 24px; */
+  /* width: 37px; */
   border-radius: 0 10px 10px 0;
 }
 .table td.table2_td.is-active {
@@ -8781,7 +8781,7 @@ label.certificate-button a {
 }
 .interview-simulator-dropdown-holder {
   position: relative;
-  padding-bottom: 1rem;
+  /* padding-bottom: 1rem; */
   max-width: 100%;
 }
 .interview-simulator-dropdown {
