@@ -251,13 +251,8 @@ class ProctoredTestUserDetail extends Component {
 
                       </div>
                       <div className="col-md-5 proctoredVideo">
+                       
                         <h3>Proctored Video</h3>
-                        <div className="proctoredVideo">
-                          <video controls width="100%">
-                            <source src={`https://langappnew.s3.amazonaws.com/${data.proctoredVideo}`} type="video/mp4" />
-                          </video>
-                        </div>
-                        <h3>Proctored Video Chunks</h3>
                         {data.streamId ? (
                            <div className="proctoredVideo">
                            <video controls width="100%">
