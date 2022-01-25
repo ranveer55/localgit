@@ -1,0 +1,55 @@
+.SkipModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9;
+}
+.SkipModal .modal-body {
+  background-color: white;
+  max-width: 480px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.SkipModal .modal-body h5 {
+  margin: 2rem auto;
+}
+.cancel-exam-button,
+.skip-button {
+  cursor: pointer;
+  background-color: white;
+  border-radius: 21px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 1rem;
+  display: block;
+  padding: 0.5rem 3rem;
+}
+.continue-exam-button,
+.next-button {
+  background-color: #19861e;
+  border-radius: 21px;
+  text-align: center;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 1rem;
+  display: block;
+  padding: 0.5rem 3rem;
+}
+.continue-exam-button,
+.cancel-exam-button {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}

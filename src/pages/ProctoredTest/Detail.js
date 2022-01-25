@@ -4,8 +4,8 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import Loader from "react-loader-spinner";
-import {up_looking,away_looking,multi_user,zero_candidate} from "../../constant";
-
+import { up_looking, away_looking, multi_user, zero_candidate } from "../../constant";
+import Popup from "../../components/Popup/Popup";
 
 const { SearchBar } = Search;
 
@@ -24,8 +24,8 @@ class ProctoredTestDetail extends Component {
       data: [],
       totalRecords: 0,
       isUpdatingTable: false,
-      searchVal:'',
-      page:1,
+      searchVal: '',
+      page: 1,
     };
   }
 
@@ -155,19 +155,19 @@ class ProctoredTestDetail extends Component {
       let lookingDown = 0;
       let persons = 0;
       let totalTime = 0;
-      
-      if(processedItmes?.up_looking_percent){
+
+      if (processedItmes?.up_looking_percent) {
         lookingUp = parseFloat(processedItmes?.up_looking_percent) * parseFloat(up_looking)
       }
-      if(processedItmes?.away_looking_percent){
+      if (processedItmes?.away_looking_percent) {
         lookingDown = parseFloat(processedItmes?.away_looking_percent) * parseFloat(away_looking)
       }
 
-      if(processedItmes?.multi_user_percent > 0){
+      if (processedItmes?.multi_user_percent > 0) {
         persons = parseFloat(processedItmes?.multi_user_percent) * parseFloat(multi_user)
       }
 
-      if(processedItmes?.zero_candidate_time > 0){
+      if (processedItmes?.zero_candidate_time > 0) {
         totalTime = (parseFloat(processedItmes?.zero_candidate_time) / parseFloat(processedItmes?.total_time)) * 100
         totalTime = totalTime * parseFloat(zero_candidate)
       }
@@ -178,7 +178,7 @@ class ProctoredTestDetail extends Component {
     }
   };
 
-  lock = (id, status) => {
+  updateAllowedReattempt =(id, status) =>{
     this.setState({
       dateLoaded: false,
     });
@@ -193,6 +193,15 @@ class ProctoredTestDetail extends Component {
           dateLoaded: true,
         });
       });
+  }
+
+  lock = (id, status) => {
+    if(status){
+      this.setState({showPopupId:id, showPopup:true})
+    } else {
+      this.updateAllowedReattempt(id, status)
+    }
+   
   };
 
   unlockRender = (datum) => {
@@ -200,13 +209,26 @@ class ProctoredTestDetail extends Component {
       color: "blue",
       cursor: "pointer",
     };
-    if (datum?.allowedReattempt == 1) {
+    if (datum?.allowedReattempt == 3) {
       return (
         <span style={s} onClick={(e) => this.lock(datum.id, 0)}>
-          Unblocked
+          Start over
         </span>
       );
-    } else {
+    } else if (datum?.allowedReattempt == 2) {
+      return (
+        <span style={s} onClick={(e) => this.lock(datum.id, 0)}>
+          Resume
+        </span>
+      );
+    } else if (datum?.allowedReattempt == 1) {
+      return (
+        <span style={s} onClick={(e) => this.lock(datum.id, 0)}>
+          Unbloked
+        </span>
+      );
+    }
+     else {
       return (
         <span style={s} onClick={(e) => this.lock(datum.id, 1)}>
           Blocked{" "}
@@ -222,22 +244,22 @@ class ProctoredTestDetail extends Component {
 
   onPageChange = (page) => {
     this.setState({ page: page });
-    if(this.state.searchVal != ''){
-      this.onTableChange(this.state.searchVal,page);
+    if (this.state.searchVal != '') {
+      this.onTableChange(this.state.searchVal, page);
 
-    }else{
+    } else {
       this.loadData(page);
     }
   };
-   onTableChange = (type, { searchText }) => {
-    this.setState({ 
-      searchVal:searchText
+  onTableChange = (type, { searchText }) => {
+    this.setState({
+      searchVal: searchText
     });
     if (type === "search" && searchText) {
       // search for the result
-      this.setState({ 
+      this.setState({
         isUpdatingTable: true,
-        page:1
+        page: 1
       });
       global.api
         .getProctoredTestDetailSearch(
@@ -261,14 +283,25 @@ class ProctoredTestDetail extends Component {
           alert(err);
           this.setState({ isUpdatingTable: false });
         });
-    }else{
-      if (type == "search"){
-        this.loadData(1) 
-        this.setState({page:1})
+    } else {
+      if (type == "search") {
+        this.loadData(1)
+        this.setState({ page: 1 })
       }
 
     }
   };
+
+  onCancel = () => {
+    const {showPopupId} =this.state;
+    this.updateAllowedReattempt(showPopupId, 2)
+    this.setState({showPopupId:null, showPopup:false})
+  }
+  onConfirm = () => {
+    const {showPopupId} =this.state;
+    this.updateAllowedReattempt(showPopupId, 3)
+    this.setState({showPopupId:null, showPopup:false})
+  }
 
 
   render() {
@@ -282,7 +315,7 @@ class ProctoredTestDetail extends Component {
     );
 
     const pagination = paginationFactory({
-      page:this.state.page,
+      page: this.state.page,
       sizePerPage: 20,
       lastPageText: ">>",
       firstPageText: "<<",
@@ -340,8 +373,8 @@ class ProctoredTestDetail extends Component {
         dataField: "reasonIncomplete",
         text: "reason Incomplete",
         formatter: (e, row) =>
-         e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : "",
-        
+          e == 1 ? "User Cancel" : e == 2 ? "Alt tab" : "",
+
       },
       // {
       //   dataField: "ai_result",
@@ -354,7 +387,8 @@ class ProctoredTestDetail extends Component {
         text: "% UFM ",
         formatter: (e, row) => {
 
-          return this.totalScore(e)},
+          return this.totalScore(e)
+        },
       },
       {
         dataField: "percent",
@@ -386,212 +420,223 @@ class ProctoredTestDetail extends Component {
         No Data Available...
       </div>
     );
+    const {showPopup} =this.state;
     return (
-      
-      <ToolkitProvider
-  keyField="id"
-  data={dataSource}
-  columns={columns}
-  search
-  clasName="proTable"
->
-  {
-    props => (
-      <main className="offset" id="content">
-        <div className="row">
-          <div className="">
-            <h4 className="title4 mb40">Procotored Tests</h4>
-            <br />
-          </div>
-        </div>
+      <>
+        {showPopup && <Popup
+          text="Continue incomplete test or Start New"
+          cancelText="Resume"
+          confirmText="Start over"
+          onConfirm={this.onConfirm}
+          onCancel={this.onCancel}
+        />}
 
-        <section className="section_box">
-          <div className="row">
-            <div className="col-md-12">
-              <div
-                clasName="col-md-6"
-                style={{ textAlign: "left", marginBottom: "1rem" }}
-              >
-                <div className="head_box_c">
-                  {this.state.isUpdatingTable ? (
-                    <svg
-                      height="40"
-                      width="40"
-                      fill="green"
-                      viewBox="0 0 55 80"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-label="audio-loading"
-                    >
-                      <g transform="matrix(1 0 0 -1 0 80)">
-                        <rect width="10" height="20" rx="3">
-                          <animate
-                            attributeName="height"
-                            begin="0s"
-                            dur="4.3s"
-                            values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20"
-                            calcMode="linear"
-                            repeatCount="indefinite"
-                          ></animate>
-                        </rect>
-                        <rect x="15" width="10" height="80" rx="3">
-                          <animate
-                            attributeName="height"
-                            begin="0s"
-                            dur="2s"
-                            values="80;55;33;5;75;23;73;33;12;14;60;80"
-                            calcMode="linear"
-                            repeatCount="indefinite"
-                          ></animate>
-                        </rect>
-                        <rect x="30" width="10" height="50" rx="3">
-                          <animate
-                            attributeName="height"
-                            begin="0s"
-                            dur="1.4s"
-                            values="50;34;78;23;56;23;34;76;80;54;21;50"
-                            calcMode="linear"
-                            repeatCount="indefinite"
-                          ></animate>
-                        </rect>
-                        <rect x="45" width="10" height="30" rx="3">
-                          <animate
-                            attributeName="height"
-                            begin="0s"
-                            dur="2s"
-                            values="30;45;13;80;56;72;45;76;34;23;67;30"
-                            calcMode="linear"
-                            repeatCount="indefinite"
-                          ></animate>
-                        </rect>
-                      </g>
-                    </svg>
-                  ) : (
-                    <></>
-                  )}
-                  <form className="form_search">
-                  <SearchBar { ...props.searchProps } />
+        <ToolkitProvider
+          keyField="id"
+          data={dataSource}
+          columns={columns}
+          search
+          clasName="proTable"
+        >
+          {
+            props => (
+              <main className="offset" id="content">
+                <div className="row">
+                  <div className="">
+                    <h4 className="title4 mb40">Procotored Tests</h4>
+                    <br />
+                  </div>
+                </div>
 
-                    {/* <SearchBar
+                <section className="section_box">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div
+                        clasName="col-md-6"
+                        style={{ textAlign: "left", marginBottom: "1rem" }}
+                      >
+                        <div className="head_box_c">
+                          {this.state.isUpdatingTable ? (
+                            <svg
+                              height="40"
+                              width="40"
+                              fill="green"
+                              viewBox="0 0 55 80"
+                              xmlns="http://www.w3.org/2000/svg"
+                              aria-label="audio-loading"
+                            >
+                              <g transform="matrix(1 0 0 -1 0 80)">
+                                <rect width="10" height="20" rx="3">
+                                  <animate
+                                    attributeName="height"
+                                    begin="0s"
+                                    dur="4.3s"
+                                    values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20"
+                                    calcMode="linear"
+                                    repeatCount="indefinite"
+                                  ></animate>
+                                </rect>
+                                <rect x="15" width="10" height="80" rx="3">
+                                  <animate
+                                    attributeName="height"
+                                    begin="0s"
+                                    dur="2s"
+                                    values="80;55;33;5;75;23;73;33;12;14;60;80"
+                                    calcMode="linear"
+                                    repeatCount="indefinite"
+                                  ></animate>
+                                </rect>
+                                <rect x="30" width="10" height="50" rx="3">
+                                  <animate
+                                    attributeName="height"
+                                    begin="0s"
+                                    dur="1.4s"
+                                    values="50;34;78;23;56;23;34;76;80;54;21;50"
+                                    calcMode="linear"
+                                    repeatCount="indefinite"
+                                  ></animate>
+                                </rect>
+                                <rect x="45" width="10" height="30" rx="3">
+                                  <animate
+                                    attributeName="height"
+                                    begin="0s"
+                                    dur="2s"
+                                    values="30;45;13;80;56;72;45;76;34;23;67;30"
+                                    calcMode="linear"
+                                    repeatCount="indefinite"
+                                  ></animate>
+                                </rect>
+                              </g>
+                            </svg>
+                          ) : (
+                            <></>
+                          )}
+                          <form className="form_search">
+                            <SearchBar {...props.searchProps} />
+
+                            {/* <SearchBar
                       value={this.state.searchVal}
                       onSearch={onTableChange}
                       // onChange={onTableChange}
                       {...this.props.searchProps}
                       placeholder="Search for student"
                     /> */}
-                    <button>
-                      <img src="search-icon.svg" alt="" />
-                    </button>
-                  </form>
-                </div>
-              </div>
-              {downloading && <h3>Generating Report ...</h3>}
-              <div
-                clasName="col-md-6"
-                style={{ textAlign: "right", marginBottom: "1rem" }}
-              >
-                <button
-                  onClick={(e) => {
-                    this.downloadCSV(
-                      dataSource.map((u) => {
-                        const rc =
-                          u.resumeContent &&
-                          Object.keys(u.resumeContent).length > 0
-                            ? Object.keys(u.resumeContent).map((k) =>
-                                u.resumeContent[k]
-                                  ? u.resumeContent[k]
-                                      .replaceAll(",", " ")
-                                      .replaceAll("\n", " ")
-                                  : ""
-                              )
-                            : [];
+                            <button>
+                              <img src="search-icon.svg" alt="" />
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                      {downloading && <h3>Generating Report ...</h3>}
+                      <div
+                        clasName="col-md-6"
+                        style={{ textAlign: "right", marginBottom: "1rem" }}
+                      >
+                        <button
+                          onClick={(e) => {
+                            this.downloadCSV(
+                              dataSource.map((u) => {
+                                const rc =
+                                  u.resumeContent &&
+                                    Object.keys(u.resumeContent).length > 0
+                                    ? Object.keys(u.resumeContent).map((k) =>
+                                      u.resumeContent[k]
+                                        ? u.resumeContent[k]
+                                          .replaceAll(",", " ")
+                                          .replaceAll("\n", " ")
+                                        : ""
+                                    )
+                                    : [];
 
-                        if (u && u.employee && u.employee) {
-                          rc.push(u.employee.Location);
+                                if (u && u.employee && u.employee) {
+                                  rc.push(u.employee.Location);
+                                }
+                                let aiResult = null;
+                                try {
+                                  aiResult = u.ai_result
+                                    ? JSON.parse(u.ai_result)
+                                    : null;
+                                  aiResult =
+                                    aiResult && aiResult.processed
+                                      ? aiResult.processed
+                                      : null;
+                                } catch (e) { }
+                                if (u && u.employee && u.employee) {
+                                  rc.push(u.employee.Location);
+                                }
+                                return [
+                                  u.userId,
+                                  u.employee.FirstName,
+                                  u.employee.LastName,
+                                  u.attemptNumber,
+                                  u.attemptStatus ? "Y" : "N",
+                                  u.reasonIncomplete == 1
+                                    ? "User Cancel"
+                                    : u.reasonIncomplete == 2
+                                      ? "Alt tab"
+                                      : "",
+                                  // this.score(u.ai_result),
+                                  this.totalScore(u.ai_result),
+                                  u.percent,
+                                  u?.employee?.Location,
+                                  u?.resumeContent?.basicInfo?.phone,
+                                  u.right,
+                                  u.wrong,
+                                  aiResult ? aiResult.away_looking_percent : "",
+                                  aiResult ? aiResult.up_looking_percent : "",
+                                  aiResult ? aiResult.total_time : "",
+                                  aiResult ? aiResult.zero_candidate_time : "",
+                                  aiResult ? aiResult.multi_user_percent : "",
+
+                                  ...rc,
+                                ];
+                              })
+                            );
+                          }}
+                          className="btn btn-size3 btn-blue btn-radius export"
+                        >
+                          <span>Download CSV</span>
+                        </button>
+                        <button
+                          style={{ marginLeft: 10 }}
+                          onClick={this.downloadExcel}
+                          className="btn btn-size3 btn-blue btn-radius export"
+                        >
+                          <span>Email Report</span>
+                        </button>
+                      </div>
+                      <h1 className="title1 mb25">Cohorts: {cohort?.name}</h1>
+                      <h4 className="title4 mb40">
+
+                        <>
+                          <BootstrapTable
+                            clasName="proTest"
+                            {...props.baseProps}
+                            remote={true}
+                            keyField="id"
+                            onTableChange={this.onTableChange}
+                            pagination={pagination}
+                            noDataIndication={() => <NoDataAvailable />}
+
+                          />
+                        </>
+                        {dataSource && dataSource.length == 0 &&
+                          <NoDataAvailable />
                         }
-                        let aiResult = null;
-                        try {
-                          aiResult = u.ai_result
-                            ? JSON.parse(u.ai_result)
-                            : null;
-                          aiResult =
-                            aiResult && aiResult.processed
-                              ? aiResult.processed
-                              : null;
-                        } catch (e) {}
-                        if (u && u.employee && u.employee) {
-                          rc.push(u.employee.Location);
-                        }
-                        return [
-                          u.userId,
-                          u.employee.FirstName,
-                          u.employee.LastName,
-                          u.attemptNumber,
-                          u.attemptStatus ? "Y" : "N",
-                          u.reasonIncomplete == 1
-                            ? "User Cancel"
-                            : u.reasonIncomplete == 2
-                            ? "Alt tab"
-                            : "",
-                          // this.score(u.ai_result),
-                          this.totalScore(u.ai_result),
-                          u.percent,
-                          u?.employee?.Location,
-                          u?.resumeContent?.basicInfo?.phone,
-                          u.right,
-                          u.wrong,
-                          aiResult ? aiResult.away_looking_percent : "",
-                          aiResult ? aiResult.up_looking_percent : "",
-                          aiResult ? aiResult.total_time : "",
-                          aiResult ? aiResult.zero_candidate_time : "",
-                          aiResult ? aiResult.multi_user_percent : "",
+                      </h4>
+                    </div>
+                  </div>
 
-                          ...rc,
-                        ];
-                      })
-                    );
-                  }}
-                  className="btn btn-size3 btn-blue btn-radius export"
-                >
-                  <span>Download CSV</span>
-                </button>
-                <button
-                  style={{ marginLeft: 10 }}
-                  onClick={this.downloadExcel}
-                  className="btn btn-size3 btn-blue btn-radius export"
-                >
-                  <span>Email Report</span>
-                </button>
-              </div>
-              <h1 className="title1 mb25">Cohorts: {cohort?.name}</h1>
-              <h4 className="title4 mb40">
-               
-                  <>
-                    <BootstrapTable
-                    clasName="proTest"
-                     { ...props.baseProps }
-                      remote={true}
-                      keyField="id"
-                      onTableChange={this.onTableChange}
-                      pagination={pagination}
-                      noDataIndication={() => <NoDataAvailable />}
-
-                    />
-                  </>
-                  {dataSource && dataSource.length == 0 &&
-                  <NoDataAvailable />
-                }
-              </h4>
-            </div>
-          </div>
-          <div></div>
-          { // loader
-                  this.state.dataLoaded ? <></> : <NoDataIndication />
-                }
-        </section>
-      </main>
-  )
-}
-         </ToolkitProvider>
+                  <div></div>
+                  { // loader
+                    this.state.dataLoaded ? <></> : <NoDataIndication />
+                  }
+                </section>
+              </main>
+            )
+          }
+        </ToolkitProvider>
+      </>
     );
   }
 }
