@@ -23,7 +23,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
       userData: null,
       prevAttempts: [],
       reviewModal: false,
-      reviewIsExternal: false,
+      reviewIsExternal: true,
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -82,9 +82,9 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
     });
   };
   reviewIsExternal;
-  
+
   render() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}')
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
     const cohort = this.state.cohort;
     const userData = this.state.userData;
     const prevAttempts = this.state.prevAttempts;
@@ -171,15 +171,15 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                               </td>
 
                               <td>
-                                                                <a href={`/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`}>{getAiRatingMedal(prevAttempt.ai_rating_avg)}</a>
-                                                            </td>
+                                <a
+                                  href={`/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`}
+                                >
+                                  {getAiRatingMedal(prevAttempt.ai_rating_avg)}
+                                </a>
+                              </td>
                               <td
                                 className="testClick"
                                 onClick={() => {
-                                  console.log(
-                                    "reviewModal-",
-                                    this.state.reviewModal
-                                  );
                                   this.setState({
                                     currentAttempt: prevAttempt,
                                     reviewModal: true,
@@ -199,11 +199,11 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                     }
                                   >
                                     <div
-                                      className=""
-                                      style={{
-                                        paddingTop: "7px",
-                                        marginRight: 6,
-                                      }}
+                                      className="starReview"
+                                    //   style={{
+                                    //     paddingTop: "7px",
+                                    //     marginRight: 6,
+                                    //   }}
                                     >
                                       {prevAttempt.external_rating_avg ? (
                                         <Star />
@@ -211,7 +211,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                         <div className="circle cursor-pointer"></div>
                                       )}
                                     </div>
-                                    <div className="ml-2">
+                                    <div className="ml-2 ratingText">
                                       {prevAttempt.external_rating_avg === null
                                         ? "NA"
                                         : prevAttempt.external_rating_avg.toFixed(

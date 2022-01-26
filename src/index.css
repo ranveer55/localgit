@@ -10704,3 +10704,41 @@ video.question-video {
   /* border: 3px solid green; */
   padding: 10px;
 }
+
+.review-red{
+  width: 85px;
+  height: 45px;
+  background: 'red';
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+}
+.review-green {
+  width: 85px;
+  height: 45px;
+  background: #1F5842;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+}
+
+.review-yellow {
+  width: 85px;
+  height: 45px;
+  background: #A2AA09;
+  color: white;
+  text-align: center;
+  display: flex;
+
+}
+
+.starReview{
+margin-top: 6px;
+margin-left: 16px;
+margin-right: 7px;
+}
+.ratingText{
+  margin-top: 10px;
+}
