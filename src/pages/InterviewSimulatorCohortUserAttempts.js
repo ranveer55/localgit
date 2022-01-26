@@ -131,6 +131,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                             <th>Video</th>
                             <th>Lesson Name</th>
                             <th>Date</th>
+                            <th>AI Review</th>
                             <th>Mentor Review</th>
                             <th>User Answer</th>
                           </tr>
@@ -169,9 +170,9 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                 )}
                               </td>
 
-                              {/* <td>
+                              <td>
                                                                 <a href={`/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`}>{getAiRatingMedal(prevAttempt.ai_rating_avg)}</a>
-                                                            </td> */}
+                                                            </td>
                               <td
                                 className="testClick"
                                 onClick={() => {
