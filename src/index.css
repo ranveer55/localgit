@@ -10689,3 +10689,18 @@ button.close {
   text-align: center!important;
   font-weight: 700;
 }
+
+.col-md-12.d-flex.justify-content-center.py-5.border {
+  padding-bottom: 3rem!important;
+  padding-top: 3rem!important;
+  justify-content: center!important;
+  display: flex!important;
+  border: 1px #d1d1d1 solid;
+}
+
+video.question-video {
+  margin: auto;
+  width: 50%;
+  /* border: 3px solid green; */
+  padding: 10px;
+}

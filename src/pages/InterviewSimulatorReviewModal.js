@@ -23,7 +23,8 @@ export function InterviewSimulatorReviewModal(props) {
         reviewIsExternal,
         setReviewIsExternal,
         attempt,
-        updateSelfReview, mentor } = props;
+        updateSelfReview, mentor,
+        handleExternalReview, } = props;
 
 
     // the states
@@ -61,13 +62,13 @@ export function InterviewSimulatorReviewModal(props) {
                                 <video controls height="200" width="400" src={'https://langappnew.s3.amazonaws.com/uploads/' + attempt.filePath}></video>
                             </div>
                             {!mentor && (<>
-                                <div className="col-md-4 text-center my-3 cursor-pointer"><h5 onClick={() => setReviewIsExternal(false)} className={reviewIsExternal ? "text-secondary" : "underlined"}>Self Review</h5></div>
+                                <div className="col-md-4 text-center my-3 cursor-pointer"><h5 onClick={() => handleExternalReview(false)} className={reviewIsExternal ? "text-secondary" : "underlined"}>Self Review</h5></div>
                                 <div className="col-md-4 text-center my-3 cursor-pointer"><h5 className={reviewIsExternal ? "underlined" : "text-secondary"} onClick={() => {
-                                    setReviewIsExternal(true);
+                                    handleExternalReview(true);
                                 }}>Other Review</h5></div>
-                                <div className="col-md-4 text-center my-3 cursor-pointer"><h5 className="cursor-pointer text-secondary" onClick={() => {
+                                {/* <div className="col-md-4 text-center my-3 cursor-pointer"><h5 className="cursor-pointer text-secondary" onClick={() => {
                                     window.location.href = "/ai-feedback/" + attempt.uuid;
-                                }}>AI Review</h5></div>
+                                }}>AI Review</h5></div> */}
                             </>)}
                             {mentor ? <ExternalReviewView user={user} externalReviews={attempt.external_rating} externalHelp={externalHelp} /> :
                                 <>
@@ -160,8 +161,11 @@ function ExternalReviewView({ externalReviews, externalHelp, user }) {
                                         <textarea style={{width:'100%'}} className="comment-box" value={comment} onChange={(e)=> setComment(e.target.value)}/>
                                         
                                     </Col> : null}
-                                    {/* {selectedIndex === id && (canGiveRating || video ) &&
-                                    <VideoReview canRecord={canGiveRating} videoDb={video} setVideo={setVideo} id={id} video={null} />} */}
+                                    {selectedIndex === id && (canGiveRating || video ) &&
+
+
+                                    <video className={"question-video"} autoPlay={false} src={`https://langappnew.s3.amazonaws.com/reviews/video/${id}/${video}`} controls ></video>
+                    }
                                     {selectedIndex === id && audio && <Mp3Player url={audio}/>}
                                     {/* {selectedIndex === id && canGiveRating &&  <Mp3  setAudio={setAudio} />} */}
                                     {/* {selectedIndex === id && canGiveRating &&  <Col sm={12} md={12}>
@@ -297,13 +301,13 @@ function SelfReviewView({ selfHelp, attempt, user, selfReview, selfReviewRatings
                                                 <div key={index} className="col-md-6">
                                                     <div className="row">
                                                         <div className="text-left col-md-8">
-                                                            {/* <HelpText placement="top-start" title={selfHelp && selfHelp[parameterName] ? selfHelp[parameterName] : ''}>
+                                                            <HelpText placement="top-start" title={selfHelp && selfHelp[parameterName] ? selfHelp[parameterName] : ''}>
 
                                                                 <span>{parameterName} </span>
-                                                            </HelpText> */}
+                                                            </HelpText>
                                                         </div>
                                                         <div className="bd-highlight col-md-4 pr-5 pl-0">
-                                                            {/* <RatingComponent
+                                                            <RatingComponent
                                                                 // defaultValue={5}
                                                                 id={index}
                                                                 // name={"rating" + index}
@@ -314,12 +318,12 @@ function SelfReviewView({ selfHelp, attempt, user, selfReview, selfReviewRatings
                                                                     let newRating = { ...selfReviewRatings };
                                                                     newRating[parameterName] = r;
                                                                     setSelfReviewRatings(newRating);
-                                                                }} /> */}
+                                                                }} />
                                                         </div>
                                                     </div>
                                                 </div>
                                             ))
-                                            : ("Loading parameters...")
+                                            : ("Not added")
                                     }
                                 </>
                             )
