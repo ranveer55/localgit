@@ -62,10 +62,10 @@ export function InterviewSimulatorReviewModal(props) {
                                 <video controls height="200" width="400" src={'https://langappnew.s3.amazonaws.com/uploads/' + attempt.filePath}></video>
                             </div>
                             {!mentor && (<>
-                                <div className="col-md-4 text-center my-3 cursor-pointer"><h5 onClick={() => handleExternalReview(false)} className={reviewIsExternal ? "text-secondary" : "underlined"}>Self Review</h5></div>
+                                {/* <div className="col-md-4 text-center my-3 cursor-pointer"><h5 onClick={() => handleExternalReview(false)} className={reviewIsExternal ? "text-secondary" : "underlined"}>Self Review</h5></div> */}
                                 <div className="col-md-4 text-center my-3 cursor-pointer"><h5 className={reviewIsExternal ? "underlined" : "text-secondary"} onClick={() => {
                                     handleExternalReview(true);
-                                }}>Other Review</h5></div>
+                                }}>Mentor Review</h5></div>
                                 {/* <div className="col-md-4 text-center my-3 cursor-pointer"><h5 className="cursor-pointer text-secondary" onClick={() => {
                                     window.location.href = "/ai-feedback/" + attempt.uuid;
                                 }}>AI Review</h5></div> */}
