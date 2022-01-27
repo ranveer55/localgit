@@ -6363,10 +6363,10 @@ body.blackTheme .breadcrumbs {
   padding-right: 70px;
   width: calc(100% - 100px);
 }
-#content > *:not(.bg_content) {
+/* #content > *:not(.bg_content) {
   position: relative;
   z-index: 1;
-}
+} */
 #content.type2 {
   width: 100%;
   padding-right: 0;
