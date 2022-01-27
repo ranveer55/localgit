@@ -173,7 +173,7 @@ class InterviewSimulatorCohortPage extends Component {
                         </h4>
                         <div id="reports" className="scrollmenu">
                             {/* The chart, zoom restorer helps with the stupid zoomout previous dev put in */}
-                            <div className="zoom-restorer">
+                            {/* <div className="zoom-restorer">
                                 <div className="zoom-unrestorer">
                                     <LineChart
                                         cohort={cohort } 
@@ -183,7 +183,7 @@ class InterviewSimulatorCohortPage extends Component {
                                        
                                          />
                                 </div>
-                            </div>
+                            </div> */}
                             {/* date range and register and activation count */}
                             <div style={{ padding: "8px 0" }}>
                                 <span style={{ padding: "2px 8px", margin: "0 8px", fontWeight: "500" }}>Date Range</span>
