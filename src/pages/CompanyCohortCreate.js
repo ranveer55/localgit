@@ -24,6 +24,7 @@ class CompanyCohortCreate extends Component {
       senderEmail:'',
       errors: null,
       profile_questionnaire: false,
+      vpi_value:false,
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -125,6 +126,7 @@ class CompanyCohortCreate extends Component {
                     }} /><span style={{margin:10}}> No</span>
                   
                 </div>
+             
                 <div className="form-group">
                   <label>Cohort Type</label>
                   <select
@@ -144,6 +146,35 @@ class CompanyCohortCreate extends Component {
                     }
                   </select>
                 </div>
+              
+                   {/* verbal proficiency index */}
+                   {this.state.cohortType == 3 && ( 
+                   <div className="form-group" style={{display:'flex'}}>
+                  <label style={{margin:10}}>Verbal proficiency index(VPI)</label>
+                  <input
+                    style={{margin:10}}
+                    type="radio"
+                    name="vpi_value"
+                    className=""
+                    checked={this.state.vpi_value ==true}
+                    onChange={e => {
+                      this.setState({vpi_value:true});
+                    }} />
+                    <span style={{margin:10}}> Yes</span>
+                    <input
+                    style={{margin:10}}
+                    type="radio"
+                    name="vpi_value"
+                    className=""
+                    checked={this.state.vpi_value !=true}
+                    onChange={e => {
+                      this.setState({
+                        vpi_value:false });
+                    }} /><span style={{margin:10}}> No</span>
+                  
+                </div>
+                )}
+                {/* end verbal proficiency index */}
                 {this.state.cohortType == 2 && ( 
                 <>
                 <div className="form-group">
@@ -268,6 +299,7 @@ class CompanyCohortCreate extends Component {
                      exam_end_time: this.state.exam_end_time,
                       exam_start_time: this.state.exam_start_time,
                       allotted_time: this.state.allotted_time,
+                      vpi_value: this.state.vpi_value, 
                     };
 
 
