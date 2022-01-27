@@ -3,13 +3,13 @@ import './Loader.css';
 
 export default function Loader() {
     return (
-        <div className="loader-container">
-            <div className="spinner">
-                <div className="bounce1"></div>
-                <div className="bounce2"></div>
-                <div className="bounce3"></div>
-            </div>
+        <div id="page-preloader">
+        <div className="preloader">
+            <div className="preload_inner preload-one"></div>
+            <div className="preload_inner preload-two"></div>
+            <div className="preload_inner preload-three"></div>
         </div>
+    </div>
 
     )
 }
