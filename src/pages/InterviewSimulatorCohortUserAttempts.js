@@ -151,12 +151,14 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                               <td style={{ wordBreak: "break-all" }}>
                                 {prevAttempt.filePath ? (
                                   <video
+                                    controls
+                                    height="200"
+                                    width="200"
                                     src={
                                       "https://langappnew.s3.amazonaws.com/uploads/" +
                                       prevAttempt.filePath
                                     }
-                                    width="200px"
-                                  />
+                                  ></video>
                                 ) : (
                                   <div style={{ height: "100%" }}>
                                     Video Not Available
@@ -200,10 +202,10 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                   >
                                     <div
                                       className="starReview"
-                                    //   style={{
-                                    //     paddingTop: "7px",
-                                    //     marginRight: 6,
-                                    //   }}
+                                      //   style={{
+                                      //     paddingTop: "7px",
+                                      //     marginRight: 6,
+                                      //   }}
                                     >
                                       {prevAttempt.external_rating_avg ? (
                                         <Star />
