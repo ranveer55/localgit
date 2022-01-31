@@ -81,7 +81,24 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
       reviewIsExternal: val,
     });
   };
-  reviewIsExternal;
+  getVPIScore =(datum) =>{
+    this.setState({
+      loading: true
+    });
+    global.api
+      .getVPIScore(datum.id)
+      .then((data) => {
+        this.setState({
+          loadin: true,
+        });
+        // this.setState({ batchData: data });
+      })
+      .catch((err) => {
+        this.setState({
+          loading: true,
+        });
+      });
+  }
 
   render() {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -132,7 +149,9 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                             <th>Lesson Name</th>
                             <th>Date</th>
                             <th>AI Review</th>
+                            <th>VPI Review</th>
                             <th>Mentor Review</th>
+                            
                             <th>User Answer</th>
                           </tr>
                         </thead>
@@ -178,6 +197,9 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                 >
                                   {getAiRatingMedal(prevAttempt.ai_rating_avg)}
                                 </a>
+                              </td>
+                              <td>
+                                <button onClick={() =>this.getVPIScore(prevAttempt)}>get</button>
                               </td>
                               <td
                                 className="testClick"

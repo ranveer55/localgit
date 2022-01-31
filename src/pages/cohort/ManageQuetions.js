@@ -774,6 +774,27 @@ class ManageQuetions extends Component {
                   </h6>
                   <div style={{ margin: "1rem 0", fontSize: "23px" }}>
                     <div className="row" style={{ padding: "2px 10px" }}>
+                      <div className="col-md-3">Practice Type</div>
+                      <div className="col-md-9">
+                        <select
+                          disabled={uploading}
+                          value={newQuestion.type}
+                          name="type"
+                          style={{
+                            width: "100%",
+                            border: "1px solid",
+                            padding: 10,
+                            borderRadius: 5,
+                          }}
+                          
+                          onChange={this.onChange}
+                        >
+                          <option value={1} >video</option>
+                          <option value={0} >text</option>
+                          </select>
+                      </div>
+                    </div>
+                    <div className="row" style={{ padding: "2px 10px" }}>
                       <div className="col-md-3">Practice Question</div>
                       <div className="col-md-9">
                         <textarea
