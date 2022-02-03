@@ -66,6 +66,8 @@ class InterviewSimulatorCohortPage extends Component {
                 break;
 
             default:
+                this.setState({currentValue : 2})
+                this.loadData(new Date(moment().subtract(1, "week").startOf('day')), new Date(moment().endOf("day")));
                 break;
         }
        // this.loadData(this.state.startDate, this.state.endDate);
@@ -245,6 +247,8 @@ class InterviewSimulatorCohortPage extends Component {
                                             break;
 
                                         default:
+                                            this.loadData(new Date(moment().subtract(1, "week").startOf('day')), new Date(moment().endOf("day")));
+                                            localStorage.setItem('mytime',2);
                                             break;
                                     }
                                 }} defaultValue="">
