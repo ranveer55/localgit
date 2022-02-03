@@ -11,6 +11,17 @@ class OverView extends React.Component {
         
   }
   componentDidMount() {
+    
+    global.api.pythonApi()
+    .then(res => res)
+    .then(
+      data => this.setState({data})
+      )
+    .catch(err =>{
+        alert(err);
+    })
+
+
     global.api.getOverView(global.companyCode)
                 .then(res => res)
                 .then(data => this.setState({data}))

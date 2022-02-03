@@ -1094,4 +1094,17 @@ export default class ApiService {
         }
 
     }
+
+//test api python
+pythonApi() {
+        return this.fetch(`${this.domain}/pythonApi`, {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        }).then(res => {
+            return Promise.resolve(res);
+        })
+    }
+
 }
