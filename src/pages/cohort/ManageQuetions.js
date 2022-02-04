@@ -24,6 +24,7 @@ class ManageQuetions extends Component {
       practiceQuestionText: "",
       referenceAnswer: "",
       video: "",
+      type: 1
     };
     this.state = {
       video: null,
@@ -786,6 +787,7 @@ class ManageQuetions extends Component {
                             padding: 10,
                             borderRadius: 5,
                           }}
+                          defaultValue={1}
                           
                           onChange={this.onChange}
                         >
@@ -916,7 +918,6 @@ class ManageQuetions extends Component {
                                   />
                                 </div>
                               )}
-                              {console.log("videoRef--", this.videoRef)}
                               {!downloadLink ? (
                                 !stream ? (
                                   <video
