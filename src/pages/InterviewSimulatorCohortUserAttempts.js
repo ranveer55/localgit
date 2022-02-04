@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { ReactComponent as Star } from "./start_icon.svg";
 import { InterviewSimulatorReviewModal } from "./InterviewSimulatorReviewModal";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { CDN_URL } from "../constant";
 class InterviewSimulatorCohortUserAttempsPage extends Component {
   constructor(props) {
     super(props);
@@ -188,10 +189,10 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                 {prevAttempt.filePath ? (
                                   <video
                                     controls
-                                    height="200"
-                                    width="200"
+                                    height="170"
+                                    width="170"
                                     src={
-                                      "https://langappnew.s3.amazonaws.com/uploads/" +
+                                       CDN_URL +"/uploads/" +
                                       prevAttempt.filePath
                                     }
                                   ></video>
