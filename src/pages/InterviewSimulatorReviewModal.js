@@ -10,6 +10,7 @@ import HelpText from '../components/HelpText/HelpText';
 import './modal.css';
 // import Mp3 from '../../../_components/Mp3Record';
 import Mp3Player from '../components/Mp3Player/Mp3Player';
+import { CDN_URL } from '../constant';
 // import VideoReview from '../../../_components/VideoReview';
 
 
@@ -46,11 +47,11 @@ export function InterviewSimulatorReviewModal(props) {
     // if (!attempt) return <></>;
 
     // get the related data
-    const { lessonName, lessonNo, self_rating } = attempt;
+    const { lessonName, lessonNo, self_rating,sequenceNo } = attempt;
 
     return (
         <div className="ReviewModal">
-
+        {console.log('ExternalReviewView--',sequenceNo,attempt)}
             <Modal className="reviewModalPoup" centered size="lg" show={show} onHide={handleClose}>
                 <Modal.Header closeButton style={{ border: 'none' }} />
                 <Modal.Body>
@@ -135,7 +136,6 @@ function ExternalReviewView({ externalReviews, externalHelp, user }) {
 
     return (
         <>
-        {console.log('ExternalReviewView--',externalReviews)}
             <Container>
             {loading ? <div className="text-center mt-5">
                 {/* <Spinner color="red" larger /> */}
@@ -164,7 +164,7 @@ function ExternalReviewView({ externalReviews, externalHelp, user }) {
                                     {selectedIndex === id && (canGiveRating || video ) &&
 
 
-                                    <video className={"question-video"} autoPlay={false} src={`https://langappnew.s3.amazonaws.com/reviews/video/${id}/${video}`} controls ></video>
+                                    <video className={"question-video"} autoPlay={false} src={`${CDN_URL}reviews/video/${id}/${video}`} controls ></video>
                     }
                                     {selectedIndex === id && audio && <Mp3Player url={audio}/>}
                                     {/* {selectedIndex === id && canGiveRating &&  <Mp3  setAudio={setAudio} />} */}

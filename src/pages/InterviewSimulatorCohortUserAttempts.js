@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
 import { ReactComponent as Star } from "./start_icon.svg";
 import { InterviewSimulatorReviewModal } from "./InterviewSimulatorReviewModal";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import { CDN_URL } from "../constant";
 class InterviewSimulatorCohortUserAttempsPage extends Component {
   constructor(props) {
@@ -289,13 +289,16 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                       <>No Data</>
                     )}
                   </h4>
-                  {showAlert && <Modal.Dialog style={{
-                    position: 'absolute',
+                  {showAlert && 
+                  <Modal.Dialog onHide={this.closeAlert} style={{
+                    position: 'fixed',
                     margin: '10px',
-                    top: '40px',
-                    left: '23%'
+                    top: '50%',
+                    left: '23%',
+                    width: '600px'
                   }}>
-                    <Modal.Header closeButton
+                    <Modal.Header
+                    //  closeButton={this.closeAlert}
                       size="lg"
                       backdrop="static"
                       keyboard={false}
@@ -311,7 +314,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                       </Spinner>}
                       {alertMsg && Object.keys(alertMsg).length > 0 ? Object.keys(alertMsg).map((key) =><div>
                         <b>{key}</b> : {alertMsg[key]}
-                      </div>):  ''}
+                      </div>): !loading ?  'No record found!' : ''}
                     </Modal.Body>
 
                     <Modal.Footer>
