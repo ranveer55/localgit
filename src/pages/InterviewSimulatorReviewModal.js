@@ -53,7 +53,6 @@ export function InterviewSimulatorReviewModal(props) {
 
     return (
         <div className="ReviewModal">
-        {console.log('ExternalReviewView--',sequenceNo,attempt)}
             <Modal className="reviewModalPoup" centered size="lg" show={show} onHide={handleClose}>
                 <Modal.Header closeButton style={{ border: 'none' }} />
                 <Modal.Body>
