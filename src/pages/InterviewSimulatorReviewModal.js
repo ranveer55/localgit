@@ -18,7 +18,9 @@ import { CDN_URL } from '../constant';
 export function InterviewSimulatorReviewModal(props) {
  
     // the props
-    const { show,
+    const { 
+        sequenceNo,
+        show,
         user,
         handleCloseReview,
         reviewIsExternal,
@@ -47,7 +49,7 @@ export function InterviewSimulatorReviewModal(props) {
     // if (!attempt) return <></>;
 
     // get the related data
-    const { lessonName, lessonNo, self_rating,sequenceNo } = attempt;
+    const { lessonName, lessonNo, self_rating } = attempt;
 
     return (
         <div className="ReviewModal">
@@ -58,7 +60,7 @@ export function InterviewSimulatorReviewModal(props) {
                     <div className="container">
                         <div className="row">
 
-                            <div className="col-md-12 text-center font-bold mb-2">Question {lessonNo}.{lessonName}</div>
+                            <div className="col-md-12 text-center font-bold mb-2">Question {sequenceNo}. {lessonName}</div>
                             <div className="col-md-12 d-flex justify-content-center py-5 border">
                                 <video controls height="200" width="400" src={'https://langappnew.s3.amazonaws.com/uploads/' + attempt.filePath}></video>
                             </div>

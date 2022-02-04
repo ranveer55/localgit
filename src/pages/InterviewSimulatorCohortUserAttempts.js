@@ -25,7 +25,8 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
       reviewModal: false,
       reviewIsExternal: true,
       loading: false,
-      alertMsg: undefined
+      alertMsg: undefined,
+      seqNo:''
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -225,6 +226,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                   this.setState({
                                     currentAttempt: prevAttempt,
                                     reviewModal: true,
+                                    seqNo:index + 1
                                   });
                                 }}
                               >
@@ -329,6 +331,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
         )}
         {this.state.reviewModal && (
           <InterviewSimulatorReviewModal
+          sequenceNo={this.state.seqNo}
             handleCloseReview={this.handleCloseReview}
             show={this.state.reviewModal}
             attempt={this.state.currentAttempt}
