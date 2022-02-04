@@ -124,6 +124,21 @@ video.record-video.c212121 {
     color: green;
   }
   
+
+
+  .add-practice-set-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0002;
+    z-index: 99;
+    overflow: auto;
+  }
   .recorder {
     flex-grow: 1;
     position: relative;
@@ -142,4 +157,56 @@ video.record-video.c212121 {
     color: red;
     left: calc(12% - 100px);
     font-size: 100px;
+  }
+  .add-practice-set-modal-body {
+    border-radius: 6px;
+    border: 1px solid body;
+    background-color: white;
+    padding: 2rem 3rem;
+    min-width: 720px;
+  }
+  .add-practice-set-modal-button-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .practice-set-choice {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .practice-set-choice-selector {
+    width: 24px;
+    height: 24px;
+    border: 1px solid gray;
+    margin-right: 1rem;
+    display: block;
+  }
+  .practice-set-choice-selector.selected::after {
+    display: block;
+    content: "";
+    width: 24px;
+    border-bottom: 4px solid gray;
+    border-left: 4px solid gray;
+    height: 16px;
+    transform: rotate(-45deg);
+  }
+  .add-practice-set-modal-button {
+    padding: 0.5rem 0;
+    width: 250px;
+    border-radius: 2rem;
+    font-size: larger;
+    border: 1px solid #000a;
+    margin: 0 5px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .add-practice-set-modal-button.green {
+    background-color: #188978;
+    border-color: #188978;
+    color: white;
+  }
+
+  .table th:nth-child(1) {
+    width: 20%;
   }
