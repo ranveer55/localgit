@@ -295,8 +295,8 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                   <Modal.Dialog onHide={this.closeAlert} style={{
                     position: 'fixed',
                     margin: '10px',
-                    top: '50%',
-                    left: '23%',
+                    top: '30%',
+                    left: '30%',
                     width: '600px'
                   }}>
                     <Modal.Header
