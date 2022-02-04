@@ -66,8 +66,8 @@ class InterviewSimulatorCohortPage extends Component {
                 break;
 
             default:
-                this.setState({currentValue : 2})
-                this.loadData(new Date(moment().subtract(1, "week").startOf('day')), new Date(moment().endOf("day")));
+                this.setState({currentValue : 5})
+                this.loadData(new Date(moment().subtract(1, "year").startOf('day')), new Date(moment().endOf("day")));
                 break;
         }
        // this.loadData(this.state.startDate, this.state.endDate);
@@ -247,8 +247,8 @@ class InterviewSimulatorCohortPage extends Component {
                                             break;
 
                                         default:
-                                            this.loadData(new Date(moment().subtract(1, "week").startOf('day')), new Date(moment().endOf("day")));
-                                            localStorage.setItem('mytime',2);
+                                            this.loadData(new Date(moment().subtract(1, "year").startOf('day')), new Date(moment().endOf("day")));
+                                            localStorage.setItem('mytime',5);
                                             break;
                                     }
                                 }} defaultValue="">
@@ -257,7 +257,7 @@ class InterviewSimulatorCohortPage extends Component {
                                     <option selected={this.state.currentValue == 4} value="4">Yesterday</option>
                                     <option selected={this.state.currentValue == 2} value="2">Last Week</option>
                                     <option selected={this.state.currentValue == 3} value="3">Last Month</option>
-                                    <option selected={this.state.currentValue == 5} value="5">Current Year</option>
+                                    <option selected={this.state.currentValue == 5} value="5">Last Year</option>
                                 </select>
                             </div>
                            
