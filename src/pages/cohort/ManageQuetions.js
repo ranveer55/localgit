@@ -6,7 +6,7 @@ import { ProgressBar } from "react-bootstrap";
 import { mixPanel } from "../../config/mixpanel.config";
 import axios from "axios";
 import { toast } from "../../components/Toast/Toast";
-
+import './video.css';
 const s3Url = "https://langappnew.s3.amazonaws.com/uploads/";
 // let baseUrl = process.env.NODE_ENV === 'development' ? "http://localhost:8000/api/" : (window.location.hostname === "app.taplingua.com" ? "https://api2.taplingua.com/api/" : "https://apistaging.taplingua.com/api/");
 let baseUrl = "http://localhost:8000/api/";
