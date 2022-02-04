@@ -661,6 +661,16 @@ export default class ApiService {
             return res.data;
         });
     }
+    getVPIScore(id) {
+        return axios.get(`${this.domain}/interview/vpiscore/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
 
     getUserMistakesByCohort(cohort_id, date) {
         return axios.get(`${this.domain}/user-mistakes-report-by-cohort/${cohort_id}?date=${date}`, {
@@ -1084,4 +1094,17 @@ export default class ApiService {
         }
 
     }
+
+//test api python
+pythonApi() {
+        return this.fetch(`${this.domain}/pythonApi`, {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        }).then(res => {
+            return Promise.resolve(res);
+        })
+    }
+
 }

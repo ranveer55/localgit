@@ -1,12 +1,11 @@
 import moment from "moment";
 import React, { Component } from "react";
-import { Row, Button } from "react-bootstrap";
+import { Row, Button, Spinner } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
 import { ReactComponent as Star } from "./start_icon.svg";
 import { InterviewSimulatorReviewModal } from "./InterviewSimulatorReviewModal";
-// import "bootstrap/dist/css/bootstrap.min.css";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 class InterviewSimulatorCohortUserAttempsPage extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +23,8 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
       prevAttempts: [],
       reviewModal: false,
       reviewIsExternal: true,
+      loading: false,
+      alertMsg: undefined
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -81,16 +82,49 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
       reviewIsExternal: val,
     });
   };
-  reviewIsExternal;
+  getVPIScore = (datum) => {
+    if(datum.vpi_score){
+      this.setState({
+        loading: false,
+        alertMsg: datum.vpi_score,
+        showAlert: true
+      });
+      return;
+    }
+    this.setState({
+      loading: true,
+      alertMsg: undefined,
+      showAlert: true
+    });
+    global.api
+      .getVPIScore(datum.id)
+      .then((data) => {
+        this.setState({
+          loading: false,
+          alertMsg: data && data.data ? data.data : null
+        });
+        // this.setState({ batchData: data });
+      })
+      .catch((err) => {
+        this.setState({
+          loading: true,
+        });
+      });
+  }
+
+  closeAlert = () => {
+    this.setState({ showAlert: false, alertMsg: undefined })
+  }
 
   render() {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const cohort = this.state.cohort;
     const userData = this.state.userData;
     const prevAttempts = this.state.prevAttempts;
-
+    const { loading, alertMsg, showAlert } = this.state;
     return (
       <>
+
         {!this.state.reviewModal && (
           <main className="offset InterciewSimulationUserAttempts" id="content">
             <section className="section_box">
@@ -132,7 +166,9 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                             <th>Lesson Name</th>
                             <th>Date</th>
                             <th>AI Review</th>
+                            <th>VPI Review</th>
                             <th>Mentor Review</th>
+
                             <th>User Answer</th>
                           </tr>
                         </thead>
@@ -145,7 +181,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                   : prevAttempt.id
                               }
                               style={{ cursor: "pointer" }}
-                              // onClick={e => { window.location.href = `/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`; }}
+                            // onClick={e => { window.location.href = `/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`; }}
                             >
                               <td>{index + 1}</td>
                               <td style={{ wordBreak: "break-all" }}>
@@ -179,6 +215,9 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                   {getAiRatingMedal(prevAttempt.ai_rating_avg)}
                                 </a>
                               </td>
+                              <td>
+                                <button onClick={() => this.getVPIScore(prevAttempt)}>get</button>
+                              </td>
                               <td
                                 className="testClick"
                                 onClick={() => {
@@ -195,17 +234,17 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                         ? prevAttempt.external_rating_avg <= 2
                                           ? "review-red cursor-pointer"
                                           : prevAttempt.external_rating_avg <= 3
-                                          ? "review-yellow cursor-pointer"
-                                          : "review-green cursor-pointer"
+                                            ? "review-yellow cursor-pointer"
+                                            : "review-green cursor-pointer"
                                         : "ai-review NA cursor-pointer"
                                     }
                                   >
                                     <div
                                       className="starReview"
-                                      //   style={{
-                                      //     paddingTop: "7px",
-                                      //     marginRight: 6,
-                                      //   }}
+                                    //   style={{
+                                    //     paddingTop: "7px",
+                                    //     marginRight: 6,
+                                    //   }}
                                     >
                                       {prevAttempt.external_rating_avg ? (
                                         <Star />
@@ -217,8 +256,8 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                       {prevAttempt.external_rating_avg === null
                                         ? "NA"
                                         : prevAttempt.external_rating_avg.toFixed(
-                                            2
-                                          )}
+                                          2
+                                        )}
                                     </div>
                                   </div>
                                 ) : (
@@ -249,6 +288,35 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                       <>No Data</>
                     )}
                   </h4>
+                  {showAlert && <Modal.Dialog style={{
+                    position: 'absolute',
+                    margin: '10px',
+                    top: '40px',
+                    left: '23%'
+                  }}>
+                    <Modal.Header closeButton
+                      size="lg"
+                      backdrop="static"
+                      keyboard={false}
+                      aria-labelledby="contained-modal-title-vcenter"
+                      centered
+                    >
+                      <Modal.Title>{loading ? `Getting...` : 'Candidate '} VPI Score</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                      {loading && <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </Spinner>}
+                      {alertMsg && Object.keys(alertMsg).length > 0 ? Object.keys(alertMsg).map((key) =><div>
+                        <b>{key}</b> : {alertMsg[key]}
+                      </div>):  ''}
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={this.closeAlert}>Close</Button>
+                    </Modal.Footer>
+                  </Modal.Dialog>}
                 </div>
               </div>
               <div></div>
