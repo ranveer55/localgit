@@ -7,6 +7,7 @@ import { mixPanel } from "../../config/mixpanel.config";
 import axios from "axios";
 import { toast } from "../../components/Toast/Toast";
 import './video.css';
+import { CDN_URL } from "../../constant";
 const s3Url = "https://langappnew.s3.amazonaws.com/uploads/";
 // let baseUrl = process.env.NODE_ENV === 'development' ? "http://localhost:8000/api/" : (window.location.hostname === "app.taplingua.com" ? "https://api2.taplingua.com/api/" : "https://apistaging.taplingua.com/api/");
 let baseUrl = "http://localhost:8000/api/";
@@ -627,10 +628,11 @@ class ManageQuetions extends Component {
         dataField: "video",
         text: "Video",
         formatter: (v, row) => (
+          row?.video_type != '0' ?
           <video width="250" height="230" controls>
             <source
               className="chkVideo"
-              src={`https://langappnew.s3.amazonaws.com/interviewprep/${
+              src={`${CDN_URL}/interviewprep/${
                 row?.practiceSetId
               }/${row?.practiceSetId}_0_${row?.practiceQuestionId}.${
                 row?.video_type ? row?.video_type : "mp4"
@@ -638,6 +640,8 @@ class ManageQuetions extends Component {
               type={`video/${row?.video_type ? row?.video_type : "mp4"}`}
             />
           </video>
+          :'Question type : Text'
+
         ),
       },
       {

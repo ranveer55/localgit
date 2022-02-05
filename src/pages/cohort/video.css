@@ -210,3 +210,11 @@ video.record-video.c212121 {
   .table th:nth-child(1) {
     width: 20%;
   }
+
+  .interview-simulator-dropdown {
+    height: 40px;
+  }
+
+  .interview-simulator-dropdown-holder:hover .interview-simulator-dropdown-content {
+    z-index: 99;
+}
