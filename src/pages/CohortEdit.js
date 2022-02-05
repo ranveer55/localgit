@@ -191,6 +191,43 @@ class CohortEdit extends Component {
                     }
                   </select>
                 </div>
+                 {/* verbal proficiency index */}
+                 {cohort?.type_id == 3 && ( 
+                   <div className="form-group" style={{display:'flex'}}>
+                  <label style={{margin:10}}>Verbal proficiency index(VPI)</label>
+                  <input
+                    style={{margin:10}}
+                    type="radio"
+                    name="vpi_value"
+                    className=""
+                    checked={cohort?.vpi_value == '1'}
+                    onChange={e => {
+                      this.setState({
+                        cohort:{
+                          ...cohort,
+                          vpi_value: '1' 
+                      }
+                      });
+                    }} />
+                    <span style={{margin:10}}> Yes</span>
+                    <input
+                    style={{margin:10}}
+                    type="radio"
+                    name="vpi_value"
+                    className=""
+                    checked={cohort?.vpi_value == '0' || cohort?.vpi_value == null}
+                    onChange={e => {
+                      this.setState({
+                        cohort:{
+                          ...cohort,
+                          vpi_value: '0' 
+                      }
+                        });
+                    }} /><span style={{margin:10}}> No</span>
+                  
+                </div>
+                )}
+                {/* end verbal proficiency index */}
                 {cohort.type_id == 2 && ( 
                 <>
                 <div className="form-group">

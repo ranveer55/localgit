@@ -27,7 +27,7 @@ class CompanyCohortCreate extends Component {
       senderEmail:'',
       errors: null,
       profile_questionnaire: false,
-      vpi_value:false,
+      vpi_value:0,
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -159,9 +159,9 @@ class CompanyCohortCreate extends Component {
                     type="radio"
                     name="vpi_value"
                     className=""
-                    checked={this.state.vpi_value ==true}
+                    checked={this.state.vpi_value == 1}
                     onChange={e => {
-                      this.setState({vpi_value:true});
+                      this.setState({vpi_value:1});
                     }} />
                     <span style={{margin:10}}> Yes</span>
                     <input
@@ -169,10 +169,10 @@ class CompanyCohortCreate extends Component {
                     type="radio"
                     name="vpi_value"
                     className=""
-                    checked={this.state.vpi_value !=true}
+                    checked={this.state.vpi_value == 0}
                     onChange={e => {
                       this.setState({
-                        vpi_value:false });
+                        vpi_value:0 });
                     }} /><span style={{margin:10}}> No</span>
                   
                 </div>

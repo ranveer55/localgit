@@ -792,7 +792,7 @@ class ManageQuetions extends Component {
                       </div>
                     </div>
                     <div className="row" style={{ padding: "2px 10px" }}>
-                      <div className="col-md-3">Practice Question</div>
+                      <div className="col-md-3">Practice Question*</div>
                       <div className="col-md-9">
                         <textarea
                           disabled={uploading}
@@ -828,7 +828,7 @@ class ManageQuetions extends Component {
                       </div>
                     </div>
                     <div className="row" style={{ padding: "2px 10px" }}>
-                      <div className="col-md-3">Reference Answer</div>
+                      <div className="col-md-3">Reference Answer{newQuestion.type == 0 && '*'}</div>
                       <div className="col-md-9">
                         <textarea
                           disabled={uploading}
@@ -847,7 +847,7 @@ class ManageQuetions extends Component {
                     </div>
                 {newQuestion.type == 1 && 
                     <div className="row" style={{ padding: "2px 10px" }}>
-                      <div className="col-md-3">Video</div>
+                      <div className="col-md-3">Video*</div>
                       <div className="col-md-9">
                         <div className="selectOptions">
                           <p
