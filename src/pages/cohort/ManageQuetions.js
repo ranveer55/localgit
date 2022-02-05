@@ -120,7 +120,6 @@ class ManageQuetions extends Component {
         formData.append("video_type", video.name);
       }
     }
-    console.log("addPrac--", video);
 
     if (this.state.newQuestion.practiceQuestionId) {
       global.api
@@ -193,7 +192,6 @@ class ManageQuetions extends Component {
     });
   };
   onChangeEditor = (e) => {
-    console.log({ e });
     let { newQuestion } = this.state;
     this.setState({
       newQuestion: {
@@ -235,11 +233,7 @@ class ManageQuetions extends Component {
     // this.setState({newQuestion: row})
   };
   onChangeFile = (e) => {
-    // console.log('1',e.target.files)
-    // console.log('2',e.target.Files)
-    // console.log(e.target)
     this.setState({ video: e.target });
-    console.log("onChangeFile--", e.target);
   };
 
   // get cohort practice sets
@@ -269,7 +263,6 @@ class ManageQuetions extends Component {
 
   togglePracticeSetSelection(practiceSetId) {
     // if already there, remove it
-    console.log("here", practiceSetId);
     if (this.state.selectedPracticeSets.includes(practiceSetId)) {
       const newState = [...this.state.selectedPracticeSets];
       newState.splice(
@@ -289,7 +282,6 @@ class ManageQuetions extends Component {
     }
   }
   formatter = (cell, row) => {
-    console.log(this);
     return (
       <div className="interview-simulator-dropdown-holder">
         <span className="interview-simulator-dropdown">⋮</span>
@@ -340,7 +332,6 @@ class ManageQuetions extends Component {
     const id_token = localStorage.getItem("id_token");
     const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-    console.log("useruser--", user);
     const saveAttempt = async (e) => {
       const fileName = "UserAttempt.webm";
       const file = new File([downloadLink], fileName);
@@ -850,7 +841,7 @@ class ManageQuetions extends Component {
                         />
                       </div>
                     </div>
-
+                {newQuestion.type == 1 && 
                     <div className="row" style={{ padding: "2px 10px" }}>
                       <div className="col-md-3">Video</div>
                       <div className="col-md-9">
@@ -875,6 +866,7 @@ class ManageQuetions extends Component {
                         </div>
                       </div>
                     </div>
+          }
                     {this.state.uploadVideo && (
                       <div className="row" style={{ padding: "2px 10px" }}>
                         <div className="col-md-3"></div>
