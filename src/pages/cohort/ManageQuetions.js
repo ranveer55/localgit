@@ -831,6 +831,7 @@ class ManageQuetions extends Component {
                       <div className="col-md-3">Reference Answer{newQuestion.type == 0 && '*'}</div>
                       <div className="col-md-9">
                         <textarea
+                        rows="8"
                           disabled={uploading}
                           name="referenceAnswer"
                           value={newQuestion.referenceAnswer}
