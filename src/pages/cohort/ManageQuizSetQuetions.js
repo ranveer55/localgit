@@ -49,7 +49,21 @@ class ManageQuizSetQuetions extends Component {
     }
 
 
-
+   cancelPopup = () => {
+    this.newQuestion = {
+        questionType: 2,
+        quizSubTopic: 0,
+        questionText: '',
+        optionChoices: '',
+        difficultyLevel: 1,
+        quizSetId: ''
+    }
+    
+    this.setState({
+        addQuizSetAddModal: false,
+        newQuestion: this.newQuestion
+    });
+   }
     addQuestion = () => {
         const datum = this.state.newQuestion;
         datum.quizSetId = this.state.data.quizSetId;
@@ -57,7 +71,17 @@ class ManageQuizSetQuetions extends Component {
             .then(
                 data => {
                     this.loadQuizSetsQuestions()
+                    this.newQuestion = {
+                        questionType: 2,
+                        quizSubTopic: 0,
+                        questionText: '',
+                        optionChoices: '',
+                        difficultyLevel: 1,
+                        quizSetId: ''
+                    }
+                    this.setState({newQuestion: this.newQuestion})
                 })
+
             .catch(err => {
                 this.setState({
                     dateLoaded: true,
@@ -275,11 +299,7 @@ class ManageQuizSetQuetions extends Component {
                                      <div className="card">
                                     <div style={{ display: 'flex' }}>
                                         <div disabled={!this.state.valid} style={{ backgroundColor: '#4AB93C' }} className="add-practice-set-modal-button" onClick={this.addQuestion}>Save</div>
-                                        <div className="add-practice-set-modal-button" onClick={e => {
-                                            this.setState({
-                                                addQuizSetAddModal: false
-                                            });
-                                        }}>Cancel</div>
+                                        <div className="add-practice-set-modal-button" onClick={this.cancelPopup}>Cancel</div>
                                     </div>
                                     </div>
                                 </div>
