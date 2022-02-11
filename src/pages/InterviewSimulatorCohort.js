@@ -158,6 +158,25 @@ class InterviewSimulatorCohortPage extends Component {
       }
 
 
+      handleRating = (e,userVal) => {
+        global.api.vpiManualRating({
+            manual_rating: e.target.value,
+            courseNumber: userVal?.courseNumber,
+            email: userVal?.userId
+
+          }).then(response => {
+              this.setState({loading:false})
+            // certificate created, refresh the page
+            alert(response.message)
+
+            if(response && response.error){
+                alert(response.message)
+            } else {
+                // window.location.reload();
+            }
+           
+          })
+      }
 
     render() {
 
@@ -308,6 +327,7 @@ class InterviewSimulatorCohortPage extends Component {
                                                         <th>Asked for Review</th>
                                                         <th>Reviews Completed</th>
                                                         <th>Practice Answer</th>
+                                                        <th>Manual Rating</th>
                                                         <th>Certificate</th>
                                                         <th> </th>
                                                     </tr>
@@ -324,6 +344,15 @@ class InterviewSimulatorCohortPage extends Component {
                                                                 <td>{user.Asked_for_Review}</td>
                                                                 <td>{user.Reviews_Completed}</td>
                                                                 <td>{user.Practice_Answer}</td>
+                                                                <td>
+                                                                    <select onChange={(e)=>{this.handleRating(e,user)}}>
+                                                                        <option>Select</option>
+                                                                        <option selected={user.manual_rating == 'red'} value="red">Red</option>
+                                                                        <option selected={user.manual_rating == 'yellow'} value="yellow">Yellow</option>
+                                                                        <option selected={user.manual_rating == 'green'} value="green">Green</option>
+
+                                                                    </select>
+                                                                </td>
                                                                 <td>{this.showCertificateButton(user)}</td>
                                                                 <td><a href={"/interview-simulator/" + this.cohortId + "/user-attempts/" + user.userId}>Show Activity</a></td>
                                                                 </tr>

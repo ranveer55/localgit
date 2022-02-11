@@ -543,6 +543,19 @@ export default class ApiService {
         });
     }
 
+    //manual rating
+    vpiManualRating(data) {
+        return axios.post(`${this.domain}/cohorts-by-company/manual-rating/`, {manual_rating:data.manual_rating,courseNumber:data.courseNumber,email:data.email}, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        })
+    }
+
+
     getCompanyCohortUsersWhoAttemptedQuiz(cohort_id = 0) {
         return axios.get(`${this.domain}/cohorts-by-company/${cohort_id}/users-who-attempted-quiz`, {
             headers: {
