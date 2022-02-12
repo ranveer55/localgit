@@ -78,7 +78,7 @@ class InterviewSimulatorCohortPage extends Component {
     downloadCSV(data) {
 
         //define the heading for each row of the data  
-        var csv = ['Email', 'First Name','Last Name', 'Questions Answered', 'Attempts', 'Asked for Review', 'Reviews Completed', '\n'].join(",");
+        var csv = ['Email', 'First Name','Last Name', 'Questions Answered', 'Attempts', 'Asked for Review', 'Reviews Completed','Manual Rating','VPI Score(Max & Min)', '\n'].join(",");
 
         //merge the data with CSV  
         data.forEach(function (row) {
@@ -315,7 +315,23 @@ class InterviewSimulatorCohortPage extends Component {
                                                 <button
                                                     onClick={e => {
                                                         this.downloadCSV(this.state.users.map(u => {
-                                                            return [
+                                                            let vpiArray =  [];
+                                                        let vpi_scores = !!u?.vpi_score && u?.vpi_score.length > 0 && u?.vpi_score.filter(
+                                                            (item, i) =>
+                                                             item?.vpi_score != null
+                                                          );
+                                                       
+                                                          !!vpi_scores && vpi_scores.length > 0 && vpi_scores.forEach((item)=>{
+                                                            let res = JSON.parse(item?.vpi_score)
+                                                            vpiArray.push(parseFloat(res?.fluency_score));
+                                                          })
+                                                          
+                                                        let maxVpiVal = Math.max(...vpiArray);
+                                                        let minVpiVal = Math.min(...vpiArray);
+                                                        let finalVpiScore = vpiArray.length > 0 ? vpiArray.length == 1 ? maxVpiVal.toFixed(2) : 
+                                                        vpiArray.length > 1 ? maxVpiVal.toFixed(2)+' - '+minVpiVal.toFixed(2) : '-':'-';
+                                                            
+                                                        return [
                                                                 u.userId,
                                                                 u.FirstName ,
                                                                 u.LastName,
@@ -323,6 +339,8 @@ class InterviewSimulatorCohortPage extends Component {
                                                                 u.totalAttempts,
                                                                 u.Asked_for_Review,
                                                                 u.Reviews_Completed,
+                                                                u.manual_rating,
+                                                                finalVpiScore,
                                                             ];
                                                         }));
                                                     }}
@@ -343,7 +361,7 @@ class InterviewSimulatorCohortPage extends Component {
                                                         <th>Practice Answer</th>
                                                         <th>Manual Rating</th>
                                                         <th>Vpi Score(Max & Min value)</th>
-                                                        <th>Certificate</th>
+                                                        {/* <th>Certificate</th> */}
                                                         <th> </th>
                                                     </tr>
                                                 </thead>
@@ -363,7 +381,7 @@ class InterviewSimulatorCohortPage extends Component {
                                                           
                                                         let maxVpiVal = Math.max(...vpiArray);
                                                         let minVpiVal = Math.min(...vpiArray);
-
+                                                      
 
                                                         return(
                                                             <tr>
@@ -386,7 +404,7 @@ class InterviewSimulatorCohortPage extends Component {
                                                                 </td>
                                                                 <td>{vpiArray.length > 0 ? vpiArray.length == 1 ? maxVpiVal.toFixed(2) : 
                                                                     vpiArray.length > 1 ? maxVpiVal.toFixed(2)+' - '+minVpiVal.toFixed(2) : '-':'-'}</td>
-                                                                <td>{this.showCertificateButton(user)}</td>
+                                                                {/* <td>{this.showCertificateButton(user)}</td> */}
                                                                 <td><a href={"/interview-simulator/" + this.cohortId + "/user-attempts/" + user.userId}>Show Activity</a></td>
                                                                 </tr>
                                                         )}
