@@ -384,8 +384,8 @@ class InterviewSimulatorCohortPage extends Component {
 
                                                                     </select>
                                                                 </td>
-                                                                <td>{vpiArray.length > 0 ? vpiArray.length == 1 ? maxVpiVal : 
-                                                                    vpiArray.length > 1 ? maxVpiVal+' - '+minVpiVal : '-':'-'}</td>
+                                                                <td>{vpiArray.length > 0 ? vpiArray.length == 1 ? maxVpiVal.toFixed(2) : 
+                                                                    vpiArray.length > 1 ? maxVpiVal.toFixed(2)+' - '+minVpiVal.toFixed(2) : '-':'-'}</td>
                                                                 <td>{this.showCertificateButton(user)}</td>
                                                                 <td><a href={"/interview-simulator/" + this.cohortId + "/user-attempts/" + user.userId}>Show Activity</a></td>
                                                                 </tr>
