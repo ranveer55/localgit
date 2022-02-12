@@ -225,7 +225,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                   parseFloat(vpi_score?.fluency_score) < 75 &&
                                    parseFloat(vpi_score?.fluency_score) > 60 ? 'yellow' :
                                    parseFloat(vpi_score?.fluency_score) < 60 ? 'red': '' : ''
-                                 }`}>{'VPI Score :' + vpi_score?.fluency_score.toFixed(2)}</span>
+                                 }`}>{'VPI Score :' + parseFloat(vpi_score?.fluency_score).toFixed(2)}</span>
                                :
                                 <button onClick={() => this.getVPIScore(prevAttempt)}>get</button>
                               }
