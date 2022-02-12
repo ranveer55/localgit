@@ -82,7 +82,9 @@ border-radius: 3px;
     border-radius: 4px;
 }
 
-
+.table th {
+    font-size: 14px;
+}
 @media only screen and (max-width: 1299px) {
     .table th, .table {
         font-size: 14px;

@@ -342,7 +342,7 @@ class InterviewSimulatorCohortPage extends Component {
                                                         <th>Reviews Completed</th>
                                                         <th>Practice Answer</th>
                                                         <th>Manual Rating</th>
-                                                        <th>Vpi Score</th>
+                                                        <th>Vpi Score(Max & Min value)</th>
                                                         <th>Certificate</th>
                                                         <th> </th>
                                                     </tr>
@@ -350,16 +350,20 @@ class InterviewSimulatorCohortPage extends Component {
                                                 <tbody>
                                                     {
                                                     this.state.users.map((user) => {
-                                                        let vpi_score =  [];
-                                                        // !!user?.vpi_score && user?.vpi_score.length > 0 && user?.vpi_score.filter((item)=>{ return item?.fluency_score});
-                                                        //  user?.vpi_score.length > 0 && user?.vpi_score.forEach((item)=> {
-                                                        //     console.log('vpi_score--',item);
-                                                           
-                                                        //         vpi_score.push(item?.fluency_score)
+                                                        let vpiArray =  [];
+                                                        let vpi_scores = !!user?.vpi_score && user?.vpi_score.length > 0 && user?.vpi_score.filter(
+                                                            (item, i) =>
+                                                             item?.vpi_score != null
+                                                          );
+                                                       
+                                                          !!vpi_scores && vpi_scores.length > 0 && vpi_scores.forEach((item)=>{
+                                                            let res = JSON.parse(item?.vpi_score)
+                                                            vpiArray.push(parseFloat(res?.fluency_score));
+                                                          })
+                                                          
+                                                        let maxVpiVal = Math.max(...vpiArray);
+                                                        let minVpiVal = Math.min(...vpiArray);
 
-                                                             
-                                                        //  })
-                                                        //  console.log('vpi_score--',vpi_score);
 
                                                         return(
                                                             <tr>
@@ -380,7 +384,8 @@ class InterviewSimulatorCohortPage extends Component {
 
                                                                     </select>
                                                                 </td>
-                                                                <td>-</td>
+                                                                <td>{vpiArray.length > 0 ? vpiArray.length == 1 ? maxVpiVal : 
+                                                                    vpiArray.length > 1 ? maxVpiVal+' - '+minVpiVal : '-':'-'}</td>
                                                                 <td>{this.showCertificateButton(user)}</td>
                                                                 <td><a href={"/interview-simulator/" + this.cohortId + "/user-attempts/" + user.userId}>Show Activity</a></td>
                                                                 </tr>
