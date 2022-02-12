@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { Line } from "react-chartjs-2";
 import ReactDatePicker from "react-datepicker";
 import endpoints from "../config/endpoints";
-import Loader from '../components/Loader/Loader'
+import Loader from '../components/Loader/Loader';
+import './index.css';
 class InterviewSimulatorCohortPage extends Component {
 
     constructor(props) {
@@ -160,6 +161,9 @@ class InterviewSimulatorCohortPage extends Component {
 
       handleRating = (e,userVal) => {
         global.api.vpiManualRating({
+            cohort_id:this.cohortId,
+            startDate:moment(this.state.startDate).format("YYYY-MM-DD"),
+            endDate:moment(this.state.endDate).format("YYYY-MM-DD"),
             manual_rating: e.target.value,
             courseNumber: userVal?.courseNumber,
             email: userVal?.userId
@@ -167,7 +171,17 @@ class InterviewSimulatorCohortPage extends Component {
           }).then(response => {
               this.setState({loading:false})
             // certificate created, refresh the page
+            this.setState({
+                dataLoaded: true,
+                startDate: this.state.startDate,
+                endDate: this.state.endDate,
+                cohort: response.program,
+                users: response.users,
+                dataSets: response.dataSets,
+                loading:false
+            });
             alert(response.message)
+          
 
             if(response && response.error){
                 alert(response.message)
@@ -328,13 +342,26 @@ class InterviewSimulatorCohortPage extends Component {
                                                         <th>Reviews Completed</th>
                                                         <th>Practice Answer</th>
                                                         <th>Manual Rating</th>
+                                                        <th>Vpi Score</th>
                                                         <th>Certificate</th>
                                                         <th> </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                    this.state.users.map((user) => (
+                                                    this.state.users.map((user) => {
+                                                        let vpi_score =  [];
+                                                        // !!user?.vpi_score && user?.vpi_score.length > 0 && user?.vpi_score.filter((item)=>{ return item?.fluency_score});
+                                                        //  user?.vpi_score.length > 0 && user?.vpi_score.forEach((item)=> {
+                                                        //     console.log('vpi_score--',item);
+                                                           
+                                                        //         vpi_score.push(item?.fluency_score)
+
+                                                             
+                                                        //  })
+                                                        //  console.log('vpi_score--',vpi_score);
+
+                                                        return(
                                                             <tr>
                                                                 <td style={{ wordBreak: "break-all" }}>{user.userId}</td>
                                                                 <td>{user.FirstName}</td>
@@ -345,18 +372,20 @@ class InterviewSimulatorCohortPage extends Component {
                                                                 <td>{user.Reviews_Completed}</td>
                                                                 <td>{user.Practice_Answer}</td>
                                                                 <td>
-                                                                    <select onChange={(e)=>{this.handleRating(e,user)}}>
-                                                                        <option>Select</option>
-                                                                        <option selected={user.manual_rating == 'red'} value="red">Red</option>
-                                                                        <option selected={user.manual_rating == 'yellow'} value="yellow">Yellow</option>
-                                                                        <option selected={user.manual_rating == 'green'} value="green">Green</option>
+                                                                    <select className="selectOption" style={{background: user.manual_rating}} onChange={(e)=>{this.handleRating(e,user)}}>
+                                                                        <option style={{background: 'white'}}>Select</option>
+                                                                        <option className="manual_rating red" selected={user.manual_rating == 'red'} value="red">Red</option>
+                                                                        <option className="manual_rating yellow" selected={user.manual_rating == 'yellow'} value="yellow">Yellow</option>
+                                                                        <option className="manual_rating green" selected={user.manual_rating == 'green'} value="green">Green</option>
 
                                                                     </select>
                                                                 </td>
+                                                                <td>-</td>
                                                                 <td>{this.showCertificateButton(user)}</td>
                                                                 <td><a href={"/interview-simulator/" + this.cohortId + "/user-attempts/" + user.userId}>Show Activity</a></td>
                                                                 </tr>
-                                                        ))
+                                                        )}
+                                                        )
                                                     }
                                                 </tbody>
                                             </table>

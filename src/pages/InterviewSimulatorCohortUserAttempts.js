@@ -170,12 +170,13 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                             <th>AI Review</th>
                             <th>VPI Review</th>
                             <th>Mentor Review</th>
-
                             <th>User Answer</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {prevAttempts.map((prevAttempt, index) => (
+                          {prevAttempts.map((prevAttempt, index) =>{
+                            let vpi_score = prevAttempt?.vpi_score;
+                            return(
                             <tr
                               key={
                                 prevAttempt.uuid
@@ -218,7 +219,16 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                 </a>
                               </td>
                               <td>
+                              {vpi_score != null ? 
+                                <span className={`scoreColor ${vpi_score != null ?
+                                  parseFloat(vpi_score?.fluency_score) > 75 ? 'green' : 
+                                  parseFloat(vpi_score?.fluency_score) < 75 &&
+                                   parseFloat(vpi_score?.fluency_score) > 60 ? 'yellow' :
+                                   parseFloat(vpi_score?.fluency_score) < 60 ? 'red': '' : ''
+                                 }`}>{'VPI Score :' + vpi_score?.fluency_score}</span>
+                               :
                                 <button onClick={() => this.getVPIScore(prevAttempt)}>get</button>
+                              }
                               </td>
                               <td
                                 className="testClick"
@@ -284,7 +294,9 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                 }}
                               ></td>
                             </tr>
-                          ))}
+                          )}
+                          
+                          )}
                         </tbody>
                       </table>
                     ) : (
