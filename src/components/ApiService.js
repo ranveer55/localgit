@@ -664,8 +664,8 @@ export default class ApiService {
 
 
 
-    getCompanyCohortUserAttempts(userId = "") {
-        return axios.get(`${this.domain}/interview/user-prev-attempts/all?email=` + userId, {
+    getCompanyCohortUserAttempts(userId = "",cohort_id) {
+        return axios.get(`${this.domain}/interview/user-prev-attempts/all?email=` + userId+`&cohort_id=`+cohort_id, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },

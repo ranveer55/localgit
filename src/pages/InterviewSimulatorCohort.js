@@ -288,9 +288,9 @@ class InterviewSimulatorCohortPage extends Component {
                                     <option value="" disabled>Select Timespan</option>
                                     <option selected={this.state.currentValue == 1} value="1">Today</option>
                                     <option selected={this.state.currentValue == 4} value="4">Yesterday</option>
-                                    <option selected={this.state.currentValue == 2} value="2">Last Week</option>
-                                    <option selected={this.state.currentValue == 3} value="3">Last Month</option>
-                                    <option selected={this.state.currentValue == 5} value="5">Last Year</option>
+                                    <option selected={this.state.currentValue == 2} value="2">Last 7 days</option>
+                                    <option selected={this.state.currentValue == 3} value="3">Last 30 days</option>
+                                    <option selected={this.state.currentValue == 5} value="5">Last 365 days</option>
                                 </select>
                             </div>
                            
@@ -348,17 +348,24 @@ class InterviewSimulatorCohortPage extends Component {
                                                     <span>Download CSV</span>
                                                 </button>
                                             </div>
-                                            <table className="table" style={{ width: '100%' }}>
+                                            <div id="table-wrapper">
+                                            <div id="table-scroll">
+                                            <table className="table">
                                                 <thead>
                                                     <tr>
                                                         <th style={{width:'250px'}}>Email</th>
                                                         <th>First Name</th>
                                                         <th>Last Name</th>
                                                         <th>Questions Answered</th>
+                                                        <th>% of questions answered</th>
                                                         <th>Attempts</th>
+                                                        <th>Attempts per question</th>
                                                         <th>Asked for Review</th>
+                                                        <th>% Reviews Requested</th>
                                                         <th>Reviews Completed</th>
+                                                        <th>%Reviews Completed </th>
                                                         <th>Practice Answer</th>
+                                                        <th>%Questions </th>
                                                         <th>Manual Rating</th>
                                                         <th>Vpi Score(Max & Min value)</th>
                                                         {/* <th>Certificate</th> */}
@@ -389,19 +396,16 @@ class InterviewSimulatorCohortPage extends Component {
                                                                 <td>{user.FirstName}</td>
                                                                 <td>{user.LastName}</td>
                                                                 <td>{user.distinctAttempts}</td>
+                                                                <td>{((user.distinctAttempts * 100 ) / user.distinctAttemptsCount).toFixed(2)}% </td>
                                                                 <td>{user.totalAttempts}</td>
+                                                                <td>{((user.totalAttempts * 100 ) / user.distinctAttemptsCount).toFixed(2)}%</td>
                                                                 <td>{user.Asked_for_Review}</td>
+                                                                <td>{((user.Asked_for_Review * 100 ) / user.distinctAttemptsCount).toFixed(2)}%</td>
                                                                 <td>{user.Reviews_Completed}</td>
+                                                                <td>{((user.Reviews_Completed * 100 ) / user.distinctAttemptsCount).toFixed(2)}%</td>
                                                                 <td>{user.Practice_Answer}</td>
-                                                                <td>
-                                                                    <select className="selectOption" style={{background: user.manual_rating}} onChange={(e)=>{this.handleRating(e,user)}}>
-                                                                        <option style={{background: 'white'}}>Select</option>
-                                                                        <option className="manual_rating red" selected={user.manual_rating == 'red'} value="red">Red</option>
-                                                                        <option className="manual_rating yellow" selected={user.manual_rating == 'yellow'} value="yellow">Yellow</option>
-                                                                        <option className="manual_rating green" selected={user.manual_rating == 'green'} value="green">Green</option>
-
-                                                                    </select>
-                                                                </td>
+                                                                <td>{((user.Practice_Answer * 100 ) / user.distinctAttemptsCount).toFixed(2)}%</td>
+                                                                <td><span className={`manual_rating ${user.manual_rating}`}>{user.manual_rating}</span></td>
                                                                 <td>{vpiArray.length > 0 ? vpiArray.length == 1 ? maxVpiVal.toFixed(2) : 
                                                                     vpiArray.length > 1 ? maxVpiVal.toFixed(2)+' - '+minVpiVal.toFixed(2) : '-':'-'}</td>
                                                                 {/* <td>{this.showCertificateButton(user)}</td> */}
@@ -412,6 +416,8 @@ class InterviewSimulatorCohortPage extends Component {
                                                     }
                                                 </tbody>
                                             </table>
+                                            </div>
+                                            </div>
                                         </>
                                     ) : <>No Data</>
                                 }

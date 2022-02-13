@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { ReactComponent as Star } from "./start_icon.svg";
 import { InterviewSimulatorReviewModal } from "./InterviewSimulatorReviewModal";
 // import "bootstrap/dist/css/bootstrap.min.css";
+import './index.css';
+
 import { CDN_URL } from "../constant";
 class InterviewSimulatorCohortUserAttempsPage extends Component {
   constructor(props) {
@@ -26,7 +28,8 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
       reviewIsExternal: true,
       loading: false,
       alertMsg: undefined,
-      seqNo:''
+      seqNo:'',
+      manualRating:''
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -57,11 +60,12 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
         });
       });
     global.api
-      .getCompanyCohortUserAttempts(this.userId)
+      .getCompanyCohortUserAttempts(this.userId,this.cohortId)
       .then((data) => {
         this.setState({
           userDataLoaded: true,
           userData: data.user,
+          manualRating:data.user?.manual_rating[0]?.manual_rating,
           prevAttempts: data.attempts,
         });
         // this.setState({ batchData: data });
@@ -118,6 +122,29 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
     this.setState({ showAlert: false, alertMsg: undefined })
   }
 
+
+  handleRating = (e,userVal) => {
+    global.api.vpiManualRating({
+        cohort_id:this.cohortId,
+        manual_rating:e.target.value,
+        courseNumber: this.state.userData?.manual_rating[0]?.courseNumber,
+        email: this.state.userData?.userId
+      }).then(response => {
+           this.setState({manualRating:response.result})
+        // certificate created, refresh the page
+       
+        alert(response.message)
+      
+
+        if(response && response.error){
+            alert(response.message)
+        } else {
+            // window.location.reload();
+        }
+       
+      })
+  }
+
   render() {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const cohort = this.state.cohort;
@@ -156,6 +183,21 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                     ) : (
                       <></>
                     )}
+                        <div style={{
+                                padding: "2px 8px",
+                                margin: "0px 8px",
+                                fontWeight: "500",
+                                float: "right"
+                            }}>
+                                
+                                <select className="selectOption" style={{background: this.state.manualRating}} onChange={(e)=>{this.handleRating(e,this.state.manualRating)}}>
+                                    <option style={{background: 'white'}}>Select</option>
+                                    <option className="manual_rating red" selected={this.state.manualRating == 'red'} value="red">Red</option>
+                                    <option className="manual_rating yellow" selected={this.state.manualRating == 'yellow'} value="yellow">Yellow</option>
+                                    <option className="manual_rating green" selected={this.state.manualRating == 'green'} value="green">Green</option>
+                                </select>
+
+                            </div>
                     {prevAttempts.length > 0 ? (
                       <table
                         className="table"
