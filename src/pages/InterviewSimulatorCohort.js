@@ -452,7 +452,8 @@ class InterviewSimulatorCohortPage extends Component {
                                     u.distinctAttemptsCount[0]
                                   ).toFixed(2) + '%';
 
-
+                            // console.log('Asked_for_Review',u.Reviews_Completed[0].length)
+                            return;
                               if (cohort?.program?.vpi_value == 1) {
                                 return [
                                   u.userId,
@@ -462,9 +463,9 @@ class InterviewSimulatorCohortPage extends Component {
                                   distinctAttemptsCount,
                                   u.totalAttempts,
                                   totalAttemptsCount,
-                                  u.Asked_for_Review[0],
+                                  u.Asked_for_Review[0].length,
                                   Asked_for_Review_count,
-                                  u.Reviews_Completed[0],
+                                  u.Reviews_Completed[0].length,
                                   Reviews_Completed_count,
                                   u.Practice_Answer[0],
                                   Practice_Answer_Count,
@@ -480,9 +481,9 @@ class InterviewSimulatorCohortPage extends Component {
                                   distinctAttemptsCount,
                                   u.totalAttempts,
                                   totalAttemptsCount,
-                                  u.Asked_for_Review[0],
+                                  u.Asked_for_Review[0].length,
                                   Asked_for_Review_count,
-                                  u.Reviews_Completed[0],
+                                  u.Reviews_Completed[0].length,
                                   Reviews_Completed_count,
                                   u.Practice_Answer[0],
                                   Practice_Answer_Count,
