@@ -88,6 +88,7 @@ class InterviewSimulatorCohortPage extends Component {
     }
     // this.loadData(this.state.startDate, this.state.endDate);
   }
+  
   downloadCSV(data) {
     //define the heading for each row of the data
     var csv = [
@@ -452,8 +453,6 @@ class InterviewSimulatorCohortPage extends Component {
                                     u.distinctAttemptsCount[0]
                                   ).toFixed(2) + '%';
 
-                            // console.log('Asked_for_Review',u.Reviews_Completed[0].length)
-                            return;
                               if (cohort?.program?.vpi_value == 1) {
                                 return [
                                   u.userId,

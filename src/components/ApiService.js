@@ -520,6 +520,27 @@ export default class ApiService {
             return res.data;
         });
     }
+    exportCohortData(company_code = 0,value) {
+        
+        var params = "company_code=" + company_code;
+        if (value) {
+            params = params + "&status=" + value;
+        }
+        return axios.get(`${this.domain}/export-cohort-data?` + params, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+
+        // return axios.get(`${this.domain}/cohorts-by-company?company_code=` + company_code, {
+        //     headers: {
+        //         'Authorization': `Bearer ${this.token}`
+        //     },
+        // }
+        ).then(res => {
+            return res.data;
+        });
+    }
 
 
     getCompanyCohortSingle(cohort_id = 0,) {

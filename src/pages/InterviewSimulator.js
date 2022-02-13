@@ -14,6 +14,7 @@ class InterviewSimulatorPage extends Component {
       dateLoaded: false,
       cohorts: [],
       selectedCohort: false,
+      companyCode : this.companyCode
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -23,6 +24,29 @@ class InterviewSimulatorPage extends Component {
   componentDidMount() {
     // getCompanyRegistrationReport
     this.loadData();
+  }
+
+  exportCohort(companyCode){
+    // this.setState({
+    //   dateLoaded: true,
+    // });
+    console.log('companyCode',companyCode)
+    global.api
+      .exportCohortData(companyCode)
+      .then((data) => {
+        let resData =  data.programs
+        let filterData = resData.filter((item)=> item.type_id == '3')
+        this.setState({
+          dataLoaded: false,
+          cohorts: filterData,
+        });
+        // this.setState({ batchData: data });
+      })
+      .catch((err) => {
+        this.setState({
+          dateLoaded: true,
+        });
+      });
   }
 
   loadData(status) {
@@ -232,18 +256,30 @@ class InterviewSimulatorPage extends Component {
                   ? this.state.selectedCompanyName
                   : ""}
               </h4> */}
+{                  console.log('companyCode-2',this.state.companyCode)
+}
               <div style={{
                                 padding: "2px 8px",
                                 margin: "0px 8px",
                                 fontWeight: "500",
-                                float: "right"
+                                float: "right",
+                                display:"flex",
                             }}>
-                                <select onChange={this.onChangeStatus}
+                               <select style={{marginRight:'10px'}} onChange={this.onChangeStatus}
                                      defaultValue="">
                                     <option value="" disabled>Select Status</option>
                                     <option value="0">Active</option>
                                     <option value="1">InActive</option>
                                 </select>
+                              <div>
+                              <button onClick={()=>{this.exportCohort(this.state.companyCode)}}
+                              className="btn btn-size3 btn-blue btn-radius export"
+                              >
+                                <span>Export</span>
+                              </button>
+                       </div>
+
+                               
                             </div>
               <div>
                 {/* <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic/${this.state.selectedCompany}`} target="_blank" rel="noopener noreferrer" style={{
