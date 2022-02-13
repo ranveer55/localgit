@@ -94,11 +94,29 @@ border-radius: 3px;
 
 div#table-scroll {
     overflow-x: scroll;
+    /* height: 100vh; */
 }
 div#table-scroll .table th {
     font-size: 14px;
     width: 160px !important;
 }
+div#table-scroll .table{
+transform: rotateX(180deg);
+}
+div#table-scroll{
+    transform: rotateX(180deg);
+    }
+
+    
+      ::-webkit-scrollbar {
+        height: 7px !important;
+        width: 7px !important;
+      }
+        
+    
+      
+      
+
 @media only screen and (max-width: 1299px) {
     .table th, .table {
         font-size: 14px;
