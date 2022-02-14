@@ -564,7 +564,7 @@ class InterviewSimulatorCohortPage extends Component {
                                       user.totalAttempts /
                                       user.distinctAttemptsCount[0]
                                     ).toFixed(2)}
-                                    %
+                                  
                                   </td>
                                   <td>{!!user.Asked_for_Review && user.Asked_for_Review[0].length}</td>
                                   <td>
@@ -586,7 +586,6 @@ class InterviewSimulatorCohortPage extends Component {
                                     %
                                   </td>
                                   <td>
-                                  {console.log('Reviews_Completed',user.Practice_Answer)}
                                     {user.Practice_Answer[0]}</td>
                                   <td>
                                     {(
