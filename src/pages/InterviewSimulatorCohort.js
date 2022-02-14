@@ -653,85 +653,85 @@ class InterviewSimulatorCohortPage extends Component {
 }
 
 export default InterviewSimulatorCohortPage;
-function LineChart({ data, cohort, startDate, endDate }) {
-  let labels = [];
-  let distinctAttempts = [];
-  let totalAttempts = [];
-  let Asked_for_Review = [];
-  let Reviews_Completed = [];
-  if (data && data.Asked_for_Review) {
-    for (const label of Object.keys(data.Asked_for_Review)) {
-      labels.push(label);
-      distinctAttempts.push(data.distinctAttempts[label]);
-      totalAttempts.push(data.totalAttempts[label]);
-      Asked_for_Review.push(data.Asked_for_Review[label]);
-      Reviews_Completed.push(data.Reviews_Completed[label]);
-    }
-  }
-  labels = labels.map((l) => moment(l).format("DD-MM-YYYY"));
+// function LineChart({ data, cohort, startDate, endDate }) {
+//   let labels = [];
+//   let distinctAttempts = [];
+//   let totalAttempts = [];
+//   let Asked_for_Review = [];
+//   let Reviews_Completed = [];
+//   if (data && data.Asked_for_Review) {
+//     for (const label of Object.keys(data.Asked_for_Review)) {
+//       labels.push(label);
+//       distinctAttempts.push(data.distinctAttempts[label]);
+//       totalAttempts.push(data.totalAttempts[label]);
+//       Asked_for_Review.push(data.Asked_for_Review[label]);
+//       Reviews_Completed.push(data.Reviews_Completed[label]);
+//     }
+//   }
+//   labels = labels.map((l) => moment(l).format("DD-MM-YYYY"));
 
-  const datasets = [
-    {
-      label: "Questions Answered",
-      data: distinctAttempts,
-      borderColor: "red",
-      backgroundColor: "red",
-      fill: false,
-    },
-    {
-      label: "Attempts",
-      data: totalAttempts,
-      borderColor: "#4E024E",
-      backgroundColor: "#4E024E",
-      fill: false,
-    },
-    {
-      label: "Asked for Review",
-      data: Asked_for_Review,
-      borderColor: "green",
-      backgroundColor: "green",
-      fill: false,
-    },
-    {
-      label: "Reviews Completed",
-      data: Reviews_Completed,
-      borderColor: "blue",
-      backgroundColor: "blue",
-      fill: false,
-    },
-  ];
-  return (
-    <Line
-      data={{
-        labels,
-        datasets,
-      }}
-      options={{
-        responsive: true,
-        hover: true,
-        tooltips: {
-          mode: "x",
-          intersect: false,
-        },
-        scales: {
-          yAxes: [
-            {
-              scaleLabel: {
-                display: true,
-              },
-              ticks: {
-                beginAtZero: true,
-                userCallback(label, index, labels) {
-                  // only show if whole number
-                  if (Math.floor(label) === label) {
-                    return label;
-                  }
-                },
-              },
-            },
-          ],
-        },
-      }}
-    />
-  );
-}
+//   const datasets = [
+//     {
+//       label: "Questions Answered",
+//       data: distinctAttempts,
+//       borderColor: "red",
+//       backgroundColor: "red",
+//       fill: false,
+//     },
+//     {
+//       label: "Attempts",
+//       data: totalAttempts,
+//       borderColor: "#4E024E",
+//       backgroundColor: "#4E024E",
+//       fill: false,
+//     },
+//     {
+//       label: "Asked for Review",
+//       data: Asked_for_Review,
+//       borderColor: "green",
+//       backgroundColor: "green",
+//       fill: false,
+//     },
+//     {
+//       label: "Reviews Completed",
+//       data: Reviews_Completed,
+//       borderColor: "blue",
+//       backgroundColor: "blue",
+//       fill: false,
+//     },
+//   ];
+//   return (
+//     <Line
+//       data={{
+//         labels,
+//         datasets,
+//       }}
+//       options={{
+//         responsive: true,
+//         hover: true,
+//         tooltips: {
+//           mode: "x",
+//           intersect: false,
+//         },
+//         scales: {
+//           yAxes: [
+//             {
+//               scaleLabel: {
+//                 display: true,
+//               },
+//               ticks: {
+//                 beginAtZero: true,
+//                 userCallback(label, index, labels) {
+//                   // only show if whole number
+//                   if (Math.floor(label) === label) {
+//                     return label;
+//                   }
+//                 },
+//               },
+//             },
+//           ],
+//         },
+//       }}
+//     />
+//   );
+// }
