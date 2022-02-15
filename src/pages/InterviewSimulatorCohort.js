@@ -438,22 +438,26 @@ class InterviewSimulatorCohortPage extends Component {
                                     u.distinctAttemptsCount[0]
                                   ).toFixed(2) + '%';
                                   
-                                 let Asked_for_Review_count =  (
+                                 let Asked_for_Review_count = !!u.Asked_for_Review && u.Asked_for_Review.length > 0 ?  (
                                     u.Asked_for_Review[0].length /
                                     u.distinctAttemptsCount[0]
-                                  ).toFixed(2) + '%';
+                                  ).toFixed(2) + '%' : '';
 
-                                  let Reviews_Completed_count =  (
+                                  let Reviews_Completed_count = !!u.Reviews_Completed && u.Reviews_Completed.length > 0 ? (
                                     u.Reviews_Completed[0].length /
                                     u.distinctAttemptsCount[0]
-                                  ).toFixed(2) + '%';
+                                  ).toFixed(2) + '%' : '';
 
-                                 let Practice_Answer_Count =  (
+                                 let Practice_Answer_Count = !!u.Practice_Answer && u.Practice_Answer.length > 0 ?  (
                                     u.Practice_Answer[0] /
                                     u.distinctAttemptsCount[0]
-                                  ).toFixed(2) + '%';
+                                  ).toFixed(2) + '%' : '';
+                             
+                                  let Asked_for_Review = !!u.Asked_for_Review && u.Asked_for_Review.length > 0 ? u.Asked_for_Review[0].length  : ''
+                                  let Reviews_Completed =  !!u.Reviews_Completed && u.Reviews_Completed.length > 0 ? u.Reviews_Completed[0].length  : ''
+                                  let Practice_Answer = !!u.Practice_Answer && u.Practice_Answer.length > 0 ? u.Practice_Answer[0].length  : ''
 
-                              if (cohort?.program?.vpi_value == 1) {
+                                  if (cohort?.program?.vpi_value == 1) {
                                 return [
                                   u.userId,
                                   u.FirstName,
@@ -462,11 +466,11 @@ class InterviewSimulatorCohortPage extends Component {
                                   distinctAttemptsCount,
                                   u.totalAttempts,
                                   totalAttemptsCount,
-                                  u.Asked_for_Review[0].length,
+                                  Asked_for_Review,
                                   Asked_for_Review_count,
-                                  u.Reviews_Completed[0].length,
+                                  Reviews_Completed,
                                   Reviews_Completed_count,
-                                  u.Practice_Answer[0],
+                                  Practice_Answer,
                                   Practice_Answer_Count,
                                   u.manual_rating,
                                   finalVpiScore,
@@ -480,11 +484,11 @@ class InterviewSimulatorCohortPage extends Component {
                                   distinctAttemptsCount,
                                   u.totalAttempts,
                                   totalAttemptsCount,
-                                  u.Asked_for_Review[0].length,
+                                  Asked_for_Review,
                                   Asked_for_Review_count,
-                                  u.Reviews_Completed[0].length,
+                                  Reviews_Completed,
                                   Reviews_Completed_count,
-                                  u.Practice_Answer[0],
+                                  Practice_Answer,
                                   Practice_Answer_Count,
                                 ];
                               }
@@ -566,32 +570,33 @@ class InterviewSimulatorCohortPage extends Component {
                                     ).toFixed(2)}
                                   
                                   </td>
-                                  <td>{!!user.Asked_for_Review && user.Asked_for_Review[0].length}</td>
+                                  <td>{!!user?.Asked_for_Review && user?.Asked_for_Review.length > 0 && user?.Asked_for_Review[0].length}</td>
                                   <td>
-                                    {(
-                                      user.Asked_for_Review[0].length /
-                                      user.distinctAttemptsCount[0]
-                                    ).toFixed(2)}
+                                    {
+                                     user?.Asked_for_Review.length > 0 ? (user?.Asked_for_Review[0].length /
+                                      user?.distinctAttemptsCount[0]
+                                    ).toFixed(2)
+                                  : ''}
                                     %
                                   </td>
                                   <td>
 
-                                      {user.Reviews_Completed[0].length}
+                                      {user?.Reviews_Completed.length > 0 ?  user.Reviews_Completed[0].length : ''}
                                       </td>
                                   <td>
-                                    {(
+                                    {user?.Reviews_Completed.length > 0 ? (
                                       user.Reviews_Completed[0].length /
                                       user.distinctAttemptsCount[0]
-                                    ).toFixed(2)}
+                                    ).toFixed(2) : ''}
                                     %
                                   </td>
                                   <td>
-                                    {user.Practice_Answer[0]}</td>
+                                    {user?.Practice_Answer.length > 0 ? user.Practice_Answer[0] : ''}</td>
                                   <td>
-                                    {(
+                                    {user?.Practice_Answer.length > 0 ?(
                                       user.Practice_Answer[0] /
                                       user.distinctAttemptsCount[0]
-                                    ).toFixed(2)}
+                                    ).toFixed(2) : ''}
                                     %
                                   </td>
                                   {cohort?.program?.vpi_value == 1 && (
