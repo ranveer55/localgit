@@ -256,7 +256,6 @@ class InterviewSimulatorPage extends Component {
                   ? this.state.selectedCompanyName
                   : ""}
               </h4> */}
-{                  console.log('companyCode-2',this.state.companyCode)
 }
               <div style={{
                                 padding: "2px 8px",
@@ -275,7 +274,7 @@ class InterviewSimulatorPage extends Component {
                               <button onClick={()=>{this.exportCohort(this.state.companyCode)}}
                               className="btn btn-size3 btn-blue btn-radius export"
                               >
-                                <span>Export</span>
+                                <span>Download reports</span>
                               </button>
                        </div>
 
