@@ -101,9 +101,10 @@ class ProctoredTestDetail extends Component {
     global.api
       .getProctoredTestDetail(this.cohortId, this.quizId, page)
       .then((data) => {
+        console.log('getProctoredTestDetail--',data.data)
         this.setState({
           dataLoaded: true,
-          data: data.data.data,
+          data: data.data,
           cohort: data.cohort,
           totalRecords: data.data.total,
         });
@@ -412,6 +413,7 @@ class ProctoredTestDetail extends Component {
       // },
     ];
     let dataSource = [];
+    console.log('dataSource--data',data)
     if (data && Object.keys(data) && Object.keys(data).length > 0) {
       dataSource = Object.values(data);
     }
@@ -423,7 +425,8 @@ class ProctoredTestDetail extends Component {
     const {showPopup} =this.state;
     return (
       <>
-        {showPopup && <Popup
+{      console.log('dataSource--',dataSource)
+}        {showPopup && <Popup
           text="Continue incomplete test or Start New"
           cancelText="Resume"
           confirmText="Start over"
@@ -620,9 +623,9 @@ class ProctoredTestDetail extends Component {
 
                           />
                         </>
-                        {dataSource && dataSource.length == 0 &&
+                        {/* {dataSource && dataSource.length == 0 &&
                           <NoDataAvailable />
-                        }
+                        } */}
                       </h4>
                     </div>
                   </div>
