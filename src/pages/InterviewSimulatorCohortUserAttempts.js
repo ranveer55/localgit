@@ -64,10 +64,12 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
       .then((data) => {
         this.setState({
           userDataLoaded: true,
-          userData: data.user,
-          manualRating:data.user?.manual_rating[0]?.manual_rating,
+          userData: data?.user,
           prevAttempts: data.attempts,
+          manualRating:data?.user?.manual_rating[0]?.manual_rating,
+
         });
+
         // this.setState({ batchData: data });
       })
       .catch((err) => {
@@ -151,6 +153,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
     const userData = this.state.userData;
     const prevAttempts = this.state.prevAttempts;
     const { loading, alertMsg, showAlert } = this.state;
+
     return (
       <>
 
