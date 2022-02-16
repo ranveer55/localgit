@@ -620,9 +620,9 @@ class ProctoredTestDetail extends Component {
 
                           />
                         </>
-                        {dataSource && dataSource.length == 0 &&
+                        {/* {dataSource && dataSource.length == 0 &&
                           <NoDataAvailable />
-                        }
+                        } */}
                       </h4>
                     </div>
                   </div>
