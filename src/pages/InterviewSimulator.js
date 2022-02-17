@@ -271,11 +271,14 @@ class InterviewSimulatorPage extends Component {
                                     <option value="1">InActive</option>
                                 </select>
                               <div>
+                              {this.state.cohorts.length > 0 ?
                               <button onClick={()=>{this.exportCohort(this.state.companyCode)}}
                               className="btn btn-size3 btn-blue btn-radius export"
                               >
                                 <span>Download reports</span>
                               </button>
+                              :''
+                                 }
                        </div>
 
                                
