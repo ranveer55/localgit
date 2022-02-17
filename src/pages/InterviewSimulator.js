@@ -256,7 +256,7 @@ class InterviewSimulatorPage extends Component {
                   ? this.state.selectedCompanyName
                   : ""}
               </h4> */}
-}
+
               <div style={{
                                 padding: "2px 8px",
                                 margin: "0px 8px",
