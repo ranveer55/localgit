@@ -11,7 +11,7 @@ class InterviewSimulatorPage extends Component {
     this.companyCode = global.companyCode;
 
     this.state = {
-      dateLoaded: false,
+      dataLoaded: false,
       cohorts: [],
       selectedCohort: false,
       companyCode : this.companyCode
@@ -27,9 +27,9 @@ class InterviewSimulatorPage extends Component {
   }
 
   exportCohort(companyCode){
-    // this.setState({
-    //   dateLoaded: true,
-    // });
+    this.setState({
+      dataLoaded: true,
+    });
     console.log('companyCode',companyCode)
     global.api
       .exportCohortData(companyCode)
@@ -44,14 +44,14 @@ class InterviewSimulatorPage extends Component {
       })
       .catch((err) => {
         this.setState({
-          dateLoaded: true,
+          dataLoaded: false,
         });
       });
   }
 
   loadData(status) {
     this.setState({
-      dateLoaded: true,
+      dataLoaded: true,
     });
     global.api
       .getCompanyCohorts(this.companyCode,status)
@@ -66,7 +66,7 @@ class InterviewSimulatorPage extends Component {
       })
       .catch((err) => {
         this.setState({
-          dateLoaded: true,
+          dataLoaded: true,
         });
       });
   }

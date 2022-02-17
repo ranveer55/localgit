@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import Loader from "react-loader-spinner";
 
 class CompanyCohortsReport extends Component {
 
@@ -10,7 +11,7 @@ class CompanyCohortsReport extends Component {
     this.companyCode = global.companyCode;
 
     this.state = {
-      dateLoaded: false,
+      dataLoaded: false,
       cohorts: [],
       selectedCohort: false
     };
@@ -28,7 +29,7 @@ class CompanyCohortsReport extends Component {
 
   loadData() {
     this.setState({
-      dateLoaded: false
+      dataLoaded: true
     });
     global.api.getCompanyCohorts(
       this.companyCode
@@ -36,14 +37,14 @@ class CompanyCohortsReport extends Component {
       .then(
         data => {
           this.setState({
-            dataLoaded: true,
+            dataLoaded: false,
             cohorts: data.programs,
           });
           // this.setState({ batchData: data });
         })
       .catch(err => {
         this.setState({
-          dateLoaded: true
+          dataLoaded: false
         });
       });
   }
@@ -51,6 +52,14 @@ class CompanyCohortsReport extends Component {
 
 
   render() {
+    const NoDataIndication = () => (
+      <div className="table_wraps" id="spinner">
+        <div className="spinner" >
+          <Loader type="Grid" color="#4441E2" height={100} width={100} />
+          Loading....
+        </div>
+      </div>
+    );
     return (
       <main className="offset" id="content">
         <section className="section_box">
@@ -88,7 +97,7 @@ class CompanyCohortsReport extends Component {
               </thead>
               <tbody>
                 {
-                  this.state.dataLoaded ?
+                  !this.state.dataLoaded ?
                     this.state.cohorts.length > 0 ?
                       this.state.cohorts.filter(c => !c.is_dynamic).map(cohort => {
                         return (
@@ -145,8 +154,9 @@ class CompanyCohortsReport extends Component {
                       )
                     : (
                       <tr>
-                        <td colSpan="4">Loading Data</td>
-                      </tr>
+                       <td colSpan="10"><NoDataIndication /> 
+                       </td>
+                         </tr>
                     )
                 }
               </tbody>
