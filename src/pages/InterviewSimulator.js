@@ -34,6 +34,8 @@ class InterviewSimulatorPage extends Component {
     global.api
       .exportCohortData(companyCode)
       .then((data) => {
+        alert('Report successfully generated. Please check your email to download Excel');
+
         let resData =  data.programs
         let filterData = resData.filter((item)=> item.type_id == '3')
         this.setState({
@@ -43,6 +45,7 @@ class InterviewSimulatorPage extends Component {
         // this.setState({ batchData: data });
       })
       .catch((err) => {
+        //alert('Request failed');
         this.setState({
           dataLoaded: false,
         });
@@ -275,7 +278,7 @@ class InterviewSimulatorPage extends Component {
                               <button onClick={()=>{this.exportCohort(this.state.companyCode)}}
                               className="btn btn-size3 btn-blue btn-radius export"
                               >
-                                <span>Download reports</span>
+                                <span>Email reports</span>
                               </button>
                               :''
                                  }
