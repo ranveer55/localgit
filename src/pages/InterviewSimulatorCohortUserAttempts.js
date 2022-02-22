@@ -331,7 +331,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                                   </div>
                                 )}
                               </td>
-                              <td
+                              <td style={{wordBreak:'break-word'}}
                                 dangerouslySetInnerHTML={{
                                   __html:
                                     prevAttempt?.student_practice_answers

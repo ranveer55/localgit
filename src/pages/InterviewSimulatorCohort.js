@@ -457,7 +457,7 @@ class InterviewSimulatorCohortPage extends Component {
                                   let Reviews_Completed =  !!u.Reviews_Completed && u.Reviews_Completed.length > 0 ? u.Reviews_Completed[0].length  : ''
                                   let Practice_Answer = !!u.Practice_Answer && u.Practice_Answer.length > 0 ? u.Practice_Answer[0].length  : ''
 
-                                  if (cohort?.program?.vpi_value == 1) {
+                                  if (cohort?.vpi_value == 1) {
                                 return [
                                   u.userId,
                                   u.FirstName,
@@ -518,7 +518,7 @@ class InterviewSimulatorCohortPage extends Component {
                               <th>%Reviews Completed </th>
                               <th>Notes</th>
                               <th>% Questions with notes</th>
-                              {cohort?.program?.vpi_value == 1 && (
+                              {cohort?.vpi_value == 1 && (
                                 <>
                                   <th>Manual Rating</th>
                                   <th>Vpi Score(Max & Min value)</th>
@@ -597,7 +597,7 @@ class InterviewSimulatorCohortPage extends Component {
                                       user.distinctAttemptsCount[0]
                                     ).toFixed(2)+'%' : ''}
                                   </td>
-                                  {cohort?.program?.vpi_value == 1 && (
+                                  {cohort?.vpi_value == 1 && (
                                     <>
                                       {" "}
                                       <td>
