@@ -105,7 +105,7 @@ class CompanyCohortsReport extends Component {
                             <td>{cohort.company_code}</td>
                             <td>{cohort.id}</td>
                             <td>{cohort.type_id == '2' ? 'Proctored Test': 
-                            cohort.type_id == '3' ? 'Interview Simulator' :
+                            cohort.type_id == '3' ? cohort?.vpi_value == 1 ? 'Verbal proficiency index' : 'Interview Simulator' :
                             cohort.type_id == '4' ? 'Business English' :
                             '-'
                             }</td>

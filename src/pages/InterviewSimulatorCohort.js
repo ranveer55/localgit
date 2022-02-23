@@ -499,6 +499,9 @@ class InterviewSimulatorCohortPage extends Component {
                       >
                         <span>Download CSV</span>
                       </button>
+                      <button className="btn btn-size3 btn-blue btn-radius export">
+                        <span>Email VPI Report</span>
+                      </button>
                     </div>
                     <div id="table-wrapper">
                       <div id="table-scroll">
