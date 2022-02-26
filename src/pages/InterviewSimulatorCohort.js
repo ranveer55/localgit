@@ -202,6 +202,37 @@ class InterviewSimulatorCohortPage extends Component {
     );
   };
 
+  exportVpiData  = () => {
+    // this.setState({
+    //   dateLoaded: false,
+    //   loading: true,
+    // });
+    global.api
+      .exportVpiData(
+        this.cohortId,
+        moment(this.state.startDate).format("YYYY-MM-DD"),
+        moment(this.state.endDate).format("YYYY-MM-DD")
+      )
+      .then((data) => {
+        this.setState({
+          dataLoaded: true,
+          startDate: this.state.startDate,
+          endDate: this.state.endDate,
+          cohort: data.program,
+          users: data.users,
+          dataSets: data.dataSets,
+          loading: false,
+        });
+        // this.setState({ batchData: data });
+      })
+      .catch((err) => {
+        this.setState({
+          dateLoaded: true,
+          loading: false,
+        });
+      });
+  }
+
   handleRating = (e, userVal) => {
     global.api
       .vpiManualRating({
@@ -499,7 +530,7 @@ class InterviewSimulatorCohortPage extends Component {
                       >
                         <span>Download CSV</span>
                       </button>
-                      <button className="btn btn-size3 btn-blue btn-radius export">
+                      <button onClick={this.exportVpiData}className="btn btn-size3 btn-blue btn-radius export">
                         <span>Email VPI Report</span>
                       </button>
                     </div>

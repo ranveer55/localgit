@@ -564,6 +564,17 @@ export default class ApiService {
         });
     }
 
+    exportVpiData(cohort_id = 0, startDate = '', endDate = '') {
+        return axios.get(`${this.domain}/export-vpi-data/${cohort_id}?startDate=${startDate}&endDate=${endDate}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+
     //manual rating
     vpiManualRating(data) {
         return axios.post(`${this.domain}/manual-rating`, {data}, {
