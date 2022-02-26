@@ -238,8 +238,6 @@ class ManageQuizSetQuetions extends Component {
 
                     </div>
                     <div>
-
-
                         {data.questions.length === 0 ? (
                             <tr>
                                 <td colSpan="4" style={{ textAlign: "center" }}>No Questions added yet!</td>
@@ -261,6 +259,20 @@ class ManageQuizSetQuetions extends Component {
                                     <h2>Quiz Set Question</h2>
                                     <div>
                                         <div className="card">
+                                        <div className="row">
+                                            <div className="col-md-5">
+                                                <div style={{ alignContent: 'center', paddingTop: '30px' }}>
+                                                    <h3>Select Question type</h3>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-7">
+                                                <select name="questionType" onChange={this.onChange}>
+                                                    <option value="">select</option>
+                                                    <option selected={newQuestion?.questionType == 2} value="2">mcq</option>
+                                                    <option selected={newQuestion?.questionType == 3}value="3">Written Test</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div className="row">
                                             <div className="col-md-5">
                                                 <div style={{ alignContent: 'center', paddingTop: '30px' }}>
