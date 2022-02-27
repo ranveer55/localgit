@@ -267,8 +267,8 @@ class ManageQuizSetQuetions extends Component {
                                             </div>
                                             <div className="col-md-7">
                                                 <select name="questionType" onChange={this.onChange}>
-                                                    <option value="">select</option>
-                                                    <option selected={newQuestion?.questionType == 2} value="2">mcq</option>
+                                                    <option value="">select question type</option>
+                                                    <option selected={newQuestion?.questionType == 2} value="2">Mcq</option>
                                                     <option selected={newQuestion?.questionType == 3}value="3">Written Test</option>
                                                 </select>
                                             </div>
