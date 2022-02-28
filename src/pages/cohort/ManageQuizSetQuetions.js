@@ -4,6 +4,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import moment from "moment";
 import RTEditor from './RTEditor'
 import AnswerOptions from './AnswerOptions'
+import './quiz.css';
 
 class ManageQuizSetQuetions extends Component {
 
@@ -266,9 +267,9 @@ class ManageQuizSetQuetions extends Component {
                                                 </div>
                                             </div>
                                             <div className="col-md-7">
-                                                <select name="questionType" onChange={this.onChange}>
-                                                    <option value="">select question type</option>
-                                                    <option selected={newQuestion?.questionType == 2} value="2">Mcq</option>
+                                                <select className="dropDownOption" name="questionType" onChange={this.onChange}>
+                                                    <option value="">Select question type</option>
+                                                    <option selected={newQuestion?.questionType == 2} value="2">MCQ</option>
                                                     <option selected={newQuestion?.questionType == 3}value="3">Written Test</option>
                                                 </select>
                                             </div>
