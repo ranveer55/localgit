@@ -294,10 +294,11 @@ class ManageQuizSetQuetions extends Component {
                                                     <p>The choices will be randomly shuffled during display.    </p>
                                                 </div>
                                                 </div>
-
+                                                   {newQuestion?.questionType == 2 &&
                                                 <div className="col-md-7">
                                                     <AnswerOptions data={newQuestion.optionChoices} inputClass={inputClass} callbacks={this.onChangeOptions} />
                                                 </div>
+                                                 }
                                            
                                         </div>
                                         </div>
