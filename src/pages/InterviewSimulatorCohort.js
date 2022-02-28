@@ -202,6 +202,37 @@ class InterviewSimulatorCohortPage extends Component {
     );
   };
 
+  exportVpiData  = () => {
+    // this.setState({
+    //   dateLoaded: false,
+    //   loading: true,
+    // });
+    global.api
+      .exportVpiData(
+        this.cohortId,
+        moment(this.state.startDate).format("YYYY-MM-DD"),
+        moment(this.state.endDate).format("YYYY-MM-DD")
+      )
+      .then((data) => {
+        // this.setState({
+        //   dataLoaded: true,
+        //   startDate: this.state.startDate,
+        //   endDate: this.state.endDate,
+        //   cohort: data.program,
+        //   users: data.users,
+        //   dataSets: data.dataSets,
+        //   loading: false,
+        // });
+        // this.setState({ batchData: data });
+      })
+      .catch((err) => {
+        this.setState({
+          dateLoaded: true,
+          loading: false,
+        });
+      });
+  }
+
   handleRating = (e, userVal) => {
     global.api
       .vpiManualRating({
@@ -431,26 +462,26 @@ class InterviewSimulatorCohortPage extends Component {
                                   : "-";
 
                                   let distinctAttemptsCount = 
-                                  ((u.distinctAttempts * 100) / u.distinctAttemptsCount[0]).toFixed(2) + '%';
+                                  ((u.distinctAttempts * 100) / u.distinctAttemptsCount).toFixed(2) + '%';
                                  
                                   let totalAttemptsCount = (
                                     u.totalAttempts /
-                                    u.distinctAttemptsCount[0]
+                                    u.distinctAttemptsCount
                                   ).toFixed(2) + '%';
                                   
                                  let Asked_for_Review_count = !!u.Asked_for_Review && u.Asked_for_Review.length > 0 ?  (
                                     u.Asked_for_Review[0].length /
-                                    u.distinctAttemptsCount[0]
+                                    u.distinctAttemptsCount
                                   ).toFixed(2) + '%' : '';
 
                                   let Reviews_Completed_count = !!u.Reviews_Completed && u.Reviews_Completed.length > 0 ? (
                                     u.Reviews_Completed[0].length /
-                                    u.distinctAttemptsCount[0]
+                                    u.distinctAttemptsCount
                                   ).toFixed(2) + '%' : '';
 
                                  let Practice_Answer_Count = !!u.Practice_Answer && u.Practice_Answer.length > 0 ?  (
                                     u.Practice_Answer[0] /
-                                    u.distinctAttemptsCount[0]
+                                    u.distinctAttemptsCount
                                   ).toFixed(2) + '%' : '';
                              
                                   let Asked_for_Review = !!u.Asked_for_Review && u.Asked_for_Review.length > 0 ? u.Asked_for_Review[0].length  : ''
@@ -499,6 +530,12 @@ class InterviewSimulatorCohortPage extends Component {
                       >
                         <span>Download CSV</span>
                       </button>
+                      {cohort?.vpi_value == 1 &&
+                      <button onClick={this.exportVpiData} className="btn btn-size3 btn-blue btn-radius export">
+                        <span>Email VPI Report</span>
+                      </button>
+                       }
+
                     </div>
                     <div id="table-wrapper">
                       <div id="table-scroll">
@@ -556,17 +593,17 @@ class InterviewSimulatorCohortPage extends Component {
                                   <td>{user.LastName}</td>
                                   <td>{user.distinctAttempts}</td>
                                   <td>
-                                    {!!user.distinctAttemptsCount && user.distinctAttemptsCount.length > 0 ?  (
+                                    {!!user.distinctAttemptsCount && user.distinctAttemptsCount > 0 ?  (
                                       (user.distinctAttempts * 100) /
-                                      user.distinctAttemptsCount[0]
+                                      user.distinctAttemptsCount
                                     ).toFixed(2) +'%': ''}
                                    
                                   </td>
                                   <td>{user.totalAttempts}</td>
                                   <td>
-                                    {!!user.distinctAttemptsCount && user.distinctAttemptsCount.length > 0 ? (
+                                    {!!user.distinctAttemptsCount && user.distinctAttemptsCount > 0 ? (
                                       user.totalAttempts /
-                                      user.distinctAttemptsCount[0]
+                                      user.distinctAttemptsCount
                                     ).toFixed(2): ''}
                                   
                                   </td>
@@ -574,7 +611,7 @@ class InterviewSimulatorCohortPage extends Component {
                                   <td>
                                     {
                                      user?.Asked_for_Review.length > 0 ? (user?.Asked_for_Review[0].length /
-                                      user?.distinctAttemptsCount[0]
+                                      user?.distinctAttemptsCount
                                     ).toFixed(2)+'%'
                                   : ''}
                                     
@@ -586,7 +623,7 @@ class InterviewSimulatorCohortPage extends Component {
                                   <td>
                                     {user?.Reviews_Completed.length > 0 ? (
                                       user.Reviews_Completed[0].length /
-                                      user.distinctAttemptsCount[0]
+                                      user.distinctAttemptsCount
                                     ).toFixed(2)+'%' : ''}
                                   </td>
                                   <td>
@@ -594,7 +631,7 @@ class InterviewSimulatorCohortPage extends Component {
                                   <td>
                                     {user?.Practice_Answer.length > 0 ?(
                                       user.Practice_Answer[0] /
-                                      user.distinctAttemptsCount[0]
+                                      user.distinctAttemptsCount
                                     ).toFixed(2)+'%' : ''}
                                   </td>
                                   {cohort?.vpi_value == 1 && (
