@@ -214,18 +214,10 @@ class InterviewSimulatorCohortPage extends Component {
         moment(this.state.endDate).format("YYYY-MM-DD")
       )
       .then((data) => {
-        // this.setState({
-        //   dataLoaded: true,
-        //   startDate: this.state.startDate,
-        //   endDate: this.state.endDate,
-        //   cohort: data.program,
-        //   users: data.users,
-        //   dataSets: data.dataSets,
-        //   loading: false,
-        // });
-        // this.setState({ batchData: data });
+       alert(data?.status)
       })
       .catch((err) => {
+        alert('Something went wrong!')
         this.setState({
           dateLoaded: true,
           loading: false,
