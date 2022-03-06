@@ -87,6 +87,7 @@ class CompanyCohortsReport extends Component {
                   <th>Cohort ID</th>
                   <th>Cohort Type</th>
                   <th>Name</th>
+                  <th style={{width:'8%'}}>Archived</th>
                   <th style={{width:'4%'}}>VPI</th>
                   <th>Registration Link</th>
                   <th>Start Date</th>
@@ -112,6 +113,7 @@ class CompanyCohortsReport extends Component {
                             <td>
                               <a target="_blank" rel="noopener noreferrer" href={"/cohort-detail/" + cohort.id}>{cohort.name}</a>
                             </td>
+                            <td>{cohort.archived ? 'Yes' : 'No'}</td>
                             <td>{cohort?.vpi_value == 1 ? 'Yes' : 'No'}</td>
                             <td> <a href={`https://api2.taplingua.com/app/user-cohort-registration/${cohort.id}`} target="_blank" rel="noopener noreferrer">Open Registration Form</a></td>
                             <td>{moment(cohort.start_date).format("DD-MM-YYYY")}</td>

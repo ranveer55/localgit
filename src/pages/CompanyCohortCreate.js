@@ -28,6 +28,7 @@ class CompanyCohortCreate extends Component {
       errors: null,
       profile_questionnaire: false,
       vpi_value:0,
+      archived:false,
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -126,6 +127,31 @@ class CompanyCohortCreate extends Component {
                     onChange={e => {
                       this.setState({
                              profile_questionnaire:false });
+                    }} /><span style={{margin:10}}> No</span>
+                  
+                </div>
+             <div className="form-group" style={{display:'flex'}}>
+                  <label style={{margin:10}}>Archived</label>
+                  <input
+                    style={{margin:10}}
+                    type="radio"
+                    name="archived"
+                    className=""
+                    placeholder="Cohort Name"
+                    checked={this.state.archived ==true}
+                    onChange={e => {
+                      this.setState({archived:true});
+                    }} /><span style={{margin:10}}> Yes</span>
+                    <input
+                    style={{margin:10}}
+                    type="radio"
+                    name="archived"
+                    className=""
+                    placeholder="Cohort Name"
+                    checked={this.state.archived !=true}
+                    onChange={e => {
+                      this.setState({
+                        archived:false });
                     }} /><span style={{margin:10}}> No</span>
                   
                 </div>
@@ -295,6 +321,7 @@ class CompanyCohortCreate extends Component {
                       exam_start_time: this.state.exam_start_time,
                       allotted_time: this.state.allotted_time,
                       vpi_value: this.state.vpi_value, 
+                      archived: this.state.archived, 
                     };
 
 
