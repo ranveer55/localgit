@@ -167,6 +167,40 @@ class CohortEdit extends Component {
                     }} /><span style={{margin:10}}> No</span>
                   
                 </div>
+                <div className="form-group" style={{display:'flex'}}>
+                  <label style={{margin:10}}>Archived</label>
+                  <input
+                    style={{margin:10}}
+                    type="radio"
+                    name="archived"
+                    className=""
+                    placeholder="Cohort Name"
+                    checked={cohort.archived ==true}
+                    onChange={e => {
+                      this.setState({
+                         cohort:{
+                             ...cohort,
+                             archived:true
+                         }
+                      });
+                    }} /><span style={{margin:10}}> Yes</span>
+                    <input
+                    style={{margin:10}}
+                    type="radio"
+                    name="archived"
+                    className=""
+                    placeholder="Cohort Name"
+                    checked={cohort.archived !=true}
+                    onChange={e => {
+                      this.setState({
+                         cohort:{
+                             ...cohort,
+                             archived:false 
+                         }
+                      });
+                    }} /><span style={{margin:10}}> No</span>
+                  
+                </div>
                 <div className="form-group">
                   <label>Cohort Type</label>
                  
