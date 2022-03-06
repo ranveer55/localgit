@@ -7,7 +7,7 @@ import { ReactComponent as Star } from "./start_icon.svg";
 import { InterviewSimulatorReviewModal } from "./InterviewSimulatorReviewModal";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import './index.css';
-
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { CDN_URL } from "../constant";
 class InterviewSimulatorCohortUserAttempsPage extends Component {
   constructor(props) {
@@ -90,8 +90,8 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
       reviewIsExternal: val,
     });
   };
-  getVPIScore = (datum) => {
-    if(datum.vpi_score){
+  getVPIScore = (datum, refresh) => {
+    if(datum.vpi_score && !refresh){
       this.setState({
         loading: false,
         alertMsg: datum.vpi_score,
@@ -265,14 +265,17 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                               </td>
                               <td>
                               {vpi_score != null ? 
+                              <>
+                              <RefreshIcon color="primary" size="medium" onClick={() => this.getVPIScore(prevAttempt, true)}/>
                                 <span className={`scoreColor ${vpi_score != null ?
                                   parseFloat(vpi_score?.fluency_score) > 75 ? 'green' : 
                                   parseFloat(vpi_score?.fluency_score) < 75 &&
                                    parseFloat(vpi_score?.fluency_score) > 60 ? 'yellow' :
                                    parseFloat(vpi_score?.fluency_score) < 60 ? 'red': '' : ''
                                  }`}>{'VPI Score: ' + parseFloat(vpi_score?.fluency_score).toFixed(2)}</span>
+                                 </>
                                :
-                                <button onClick={() => this.getVPIScore(prevAttempt)}>get</button>
+                                <button onClick={() => this.getVPIScore(prevAttempt, false)}>get</button>
                               }
                               </td>
                               <td
