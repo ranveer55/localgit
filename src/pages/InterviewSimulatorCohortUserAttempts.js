@@ -7,7 +7,7 @@ import { ReactComponent as Star } from "./start_icon.svg";
 import { InterviewSimulatorReviewModal } from "./InterviewSimulatorReviewModal";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import './index.css';
-import RefreshIcon from '@mui/icons-material/Refresh';
+// import RefreshIcon from '@mui/icons-material/Refresh';
 import { CDN_URL } from "../constant";
 class InterviewSimulatorCohortUserAttempsPage extends Component {
   constructor(props) {
@@ -213,6 +213,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                             <th>Lesson Name</th>
                             <th>Date</th>
                             <th>AI Review</th>
+                            <th>VPI refresh</th>
                             <th>VPI Review</th>
                             <th>Mentor Review</th>
                             <th>User Answer</th>
@@ -257,6 +258,7 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                               </td>
 
                               <td>
+                                
                                 <a
                                   href={`/interview-simulator/${this.cohortId}/user-attempts/${this.userId}/${prevAttempt.id}`}
                                 >
@@ -266,7 +268,15 @@ class InterviewSimulatorCohortUserAttempsPage extends Component {
                               <td>
                               {vpi_score != null ? 
                               <>
-                              <RefreshIcon color="primary" size="medium" onClick={() => this.getVPIScore(prevAttempt, true)}/>
+                              <button onClick={() => this.getVPIScore(prevAttempt, true)} class="btnbtn-sm">Refresh</button>
+                              </>
+                              : null
+                          }
+                          </td>
+                              <td>
+                              {vpi_score != null ? 
+                              <>
+                              
                                 <span className={`scoreColor ${vpi_score != null ?
                                   parseFloat(vpi_score?.fluency_score) > 75 ? 'green' : 
                                   parseFloat(vpi_score?.fluency_score) < 75 &&
