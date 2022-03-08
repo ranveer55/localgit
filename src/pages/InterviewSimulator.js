@@ -167,11 +167,11 @@ class InterviewSimulatorPage extends Component {
           </td>
         ),
       },
-      // {
-      //     dataField: 'created_at',
-      //     text: 'Date Created',
-      //     formatter: (created_at) =>'',
-      // },
+      {
+          dataField: 'vpi_value',
+          text: 'VPI',
+          formatter: (val) =>val === '1' ? 'Yes':'No',
+      },
       {
         dataField: "id",
         text: "Registration Link",
