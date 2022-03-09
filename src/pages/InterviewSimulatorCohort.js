@@ -599,33 +599,17 @@ class InterviewSimulatorCohortPage extends Component {
                                     ).toFixed(2): ''}
                                   
                                   </td>
-                                  <td>{!!user?.Asked_for_Review && user?.Asked_for_Review.length > 0 && user?.Asked_for_Review[0].length}</td>
-                                  <td>
-                                    {
-                                     user?.Asked_for_Review.length > 0 ? (user?.Asked_for_Review[0].length /
-                                      user?.distinctAttemptsCount
-                                    ).toFixed(2)+'%'
-                                  : ''}
-                                    
-                                  </td>
-                                  <td>
-
-                                      {user?.Reviews_Completed.length > 0 ?  user.Reviews_Completed[0].length : ''}
-                                      </td>
-                                  <td>
-                                    {user?.Reviews_Completed.length > 0 ? (
-                                      user.Reviews_Completed[0].length /
-                                      user.distinctAttemptsCount
-                                    ).toFixed(2)+'%' : ''}
-                                  </td>
-                                  <td>
-                                    {user?.Practice_Answer.length > 0 ? user.Practice_Answer[0] : ''}</td>
-                                  <td>
-                                    {user?.Practice_Answer.length > 0 ?(
-                                      user.Practice_Answer[0] /
-                                      user.distinctAttemptsCount
-                                    ).toFixed(2)+'%' : ''}
-                                  </td>
+                                  <td>{user && user.Asked_for_Review && user.Asked_for_Review.length > 0 && user.Asked_for_Review[0] ? user.Asked_for_Review[0].length : 0}</td>
+                                  <td>{user && user.Asked_for_Review && user.Asked_for_Review.length > 0 && user.Asked_for_Review[0] && user.distinctAttemptsCount  ? (user?.Asked_for_Review[0].length /user?.distinctAttemptsCount).toFixed(2)+'%' : ''}</td>
+                                  
+                                  <td>{user && user.Reviews_Completed && user.Reviews_Completed.length > 0 && user.Reviews_Completed[0] ? user.Reviews_Completed[0].length : 0}</td>
+                                  <td>{user && user.Reviews_Completed && user.Reviews_Completed.length > 0 && user.Reviews_Completed[0] && user.distinctAttemptsCount  ? (user?.Reviews_Completed[0].length /user?.distinctAttemptsCount).toFixed(2)+'%' : ''}</td>
+                                  
+                                 <td>{user && user.Practice_Answer && user.Practice_Answer.length > 0 && user.Practice_Answer[0] ? user.Practice_Answer[0].length : 0}</td>
+                                  <td>{user && user.Practice_Answer && user.Practice_Answer.length > 0 && user.Practice_Answer[0] && user.distinctAttemptsCount  ? (user?.Practice_Answer[0].length /user?.distinctAttemptsCount).toFixed(2)+'%' : ''}</td>
+                                  
+                                 
+                                
                                   {cohort?.vpi_value == 1 && (
                                     <>
                                       {" "}
