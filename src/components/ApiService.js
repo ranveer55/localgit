@@ -498,6 +498,17 @@ export default class ApiService {
         });
 
     }
+    deleteUserCourse(userId, courseNumber) {
+        return axios.post(`${this.domain}/deleteUserCourses`,{userId, courseNumber}, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+
+    }
 
     getCompanyCohorts(company_code = 0,value) {
         

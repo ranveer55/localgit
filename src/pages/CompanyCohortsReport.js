@@ -2,7 +2,12 @@ import moment from "moment";
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import Loader from "react-loader-spinner";
-
+import DeleteIcon from '@material-ui/icons/Delete';
+import ConfirmationDialog from "./ConfirmDialog";
+import Snackbar from '@material-ui/core/Snackbar';
+import ErrorIcon from '@material-ui/icons/Error';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CustomizedSnackbars from "./CustomizedSnackbars";
 class CompanyCohortsReport extends Component {
 
   constructor(props) {
@@ -13,7 +18,12 @@ class CompanyCohortsReport extends Component {
     this.state = {
       dataLoaded: false,
       cohorts: [],
-      selectedCohort: false
+      selectedCohort: false,
+      open: false,
+      userId: '',
+      course: '',
+      courseNumber: null,
+      deleting: undefined,
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -47,6 +57,73 @@ class CompanyCohortsReport extends Component {
           dataLoaded: false
         });
       });
+  }
+
+  DeleteIconClick = (userId, courseNumber, course) => {
+    this.setState({
+      open: true,
+      userId, courseNumber, course
+    })
+  }
+  handleCancel = () => {
+    this.setState({
+      open: false,
+      open: false,
+      userId: '',
+      course: '',
+      courseNumber: null,
+      deleting: undefined,
+    })
+  }
+
+  deleteUser = () => {
+    this.setState({
+      deleting: true,
+      deleted: undefined
+    });
+    global.api.deleteUserCourse(this.state.userId, this.state.courseNumber)
+      .then(data => {
+       
+        if (data && data.status) {
+          let selectedCohort =undefined;
+          const cohorts = this.state.cohorts.map((c) => {
+            if (c.id === this.state.selectedCohort.id) {
+              const users = this.state.selectedCohort.users.filter((u) => u.userId !== this.state.userId);
+              selectedCohort = {
+                ...this.state.selectedCohort,
+                users
+              }
+              return selectedCohort;
+            }
+            return c;
+          })
+          this.setState({
+            open: false,
+            userId: '',
+            course: '',
+            courseNumber: null,
+            deleting: undefined,
+            deleted: true,
+            cohorts,
+            selectedCohort: selectedCohort ? selectedCohort :this.state.selectedCohort
+          })
+        } else {
+          this.setState({
+            open: false,
+            userId: '',
+            course: '',
+            courseNumber: null,
+            deleting: undefined,
+            deleted: false
+          })
+        }
+      })
+      .catch(err => {
+        this.setState({
+          deleting: undefined
+        });
+      });
+
   }
 
 
@@ -87,8 +164,8 @@ class CompanyCohortsReport extends Component {
                   <th>Cohort ID</th>
                   <th>Cohort Type</th>
                   <th>Name</th>
-                  <th style={{width:'8%'}}>Archived</th>
-                  <th style={{width:'4%'}}>VPI</th>
+                  <th style={{ width: '8%' }}>Archived</th>
+                  <th style={{ width: '4%' }}>VPI</th>
                   <th>Registration Link</th>
                   <th>Start Date</th>
                   <th>Users</th>
@@ -105,10 +182,10 @@ class CompanyCohortsReport extends Component {
                           <tr key={cohort.id}>
                             <td>{cohort.company_code}</td>
                             <td>{cohort.id}</td>
-                            <td>{cohort.type_id == '2' ? 'Proctored Test': 
-                            cohort.type_id == '3' ? cohort?.vpi_value == 1 ? 'Verbal proficiency index' : 'Interview Simulator' :
-                            cohort.type_id == '4' ? 'Business English' :
-                            '-'
+                            <td>{cohort.type_id == '2' ? 'Proctored Test' :
+                              cohort.type_id == '3' ? cohort?.vpi_value == 1 ? 'Verbal proficiency index' : 'Interview Simulator' :
+                                cohort.type_id == '4' ? 'Business English' :
+                                  '-'
                             }</td>
                             <td>
                               <a target="_blank" rel="noopener noreferrer" href={"/cohort-detail/" + cohort.id}>{cohort.name}</a>
@@ -156,9 +233,9 @@ class CompanyCohortsReport extends Component {
                       )
                     : (
                       <tr>
-                       <td colSpan="10"><NoDataIndication /> 
-                       </td>
-                         </tr>
+                        <td colSpan="10"><NoDataIndication />
+                        </td>
+                      </tr>
                     )
                 }
               </tbody>
@@ -173,7 +250,7 @@ class CompanyCohortsReport extends Component {
                   <div>
                     {
                       this.state.selectedCohort.users.map(user => (
-                        <div>
+                        <div key={user.userId}>
                           <Link key={user.userId}
                             target="_blank"
                             to={"/user-cohort-detail/" + this.state.selectedCohort.id + "/" + user.userId}
@@ -181,6 +258,7 @@ class CompanyCohortsReport extends Component {
                               color: "blue",
                               cursor: "pointer"
                             }}>{user.userId}</Link>
+                          <DeleteIcon style={{ margin: '3px 0px 0px 25px' }} color="secondary" onClick={() => this.DeleteIconClick(user.userId, user.courseNumber, this.state.selectedCohort.name)} />
                         </div>
                       ))
                     }
@@ -190,6 +268,15 @@ class CompanyCohortsReport extends Component {
             }
           </div>
         </section>
+        <ConfirmationDialog userId={this.state.userId} course={this.state.course} open={this.state.open} handleCancel={this.handleCancel} handleOk={this.deleteUser} deleting={this.state.deleting} />
+
+        <CustomizedSnackbars 
+        open={this.state.deleted !== undefined}
+        handleClose={() =>this.setState({deleted:undefined})}
+        variant={this.state.deleted ? 'success' : 'error'}
+        message={this.state.deleted ? 'User has been deleted' : 'Oops something went wrong'}
+        />
+       
       </main>
     );
   }
