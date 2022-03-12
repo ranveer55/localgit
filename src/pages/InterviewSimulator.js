@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import Loader from "react-loader-spinner";
+import CustomizedSnackbars from "./CustomizedSnackbars";
 
 class InterviewSimulatorPage extends Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class InterviewSimulatorPage extends Component {
       dataLoaded: false,
       cohorts: [],
       selectedCohort: false,
-      companyCode : this.companyCode
+      companyCode : this.companyCode,
+      exported: undefined
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -30,25 +32,48 @@ class InterviewSimulatorPage extends Component {
     this.setState({
       dataLoaded: true,
     });
-    console.log('companyCode',companyCode)
     global.api
       .exportCohortData(companyCode)
       .then((data) => {
-        alert('Report successfully generated. Please check your email to download Excel');
-
+        
         let resData =  data.programs
         let filterData = resData.filter((item)=> item.type_id == '3')
         this.setState({
           dataLoaded: false,
           cohorts: filterData,
+          exported:'success',
+          message:'Report successfully generated. Please check your email to download Excel'
         });
-        // this.setState({ batchData: data });
       })
       .catch((err) => {
-        //alert('Request failed');
-        this.setState({
+        this.setState(({
+          exported:'error',
+          message:'Oops something went wrong',
           dataLoaded: false,
-        });
+        }))
+      });
+  }
+  exportCohortDaily(companyCode){
+    this.setState({
+      dataLoaded: true,
+    });
+    global.api
+      .exportCohortDaily(companyCode)
+      .then((data) => {
+        this.setState(({
+          dataLoaded:false,
+          exported:'success',
+          message:'Report successfully generated. Please check your email to download Excel'
+        }))
+
+      })
+      .catch((err) => {
+        this.setState(({
+          exported:'error',
+          message:'Oops something went wrong',
+          dataLoaded: false,
+        }))
+       
       });
   }
 
@@ -275,13 +300,19 @@ class InterviewSimulatorPage extends Component {
                                 </select>
                               <div>
                               {this.state.cohorts.length > 0 ?
+                              <>
                               <button onClick={()=>{this.exportCohort(this.state.companyCode)}}
                               className="btn btn-size3 btn-blue btn-radius export"
                               >
-                                <span>Email reports</span>
+                                <span>Email Engagement Report</span>
                               </button>
-                              :''
-                                 }
+                               <button onClick={()=>{this.exportCohortDaily(this.state.companyCode)}}
+                              className="btn btn-size3 btn-blue btn-radius export"
+                              >
+                                <span>Email Daily Activity Report</span>
+                              </button>
+                              </>
+                              :null}
                        </div>
 
                                
@@ -319,6 +350,12 @@ class InterviewSimulatorPage extends Component {
             )}
           </div>
         </section>
+        {this.state.exported !== undefined ? <CustomizedSnackbars 
+        open={this.state.exported !== undefined}
+        handleClose={() =>this.setState({exported:undefined})}
+        variant={this.state.exported ?? ''}
+        message={this.state.message ?? ''}
+        />: null}
       </main>
     );
   }
