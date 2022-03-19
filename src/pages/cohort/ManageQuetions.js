@@ -30,7 +30,8 @@ class ManageQuetions extends Component {
       referenceAnswer: "",
       video: "",
       type: 1,
-      allottedTime:null
+      allottedTime:null,
+      preparationTime:null
     };
     this.state = {
       video: null,
@@ -849,6 +850,24 @@ class ManageQuetions extends Component {
                             borderRadius: 5,
                           }}
                           placeholder="Aseesment Time"
+                          onChange={this.onChange}
+                        />
+                      </div>
+                    </div>
+                    <div className="row" style={{ padding: "2px 10px" }}>
+                      <div className="col-md-3">Preparation Time{newQuestion.type == 0 && '*'}</div>
+                      <div className="col-md-9">
+                        <input
+                          disabled={uploading}
+                          name="preparationTime"
+                          value={newQuestion.preparationTime}
+                          style={{
+                            width: "100%",
+                            border: "1px solid",
+                            padding: 10,
+                            borderRadius: 5,
+                          }}
+                          placeholder="Preparation Time"
                           onChange={this.onChange}
                         />
                       </div>
