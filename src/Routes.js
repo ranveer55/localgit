@@ -48,6 +48,8 @@ import ProctoredTest from './pages/ProctoredTest';
 import ProctoredTestDetail from './pages/ProctoredTest/Detail';
 import ProctoredTestUserDetail from './pages/ProctoredTest/User';
 import CohortEdit from './pages/CohortEdit';
+import BusinessEnglish from './pages/BusinessEnglish';
+import BusinessEnglishDetail from './pages/BusinessEnglish/Detail';
 
 const Auth = new AuthService();
 class Router extends React.Component {
@@ -92,6 +94,8 @@ class Router extends React.Component {
         <ProtectedRoute path="/daily-goal-log" component={DailyGoalLog} />
         <ProtectedRoute path="/coursedetail" component={CourseDetails} />
         <ProtectedRoute path="/courses" component={Courses} />
+        <ProtectedRoute path="/business-english/:cohortId" component={BusinessEnglishDetail} />
+        <ProtectedRoute path="/business-english" component={BusinessEnglish} />
         <ProtectedRoute exact path="/proctored-test/user/:attemptLogId" component={ProctoredTestUserDetail} />
         <ProtectedRoute exact path="/proctored-test/:cohortId/:quizId" component={ProctoredTestDetail} />
         <ProtectedRoute exact path="/proctored-test" component={ProctoredTest} />
