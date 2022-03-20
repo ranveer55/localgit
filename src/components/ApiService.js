@@ -624,6 +624,16 @@ export default class ApiService {
             return res.data;
         });
     }
+    getBusinessEnglishTest(id) {
+        return axios.get(`${this.domain}/get-business-english/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
     getProctoredTest(id) {
         return axios.get(`${this.domain}/get-proctored-test/${id}`, {
             headers: {
@@ -636,6 +646,26 @@ export default class ApiService {
     }
     getProctoredTestDetail(cohortId, quizId,page) {
         return axios.get(`${this.domain}/get-proctored-test/detail/${cohortId}/${quizId}?page=${page}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    getBusinessEnglishDetail(cohortId,page) {
+        return axios.get(`${this.domain}/business-english/detail/${cohortId}?page=${page}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
+    getBusinessEnglishCourseDetail(courseId,companyCode) {
+        return axios.get(`${this.domain}/business-english/coursedetail?companyCode=${companyCode}&courseNumber=${courseId}`, {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             },

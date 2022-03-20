@@ -126,7 +126,11 @@ class CompanyCohortsReport extends Component {
 
   }
 
-
+  getUserCount =(data) =>{
+    data =data.map((u)=>u.userId);
+    data =[...new Set(data)];
+    return `${data.length} User (s)`
+  }
 
   render() {
     const NoDataIndication = () => (
@@ -208,7 +212,7 @@ class CompanyCohortsReport extends Component {
                                 style={{
                                   color: "blue",
                                   cursor: "pointer"
-                                }}>{cohort.users.length} User(s)</span>
+                                }}>{this.getUserCount(cohort.users)}</span>
                             </td>
                             <td
                               style={{

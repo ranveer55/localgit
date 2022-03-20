@@ -58,12 +58,12 @@ class Menu extends Component {
                         </li>
 
                         <li className="menu_item">
-                            <a className={pathName === '/courses' ? 'menu_link current' : 'menu_link'} href="/courses">
+                            <a className={pathName === '/business-english' ? 'menu_link current' : 'menu_link'} href="/business-english">
                                 <i className="menu_link_icon">
                                     <img src="/images/icons/icon4.svg" alt="" />
                                     <img src="/images/icons/icon4hover.svg" alt="" />
                                 </i>
-                                <span>Courses</span>
+                                <span>Business English</span>
                             </a>
                         </li>
                         <li className="menu_item">
