@@ -649,6 +649,16 @@ export default class ApiService {
             return res.data;
         });
     }
+    getBusinessEnglishCourseDetail(courseId,$companyCode) {
+        return axios.get(`${this.domain}/business-english/coursedetail?companyCode=${companyCode}&courseNumber=${courseId}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            },
+        }
+        ).then(res => {
+            return res.data;
+        });
+    }
 
     getProctoredTestDetailSearch(cohortId, quizId,page,search) {
         

@@ -1,8 +1,8 @@
 
 import React, { Component } from "react";
 import Table from '../../components/Table'
-import { Container, Typography, Divider } from '@material-ui/core';
-
+import { Container, Typography, Button } from '@material-ui/core';
+import { Link } from 'react-router-dom'
 class BusinessEnglishDetail extends Component {
     constructor(props) {
         super(props);
@@ -39,6 +39,20 @@ class BusinessEnglishDetail extends Component {
             });
     }
 
+   
+
+    btnComponent = (row) => {
+        return (
+            <td>
+                <Link to={`/business-english/course/${row.courseNumber}`}>
+                <Button size="small" variant="contained" color="primary">
+                    Detail
+                </Button>
+                </Link>
+            </td>
+        )
+    }
+
     render() {
 
         const headCells = [
@@ -50,6 +64,7 @@ class BusinessEnglishDetail extends Component {
             { id: 'courseStartDate', numeric: false, disablePadding: false, label: 'Start Date' },
             { id: 'enrolled', numeric: true, disablePadding: false, label: 'Enrolled' },
             { id: 'module_level', numeric: true, disablePadding: false, label: 'Level' },
+            { id: 'btn', numeric: false, disablePadding: false, label: 'Detail', component: this.btnComponent },
         ];
 
         const { data, loading, cohort } = this.state;
@@ -61,7 +76,7 @@ class BusinessEnglishDetail extends Component {
 
                     </Typography>
                     <Typography variant="h6">Name:  {cohort ? cohort.name : ''}</Typography>
-                    <Typography variant="h6" style={{marginBottom:20}}>Instructor Emails: {cohort ? cohort.instructorEmails : ''}</Typography>
+                    <Typography variant="h6" style={{ marginBottom: 20 }}>Instructor Emails: {cohort ? cohort.instructorEmails : ''}</Typography>
                     <Table headCells={headCells} rows={data} loading={loading} />
                 </Container>
 

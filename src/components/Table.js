@@ -222,7 +222,7 @@ export default function EnhancedTable({ rows, headCells, loading }) {
                                             tabIndex={-1}
                                             key={index}
                                         >
-                                            {headCells.map((cell) => <TableCell key={cell.id} align="left">{row[cell.id]}</TableCell>)}
+                                            {headCells.map((cell) => cell.component ? cell.component(row):<TableCell key={cell.id} align="left">{row[cell.id]}</TableCell>)}
                                         </TableRow>
                                     );
                                 })}
