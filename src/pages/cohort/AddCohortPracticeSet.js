@@ -2,6 +2,14 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import moment from "moment";
 import BootstrapTable from 'react-bootstrap-table-next';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import CustomizedSnackbars from '../CustomizedSnackbars'
 class AddPracticeSetToCohortPage extends Component {
 
     constructor(props) {
@@ -18,7 +26,10 @@ class AddPracticeSetToCohortPage extends Component {
             availablePracticeSets: [],
             showPracticeSetAddModal: false,
             alreadySelectedPracticeSets: [],
-            selectedPracticeSets: []
+            selectedPracticeSets: [],
+            flash:false,
+            message:'',
+            variant:''
         };
 
         this.state.selectedCompany = global.companyCode;
@@ -55,8 +66,8 @@ class AddPracticeSetToCohortPage extends Component {
     }
 
     addPracticeSet = () => {
-
-        global.api.addCompanyPracticeSet({ name: this.state.newPracticeName })
+        const { newPracticeName, assesment, assesmentTime } = this.state;
+        global.api.addCompanyPracticeSet({ name: newPracticeName, assesment, assesmentTime })
             .then(
                 data => {
                     const dt = this.state.availablePracticeSets;
@@ -64,11 +75,17 @@ class AddPracticeSetToCohortPage extends Component {
                     this.setState({
                         selectedPracticeSets: [data.practiceSet.practiceSetId],
                         availablePracticeSets: dt,
-                    },()=>this.addd());
+                        message:'Practice set Added',
+                        variant:'success',
+                        flash:true
+                    }, () => this.addd());
                 })
             .catch(err => {
                 this.setState({
-                    dateLoaded: true
+                    dateLoaded: true,
+                    message:'Oops something went wrong',
+                        variant:'error',
+                        flash:true
                 });
             });
     }
@@ -116,52 +133,43 @@ class AddPracticeSetToCohortPage extends Component {
             });
         }
     }
-    Remove =(e, row)=>{
+    Remove = (e, row) => {
         e.preventDefault();
         global.api.removePracticeSetFromCohort(this.cohortId, row.practiceSetId)
-        .then((response) => {
-            // remove from practice sets list
-            const newState = [...this.state.practiceSets];
-            newState.splice(this.state.practiceSets.indexOf(row.practiceSetId), 1);
-            this.setState({
-                practiceSets: newState,
-                alreadySelectedPracticeSets: newState.map(d => d.practiceSetId),
-            });
-        })
-        .catch(err => {
-            alert("Something went wrong!");
-        })
-       
+            .then((response) => {
+                // remove from practice sets list
+                const newState = [...this.state.practiceSets];
+                newState.splice(this.state.practiceSets.indexOf(row.practiceSetId), 1);
+                this.setState({
+                    practiceSets: newState,
+                    alreadySelectedPracticeSets: newState.map(d => d.practiceSetId),
+                    message:'Practice set has been deleted',
+                    variant:'success',
+                    flash:true
+                });
+            })
+            .catch(err => {
+                this.setState({
+                    message:'Oops something went wrong',
+                    variant:'error',
+                    flash:true
+                })
+            })
+
     }
     formatter = (cell, row) => {
         return (
             <div className="interview-simulator-dropdown-holder Inerpractice">
-                {/* <span className="interview-simulator-dropdown">⋮</span> */}
-                {/* <div className="interview-simulator-dropdown-content"> */}
-                    <Link
-                        to={`/manage-quetions/${this.cohortId}/${row.practiceSetId}`}
-                        className="interview-simulator-dropdown-link"
-                        style={{
-                            color: "blue",
-                            cursor: "pointer"
-                        }}>Manage Questions
-                    </Link>
-                    <Link
-                        to="#"
-                        onClick={e=>this.Remove(e, row)}
-                        className="interview-simulator-dropdown-link"
-                        style={{
-                            color: "blue",
-                            cursor: "pointer"
-                        }}>Delete Practice Set
-                    </Link>
-
-
-                {/* </div> */}
+                <Button variant="contained" color="secondary" onClick={e => this.Remove(e, row)} title="Delete Practice Set" >
+                    <DeleteIcon />
+                </Button>
+                <Button variant="contained" color="primary" onClick={e => this.props.history.push(`/manage-quetions/${this.cohortId}/${row.practiceSetId}`)} title=" Manage Questions" >
+                    <EditIcon />
+                </Button>
             </div>)
     }
 
-    addd =() =>{
+    addd = () => {
         if (this.state.selectedPracticeSets.length === 0) {
             return alert("Please select atleast one practice set to add!");
         }
@@ -186,10 +194,19 @@ class AddPracticeSetToCohortPage extends Component {
     render() {
 
         const columns = [
-           
+
             {
                 dataField: 'practiceSetName',
                 text: 'Practice Set Name'
+            },
+            {
+                dataField: 'assesment',
+                text: 'Is Assesment',
+                formatter: (val) => <Switch checked={val ?? false} />
+            },
+            {
+                dataField: 'assesmentTime',
+                text: ' Assesment Time'
             },
             {
                 dataField: 'questionCount',
@@ -197,7 +214,7 @@ class AddPracticeSetToCohortPage extends Component {
             },
 
 
-            
+
             {
                 dataField: 'id',
                 text: 'Action',
@@ -310,9 +327,42 @@ class AddPracticeSetToCohortPage extends Component {
                                 <div className="add-practice-set-modal-body">
 
                                     <h2>Create new Practice Set</h2>
+
+                                    <TextField
+                                        id="outlined-name"
+                                        label="Practice set name"
+                                        value={this.state.newPracticeName ?? ''}
+                                        onChange={e => this.setState({ newPracticeName: e.target.value })}
+                                        margin="normal"
+                                        variant="outlined"
+                                        fullWidth
+                                    />
                                     <div style={{ margin: "1rem 0", fontSize: "23px" }}>
-                                        <input style={{ border: '1px solid', padding: 10, borderRadius: 5 }} placeholder="Practice set name" onChange={e => this.setState({ newPracticeName: e.target.value })} />
+                                        <FormGroup row>
+                                            <FormControlLabel
+                                                control={
+                                                    <Switch
+                                                        checked={this.state.assesment ?? false}
+                                                        onChange={(e, val) => this.setState({ assesment: val })}
+                                                        value="checkedA"
+                                                        color="primary"
+                                                    />
+                                                }
+                                                label="Is Assessment"
+                                            />
+                                        </FormGroup>
                                     </div>
+                                    {this.state.assesment && <TextField
+                                        id="outlined-name"
+                                        label="Assesment Time"
+                                        value={this.state.assesmentTime ?? 0}
+                                        onChange={e => this.setState({ assesmentTime: e.target.value })}
+                                        margin="normal"
+                                        variant="outlined"
+                                        type="number"
+                                        fullWidth
+                                    />}
+
 
 
                                     <div style={{ display: 'flex' }}>
@@ -328,6 +378,12 @@ class AddPracticeSetToCohortPage extends Component {
                         ) : <></>
                     }
                 </section>
+                <CustomizedSnackbars 
+        open={this.state.flash}
+        handleClose={() =>this.setState({flash:null})}
+        variant={this.state.variant ?? ''}
+        message={this.state.message ?? ''}
+        />
             </main>
         );
     }

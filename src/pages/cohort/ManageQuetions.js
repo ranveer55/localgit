@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+// import QuestionModal from './QuestionModal'
 import BootstrapTable from "react-bootstrap-table-next";
 import moment from "moment";
 import { ProgressBar } from "react-bootstrap";
 import { mixPanel } from "../../config/mixpanel.config";
 import axios from "axios";
 import { toast } from "../../components/Toast/Toast";
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import './video.css';
 import { CDN_URL } from "../../constant";
 const s3Url = "https://langappnew.s3.amazonaws.com/uploads/";
@@ -25,7 +29,9 @@ class ManageQuetions extends Component {
       practiceQuestionText: "",
       referenceAnswer: "",
       video: "",
-      type: 1
+      type: 1,
+      allottedTime:null,
+      preparationTime:null
     };
     this.state = {
       video: null,
@@ -285,31 +291,14 @@ class ManageQuetions extends Component {
   formatter = (cell, row) => {
     return (
       <div className="interview-simulator-dropdown-holder">
-        <span className="interview-simulator-dropdown">⋮</span>
-        <div className="interview-simulator-dropdown-content">
-          <Link
-            to="#"
-            onClick={(e) => this.Remove(e, row)}
-            className="interview-simulator-dropdown-link"
-            style={{
-              color: "blue",
-              cursor: "pointer",
-            }}
-          >
-            Remove Question
-          </Link>
-          <Link
-            to="#"
-            onClick={(e) => this.Edit(e, row)}
-            className="interview-simulator-dropdown-link"
-            style={{
-              color: "blue",
-              cursor: "pointer",
-            }}
-          >
-            Edit Question
-          </Link>
-        </div>
+        <div className="interview-simulator-dropdown-holder Inerpractice">
+                <Button variant="contained" color="secondary" onClick={e => this.Remove(e, row)} title="Delete Question" >
+                    <DeleteIcon />
+                </Button>
+                <Button variant="contained" color="primary" onClick={e => this.Edit(e, row)} title="Edit Question" >
+                    <EditIcon />
+                </Button>
+            </div>
       </div>
     );
   };
@@ -705,6 +694,7 @@ class ManageQuetions extends Component {
 
     return (
       <main className="offset" id="content">
+        {/* <QuestionModal /> */}
         <section className="section_box">
           <div className="row">
             <div className="col-md-6">
@@ -842,6 +832,42 @@ class ManageQuetions extends Component {
                             borderRadius: 5,
                           }}
                           placeholder="Reference Answer"
+                          onChange={this.onChange}
+                        />
+                      </div>
+                    </div>
+                    <div className="row" style={{ padding: "2px 10px" }}>
+                      <div className="col-md-3">Aseesment Time{newQuestion.type == 0 && '*'}</div>
+                      <div className="col-md-9">
+                        <input
+                          disabled={uploading}
+                          name="allottedTime"
+                          value={newQuestion.allottedTime}
+                          style={{
+                            width: "100%",
+                            border: "1px solid",
+                            padding: 10,
+                            borderRadius: 5,
+                          }}
+                          placeholder="Aseesment Time"
+                          onChange={this.onChange}
+                        />
+                      </div>
+                    </div>
+                    <div className="row" style={{ padding: "2px 10px" }}>
+                      <div className="col-md-3">Preparation Time{newQuestion.type == 0 && '*'}</div>
+                      <div className="col-md-9">
+                        <input
+                          disabled={uploading}
+                          name="preparationTime"
+                          value={newQuestion.preparationTime}
+                          style={{
+                            width: "100%",
+                            border: "1px solid",
+                            padding: 10,
+                            borderRadius: 5,
+                          }}
+                          placeholder="Preparation Time"
                           onChange={this.onChange}
                         />
                       </div>
