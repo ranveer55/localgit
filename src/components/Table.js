@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -133,7 +133,11 @@ export default function EnhancedTable({ rows, headCells, loading }) {
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(1);
+
+    useEffect(() => {
+        setRowsPerPage(rows.length > 15 ? 15 : rows.length)
+    },[rows.length])
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -222,7 +226,9 @@ export default function EnhancedTable({ rows, headCells, loading }) {
                                             tabIndex={-1}
                                             key={index}
                                         >
-                                            {headCells.map((cell) => cell.component ? cell.component(row):<TableCell key={cell.id} align="left">{row[cell.id]}</TableCell>)}
+                                            {headCells.map((cell) => <TableCell key={cell.id} align="left">
+                                                {cell.component ? cell.component(row): row[cell.id]}</TableCell>
+                                                )}
                                         </TableRow>
                                     );
                                 })}

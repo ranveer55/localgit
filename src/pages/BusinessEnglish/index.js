@@ -1,7 +1,8 @@
 import moment from "moment";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import Table from '../../components/Table'
+import { Container, Typography, Button } from '@material-ui/core';
 class BusinessEnglish extends Component {
 
     constructor(props) {
@@ -51,7 +52,7 @@ class BusinessEnglish extends Component {
 
     loadData(startDate, endDate) {
         this.setState({
-            dateLoaded: false
+            loading: true
         });
         global.api.getBusinessEnglishTest(global.companyCode)
             .then(
@@ -59,86 +60,53 @@ class BusinessEnglish extends Component {
                     let resData =  data.data
                     let filterData = resData.filter((item)=> item.type_id == '4')
                     this.setState({
-                        dataLoaded: true,
+                        loading: false,
                         data: filterData,
                     });
                     // this.setState({ batchData: data });
                 })
             .catch(err => {
                 this.setState({
-                    dateLoaded: true
+                    loading: true
                 });
             });
+    }
+
+    btnComponent = (row) => {
+        return (
+                <Link to={`/business-english/${row.id}`}>
+                <Button size="small" variant="contained" color="primary">
+                    View Course
+                </Button>
+                </Link>
+        )
     }
 
 
 
     render() {
 
-        const {data} = this.state;
+        const headCells = [
+            { id: 'name', numeric: false, disablePadding: false, label: 'Cohort Name' },
+            { id: 'start_date', numeric: true, disablePadding: false, label: 'Start Date' },
+            { id: 'btn', numeric: false, disablePadding: false, label: 'Detail', component: this.btnComponent },
+        ];
+
+        const { data, loading, cohort } = this.state;
 
         return (
-            <main className="offset" id="content">
-                <div className="row">
-                    <div className="">
-                        <h4 className="title4 mb40">
-                        Business English Tests
-                        </h4>
-                        <br />
-                    </div>
+            <>
+                <Container>
+                    <Typography variant="h4" component="h4" style={{ marginTop: 20, marginBottom: 20 }}>
+                    Business English Tests
 
-                </div>
+                    </Typography>
+                    <Typography variant="h6" style={{ marginBottom: 20 }}></Typography>
+                    <Table headCells={headCells} rows={data} loading={loading} />
+                </Container>
 
-                <section className="section_box">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <h1 className="title1 mb25">Cohorts</h1>
-                            <h4 className="title4 mb40">
-                                {
-                                    data  && data.length > 0 ? (
-                                        <>
-                                            
-                                            <table className="table" style={{ width: '100%' }}>
-                                                <thead>
-                                                    <tr>
-                                                        <th style={{ width: '250px' }}>Cohort Name</th>
-                                                        <th>Cohort Start Date</th>
-                                                        {/* <th>View Quiz set</th>
-                                                        <th>Quiz Topic</th> */}
-                                                        <th>Number of Candidates</th>
-                                                        {/* <th>Tests Completed</th>
-                                                        <th>Pending Tests</th> */}
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {
-                                                        data.map((datum) => (
-                                                            <tr key={datum.id + "" + datum.quizSetId}>
-                                                                <td style={{ wordBreak: "break-all", color:'#408BF9' }}><a href={"/business-english/"  + datum.id  }>{datum.name}</a></td>
-                                                                <td>{datum?.start_date}</td>
-                                                                <td>
-                                                                    <Link to={`/cohort-detail/${datum.id}/quiz-set`}>Quiz Set</Link>
-                                                                </td>
-                                                                {/* <td>{datum.quizTopic}</td> */}
-                                                                <td>{datum.students}</td>
-                                                                {/* <td>{datum.completed}</td>
-                                                                <td>{datum.pending}</td> */}
-                                                                
-                                                            </tr>
-                                                        ))
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </>
-                                    ) : <>No Course were found for Business English</>
-                                }
-                            </h4>
-                        </div>
-                    </div>
-                    <div>
-                    </div>
-                </section>
-            </main>
+
+            </>
         );
     }
 }

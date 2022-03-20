@@ -44,13 +44,11 @@ class BusinessEnglishCourse extends Component {
 
     btnComponent = (row) => {
         return (
-            <td>
                 <Link to={`/business-english/course/${row.courseNumber}`}>
                 <Button size="small" variant="contained" color="primary">
                     Detail
                 </Button>
                 </Link>
-            </td>
         )
     }
 

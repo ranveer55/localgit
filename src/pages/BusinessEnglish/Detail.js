@@ -43,13 +43,11 @@ class BusinessEnglishDetail extends Component {
 
     btnComponent = (row) => {
         return (
-            <td>
                 <Link to={`/business-english/course/${row.courseNumber}`}>
                 <Button size="small" variant="contained" color="primary">
                     Detail
                 </Button>
                 </Link>
-            </td>
         )
     }
 
@@ -58,9 +56,7 @@ class BusinessEnglishDetail extends Component {
         const headCells = [
             { id: 'courseName', numeric: false, disablePadding: false, label: 'Course Name' },
             { id: 'courseNumber', numeric: true, disablePadding: false, label: 'Course Number' },
-            { id: 'batchNumber', numeric: true, disablePadding: true, label: 'Batch Number' },
             { id: 'moduleNo', numeric: true, disablePadding: true, label: 'Module No' },
-            { id: 'moduleName', numeric: false, disablePadding: true, label: 'Module Name' },
             { id: 'courseStartDate', numeric: false, disablePadding: false, label: 'Start Date' },
             { id: 'enrolled', numeric: true, disablePadding: false, label: 'Enrolled' },
             { id: 'module_level', numeric: true, disablePadding: false, label: 'Level' },
