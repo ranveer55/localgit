@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import Loader from "react-loader-spinner";
 import CustomizedSnackbars from "./CustomizedSnackbars";
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 class InterviewSimulatorPage extends Component {
   constructor(props) {
@@ -15,8 +20,9 @@ class InterviewSimulatorPage extends Component {
       dataLoaded: false,
       cohorts: [],
       selectedCohort: false,
-      companyCode : this.companyCode,
-      exported: undefined
+      companyCode: this.companyCode,
+      exported: undefined,
+      selectedStatus: 0,
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -25,35 +31,35 @@ class InterviewSimulatorPage extends Component {
 
   componentDidMount() {
     // getCompanyRegistrationReport
-    this.loadData();
+    this.loadData(this.state.selectedStatus);
   }
 
-  exportCohort(companyCode){
+  exportCohort(companyCode) {
     this.setState({
       dataLoaded: true,
     });
     global.api
       .exportCohortData(companyCode)
       .then((data) => {
-        
-        let resData =  data.programs
-        let filterData = resData.filter((item)=> item.type_id == '3')
+
+        let resData = data.programs
+        let filterData = resData.filter((item) => item.type_id == '3')
         this.setState({
           dataLoaded: false,
           cohorts: filterData,
-          exported:'success',
-          message:'Report successfully generated. Please check your email to download Excel'
+          exported: 'success',
+          message: 'Report successfully generated. Please check your email to download Excel'
         });
       })
       .catch((err) => {
         this.setState(({
-          exported:'error',
-          message:'Oops something went wrong',
+          exported: 'error',
+          message: 'Oops something went wrong',
           dataLoaded: false,
         }))
       });
   }
-  exportCohortDaily(companyCode){
+  exportCohortDaily(companyCode) {
     this.setState({
       dataLoaded: true,
     });
@@ -61,19 +67,19 @@ class InterviewSimulatorPage extends Component {
       .exportCohortDaily(companyCode)
       .then((data) => {
         this.setState(({
-          dataLoaded:false,
-          exported:'success',
-          message:'Report successfully generated. Please check your email to download Excel'
+          dataLoaded: false,
+          exported: 'success',
+          message: 'Report successfully generated. Please check your email to download Excel'
         }))
 
       })
       .catch((err) => {
         this.setState(({
-          exported:'error',
-          message:'Oops something went wrong',
+          exported: 'error',
+          message: 'Oops something went wrong',
           dataLoaded: false,
         }))
-       
+
       });
   }
 
@@ -82,10 +88,10 @@ class InterviewSimulatorPage extends Component {
       dataLoaded: true,
     });
     global.api
-      .getCompanyCohorts(this.companyCode,status)
+      .getCompanyCohorts(this.companyCode, status)
       .then((data) => {
-        let resData =  data.programs
-        let filterData = resData.filter((item)=> item.type_id == '3')
+        let resData = data.programs
+        let filterData = resData.filter((item) => item.type_id == '3')
         this.setState({
           dataLoaded: false,
           cohorts: filterData,
@@ -100,28 +106,30 @@ class InterviewSimulatorPage extends Component {
   }
 
   onChangeStatus = (e) => {
+    console.log('ssssssssssss',e.target.value);
     this.loadData(e.target.value)
     this.setState({
       dataLoaded: true,
       cohorts: [],
+      selectedStatus: e.target.value
     });
-    
+
   }
 
   formatter = (cell, row) => {
     return (
       <div className="interview-simulator-dropdown-holder">
-      
-      <Link
-            to={"/interview-simulator/" + row.id + "/add-practice-set"}
-            className="interview-simulator-dropdown-link"
-            style={{
-              color: "blue",
-              cursor: "pointer",
-            }}
-          >
-            Manage Practice Sets
-          </Link>
+
+        <Link
+          to={"/interview-simulator/" + row.id + "/add-practice-set"}
+          className="interview-simulator-dropdown-link"
+          style={{
+            color: "blue",
+            cursor: "pointer",
+          }}
+        >
+          Manage Practice Sets
+        </Link>
         {/* <div className="interview-simulator-dropdown-content"> */}
         {/* </div> */}
       </div>
@@ -150,7 +158,7 @@ class InterviewSimulatorPage extends Component {
               cursor: "pointer",
             }}
           >
-            
+
             <Link
               to={"/interview-simulator/" + row.id}
               style={{
@@ -158,7 +166,7 @@ class InterviewSimulatorPage extends Component {
                 cursor: "pointer",
               }}
             >
-              {row.name} 
+              {row.name}
             </Link>
           </td>
         ),
@@ -180,7 +188,7 @@ class InterviewSimulatorPage extends Component {
               cursor: "pointer",
             }}
           >
-       <Link
+            <Link
               to={"/interview-simulator/" + row.id}
               style={{
                 color: "blue",
@@ -193,9 +201,9 @@ class InterviewSimulatorPage extends Component {
         ),
       },
       {
-          dataField: 'vpi_value',
-          text: 'VPI',
-          formatter: (val) =>val === '1' ? 'Yes':'No',
+        dataField: 'vpi_value',
+        text: 'VPI',
+        formatter: (val) => val === '1' ? 'Yes' : 'No',
       },
       {
         dataField: "id",
@@ -286,37 +294,42 @@ class InterviewSimulatorPage extends Component {
               </h4> */}
 
               <div style={{
-                                padding: "2px 8px",
-                                margin: "0px 8px",
-                                fontWeight: "500",
-                                float: "right",
-                                display:"flex",
-                            }}>
-                               <select style={{marginRight:'10px'}} onChange={this.onChangeStatus}
-                                     defaultValue="">
-                                    <option value="" disabled>Select Status</option>
-                                    <option value="0">Active</option>
-                                    <option value="1">InActive</option>
-                                </select>
-                              <div>
-                              {this.state.cohorts.length > 0 ?
-                              <>
-                              <button onClick={()=>{this.exportCohort(this.state.companyCode)}}
-                              className="btn btn-size3 btn-blue btn-radius export"
-                              >
-                                <span>Email Engagement Report</span>
-                              </button>
-                               <button onClick={()=>{this.exportCohortDaily(this.state.companyCode)}}
-                              className="btn btn-size3 btn-blue btn-radius export"
-                              >
-                                <span>Email Daily Activity Report</span>
-                              </button>
-                              </>
-                              :null}
-                       </div>
+                padding: "2px 8px",
+                margin: "0px 8px",
+                fontWeight: "500",
+                float: "right",
+                display: "flex",
+              }}>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={this.state.selectedStatus}
+                  onChange={this.onChangeStatus}
+                >
+                  <MenuItem value={1}>Archived</MenuItem>
+                  <MenuItem value={0}>Active</MenuItem>
 
-                               
-                            </div>
+                </Select>
+               
+                <div>
+                  {this.state.cohorts.length > 0 ?
+                    <>
+                      <button onClick={() => { this.exportCohort(this.state.companyCode) }}
+                        className="btn btn-size3 btn-blue btn-radius export"
+                      >
+                        <span>Email Engagement Report</span>
+                      </button>
+                      <button onClick={() => { this.exportCohortDaily(this.state.companyCode) }}
+                        className="btn btn-size3 btn-blue btn-radius export"
+                      >
+                        <span>Email Daily Activity Report</span>
+                      </button>
+                    </>
+                    : null}
+                </div>
+
+
+              </div>
               <div>
                 {/* <a href={`https://api2.taplingua.com/app/user-cohort-registration-dynamic/${this.state.selectedCompany}`} target="_blank" rel="noopener noreferrer" style={{
                                     margin: "0 4px"
@@ -333,7 +346,7 @@ class InterviewSimulatorPage extends Component {
             </div>
           </div>
           <div>
-        {!this.state.dataLoaded ? (
+            {!this.state.dataLoaded ? (
               this.state.cohorts.length > 0 ? (
                 <BootstrapTable
                   keyField="id"
@@ -345,17 +358,17 @@ class InterviewSimulatorPage extends Component {
               )
             ) : (
               // loader
-                <NoDataIndication />
-              
+              <NoDataIndication />
+
             )}
           </div>
         </section>
-        {this.state.exported !== undefined ? <CustomizedSnackbars 
-        open={this.state.exported !== undefined}
-        handleClose={() =>this.setState({exported:undefined})}
-        variant={this.state.exported ?? ''}
-        message={this.state.message ?? ''}
-        />: null}
+        {this.state.exported !== undefined ? <CustomizedSnackbars
+          open={this.state.exported !== undefined}
+          handleClose={() => this.setState({ exported: undefined })}
+          variant={this.state.exported ?? ''}
+          message={this.state.message ?? ''}
+        /> : null}
       </main>
     );
   }

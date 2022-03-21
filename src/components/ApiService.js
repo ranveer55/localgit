@@ -513,7 +513,7 @@ export default class ApiService {
     getCompanyCohorts(company_code = 0,value) {
         
         var params = "company_code=" + company_code;
-        if (value) {
+        if (value !=undefined) {
             params = params + "&status=" + value;
         }
         return axios.get(`${this.domain}/cohorts-by-company?` + params, {
