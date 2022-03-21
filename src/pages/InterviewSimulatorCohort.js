@@ -534,9 +534,9 @@ class InterviewSimulatorCohortPage extends Component {
                         <table className="table">
                           <thead>
                             <tr>
-                              <th style={{ width: "250px" }}>Email</th>
-                              <th>First Name</th>
-                              <th>Last Name</th>
+                              <th style={{ width: "250px" }} className="first-col bg-ngwhite">Email</th>
+                              <th className="second-col bg-ngwhite">First Name</th>
+                              <th className="third-col bg-ngwhite">Last Name</th>
                               <th>Questions Answered</th>
                               <th>% of questions answered</th>
                               <th>Attempts</th>
@@ -577,12 +577,12 @@ class InterviewSimulatorCohortPage extends Component {
                               let maxVpiVal = Math.max(...vpiArray);
                               let minVpiVal = Math.min(...vpiArray);
                               return (
-                                <tr>
-                                  <td style={{ wordBreak: "break-all" }}>
+                                <tr key={user.userId}>
+                                  <td style={{ wordBreak: "break-all" }} className="first-col bg-white">
                                     {user.userId}
                                   </td>
-                                  <td>{user.FirstName}</td>
-                                  <td>{user.LastName}</td>
+                                  <td className="second-col bg-white">{user.FirstName}</td>
+                                  <td className="third-col bg-white">{user.LastName}</td>
                                   <td>{user.distinctAttempts}</td>
                                   <td>
                                     {!!user.distinctAttemptsCount && user.distinctAttemptsCount > 0 ?  (

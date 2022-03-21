@@ -124,3 +124,37 @@ button.btn.btn-size3.btn-blue.btn-radius.export {
         font-size: 14px;
     }
 }
+
+.first-col {
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+    left: 0px;
+    position: -webkit-sticky;
+  position: sticky;
+ 
+  }
+  
+  .second-col {
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    left: 160px;
+    position: -webkit-sticky;
+  position: sticky;
+  }
+   .third-col {
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    left: 310px;
+    position: -webkit-sticky;
+  position: sticky;
+  
+  }
+  .bg-white{
+    background-color: white;
+  }
+  .bg-ngwhite{
+    background-color: #F2F3F8;
+  }
