@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Datetime from 'react-datetime';
 import "react-datetime/css/react-datetime.css";
 
-const timezone ='Asia/Kolkata';
+const timezone = 'Asia/Kolkata';
 moment.tz.setDefault(timezone);
 
 class CompanyCohortCreate extends Component {
@@ -21,14 +21,14 @@ class CompanyCohortCreate extends Component {
       instructorEmails: "",
       cohortName: "",
       cohortStartDate: new Date(),
-      exam_start_time:'',
-      exam_end_time:'',
-      allotted_time:'',
-      senderEmail:'',
+      exam_start_time: '',
+      exam_end_time: '',
+      allotted_time: '',
+      senderEmail: '',
       errors: null,
       profile_questionnaire: false,
-      vpi_value:0,
-      archived:false,
+      vpi_value: 0,
+      archived: false,
     };
 
     this.state.selectedCompany = global.companyCode;
@@ -68,7 +68,7 @@ class CompanyCohortCreate extends Component {
 
 
   render() {
-    const {types } =this.state;
+    const { types } = this.state;
     return (
       <main className="offset CreateCohortModal" id="content">
         <section className="section_box">
@@ -101,61 +101,63 @@ class CompanyCohortCreate extends Component {
                     placeholder="Cohort Name"
                     value={this.state.senderEmail ?? ''}
                     onChange={e => {
-                      this.setState({senderEmail:e.target.value  });
+                      this.setState({ senderEmail: e.target.value });
                     }} />
                   <ErrorDiv errors={this.state.errors} label="senderEmail" />
                 </div>
-                <div className="form-group" style={{display:'flex'}}>
-                  <label style={{margin:10}}>Profile Required</label>
+                <div className="form-group" style={{ display: 'flex' }}>
+                  <label style={{ margin: 10 }}>Profile Required</label>
                   <input
-                    style={{margin:10}}
+                    style={{ margin: 10 }}
                     type="radio"
                     name="profile_questionnaire"
                     className=""
                     placeholder="Cohort Name"
-                    checked={this.state.profile_questionnaire ==true}
+                    checked={this.state.profile_questionnaire == true}
                     onChange={e => {
-                      this.setState({profile_questionnaire:true});
-                    }} /><span style={{margin:10}}> Yes</span>
-                    <input
-                    style={{margin:10}}
+                      this.setState({ profile_questionnaire: true });
+                    }} /><span style={{ margin: 10 }}> Yes</span>
+                  <input
+                    style={{ margin: 10 }}
                     type="radio"
                     name="profile_questionnaire"
                     className=""
                     placeholder="Cohort Name"
-                    checked={this.state.profile_questionnaire !=true}
+                    checked={this.state.profile_questionnaire != true}
                     onChange={e => {
                       this.setState({
-                             profile_questionnaire:false });
-                    }} /><span style={{margin:10}}> No</span>
-                  
+                        profile_questionnaire: false
+                      });
+                    }} /><span style={{ margin: 10 }}> No</span>
+
                 </div>
-             <div className="form-group" style={{display:'flex'}}>
-                  <label style={{margin:10}}>Archived</label>
+                <div className="form-group" style={{ display: 'flex' }}>
+                  <label style={{ margin: 10 }}>Archived</label>
                   <input
-                    style={{margin:10}}
+                    style={{ margin: 10 }}
                     type="radio"
                     name="archived"
                     className=""
                     placeholder="Cohort Name"
-                    checked={this.state.archived ==true}
+                    checked={this.state.archived == true}
                     onChange={e => {
-                      this.setState({archived:true});
-                    }} /><span style={{margin:10}}> Yes</span>
-                    <input
-                    style={{margin:10}}
+                      this.setState({ archived: true });
+                    }} /><span style={{ margin: 10 }}> Yes</span>
+                  <input
+                    style={{ margin: 10 }}
                     type="radio"
                     name="archived"
                     className=""
                     placeholder="Cohort Name"
-                    checked={this.state.archived !=true}
+                    checked={this.state.archived != true}
                     onChange={e => {
                       this.setState({
-                        archived:false });
-                    }} /><span style={{margin:10}}> No</span>
-                  
+                        archived: false
+                      });
+                    }} /><span style={{ margin: 10 }}> No</span>
+
                 </div>
-             
+
                 <div className="form-group">
                   <label>Cohort Type</label>
                   <select
@@ -175,133 +177,186 @@ class CompanyCohortCreate extends Component {
                     }
                   </select>
                 </div>
-              
-                   {/* verbal proficiency index */}
-                   {this.state.cohortType == 3 && ( 
-                   <div className="form-group" style={{display:'flex'}}>
-                  <label style={{margin:10}}>Verbal proficiency index(VPI)</label>
-                  <input
-                    style={{margin:10}}
-                    type="radio"
-                    name="vpi_value"
-                    className=""
-                    checked={this.state.vpi_value == 1}
-                    onChange={e => {
-                      this.setState({vpi_value:1});
-                    }} />
-                    <span style={{margin:10}}> Yes</span>
+
+                {/* verbal proficiency index */}
+                {this.state.cohortType == 3 && (
+                  <div className="form-group" style={{ display: 'flex' }}>
+                    <label style={{ margin: 10 }}>Verbal proficiency index(VPI)</label>
                     <input
-                    style={{margin:10}}
-                    type="radio"
-                    name="vpi_value"
-                    className=""
-                    checked={this.state.vpi_value == 0}
-                    onChange={e => {
-                      this.setState({
-                        vpi_value:0 });
-                    }} /><span style={{margin:10}}> No</span>
-                  
-                </div>
+                      style={{ margin: 10 }}
+                      type="radio"
+                      name="vpi_value"
+                      className=""
+                      checked={this.state.vpi_value == 1}
+                      onChange={e => {
+                        this.setState({ vpi_value: 1 });
+                      }} />
+                    <span style={{ margin: 10 }}> Yes</span>
+                    <input
+                      style={{ margin: 10 }}
+                      type="radio"
+                      name="vpi_value"
+                      className=""
+                      checked={this.state.vpi_value == 0}
+                      onChange={e => {
+                        this.setState({
+                          vpi_value: 0
+                        });
+                      }} /><span style={{ margin: 10 }}> No</span>
+
+                  </div>
                 )}
                 {/* end verbal proficiency index */}
-                {this.state.cohortType == 2 && ( 
-                <>
-                <div className="form-group">
-                  <label>Exam start time</label>
-                  <Datetime  value={moment(this.state.exam_start_time)} 
-                   placeholderText="Exam start time"
-                   onChange={date => {
-                       this.setState({
-                             exam_start_time: moment(date).utcOffset(330).format()
-                           
-                        });
-                   }}
-                  />
-                  
-                </div> 
-                <div className="form-group">
-                  <label>Exam End time</label>
-                  <Datetime  value={moment(this.state.exam_end_time)} 
-                   placeholderText="Exam end time"
-                   onChange={date => {
-                       this.setState({
-                        exam_end_time: moment(date).utcOffset(330).format()
-                           
-                        });
-                   }}
-                  />
-                 
-                </div>
-                <div className="form-group">
-                  <label>Allotted time</label>
-                  <input
-                    type="number"
-                    min="1"
-                    max="1000"
-                    value={this.state.allotted_time}
-                    className="form-control"
-                    placeholderText="Allotted time"
-                    onChange={e => {
-                      if(e.target.value){
-                        this.setState({
-                          allotted_time: parseInt(e.target.value)
-                        });
-                      } else {
-                        this.setState({
-                          allotted_time: 0
-                        });
-                      }
-                      
-                    }} />
-                </div>
-                </>
+                {this.state.cohortType == 2 && (
+                  <>
+                    <div className="form-group">
+                      <label>Exam start time</label>
+                      <Datetime value={moment(this.state.exam_start_time)}
+                        placeholderText="Exam start time"
+                        onChange={date => {
+                          this.setState({
+                            exam_start_time: moment(date).utcOffset(330).format()
+
+                          });
+                        }}
+                      />
+
+                    </div>
+                    <div className="form-group">
+                      <label>Exam End time</label>
+                      <Datetime value={moment(this.state.exam_end_time)}
+                        placeholderText="Exam end time"
+                        onChange={date => {
+                          this.setState({
+                            exam_end_time: moment(date).utcOffset(330).format()
+
+                          });
+                        }}
+                      />
+
+                    </div>
+                    <div className="form-group">
+                      <label>Allotted time</label>
+                      <input
+                        type="number"
+                        min="1"
+                        max="1000"
+                        value={this.state.allotted_time}
+                        className="form-control"
+                        placeholderText="Allotted time"
+                        onChange={e => {
+                          if (e.target.value) {
+                            this.setState({
+                              allotted_time: parseInt(e.target.value)
+                            });
+                          } else {
+                            this.setState({
+                              allotted_time: 0
+                            });
+                          }
+
+                        }} />
+                    </div>
+                  </>
                 )}
-                 {this.state.cohortType == 4 && (
+                {!this.state.vpi_value && this.state.cohortType == 3 && (
+                  <>
+                    <div className="form-group">
+                      <label>start time</label>
+                      <Datetime dateFormat={false} value={moment(this.state.exam_start_time)}
+                        placeholderText="Exam start time"
+                        onChange={date => {
+                          this.setState({
+                            exam_start_time: moment(date).utcOffset(330).format()
+
+                          });
+                        }}
+                      />
+
+                    </div>
+                    <div className="form-group">
+                      <label> End time</label>
+                      <Datetime dateFormat={false} value={moment(this.state.exam_end_time)}
+                        placeholderText="Exam end time"
+                        onChange={date => {
+                          this.setState({
+                            exam_end_time: moment(date).utcOffset(330).format()
+
+                          });
+                        }}
+                      />
+
+                    </div>
+                    <div className="form-group">
+                      <label>Allotted time</label>
+                      <input
+                        type="number"
+                        min="1"
+                        max="1000"
+                        value={this.state.allotted_time}
+                        className="form-control"
+                        placeholderText="Allotted time"
+                        onChange={e => {
+                          if (e.target.value) {
+                            this.setState({
+                              allotted_time: parseInt(e.target.value)
+                            });
+                          } else {
+                            this.setState({
+                              allotted_time: 0
+                            });
+                          }
+
+                        }} />
+                    </div>
+                  </>
+                )}
+                {this.state.cohortType == 4 && (
+                  <div className="form-group">
+                    <label>Select Program</label>
+                    <select
+                      value={this.state.selectedProgram ?? ""}
+                      onChange={e => {
+                        this.setState({
+                          selectedProgram: e.target.value
+                        });
+                      }}
+                      className="form-control"
+                      style={{ borderRadius: "3px" }}>
+                      <option value={""}>Select a program</option>
+                      {
+                        this.state.programs.filter(item => item.id !== 9999).map(program => (
+                          <option key={program.id} value={program.id}>{program.id} - {program.name}</option>
+                        ))
+                      }
+                    </select>
+                  </div>
+
+                )}
                 <div className="form-group">
-                  <label>Select Program</label>
-                  <select
-                    value={this.state.selectedProgram ?? ""}
+                  <label>Cohort instructor support Email</label>
+                  <input
+                    value={this.state.instructorEmails ?? ""}
                     onChange={e => {
                       this.setState({
-                        selectedProgram: e.target.value
+                        instructorEmails: e.target.value
                       });
                     }}
                     className="form-control"
-                    style={{ borderRadius: "3px" }}>
-                    <option value={""}>Select a program</option>
-                    {
-                      this.state.programs.filter(item=>item.id !==9999).map(program => (
-                        <option key={program.id} value={program.id}>{program.id} - {program.name}</option>
-                      ))
-                    }
-                  </select>
+                    style={{ borderRadius: "3px" }} />
                 </div>
-               
-                )}
-                 <div className="form-group">
-                <label>Cohort instructor support Email</label>
-                <input
-                  value={this.state.instructorEmails ?? ""}
-                  onChange={e => {
-                    this.setState({
-                      instructorEmails: e.target.value
-                    });
-                  }}
-                  className="form-control"
-                  style={{ borderRadius: "3px" }}/>
-              </div>
                 <div className="form-group">
                   <label>Cohort Start Date</label>
-                  <Datetime  value={moment(this.state.cohortStartDate)} 
-                   placeholderText="Cohort Start Date"
-                   onChange={date => {
-                       this.setState({
+                  <Datetime value={moment(this.state.cohortStartDate)}
+                    placeholderText="Cohort Start Date"
+                    onChange={date => {
+                      this.setState({
                         cohortStartDate: moment(date).utcOffset(330).format()
-                           
-                        });
-                   }}
+
+                      });
+                    }}
                   />
-               
+
                 </div>
                 {/* submit button */}
                 <button
@@ -317,11 +372,11 @@ class CompanyCohortCreate extends Component {
                       company_code: this.companyCode,
                       profile_questionnaire: this.state.profile_questionnaire,
                       senderEmail: this.state.senderEmail,
-                     exam_end_time: this.state.exam_end_time,
+                      exam_end_time: this.state.exam_end_time,
                       exam_start_time: this.state.exam_start_time,
                       allotted_time: this.state.allotted_time,
-                      vpi_value: this.state.vpi_value, 
-                      archived: this.state.archived, 
+                      vpi_value: this.state.vpi_value,
+                      archived: this.state.archived,
                     };
 
 
