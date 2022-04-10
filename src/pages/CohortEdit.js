@@ -12,6 +12,7 @@ class CohortEdit extends Component {
 
     this.companyCode = global.companyCode;
     this.cohortId = props.match.params.id;
+    
     this.state = {
       dateLoaded: false,
       programs: [],
@@ -39,7 +40,7 @@ class CohortEdit extends Component {
     )
       .then(
         data => {
-          this.setState({
+            this.setState({
             dataLoaded: true,
             cohort: data,
           });

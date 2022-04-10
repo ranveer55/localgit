@@ -25,7 +25,7 @@ class BusinessEnglishDetail extends Component {
         global.api
             .getBusinessEnglishDetail(this.cohortId, page)
             .then((data) => {
-                this.setState({
+                   this.setState({
                     loading: false,
                     data: data && data.course && data.course.length > 0 ? data.course : [],
                     cohort: data.cohort ?? null

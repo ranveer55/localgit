@@ -18,13 +18,10 @@ class CompanyCohortsReport extends Component {
     this.state = {
       dataLoaded: false,
       cohorts: [],
-      selectedCohort: false,
       open: false,
       userId: '',
       course: '',
-      courseNumber: null,
-      deleting: undefined,
-    };
+     };
 
     this.state.selectedCompany = global.companyCode;
     this.state.selectedCompanyName = global.companyName;
@@ -33,8 +30,6 @@ class CompanyCohortsReport extends Component {
   componentDidMount() {
     // getCompanyRegistrationReport 
     this.loadData();
-
-
   }
 
   loadData() {
@@ -57,75 +52,9 @@ class CompanyCohortsReport extends Component {
           dataLoaded: false
         });
       });
+      
   }
-
-  DeleteIconClick = (userId, courseNumber, course) => {
-    this.setState({
-      open: true,
-      userId, courseNumber, course
-    })
-  }
-  handleCancel = () => {
-    this.setState({
-      open: false,
-      open: false,
-      userId: '',
-      course: '',
-      courseNumber: null,
-      deleting: undefined,
-    })
-  }
-
-  deleteUser = () => {
-    this.setState({
-      deleting: true,
-      deleted: undefined
-    });
-    global.api.deleteUserCourse(this.state.userId, this.state.courseNumber)
-      .then(data => {
-       
-        if (data && data.status) {
-          let selectedCohort =undefined;
-          const cohorts = this.state.cohorts.map((c) => {
-            if (c.id === this.state.selectedCohort.id) {
-              const users = this.state.selectedCohort.users.filter((u) => u.userId !== this.state.userId);
-              selectedCohort = {
-                ...this.state.selectedCohort,
-                users
-              }
-              return selectedCohort;
-            }
-            return c;
-          })
-          this.setState({
-            open: false,
-            userId: '',
-            course: '',
-            courseNumber: null,
-            deleting: undefined,
-            deleted: true,
-            cohorts,
-            selectedCohort: selectedCohort ? selectedCohort :this.state.selectedCohort
-          })
-        } else {
-          this.setState({
-            open: false,
-            userId: '',
-            course: '',
-            courseNumber: null,
-            deleting: undefined,
-            deleted: false
-          })
-        }
-      })
-      .catch(err => {
-        this.setState({
-          deleting: undefined
-        });
-      });
-
-  }
-
+ 
   getUserCount =(data) =>{
     data =data.map((u)=>u.userId);
     data =[...new Set(data)];
@@ -198,28 +127,26 @@ class CompanyCohortsReport extends Component {
                             <td>{cohort?.vpi_value == 1 ? 'Yes' : 'No'}</td>
                             <td> <a href={`https://api2.taplingua.com/app/user-cohort-registration/${cohort.id}`} target="_blank" rel="noopener noreferrer">Open Registration Form</a></td>
                             <td>{moment(cohort.start_date).format("DD-MM-YYYY")}</td>
-                            <td
-                              style={{
+                            <td style={{
                                 color: "blue",
                                 cursor: "pointer"
-                              }}
-                              onClick={e => {
-                                this.setState({
-                                  selectedCohort: cohort
-                                });
                               }}>
-                              <span
-                                style={{
-                                  color: "blue",
-                                  cursor: "pointer"
-                                }}>{this.getUserCount(cohort.users)}</span>
-                            </td>
-                            <td
+                              <a target="_blank" rel="noopener noreferrer" href={"/cohort-eml/" +cohort.id}>    
+                           {this.getUserCount(cohort.users)}</a>
+                             </td>
+                             <td style={{
+                                color: "blue",
+                                cursor: "pointer"
+                              }}>
+                              <a target="_blank" rel="noopener noreferrer" href={"/cohort-eml2/" +cohort.id}>    
+                           {this.getUserCount(cohort.users)}</a>
+                             </td>
+                             <td
                               style={{
                                 color: "blue",
                                 cursor: "pointer"
                               }}>
-                              <a href={"/cohort-csv-register/" + cohort.id}>Upload CSV</a>
+                              <Link to={"/cohort-csv-register/" + cohort.id}>Upload CSV</Link >
                             </td>
                             <td
                               style={{
@@ -245,43 +172,8 @@ class CompanyCohortsReport extends Component {
               </tbody>
             </table>
           </div>
-          <div>
-            {
-              this.state.selectedCohort ? (
-                <div>
-                  <br />
-                  <h4>{this.state.selectedCohort.name} - User Count</h4>
-                  <div>
-                    {
-                      this.state.selectedCohort.users.map(user => (
-                        <div key={user.userId}>
-                          <Link key={user.userId}
-                            target="_blank"
-                            to={"/user-cohort-detail/" + this.state.selectedCohort.id + "/" + user.userId}
-                            style={{
-                              color: "blue",
-                              cursor: "pointer"
-                            }}>{user.userId}</Link>
-                          <DeleteIcon style={{ margin: '3px 0px 0px 25px' }} color="secondary" onClick={() => this.DeleteIconClick(user.userId, user.courseNumber, this.state.selectedCohort.name)} />
-                        </div>
-                      ))
-                    }
-                  </div>
-                </div>
-              ) : <></>
-            }
-          </div>
-        </section>
-        <ConfirmationDialog userId={this.state.userId} course={this.state.course} open={this.state.open} handleCancel={this.handleCancel} handleOk={this.deleteUser} deleting={this.state.deleting} />
-
-        <CustomizedSnackbars 
-        open={this.state.deleted !== undefined}
-        handleClose={() =>this.setState({deleted:undefined})}
-        variant={this.state.deleted ? 'success' : 'error'}
-        message={this.state.deleted ? 'User has been deleted' : 'Oops something went wrong'}
-        />
-       
-      </main>
+         </section>
+       </main>
     );
   }
 }

@@ -35,7 +35,7 @@ class CohortDetail extends Component {
     )
       .then(
         data => {
-          this.setState({
+           this.setState({
             dataLoaded: true,
             cohort: data,
           });

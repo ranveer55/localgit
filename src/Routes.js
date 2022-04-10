@@ -51,7 +51,9 @@ import CohortEdit from './pages/CohortEdit';
 import BusinessEnglish from './pages/BusinessEnglish';
 import BusinessEnglishDetail from './pages/BusinessEnglish/Detail';
 import BusinessEnglishCourse from './pages/BusinessEnglish/Course';
-
+import CohortEml from './pages/CohortEml';
+import CohortEml2 from './pages/CohortEml2';
+import aaaa from './pages/aaaa';
 const Auth = new AuthService();
 class Router extends React.Component {
   render() {
@@ -88,6 +90,8 @@ class Router extends React.Component {
         <ProtectedRoute path="/cohort-detail/:cohortId/manage-quetions/:quizSetId" component={ManageQuizSetQuetions} />
         <ProtectedRoute path="/cohort-detail/:cohortId/quiz-set" component={AddQuizSetToCohortPage} />
         <ProtectedRoute path="/cohort-detail/:cohortId" component={CohortDetail} />
+        <ProtectedRoute path ="/cohort-eml/:cohortId" component={CohortEml}/>
+        <ProtectedRoute path ="/cohort-eml2/:cohortId" component={aaaa}/>
         <ProtectedRoute path="/cohort-csv-register/:cohortId" component={CohortRegisterCSV} />
         <ProtectedRoute path="/user-cohort-detail/:cohortId/:userId" component={UserCohortDetail} />
         <ProtectedRoute path="/course-registration-report" component={CourseRegistrationReport} />

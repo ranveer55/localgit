@@ -165,7 +165,7 @@ class Program extends Component {
                       Object.entries(this.state.userData.levels).map(([index, level]) => (
                         <div key={index}>
                           <div style={{
-                            backgroundColor: "dodgerblue",
+                            backgroundColor: "green",
                             padding: "2px 12px",
                             color: "white"
                           }}>Level: {index}</div>
