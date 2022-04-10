@@ -223,7 +223,7 @@ class ProctoredTestUserDetail extends Component {
                           <div className="col-md-5  label">Time stepped away </div><div className="col-md-7  labelval">{ai_result?.processed?.zero_candidate_time} Seconds</div>
                         </div>
                         <div className="flex">
-                          <div className="col-md-5  label">> 1 person </div><div className="col-md-7  labelval">{ai_result?.processed?.multi_user_percent}%</div>
+                          <div className="col-md-5  label"> 1 person </div><div className="col-md-7  labelval">{ai_result?.processed?.multi_user_percent}%</div>
                         </div>
                         <div className="flex">
                           <div className="col-md-5  label">Location </div><div className="col-md-7  labelval"> {data?.employee?.Location}</div>
