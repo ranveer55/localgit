@@ -1,6 +1,6 @@
 
-import React, { useEffect, useState } from 'react';
-import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
+import React, {useState } from 'react';
+import {Col, Container,Modal, Row } from 'react-bootstrap';
 // import { useToasts } from 'react-toast-notifications';
 // import { Spinner } from '../../../_components';
 import ExternalRatingComponent from '../components/ExternalRatingComponent';
