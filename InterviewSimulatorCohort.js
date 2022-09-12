@@ -1,7 +1,5 @@
 import moment from "moment";
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Line } from "react-chartjs-2";
 import ReactDatePicker from "react-datepicker";
 import endpoints from "../config/endpoints";
 import Loader from "../components/Loader/Loader";
