@@ -1,16 +1,11 @@
-import moment from "moment";
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import Loader from "react-loader-spinner";
 import DeleteIcon from '@material-ui/icons/Delete';
 import ConfirmationDialog from "./ConfirmDialog";
-import Snackbar from '@material-ui/core/Snackbar';
-import ErrorIcon from '@material-ui/icons/Error';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CustomizedSnackbars from "./CustomizedSnackbars";
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { green } from "@material-ui/core/colors";
 class CohortEml extends Component {
 
   constructor(props) {
